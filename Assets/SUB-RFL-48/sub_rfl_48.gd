@@ -65,7 +65,7 @@ func squadLogic(node : SUBRFL48) :
 	
 	if node != self and leader != node :
 		
-		#print(self.name," is considering joining ", node.name, "'s squad, ", node.name, "'s isLeader : ", node.isLeader,", inSquad : ", node.inSquad)
+		#print(self.name," considering joining ", node.name, "'s squad, ", node.name, "'s isLeader : ", node.isLeader,", inSquad : ", node.inSquad)
 		
 		match node.isLeader :
 			true : 
