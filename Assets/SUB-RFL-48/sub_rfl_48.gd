@@ -14,11 +14,12 @@ var direction : Vector2 = Vector2(0, 1)
 @export var turnSpeed : float = 6
 
 enum States {
-Unidle = 0,
-Idle = 1,
-Move = 2,
-Shoot = 3
+	Unidle = 0,
+	Idle = 1,
+	Move = 2,
+	Shoot = 3
 }
+
 var State = States.Move
 
 @onready var test : Timer =$Test
@@ -36,7 +37,7 @@ func _physics_process(delta):
 		if thing is Unit :
 			if  thing.team != team : pass
 			elif thing is SUBRFL48 : squadLogic(thing)
-	
+			
 	if State != States.Idle : actionQuery()
 	
 	velocity = velocity.slerp(Vector2.ZERO, delta)
@@ -44,7 +45,7 @@ func _physics_process(delta):
 	match State :
 		States.Idle : idle(delta)
 		States.Move : move(delta)
-		States.Shoot : pass
+		_ : pass
 	
 	nav.max_speed = maxSpeed
 	
@@ -52,8 +53,8 @@ func _physics_process(delta):
 		sprite.play()
 	
 	if cAni == "Walk" :
-		sprite.speed_scale = velocity.length()/100
-		Step.volume_db = round(((velocity.length()/maxSpeed) * 15) - 30)
+		sprite.speed_scale = velocity.length() / 100
+		Step.volume_db = round(((velocity.length() / maxSpeed) * 15) - 30)
 		if sprite.speed_scale == 0 :
 			sprite.frame = 0
 
@@ -62,29 +63,21 @@ func exchangeTileInfo(node : Unit):
 	lastSeenTile.merge(nodeTileInfo)
 
 func squadLogic(node : SUBRFL48) :
-	
 	if node != self and leader != node :
-		
 		#print(self.name," considering joining ", node.name, "'s squad, ", node.name, "'s isLeader : ", node.isLeader,", inSquad : ", node.inSquad)
-		
-		match node.isLeader :
-			true : 
-				if inSquad :
-					if isLeader == false :
-						if leader.followers.size() + 1 < node.followers.size() + 1 : joinSquad(node) 
-					#they are a leader, I am not a leader, I am in a squad, and their squad has more than mine
-				else : 
-					node.exchangeTileInfo(self)
-					joinSquad(node) 
-				#they are a leader, and I am not in a squad
-			false : 
-				match node.inSquad :
-					true : squadLogic(node.getLeader())
-					#they are not a leader, and they are in a squad
-					false :  if inSquad == false : 
-						node.exchangeTileInfo(self)
-						joinSquad(node)
-					#they are not a leader, and they are not in a squad, and I am not in a squad
+		match [node.isLeader, node.inSquad, inSquad] :
+			[true, _, true] : 
+				if inSquad and isLeader and (leader.followers.size() + 1 < node.followers.size() + 1) : 
+					joinSquad(node)
+			[true, _, false] :
+				node.exchangeTileInfo(self)
+				joinSquad(node)
+				
+			[false, true, _] : 
+				squadLogic(node.getLeader())
+			[false, false, false] :
+				node.exchangeTileInfo(self)
+				joinSquad(node)
 
 func joinSquad(node : SUBRFL48) :
 	
@@ -141,50 +134,44 @@ var avoidenceVelocity : Vector2 = Vector2.ZERO
 
 func actionQuery() :
 	
-	if leader == null : leaveSquad()
-	
-	match inSquad :
-		false : #alone logic
-			pass
-		true : 
-			match isLeader :
-				false : #follower logic, probably ask leader
-					lastSeenTile = leader.lastSeenTile
-					var leaderPos : Vector2 = leader.global_position
-					if reachable(leaderPos) == false :
-						leaveSquad()
-					else :
-						var myPlace = leader.followers.find(self)
-						var tarPos : Vector2
-						if myPlace == 0 : tarPos = leaderPos
-						else : tarPos = leader.followers[myPlace - 1].global_position
-						Selector.inFrontPos = tarPos
-						nav.target_position = tarPos
-						nav.avoidance_priority = (1.0 / leader.followers.size()) * (myPlace + 1)
-				true : #leader Logic
-					pass
-					#var tileToGoTo = getTileToSearch()
-					#nav.set_target_position(map.map_to_local(tileToGoTo))
+	if leader == null : 
+		leaveSquad()
+	else :
+		lastSeenTile = leader.lastSeenTile
+		var leaderPos : Vector2 = leader.global_position
+		match [inSquad and not isLeader, reachable(leaderPos)] :	
+			[true, true] :
+				var myPlace = leader.followers.find(self)
+				var tarPos : Vector2
+				if myPlace == 0 : 
+					tarPos = leaderPos
+				else : 
+					tarPos = leader.followers[myPlace - 1].global_position # this line crashes sometimes when a mine kills goobers
+				Selector.inFrontPos = tarPos
+				nav.target_position = tarPos
+				nav.avoidance_priority = (1.0 / leader.followers.size()) * (myPlace + 1)
+			[true, false] :
+				leaveSquad()
+
 
 func move(delta) :
 	var target = nav.get_next_path_position()
 	#print(nav.distance_to_target())
 	
-	const randoTurn = 0.001
+	const RANDO_TURN = 0.001
 	
 	direction = lerp(direction, position.direction_to(target), turnSpeed * delta).normalized()
-	direction = direction + Vector2(randf_range(-randoTurn, randoTurn), randf_range(-randoTurn, randoTurn))
-	flashlight.rotation = direction.angle() - PI/2
+	direction += Vector2(randf_range(-RANDO_TURN, RANDO_TURN), randf_range(-RANDO_TURN, RANDO_TURN))
+	flashlight.rotation = direction.angle() - PI / 2
 	velocity = velocity.slerp((direction * maxSpeed) + (avoidenceVelocity * 0.75), acceleration * delta)
 	
-	if move_and_slide() : 
+	if move_and_slide() :
 		var collision = get_last_slide_collision()
-		
-		if collision.get_collider() is PhysicsBody2D :
-			if collision.get_collider() is CharacterBody2D :
-					collision.get_collider().velocity + ( velocity * delta) 
-			if collision.get_collider() is RigidBody2D :
-					collision.get_collider().apply_force(velocity * delta)
+		match collision.get_collider() :
+			CharacterBody2D :
+				collision.get_collider().velocity + ( velocity * delta) 
+			RigidBody2D :
+				collision.get_collider().apply_force(velocity * delta)
 
 func idle(delta) :
 	
@@ -223,15 +210,17 @@ func _on_idle_timer_timeout():
 	State = States.Unidle
 
 func _on_animated_sprite_2d_frame_changed():
-	if sprite.animation.contains("Walk") :
-		if sprite.frame == 16 or sprite.frame == 0 :
-			Step.pitch_scale = (velocity.length()/maxSpeed * randf_range(0.9, 1.1))
-			Step.pitch_scale = clamp(Step.pitch_scale, 0.75, 2)
-			Step.play()
+	var on_walking_animation = sprite.animation.contains("Walk")
+	var on_step_frame = sprite.frame == 16 or sprite.frame == 0
+	
+	if on_walking_animation and on_step_frame :
+		Step.pitch_scale = (velocity.length() / maxSpeed * randf_range(0.9, 1.1))
+		Step.pitch_scale = clamp(Step.pitch_scale, 0.75, 2)
+		Step.play()
 
 func _on_sub_navigation_navigation_finished():
 	
-	if isLeader or (inSquad == false) :
+	if isLeader or not inSquad :
 		var currentTile = map.local_to_map(nav.target_position)
 		trySeeTile(currentTile)
 		
@@ -242,7 +231,7 @@ func _on_sub_navigation_navigation_finished():
 
 func _on_test_timeout():
 	
-	if isLeader or (inSquad == false) :
+	if isLeader or not inSquad :
 		#print("begin")
 		var tileToGoTo = getTileToSearch()
 		nav.set_target_position(map.map_to_local(tileToGoTo))
