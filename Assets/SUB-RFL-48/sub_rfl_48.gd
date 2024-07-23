@@ -5,13 +5,23 @@ class_name SUBRFL48
 @onready var sprite : AnimatedSprite2D = $SUBSprite
 @onready var flashlight : PointLight2D = $Flashlight
 @onready var Step : AudioStreamPlayer2D = $Step
+@onready var Fire : AudioStreamPlayer2D = $Fire
 @onready var Selector : Sprite2D = $"Self Selector"
 @onready var testTimer : Timer = $Test
+@onready var gunModule : GunModule = $GunModule
+@onready var fireArea : Area2D = $FireArea
 
 var direction : Vector2 = Vector2(0, 1)
 @export var maxSpeed : int = 200
+var speed : int = 200
 @export var acceleration : float = 5
 @export var turnSpeed : float = 6
+@export var preferedSquadSize : int = 4
+
+@export_subgroup("SMG")
+@export var DMG : int = 2
+@export var AP : int = 3
+@export var inaccuracy : float = 5
 
 enum States {
 Unidle = 0,
@@ -32,30 +42,58 @@ func _init():
 
 func _physics_process(delta):
 	
+	speed = maxSpeed * clamp((float(HP)/float(maxHP)), 0.5, 1)
+	if isLeader == false and inSquad and leader != null : speed = getLeader().speed
+	 
+	aggroList.clear()
+	
 	for thing in checkVision() :
 		if thing is Unit :
-			if  thing.team != team : pass
+			if  thing.team != team : 
+				aggroList.append(thing)
 			elif thing is SUBRFL48 : squadLogic(thing)
 	
+	if aggroList.size() > 0 : State = States.Shoot
 	if State != States.Idle : actionQuery()
 	
-	velocity = velocity.slerp(Vector2.ZERO, delta)
+	velocity = velocity.lerp(Vector2.ZERO, delta)
 	
 	match State :
 		States.Idle : idle(delta)
 		States.Move : move(delta)
-		States.Shoot : pass
+		States.Shoot : shoot(delta)
 	
-	nav.max_speed = maxSpeed
+	flashlight.rotation = direction.angle() - PI/2
+	
+	if move_and_slide() : 
+		var collision = get_last_slide_collision()
+		
+		if collision.get_collider() is PhysicsBody2D :
+			if collision.get_collider() is CharacterBody2D :
+					collision.get_collider().velocity + ( velocity * delta) 
+			if collision.get_collider() is RigidBody2D :
+					collision.get_collider().apply_force(velocity * delta)
+	
+	nav.max_speed = speed
 	
 	if sprite.speed_scale != 0 and sprite.is_playing() == false :
 		sprite.play()
 	
 	if cAni == "Walk" :
 		sprite.speed_scale = velocity.length()/100
-		Step.volume_db = round(((velocity.length()/maxSpeed) * 15) - 30)
+		Step.volume_db = round(((velocity.length()/speed) * 15) - 30)
 		if sprite.speed_scale == 0 :
 			sprite.frame = 0
+	if cAni == "Shoot" :
+		if sprite.is_playing() == false : sprite.play()
+		if fireArea.get_overlapping_bodies().any(allies) : sprite.speed_scale = 0
+		else : sprite.speed_scale = 1
+
+func allies(node) :
+	if node != self :
+		if node is Unit and node.team == team :
+			return true
+	return false
 
 func exchangeTileInfo(node : Unit):
 	var nodeTileInfo = node.lastSeenTile
@@ -63,7 +101,7 @@ func exchangeTileInfo(node : Unit):
 
 func squadLogic(node : SUBRFL48) :
 	
-	if node != self and leader != node :
+	if node != null and node != self and leader != node :
 		
 		#print(self.name," considering joining ", node.name, "'s squad, ", node.name, "'s isLeader : ", node.isLeader,", inSquad : ", node.inSquad)
 		
@@ -104,14 +142,13 @@ func joinSquad(node : SUBRFL48) :
 				node.followers.append(follower)
 		followers = []
 	
-	print(self.name," has joined ", node.name, "'s squad")
-	#print(node.name, "'s squad : ", node.followers)
+	#print(self.name," has joined ", node.name, "'s squad")
 
 func leaveSquad() :
 	
 	if leader :
 		for follower in followers : follower.leaveSquad()
-	elif inSquad and leader != null :
+	if inSquad and leader != null :
 		leader.followers.erase(self)
 		if leader.followers.size() == 0 :
 			leader.leaveSquad()
@@ -121,7 +158,7 @@ func leaveSquad() :
 func getLeader():
 	if leader != null : return leader
 	else : 
-		print(self.name, " : ERROR! tried to get leader but I have no leader")
+		#print(self.name, " : ERROR! tried to get leader but I have no leader")
 		inSquad = false
 		isLeader = false
 		return null
@@ -134,8 +171,6 @@ var inSquad : bool = false
 var isLeader : bool = false
 var leader : SUBRFL48 = null
 var followers : Array[SUBRFL48] = []
-
-@export var preferedSquadSize : int = 4
 
 var avoidenceVelocity : Vector2 = Vector2.ZERO
 
@@ -157,7 +192,7 @@ func actionQuery() :
 						var myPlace = leader.followers.find(self)
 						var tarPos : Vector2
 						if myPlace == 0 : tarPos = leaderPos
-						else : tarPos = leader.followers[myPlace - 1].global_position
+						elif leader.followers[myPlace - 1] != null : tarPos = leader.followers[myPlace - 1].global_position
 						Selector.inFrontPos = tarPos
 						nav.target_position = tarPos
 						nav.avoidance_priority = (1.0 / leader.followers.size()) * (myPlace + 1)
@@ -174,24 +209,24 @@ func move(delta) :
 	
 	direction = lerp(direction, position.direction_to(target), turnSpeed * delta).normalized()
 	direction = direction + Vector2(randf_range(-randoTurn, randoTurn), randf_range(-randoTurn, randoTurn))
-	flashlight.rotation = direction.angle() - PI/2
-	velocity = velocity.slerp((direction * maxSpeed) + (avoidenceVelocity * 0.75), acceleration * delta)
-	
-	if move_and_slide() : 
-		var collision = get_last_slide_collision()
-		
-		if collision.get_collider() is PhysicsBody2D :
-			if collision.get_collider() is CharacterBody2D :
-					collision.get_collider().velocity + ( velocity * delta) 
-			if collision.get_collider() is RigidBody2D :
-					collision.get_collider().apply_force(velocity * delta)
+	velocity = velocity.lerp((direction * speed) + (avoidenceVelocity * 0.75), acceleration * delta)
 
 func idle(delta) :
-	
-	velocity = velocity.slerp(Vector2.ZERO, acceleration * delta)
-	move_and_slide()
+	velocity = velocity.lerp(Vector2.ZERO, acceleration * delta)
+
+func shoot(delta):
+	cAni = "Shoot"
+	if aggroList.is_empty() : 
+		aggroTarget = null
+		goIdle()
+	else :
+		aggroTarget = aggroList[0]
+		direction = lerp(direction, position.direction_to(aggroTarget.position), turnSpeed * delta).normalized()
+		if sprite.speed_scale == 0 : velocity.lerp((aggroTarget.position.direction_to(position) * speed), acceleration * delta)
 
 func goIdle() :
+	#print("Going Idle")
+	cAni = "Walk"
 	State = States.Idle
 	var timer : Timer = $IdleTimer
 	timer.wait_time = randf_range(3, 6)
@@ -220,14 +255,16 @@ func roundDirection(toRound : Vector2) :
 	return Vector2(round(toRound.x), round(toRound.y)).normalized()
 
 func _on_idle_timer_timeout():
-	State = States.Unidle
+	State = States.Move
 
 func _on_animated_sprite_2d_frame_changed():
 	if sprite.animation.contains("Walk") :
 		if sprite.frame == 16 or sprite.frame == 0 :
-			Step.pitch_scale = (velocity.length()/maxSpeed * randf_range(0.9, 1.1))
-			Step.pitch_scale = clamp(Step.pitch_scale, 0.75, 2)
 			Step.play()
+	if sprite.animation.contains("Shoot") :
+		if sprite.frame == 1 :
+			Fire.play()
+			gunModule.fire(DMG, AP, direction, inaccuracy)
 
 func _on_sub_navigation_navigation_finished():
 	

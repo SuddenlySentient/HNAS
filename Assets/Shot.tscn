@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://beudw2414os64"]
+
+[ext_resource type="Script" path="res://Assets/Shot.gd" id="1_i4uir"]
+[ext_resource type="Texture2D" uid="uid://bxkjekiyhci77" path="res://Assets/SUB-RFL-48/SMGShot.png" id="2_57hvw"]
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/CircleLight.png" id="2_rmboh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3f514"]
+radius = 8.0
+
+[node name="Shot" type="RigidBody2D"]
+collision_layer = 0
+mass = 0.1
+gravity_scale = 0.0
+center_of_mass_mode = 1
+center_of_mass = Vector2(0, -64)
+lock_rotation = true
+max_contacts_reported = 1
+contact_monitor = true
+linear_damp_mode = 1
+script = ExtResource("1_i4uir")
+speed = 8192.0
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(0.75, 1)
+color = Color(1, 0.85098, 0.698039, 1)
+energy = 0.6
+shadow_enabled = true
+texture = ExtResource("2_rmboh")
+texture_scale = 6.0
+
+[node name="Shot" type="Sprite2D" parent="."]
+self_modulate = Color(5, 5, 5, 1)
+z_index = 2
+texture = ExtResource("2_57hvw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+scale = Vector2(1, 6)
+shape = SubResource("CircleShape2D_3f514")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

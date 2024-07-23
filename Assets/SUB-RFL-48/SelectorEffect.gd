@@ -16,7 +16,7 @@ func _physics_process(delta):
 		var length = global_position.distance_to(inFrontPos)/64
 		line.scale.y = length
 		line.rotation = global_position.angle_to_point(inFrontPos) - PI/2
-		LeaderSelector.position = SUB.leader.position #+ Vector2(
+		LeaderSelector.position = SUB.getLeader().position #+ Vector2(
 			#randf_range(-SUB.leader.followers.size(), SUB.leader.followers.size()), 
 			#randf_range(-SUB.leader.followers.size(), SUB.leader.followers.size())
 			#)

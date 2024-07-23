@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://6lg6q0wyhlag"]
+[gd_scene load_steps=21 format=3 uid="uid://6lg6q0wyhlag"]
 
 [ext_resource type="Script" path="res://Assets/SUB-RFL-48/sub_rfl_48.gd" id="1_evgs4"]
 [ext_resource type="SpriteFrames" uid="uid://dixx16d0v7joh" path="res://Assets/SUB-RFL-48/Frames.tres" id="1_mp564"]
+[ext_resource type="PackedScene" uid="uid://gtu06q71hu4e" path="res://Assets/gun_module.tscn" id="2_oyipb"]
 [ext_resource type="Texture2D" uid="uid://dnykk038hfxt7" path="res://Assets/UnitSelector.png" id="2_yrspc"]
 [ext_resource type="Texture2D" uid="uid://0eseirpqcd5k" path="res://Assets/Line.png" id="3_0dplg"]
 [ext_resource type="Script" path="res://Assets/SUB-RFL-48/SelectorEffect.gd" id="3_mhsra"]
@@ -13,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://cy2gq1gqxvnkc" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_04.wav" id="11_v5mkf"]
 [ext_resource type="AudioStream" uid="uid://dooomnqyuegtt" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_05.wav" id="12_uolbo"]
 [ext_resource type="AudioStream" uid="uid://cevrlcgyxnd8y" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_06.wav" id="13_d4pxe"]
+[ext_resource type="AudioStream" uid="uid://bm7cw0hectbjw" path="res://Assets/SUB-RFL-48/Plasma_SMG.wav" id="14_1qt1s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_whhbl"]
 radius = 32.0
@@ -41,14 +43,23 @@ stream_4/weight = 1.0
 stream_5/stream = ExtResource("13_d4pxe")
 stream_5/weight = 1.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_oavmi"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("14_1qt1s")
+stream_0/weight = 1.0
+
 [node name="SUB-RFL-48-000" type="CharacterBody2D"]
 y_sort_enabled = true
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_evgs4")
+acceleration = 60.0
 team = "Facility"
 maxHP = 12
 ARM = 2
+
+[node name="GunModule" parent="." instance=ExtResource("2_oyipb")]
 
 [node name="Test" type="Timer" parent="."]
 wait_time = 2.0
@@ -83,7 +94,7 @@ texture = ExtResource("2_yrspc")
 z_index = 1
 texture_filter = 1
 sprite_frames = ExtResource("1_mp564")
-animation = &"WalkDown"
+animation = &"ShootDown"
 offset = Vector2(0, -32)
 
 [node name="SUBCollision" type="CollisionShape2D" parent="."]
@@ -97,9 +108,8 @@ avoidance_enabled = true
 radius = 32.0
 neighbor_distance = 128.0
 time_horizon_agents = 2.0
-debug_enabled = true
 debug_use_custom = true
-debug_path_custom_color = Color(1, 0.25098, 0.25098, 1)
+debug_path_custom_color = Color(4, 1, 1, 1)
 debug_path_custom_point_size = 16.0
 debug_path_custom_line_width = 4.0
 
@@ -139,6 +149,20 @@ debug_color = Color(1, 0.376471, 0.25098, 0.0627451)
 stream = SubResource("AudioStreamRandomizer_isfrd")
 max_distance = 1024.0
 max_polyphony = 4
+
+[node name="Fire" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_oavmi")
+volume_db = -5.0
+pitch_scale = 0.5
+max_distance = 4096.0
+attenuation = 2.0
+max_polyphony = 4
+
+[node name="FireArea" type="Area2D" parent="."]
+monitorable = false
+
+[node name="FireCollision" type="CollisionPolygon2D" parent="FireArea"]
+polygon = PackedVector2Array(0, 0, 192, 2048, -192, 2048)
 
 [connection signal="timeout" from="Test" to="." method="_on_test_timeout"]
 [connection signal="frame_changed" from="SUBSprite" to="." method="_on_animated_sprite_2d_frame_changed"]

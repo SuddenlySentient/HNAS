@@ -3,6 +3,8 @@ extends CharacterBody2D
 class_name Unit
 
 @export var team : String = "Unalligned"
+var aggroTarget : Unit
+var aggroList : Array[Unit] = []
 
 var vision : Area2D
 func checkVision():
@@ -29,9 +31,9 @@ func damage(DMG : int, AP : int) :
 	var DMGDealt = DMG - reduction
 	HP -= DMGDealt
 	
-	#print(DMGDealt)
-	
 	if HP <= 0 : die()
+	
+	return DMGDealt
 
 func die() :
 	queue_free()

@@ -65,13 +65,13 @@ func explode():
 	explosionSprite.show()
 	explosionSprite.play()
 	ExplosionParticles.restart()
-	for Unit in explosionArea.get_overlapping_bodies() :
-		var falloff = sqrt(1.0 - (position.distance_to(Unit.position)/384))
-		print("Falloff : ", falloff)
+	for unit in explosionArea.get_overlapping_bodies() :
+		var falloff = sqrt(1.0 - (position.distance_to(unit.position)/384))
+		#print("Falloff : ", falloff)
 		var DMGDealt = round(DMG * falloff)
 		var APDealt = round(AP * falloff)
-		print("DMG : ", DMGDealt, " AP : ", APDealt)
-		Unit.damage(DMGDealt, APDealt)
+		#print("DMG : ", DMGDealt, " AP : ", APDealt)
+		unit.damage(DMGDealt, APDealt)
 	destroyTimer.start()
 	explosionLight.show()
 	mineSprite.hide()
