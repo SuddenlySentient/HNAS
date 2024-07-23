@@ -1,0 +1,147 @@
+[gd_scene load_steps=18 format=3 uid="uid://6lg6q0wyhlag"]
+
+[ext_resource type="Script" path="res://Assets/SUB-RFL-48/sub_rfl_48.gd" id="1_evgs4"]
+[ext_resource type="SpriteFrames" uid="uid://dixx16d0v7joh" path="res://Assets/SUB-RFL-48/Frames.tres" id="1_mp564"]
+[ext_resource type="Texture2D" uid="uid://dnykk038hfxt7" path="res://Assets/UnitSelector.png" id="2_yrspc"]
+[ext_resource type="Texture2D" uid="uid://0eseirpqcd5k" path="res://Assets/Line.png" id="3_0dplg"]
+[ext_resource type="Script" path="res://Assets/SUB-RFL-48/SelectorEffect.gd" id="3_mhsra"]
+[ext_resource type="Texture2D" uid="uid://dr11atb80kaht" path="res://Assets/SUB-RFL-48/Flashlight.png" id="3_rjy8v"]
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/CircleLight.png" id="6_elam6"]
+[ext_resource type="AudioStream" uid="uid://is867bturdyx" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_01.wav" id="8_cu81f"]
+[ext_resource type="AudioStream" uid="uid://rhtoivdcpvx5" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_02.wav" id="9_7x3it"]
+[ext_resource type="AudioStream" uid="uid://cimsf8ydh2tmn" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_03.wav" id="10_2wk2a"]
+[ext_resource type="AudioStream" uid="uid://cy2gq1gqxvnkc" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_04.wav" id="11_v5mkf"]
+[ext_resource type="AudioStream" uid="uid://dooomnqyuegtt" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_05.wav" id="12_uolbo"]
+[ext_resource type="AudioStream" uid="uid://cevrlcgyxnd8y" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_06.wav" id="13_d4pxe"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_whhbl"]
+radius = 32.0
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_81ks5"]
+cull_mode = 2
+polygon = PackedVector2Array(-16, -16, -22, 0, -16, 16, 0, 22, 16, 16, 22, 0, 16, -16, 0, -22)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wi45q"]
+radius = 1536.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_isfrd"]
+playback_mode = 1
+random_volume_offset_db = 2.5
+streams_count = 6
+stream_0/stream = ExtResource("8_cu81f")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("9_7x3it")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("10_2wk2a")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("11_v5mkf")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("12_uolbo")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("13_d4pxe")
+stream_5/weight = 1.0
+
+[node name="SUB-RFL-48-000" type="CharacterBody2D"]
+y_sort_enabled = true
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_evgs4")
+team = "Facility"
+maxHP = 12
+ARM = 2
+
+[node name="Test" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="Self Selector" type="Sprite2D" parent="."]
+show_behind_parent = true
+light_mask = 0
+scale = Vector2(5, 5)
+texture = ExtResource("2_yrspc")
+script = ExtResource("3_mhsra")
+
+[node name="Line" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(1, 1, 1, 0.501961)
+show_behind_parent = true
+light_mask = 0
+z_index = 4
+scale = Vector2(5, 5)
+texture = ExtResource("3_0dplg")
+offset = Vector2(0, 32)
+
+[node name="Leader Selector" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(1, 1, 1, 0.25098)
+top_level = true
+light_mask = 0
+scale = Vector2(5, 5)
+texture = ExtResource("2_yrspc")
+
+[node name="SUBSprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+sprite_frames = ExtResource("1_mp564")
+animation = &"WalkDown"
+offset = Vector2(0, -32)
+
+[node name="SUBCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_whhbl")
+
+[node name="SUBNavigation" type="NavigationAgent2D" parent="."]
+path_desired_distance = 64.0
+target_desired_distance = 64.0
+path_max_distance = 64.0
+avoidance_enabled = true
+radius = 32.0
+neighbor_distance = 128.0
+time_horizon_agents = 2.0
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(1, 0.25098, 0.25098, 1)
+debug_path_custom_point_size = 16.0
+debug_path_custom_line_width = 4.0
+
+[node name="IdleTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_81ks5")
+
+[node name="CircleLight" type="PointLight2D" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+color = Color(0.752941, 1, 1, 1)
+energy = 0.6
+shadow_enabled = true
+texture = ExtResource("6_elam6")
+
+[node name="Flashlight" type="PointLight2D" parent="."]
+texture_filter = 1
+scale = Vector2(3, 6)
+color = Color(0.752941, 1, 1, 1)
+energy = 0.8
+shadow_enabled = true
+texture = ExtResource("3_rjy8v")
+offset = Vector2(0, 128)
+
+[node name="Vision" type="Area2D" parent="Flashlight"]
+scale = Vector2(0.333333, 0.166667)
+
+[node name="Vision Shape" type="CollisionShape2D" parent="Flashlight/Vision"]
+visible = false
+position = Vector2(0, 768)
+shape = SubResource("CircleShape2D_wi45q")
+debug_color = Color(1, 0.376471, 0.25098, 0.0627451)
+
+[node name="Step" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_isfrd")
+max_distance = 1024.0
+max_polyphony = 4
+
+[connection signal="timeout" from="Test" to="." method="_on_test_timeout"]
+[connection signal="frame_changed" from="SUBSprite" to="." method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="navigation_finished" from="SUBNavigation" to="." method="_on_sub_navigation_navigation_finished"]
+[connection signal="velocity_computed" from="SUBNavigation" to="." method="_on_sub_navigation_velocity_computed"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_idle_timer_timeout"]
