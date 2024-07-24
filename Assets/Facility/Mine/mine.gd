@@ -1,4 +1,6 @@
+@icon("res://Assets/Facility/Mine/MineIcon.png")
 extends RigidBody2D
+class_name Mine
 
 @onready var beep : AudioStreamPlayer2D = $Beep
 @onready var buzzer : AudioStreamPlayer2D = $Buzzer
@@ -18,8 +20,9 @@ extends RigidBody2D
 @export var DMG : int = 16
 @export var AP : int = 5
 
-var steppedOff : bool = false
+signal exploded
 var detonating : bool = false
+var steppedOff : bool = false
 
 func _init():
 	await ready
@@ -59,6 +62,7 @@ func _on_explostion_timer_timeout():
 	explode()
 
 func explode():
+	emit_signal("exploded")
 	timer.stop()
 	explosionSound.pitch_scale = randf_range(0.75, 1.25)
 	explosionSound.play()

@@ -58,7 +58,7 @@ script = ExtResource("1_evgs4")
 acceleration = 60.0
 AP = 2
 inaccuracy = 10.0
-recoil = 1.0
+recoil = 0.125
 team = "Facility"
 maxHP = 16
 ARM = 2
@@ -128,7 +128,6 @@ texture_filter = 1
 scale = Vector2(4, 4)
 color = Color(0.752941, 1, 1, 1)
 energy = 0.6
-shadow_enabled = true
 texture = ExtResource("6_elam6")
 
 [node name="Flashlight" type="PointLight2D" parent="."]
@@ -145,7 +144,7 @@ scale = Vector2(0.333333, 0.166667)
 monitorable = false
 
 [node name="FireCollision" type="CollisionPolygon2D" parent="Flashlight/FireArea"]
-polygon = PackedVector2Array(0, 0, 512, 2048, -512, 2048)
+polygon = PackedVector2Array(0, 0, 640, 2048, -640, 2048)
 
 [node name="Vision" type="Area2D" parent="Flashlight"]
 scale = Vector2(0.333333, 0.166667)

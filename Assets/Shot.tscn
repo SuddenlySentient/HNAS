@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://c61q1tghqyf03" path="res://Assets/Sound/ShotHit/sharp_impact_01.wav" id="9_5brm0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3f514"]
-radius = 8.0
+radius = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qlkel"]
 random_pitch = 1.5
@@ -57,7 +57,6 @@ z_index = 2
 texture = ExtResource("2_57hvw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(1, 6)
 shape = SubResource("CircleShape2D_3f514")
 
 [node name="Impact" type="AudioStreamPlayer2D" parent="."]

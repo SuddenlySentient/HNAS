@@ -25,7 +25,7 @@ var speed : int = 200
 @export var AP : int = 3
 @export var inaccuracy : float = 5
 @export var recoil : float = 5
-var revved : float = 0.25
+var revved : float = 0.5
 
 enum States {
 Unidle = 0,
@@ -47,9 +47,6 @@ func _init():
 func _physics_process(delta):
 	
 	if voice.playing == false : voice.tryVoice()
-	
-	speed = maxSpeed * clamp((float(HP)/float(maxHP)), 0.5, 1)
-	if isLeader == false and inSquad and leader != null : speed = getLeader().speed
 	 
 	aggroList.clear()
 	if inSquad and !isLeader : aggroList.append_array(getLeader().aggroList)
@@ -80,8 +77,6 @@ func _physics_process(delta):
 					collision.get_collider().velocity + ( velocity * delta) 
 			if collision.get_collider() is RigidBody2D :
 					collision.get_collider().apply_force(velocity * delta)
-	
-	nav.max_speed = speed
 	
 	if sprite.speed_scale != 0 and sprite.is_playing() == false :
 		sprite.play()
@@ -154,13 +149,14 @@ func joinSquad(node : SUBRFL48) :
 
 func leaveSquad() :
 	
-	if leader :
+	if isLeader :
 		for follower in followers : follower.leaveSquad()
 	if inSquad and leader != null :
 		leader.followers.erase(self)
 		if leader.followers.size() == 0 :
 			leader.leaveSquad()
 	leader = null
+	isLeader = false
 	inSquad = false
 
 func getLeader():
@@ -184,7 +180,7 @@ var avoidenceVelocity : Vector2 = Vector2.ZERO
 
 func actionQuery() :
 	
-	if leader == null : leaveSquad()
+	#if leader == null : leaveSquad()
 	
 	match inSquad :
 		false : #alone logic
@@ -201,6 +197,9 @@ func actionQuery() :
 						var tarPos : Vector2
 						if myPlace == 0 : tarPos = leaderPos
 						elif leader.followers[myPlace - 1] != null : tarPos = leader.followers[myPlace - 1].global_position
+						if tarPos.distance_to(position) < 256 : speed = getLeader().speed
+						else : speed = maxSpeed * clamp((float(HP)/float(maxHP)), 0.5, 1)
+						nav.max_speed = speed
 						Selector.inFrontPos = tarPos
 						nav.target_position = tarPos
 						nav.avoidance_priority = (1.0 / leader.followers.size()) * (myPlace + 1)
@@ -227,11 +226,11 @@ func shoot(delta):
 	sprite.speed_scale = 1 * revved
 	if aggroList.is_empty() : 
 		aggroTarget = null
-		revved = 0.25
+		revved = 0.5
 		goIdle(0, 3)
 	else :
 		revved += delta / 8
-		revved = clampf(revved, 0.25, 2)
+		revved = clampf(revved, 0.5, 2)
 		$Fire.pitch_scale = revved / 2
 		aggroTarget = aggroList[0]
 		nav.target_position = aggroTarget.position
@@ -249,6 +248,10 @@ func goIdle(lowerRange : float = 3, UpperRange : float = 6) :
 var cAni : String = "Walk"
 
 func _process(_delta): #if flashlight bugs out, remove the underscore
+	
+	if inSquad and isLeader == false : flashlight.enabled = false
+	else : flashlight.enabled = true
+	flashlight.energy = (flashlight.energy + randf_range(float(HP)/float(maxHP), 0.8))/2
 	
 	var directionString : String = "Down"
 	var altDirection = Vector2(round(direction.x), round(direction.y))
