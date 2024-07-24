@@ -9,7 +9,9 @@ class_name SUBRFL48
 @onready var Selector : Sprite2D = $"Self Selector"
 @onready var testTimer : Timer = $Test
 @onready var gunModule : GunModule = $GunModule
-@onready var fireArea : Area2D = $FireArea
+@onready var fireArea : Area2D = $Flashlight/FireArea
+@onready var test : Timer = $Test
+@onready var voice : AudioStreamPlayer2D = $Voice
 
 var direction : Vector2 = Vector2(0, 1)
 @export var maxSpeed : int = 200
@@ -22,6 +24,8 @@ var speed : int = 200
 @export var DMG : int = 2
 @export var AP : int = 3
 @export var inaccuracy : float = 5
+@export var recoil : float = 5
+var revved : float = 0.25
 
 enum States {
 Unidle = 0,
@@ -31,7 +35,7 @@ Shoot = 3
 }
 var State = States.Move
 
-@onready var test : Timer =$Test
+
 
 func _init():
 	await ready
@@ -42,15 +46,18 @@ func _init():
 
 func _physics_process(delta):
 	
+	if voice.playing == false : voice.tryVoice()
+	
 	speed = maxSpeed * clamp((float(HP)/float(maxHP)), 0.5, 1)
 	if isLeader == false and inSquad and leader != null : speed = getLeader().speed
 	 
 	aggroList.clear()
+	if inSquad and !isLeader : aggroList.append_array(getLeader().aggroList)
 	
 	for thing in checkVision() :
 		if thing is Unit :
 			if  thing.team != team : 
-				aggroList.append(thing)
+				if aggroList.has(thing) == false : aggroList.append(thing)
 			elif thing is SUBRFL48 : squadLogic(thing)
 	
 	if aggroList.size() > 0 : State = States.Shoot
@@ -86,8 +93,9 @@ func _physics_process(delta):
 			sprite.frame = 0
 	if cAni == "Shoot" :
 		if sprite.is_playing() == false : sprite.play()
-		if fireArea.get_overlapping_bodies().any(allies) : sprite.speed_scale = 0
-		else : sprite.speed_scale = 1
+		if fireArea.get_overlapping_bodies().any(allies) : 
+			sprite.speed_scale = 0
+			revved = 0.25
 
 func allies(node) :
 	if node != self :
@@ -161,7 +169,7 @@ func getLeader():
 		#print(self.name, " : ERROR! tried to get leader but I have no leader")
 		inSquad = false
 		isLeader = false
-		return null
+		return self
 
 func reachable(positionToTest : Vector2) : #finish this
 	
@@ -216,20 +224,26 @@ func idle(delta) :
 
 func shoot(delta):
 	cAni = "Shoot"
+	sprite.speed_scale = 1 * revved
 	if aggroList.is_empty() : 
 		aggroTarget = null
-		goIdle()
+		revved = 0.25
+		goIdle(0, 3)
 	else :
+		revved += delta / 8
+		revved = clampf(revved, 0.25, 2)
+		$Fire.pitch_scale = revved / 2
 		aggroTarget = aggroList[0]
+		nav.target_position = aggroTarget.position
 		direction = lerp(direction, position.direction_to(aggroTarget.position), turnSpeed * delta).normalized()
 		if sprite.speed_scale == 0 : velocity.lerp((aggroTarget.position.direction_to(position) * speed), acceleration * delta)
 
-func goIdle() :
+func goIdle(lowerRange : float = 3, UpperRange : float = 6) :
 	#print("Going Idle")
 	cAni = "Walk"
 	State = States.Idle
 	var timer : Timer = $IdleTimer
-	timer.wait_time = randf_range(3, 6)
+	timer.wait_time = randf_range(lowerRange, UpperRange)
 	timer.start()
 
 var cAni : String = "Walk"
@@ -264,7 +278,8 @@ func _on_animated_sprite_2d_frame_changed():
 	if sprite.animation.contains("Shoot") :
 		if sprite.frame == 1 :
 			Fire.play()
-			gunModule.fire(DMG, AP, direction, inaccuracy)
+			gunModule.fire(DMG, AP, direction, inaccuracy * revved)
+			velocity += (direction * -1) * recoil
 
 func _on_sub_navigation_navigation_finished():
 	

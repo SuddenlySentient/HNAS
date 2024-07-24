@@ -1,11 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://beudw2414os64"]
+[gd_scene load_steps=12 format=3 uid="uid://beudw2414os64"]
 
 [ext_resource type="Script" path="res://Assets/Shot.gd" id="1_i4uir"]
 [ext_resource type="Texture2D" uid="uid://bxkjekiyhci77" path="res://Assets/SUB-RFL-48/SMGShot.png" id="2_57hvw"]
 [ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/CircleLight.png" id="2_rmboh"]
+[ext_resource type="AudioStream" uid="uid://b3d8nyqetdtd2" path="res://Assets/Sound/ShotHit/sharp_impact_02.wav" id="4_ustme"]
+[ext_resource type="AudioStream" uid="uid://bwuqyprutwy8k" path="res://Assets/Sound/ShotHit/sharp_impact_03.wav" id="5_d14l3"]
+[ext_resource type="AudioStream" uid="uid://bfiel3f4xfij2" path="res://Assets/Sound/ShotHit/sharp_impact_04.wav" id="6_0sf3i"]
+[ext_resource type="AudioStream" uid="uid://dvtefxde3jesu" path="res://Assets/Sound/ShotHit/sharp_impact_05.wav" id="7_6s51d"]
+[ext_resource type="AudioStream" uid="uid://i8rg23h3slji" path="res://Assets/Sound/ShotHit/sharp_impact_06.wav" id="8_x0d00"]
+[ext_resource type="AudioStream" uid="uid://c61q1tghqyf03" path="res://Assets/Sound/ShotHit/sharp_impact_01.wav" id="9_5brm0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3f514"]
 radius = 8.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qlkel"]
+random_pitch = 1.5
+streams_count = 6
+stream_0/stream = ExtResource("4_ustme")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("5_d14l3")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("6_0sf3i")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("7_6s51d")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("8_x0d00")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("9_5brm0")
+stream_5/weight = 1.0
 
 [node name="Shot" type="RigidBody2D"]
 collision_layer = 0
@@ -14,11 +36,12 @@ gravity_scale = 0.0
 center_of_mass_mode = 1
 center_of_mass = Vector2(0, -64)
 lock_rotation = true
-max_contacts_reported = 1
+continuous_cd = 1
+max_contacts_reported = 64
 contact_monitor = true
 linear_damp_mode = 1
 script = ExtResource("1_i4uir")
-speed = 8192.0
+speed = 16384.0
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 scale = Vector2(0.75, 1)
@@ -29,13 +52,16 @@ texture = ExtResource("2_rmboh")
 texture_scale = 6.0
 
 [node name="Shot" type="Sprite2D" parent="."]
-self_modulate = Color(5, 5, 5, 1)
+self_modulate = Color(2, 2, 2, 1)
 z_index = 2
 texture = ExtResource("2_57hvw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 scale = Vector2(1, 6)
 shape = SubResource("CircleShape2D_3f514")
+
+[node name="Impact" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_qlkel")
+max_distance = 1024.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

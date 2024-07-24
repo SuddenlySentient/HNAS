@@ -20,8 +20,8 @@ func _physics_process(delta):
 			#randf_range(-SUB.leader.followers.size(), SUB.leader.followers.size()), 
 			#randf_range(-SUB.leader.followers.size(), SUB.leader.followers.size())
 			#)
-		var hueShift = 1.0 / SUB.leader.followers.size()
-		var place : int = SUB.leader.followers.find(SUB)
+		var hueShift = 1.0 / SUB.getLeader().followers.size()
+		var place : int = SUB.getLeader().followers.find(SUB)
 		var selfColor =  Color.from_hsv(hueShift * place, 0.4, 4, 0.8)
 		self_modulate = selfColor
 		var lineColor =  Color.from_hsv(hueShift * place, 0.6, 4, 0.4)

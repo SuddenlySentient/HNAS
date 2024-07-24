@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://6lg6q0wyhlag"]
+[gd_scene load_steps=22 format=3 uid="uid://6lg6q0wyhlag"]
 
 [ext_resource type="Script" path="res://Assets/SUB-RFL-48/sub_rfl_48.gd" id="1_evgs4"]
 [ext_resource type="SpriteFrames" uid="uid://dixx16d0v7joh" path="res://Assets/SUB-RFL-48/Frames.tres" id="1_mp564"]
@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://dooomnqyuegtt" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_05.wav" id="12_uolbo"]
 [ext_resource type="AudioStream" uid="uid://cevrlcgyxnd8y" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_06.wav" id="13_d4pxe"]
 [ext_resource type="AudioStream" uid="uid://bm7cw0hectbjw" path="res://Assets/SUB-RFL-48/Plasma_SMG.wav" id="14_1qt1s"]
+[ext_resource type="Script" path="res://Assets/SUB-RFL-48/Voice.gd" id="16_eixpd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_whhbl"]
 radius = 32.0
@@ -55,8 +56,11 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_evgs4")
 acceleration = 60.0
+AP = 2
+inaccuracy = 10.0
+recoil = 1.0
 team = "Facility"
-maxHP = 12
+maxHP = 16
 ARM = 2
 
 [node name="GunModule" parent="." instance=ExtResource("2_oyipb")]
@@ -136,6 +140,13 @@ shadow_enabled = true
 texture = ExtResource("3_rjy8v")
 offset = Vector2(0, 128)
 
+[node name="FireArea" type="Area2D" parent="Flashlight"]
+scale = Vector2(0.333333, 0.166667)
+monitorable = false
+
+[node name="FireCollision" type="CollisionPolygon2D" parent="Flashlight/FireArea"]
+polygon = PackedVector2Array(0, 0, 512, 2048, -512, 2048)
+
 [node name="Vision" type="Area2D" parent="Flashlight"]
 scale = Vector2(0.333333, 0.166667)
 
@@ -158,12 +169,12 @@ max_distance = 4096.0
 attenuation = 2.0
 max_polyphony = 4
 
-[node name="FireArea" type="Area2D" parent="."]
-monitorable = false
+[node name="Voice" type="AudioStreamPlayer2D" parent="."]
+max_distance = 2048.0
+attenuation = 2.0
+script = ExtResource("16_eixpd")
 
-[node name="FireCollision" type="CollisionPolygon2D" parent="FireArea"]
-polygon = PackedVector2Array(0, 0, 192, 2048, -192, 2048)
-
+[connection signal="hurt" from="." to="Voice" method="_on_subrfl_48000_hurt"]
 [connection signal="timeout" from="Test" to="." method="_on_test_timeout"]
 [connection signal="frame_changed" from="SUBSprite" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="navigation_finished" from="SUBNavigation" to="." method="_on_sub_navigation_navigation_finished"]

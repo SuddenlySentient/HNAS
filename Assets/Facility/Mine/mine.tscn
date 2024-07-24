@@ -213,6 +213,8 @@ max_contacts_reported = 1
 contact_monitor = true
 linear_damp = 5.0
 script = ExtResource("1_8fbj4")
+DMG = 20
+AP = 3
 
 [node name="ExplosionArea" type="Area2D" parent="."]
 monitorable = false

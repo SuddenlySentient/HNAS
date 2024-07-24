@@ -331,7 +331,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"ShootDownLeft",
-"speed": 30.0
+"speed": 45.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -348,7 +348,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"ShootDownRight",
-"speed": 30.0
+"speed": 45.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -365,7 +365,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"ShootLeft",
-"speed": 30.0
+"speed": 45.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -382,7 +382,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"ShootRight",
-"speed": 30.0
+"speed": 45.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -399,7 +399,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"ShootUp",
-"speed": 30.0
+"speed": 45.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -416,7 +416,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"ShootUpLeft",
-"speed": 30.0
+"speed": 45.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -433,7 +433,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"ShootUpRight",
-"speed": 30.0
+"speed": 45.0
 }, {
 "frames": [{
 "duration": 1.0,

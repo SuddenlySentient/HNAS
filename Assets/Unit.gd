@@ -6,6 +6,13 @@ class_name Unit
 var aggroTarget : Unit
 var aggroList : Array[Unit] = []
 
+signal hurt
+
+
+func _init():
+	await ready
+	HP = maxHP
+
 var vision : Area2D
 func checkVision():
 	var inRange = vision.get_overlapping_bodies()
@@ -25,14 +32,18 @@ func checkVision():
 var HP : int = maxHP
 @export_range(1, 100, 1, "or_greater") var ARM : int = 1
 
-func damage(DMG : int, AP : int) :
+func damage(DMG : int, AP : int, source : Node = null) :
 	
-	var reduction = clamp(ARM - AP, 0, ARM)
-	var DMGDealt = DMG - reduction
+	var reduction = clampf( float(AP) / float(ARM), 0, ARM)
+	var DMGDealt : int = DMG * reduction
+	
 	HP -= DMGDealt
 	
 	if HP <= 0 : die()
 	
+	if DMGDealt > 0 : emit_signal("hurt")
+	
+	#if DMGDealt > 0 : print(DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
 	return DMGDealt
 
 func die() :
@@ -73,7 +84,7 @@ func getTileNavigable(tileCoord : Vector2i):
 func getTileValue(tileCoord : Vector2i, searchValue : float = -1, distanceValue : float = 1):
 	
 	var searched = getLastSearched(tileCoord)
-	var distance = getNavDistanceTo(map.map_to_local(tileCoord))
+	var distance = getDistanceTo(map.map_to_local(tileCoord))
 	return (searched * searchValue) + (distance * distanceValue)
 
 func getTileToSearch():
@@ -93,12 +104,8 @@ func getTileToSearch():
 	
 	return theOne
 
-func getNavDistanceTo(targetPos):
-	var pastNav = nav.target_position
-	nav.target_position = targetPos
-	var value = nav.distance_to_target()
-	nav.target_position = pastNav
-	return value
+func getDistanceTo(targetPos):
+	return global_position.distance_to(targetPos)
 
 func newRandomPos(randDist : int = 1024) : 
 	return Vector2(randi_range(-randDist, randDist), randi_range(-randDist, randDist)) + position
