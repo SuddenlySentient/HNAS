@@ -74,7 +74,7 @@ func _physics_process(delta):
 		
 		if collision.get_collider() is PhysicsBody2D :
 			if collision.get_collider() is CharacterBody2D :
-					collision.get_collider().velocity + ( velocity * delta) 
+					collision.get_collider().velocity += ( velocity * delta) 
 			if collision.get_collider() is RigidBody2D :
 					collision.get_collider().apply_force(velocity * delta)
 	
@@ -168,8 +168,12 @@ func getLeader():
 		return self
 
 func reachable(positionToTest : Vector2) : #finish this
-	
-	return true
+	var oldNav = nav.target_position
+	nav.target_position = positionToTest
+	nav.get_next_path_position()
+	var value = nav.is_target_reachable()
+	nav.target_position = oldNav
+	return value
 
 var inSquad : bool = false
 var isLeader : bool = false
@@ -247,10 +251,14 @@ func goIdle(lowerRange : float = 3, UpperRange : float = 6) :
 
 var cAni : String = "Walk"
 
-func _process(_delta): #if flashlight bugs out, remove the underscore
+func _process(_delta):
 	
-	if inSquad and isLeader == false : flashlight.enabled = false
-	else : flashlight.enabled = true
+	if inSquad and isLeader == false : 
+		flashlight.enabled = false
+		flashlight.shadow_enabled = false
+	else : 
+		flashlight.enabled = true
+		flashlight.shadow_enabled = true
 	flashlight.energy = (flashlight.energy + randf_range(float(HP)/float(maxHP), 0.8))/2
 	
 	var directionString : String = "Down"

@@ -14,7 +14,7 @@ func tryVoice():
 		pitch_scale = randPitch
 	
 
-func _on_subrfl_48000_hurt():
+func _on_subrfl_48000_hurt(_DMG):
 	if randPitch == null : 
 		randPitch = randf_range(0.5, 1.5)
 		pitch_scale = randPitch

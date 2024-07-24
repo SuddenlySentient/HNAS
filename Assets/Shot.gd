@@ -9,7 +9,7 @@ var distance : float = 256
 
 @onready var sparks = load("res://Assets/SparkParticle.tscn")
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if linear_velocity.length() < (speed/16) : queue_free()
 	rotation = linear_velocity.angle() + PI/2
 	scale.y = linear_velocity.length() / speed

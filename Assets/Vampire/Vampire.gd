@@ -20,5 +20,7 @@ func damage(DMG : int, AP : int, source : Node = null) :
 	HP -= DMGDealt
 	
 	if HP <= 0 : die()
-	if DMGDealt > 0 : print(DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
+	if DMGDealt > 0 : 
+		emit_signal("hurt", DMGDealt)
+		print(DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
 	return DMGDealt

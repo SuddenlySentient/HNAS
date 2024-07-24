@@ -1,4 +1,4 @@
-[gd_scene load_steps=772 format=3 uid="uid://blriopxiv7rh2"]
+[gd_scene load_steps=800 format=3 uid="uid://blriopxiv7rh2"]
 
 [ext_resource type="Script" path="res://Assets/Vampire/Vampire.gd" id="1_f578t"]
 [ext_resource type="Texture2D" uid="uid://2lq0jjofqjct" path="res://Assets/Vampire/Frames/Walk/Down/0000.png" id="2_g7eyt"]
@@ -767,6 +767,34 @@
 [ext_resource type="Texture2D" uid="uid://bp4se76q5l881" path="res://Assets/Vampire/Frames/Attack/UpRight/0069.png" id="504_8nwyj"]
 [ext_resource type="Texture2D" uid="uid://demg3i1d2c52m" path="res://Assets/Vampire/Frames/Attack/UpRight/0070.png" id="505_sps3t"]
 [ext_resource type="Texture2D" uid="uid://danl3ygcqc21t" path="res://Assets/Vampire/Frames/Attack/UpRight/0071.png" id="506_yg4ny"]
+[ext_resource type="Texture2D" uid="uid://dbnqb8jjqbxv5" path="res://Assets/Vampire/Frames/Deflect/DownLeft/0000.png" id="511_mfs2h"]
+[ext_resource type="Texture2D" uid="uid://3rhslqs1qla1" path="res://Assets/Vampire/Frames/Deflect/DownLeft/0001.png" id="512_r6yyx"]
+[ext_resource type="Texture2D" uid="uid://7x3xur1o7cce" path="res://Assets/Vampire/Frames/Deflect/DownLeft/0002.png" id="513_a74y8"]
+[ext_resource type="Texture2D" uid="uid://46bci43bvgy0" path="res://Assets/Vampire/Frames/Deflect/DownLeft/0003.png" id="514_n4e73"]
+[ext_resource type="Texture2D" uid="uid://y7258crhenfo" path="res://Assets/Vampire/Frames/Deflect/DownRight/0000.png" id="515_ad3qc"]
+[ext_resource type="Texture2D" uid="uid://cowy0lqrve12n" path="res://Assets/Vampire/Frames/Deflect/DownRight/0001.png" id="516_3nbsr"]
+[ext_resource type="Texture2D" uid="uid://ddew2lt2jpe05" path="res://Assets/Vampire/Frames/Deflect/DownRight/0002.png" id="517_al3xr"]
+[ext_resource type="Texture2D" uid="uid://g4nnlv3uv3kq" path="res://Assets/Vampire/Frames/Deflect/DownRight/0003.png" id="518_kxwel"]
+[ext_resource type="Texture2D" uid="uid://clv6ftmurfs5h" path="res://Assets/Vampire/Frames/Deflect/Left/0000.png" id="519_vvm7g"]
+[ext_resource type="Texture2D" uid="uid://dqvrhsfbi3puj" path="res://Assets/Vampire/Frames/Deflect/Left/0001.png" id="520_jvfth"]
+[ext_resource type="Texture2D" uid="uid://2s8cwsddi4fv" path="res://Assets/Vampire/Frames/Deflect/Left/0002.png" id="521_mud76"]
+[ext_resource type="Texture2D" uid="uid://cwac1duuklbf5" path="res://Assets/Vampire/Frames/Deflect/Left/0003.png" id="522_wise8"]
+[ext_resource type="Texture2D" uid="uid://be2ccvk3q1siu" path="res://Assets/Vampire/Frames/Deflect/Right/0000.png" id="523_vmuq1"]
+[ext_resource type="Texture2D" uid="uid://edqhfgk84kji" path="res://Assets/Vampire/Frames/Deflect/Right/0001.png" id="524_ki3t7"]
+[ext_resource type="Texture2D" uid="uid://d2vtpj8nqn55v" path="res://Assets/Vampire/Frames/Deflect/Right/0002.png" id="525_koxmw"]
+[ext_resource type="Texture2D" uid="uid://dacn55e4msof2" path="res://Assets/Vampire/Frames/Deflect/Right/0003.png" id="526_nly7f"]
+[ext_resource type="Texture2D" uid="uid://bbahm7meu5fja" path="res://Assets/Vampire/Frames/Deflect/Up/0000.png" id="527_mox2v"]
+[ext_resource type="Texture2D" uid="uid://dq06l365qmk77" path="res://Assets/Vampire/Frames/Deflect/Up/0001.png" id="528_usib6"]
+[ext_resource type="Texture2D" uid="uid://dtcmedxlorm3h" path="res://Assets/Vampire/Frames/Deflect/Up/0002.png" id="529_yl1np"]
+[ext_resource type="Texture2D" uid="uid://ekicxaxwv3qu" path="res://Assets/Vampire/Frames/Deflect/Up/0003.png" id="530_wwu48"]
+[ext_resource type="Texture2D" uid="uid://csxywnl0yhh8r" path="res://Assets/Vampire/Frames/Deflect/UpLeft/0000.png" id="531_q4cdp"]
+[ext_resource type="Texture2D" uid="uid://b7qextjplcn62" path="res://Assets/Vampire/Frames/Deflect/UpLeft/0001.png" id="532_0nlt5"]
+[ext_resource type="Texture2D" uid="uid://dixg0d06q4khl" path="res://Assets/Vampire/Frames/Deflect/UpLeft/0002.png" id="533_lc1ov"]
+[ext_resource type="Texture2D" uid="uid://b4jv4kc1l8sq" path="res://Assets/Vampire/Frames/Deflect/UpLeft/0003.png" id="534_tmisb"]
+[ext_resource type="Texture2D" uid="uid://cuav2yfm1832e" path="res://Assets/Vampire/Frames/Deflect/UpRight/0000.png" id="535_to3l4"]
+[ext_resource type="Texture2D" uid="uid://c33ivaq0j7wv1" path="res://Assets/Vampire/Frames/Deflect/UpRight/0001.png" id="536_1g1fx"]
+[ext_resource type="Texture2D" uid="uid://dribexm7s3nw6" path="res://Assets/Vampire/Frames/Deflect/UpRight/0002.png" id="537_unjju"]
+[ext_resource type="Texture2D" uid="uid://bbsnibiwq6dyp" path="res://Assets/Vampire/Frames/Deflect/UpRight/0003.png" id="538_hcnxa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p2uxg"]
 radius = 96.0
@@ -2338,8 +2366,127 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("150_5n03k")
 }],
-"loop": true,
+"loop": false,
 "name": &"DeflectDown",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("511_mfs2h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("512_r6yyx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("513_a74y8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("514_n4e73")
+}],
+"loop": false,
+"name": &"DeflectDownLeft",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("515_ad3qc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("516_3nbsr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("517_al3xr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("518_kxwel")
+}],
+"loop": false,
+"name": &"DeflectDownRight",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("519_vvm7g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("520_jvfth")
+}, {
+"duration": 1.0,
+"texture": ExtResource("521_mud76")
+}, {
+"duration": 1.0,
+"texture": ExtResource("522_wise8")
+}],
+"loop": false,
+"name": &"DeflectLeft",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("523_vmuq1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("524_ki3t7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("525_koxmw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("526_nly7f")
+}],
+"loop": false,
+"name": &"DeflectRight",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("527_mox2v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("528_usib6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("529_yl1np")
+}, {
+"duration": 1.0,
+"texture": ExtResource("530_wwu48")
+}],
+"loop": false,
+"name": &"DeflectUp",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("531_q4cdp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("532_0nlt5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("533_lc1ov")
+}, {
+"duration": 1.0,
+"texture": ExtResource("534_tmisb")
+}],
+"loop": false,
+"name": &"DeflectUpLeft",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("535_to3l4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("536_1g1fx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("537_unjju")
+}, {
+"duration": 1.0,
+"texture": ExtResource("538_hcnxa")
+}],
+"loop": false,
+"name": &"DeflectUpRight",
 "speed": 1.0
 }, {
 "frames": [{
@@ -3169,7 +3316,7 @@ script = ExtResource("1_f578t")
 
 [node name="CircleLight" type="PointLight2D" parent="."]
 texture_filter = 1
-scale = Vector2(16, 16)
+scale = Vector2(12, 12)
 color = Color(1, 0.8, 0.8, 1)
 shadow_enabled = true
 texture = ExtResource("2_wq3jw")
@@ -3181,12 +3328,11 @@ shape = SubResource("CircleShape2D_p2uxg")
 position = Vector2(1, 0)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_xku26")
-animation = &"AttackDown"
+animation = &"DeflectDown"
 
 [node name="RotateNode" type="Node2D" parent="."]
 
 [node name="ThrustArea" type="Area2D" parent="RotateNode"]
-scale = Vector2(1, 1)
 monitorable = false
 
 [node name="Thrust" type="CollisionShape2D" parent="RotateNode/ThrustArea"]
@@ -3196,20 +3342,17 @@ shape = SubResource("CapsuleShape2D_68ekf")
 debug_color = Color(0.7, 0.0583333, 0, 0.419608)
 
 [node name="SweepArea" type="Area2D" parent="RotateNode"]
-scale = Vector2(1, 1)
 monitorable = false
 
 [node name="Sweep1" type="CollisionShape2D" parent="RotateNode/SweepArea"]
 position = Vector2(160, 160)
 rotation = 0.785398
-scale = Vector2(1, 1)
 shape = SubResource("CapsuleShape2D_68ekf")
 debug_color = Color(0.7, 0.0583333, 0, 0.419608)
 
 [node name="Sweep2" type="CollisionShape2D" parent="RotateNode/SweepArea"]
 position = Vector2(-160, 160)
 rotation = -0.785398
-scale = Vector2(1, 1)
 shape = SubResource("CapsuleShape2D_68ekf")
 debug_color = Color(0.7, 0.0583333, 0, 0.419608)
 

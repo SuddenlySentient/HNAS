@@ -6,12 +6,12 @@ const TILE_CENTER: Vector2 = Vector2(128, 128)
 var zipZoom : float = 0.25
 @export var zoomSpeed : float
 
-func _process(delta):
+func _process(_delta):
 	
 	zoom.x = lerpf(0.2, 1, zipZoom)
 	zoom.y = lerpf(0.2, 1, zipZoom)
 
-func _input(event) :
+func _input(_event) :
 	
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_WHEEL_UP) :
 		zipZoom = lerpf(zipZoom, 0, zoomSpeed)

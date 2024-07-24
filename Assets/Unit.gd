@@ -6,7 +6,7 @@ class_name Unit
 var aggroTarget : Unit
 var aggroList : Array[Unit] = []
 
-signal hurt
+signal hurt(DMG : int)
 
 
 func _init():
@@ -32,7 +32,7 @@ func checkVision():
 var HP : int = maxHP
 @export_range(1, 100, 1, "or_greater") var ARM : int = 1
 
-func damage(DMG : int, AP : int, source : Node = null) :
+func damage(DMG : int, AP : int, _source : Node = null) :
 	
 	var reduction = clampf( float(AP) / float(ARM), 0, ARM)
 	var DMGDealt : int = DMG * reduction
@@ -41,7 +41,7 @@ func damage(DMG : int, AP : int, source : Node = null) :
 	
 	if HP <= 0 : die()
 	
-	if DMGDealt > 0 : emit_signal("hurt")
+	if DMGDealt > 0 : emit_signal("hurt", DMGDealt)
 	
 	#if DMGDealt > 0 : print(DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
 	return DMGDealt

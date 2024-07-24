@@ -30,7 +30,7 @@ func _init():
 	timer.wait_time = randf_range(1, 2.5)
 	position += Vector2(randi_range(-64, 64), randi_range(-64, 64))
 
-func _process(delta):
+func _process(_delta):
 	
 	light.energy = timer.time_left/timer.wait_time
 	
@@ -63,6 +63,7 @@ func _on_explostion_timer_timeout():
 
 func explode():
 	emit_signal("exploded")
+	explosionLight.enabled = true
 	timer.stop()
 	explosionSound.pitch_scale = randf_range(0.75, 1.25)
 	explosionSound.play()
