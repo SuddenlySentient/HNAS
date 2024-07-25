@@ -249,20 +249,32 @@ func move(delta) :
 	
 	const randoTurn = 0.001
 	
-	direction = lerp(direction, position.direction_to(target), turnSpeed * delta).normalized()
-	direction = direction + Vector2(randf_range(-randoTurn, randoTurn), randf_range(-randoTurn, randoTurn))
-	velocity = velocity.lerp((direction * speed) + (avoidenceVelocity * 0.75), acceleration * delta)
+	var vectorToTarget = position.direction_to(target)
 	
-	if State == States.Approach :
-		nav.target_position = aggroTarget.position
-		if fireArea.overlaps_body(aggroTarget) and fireArea.get_overlapping_bodies().any(allies) == false :
-			State = States.Shoot
+	match State :
+		States.Move :
+			direction = lerp(direction, vectorToTarget, turnSpeed * delta).normalized()
+			direction = direction + Vector2(randf_range(-randoTurn, randoTurn), randf_range(-randoTurn, randoTurn))
+			velocity = velocity.lerp((direction * speed) + (avoidenceVelocity * 0.75), acceleration * delta)
+		States.Approach :
+			var distanceToTarget = position.distance_to(aggroTarget.position)
+			#if distanceToTarget < 512 : vectorToTarget = vectorToTarget * -1
+			vectorToTarget = vectorToTarget * (-1 * (1 - (clamp(distanceToTarget, 0, 512)/256)))
+			var vectorToLeader = Vector2.ZERO
+			if leader != null : vectorToLeader = position.direction_to(leader.position) * -0.25
+			direction = lerp(direction, (vectorToTarget + vectorToLeader).normalized(), turnSpeed * delta).normalized()
+			direction = direction + Vector2(randf_range(-randoTurn, randoTurn), randf_range(-randoTurn, randoTurn))
+			#print("Direction : ",direction, ", Direction to Target : ", vectorToTarget, ". Direction to Leader : ", vectorToLeader)
+			velocity = velocity.lerp((direction * speed) + (avoidenceVelocity * 0.75), acceleration * delta)
+			nav.target_position = aggroTarget.position
+			if fireArea.overlaps_body(aggroTarget) and fireArea.get_overlapping_bodies().any(allies) == false :
+				State = States.Shoot
 
 func idle(delta) :
 	velocity = velocity.lerp(Vector2.ZERO, acceleration * delta)
 
 func shoot(delta) :
-	#velocity = velocity.lerp(Vector2.ZERO, acceleration * delta)
+	velocity = velocity.lerp(Vector2.ZERO, delta)
 	testTimer.stop()
 	cAni = "Shoot"
 	sprite.speed_scale = 1 * revved
@@ -328,7 +340,7 @@ func _on_animated_sprite_2d_frame_changed():
 	if sprite.animation.contains("Shoot") :
 		if sprite.frame == 1 :
 			Fire.play()
-			gunModule.fire(DMG, AP, direction, inaccuracy * revved)
+			#gunModule.fire(DMG, AP, direction, inaccuracy * revved)
 			velocity += (direction * -1) * recoil
 
 func _on_sub_navigation_navigation_finished():

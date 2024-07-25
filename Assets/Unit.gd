@@ -45,9 +45,9 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 		dealer.getKill(self)
 		die(source.name)
 	
-	if DMGDealt > 0 : emit_signal("hurt", DMGDealt)
-	
-	#if DMGDealt > 0 : print(DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
+	if DMGDealt > 0 : 
+		emit_signal("hurt", DMGDealt)
+		#print(DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
 	return DMGDealt
 
 func die(_cause : String) :

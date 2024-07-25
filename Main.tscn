@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://ca1pdu3fohe43"]
 
-[ext_resource type="Texture2D" uid="uid://ccfhf5ts588ay" path="res://Assets/Facility/Floor.png" id="1_l7q3f"]
+[ext_resource type="Texture2D" uid="uid://ccfhf5ts588ay" path="res://Assets/Vampire/Floor.png" id="1_l7q3f"]
 [ext_resource type="PackedScene" uid="uid://6lg6q0wyhlag" path="res://Assets/SUB-RFL-48/sub_rfl_48.tscn" id="1_yof75"]
 [ext_resource type="Texture2D" uid="uid://dlkbyhdbm6w5h" path="res://Assets/Facility/Wall.png" id="2_24oxp"]
 [ext_resource type="Texture2D" uid="uid://b42r3578uyte3" path="res://Assets/Facility/Block.png" id="3_ti7vl"]
@@ -137,19 +137,18 @@ position = Vector2(-3487, -3870)
 position = Vector2(-3838, -3501)
 
 [node name="SUB-RFL-48-012" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(3834, -3396)
+position = Vector2(-2208, -3487)
 
 [node name="SUB-RFL-48-013" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(3481, -3830)
+position = Vector2(-2561, -3921)
 
 [node name="SUB-RFL-48-014" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(3822, -3746)
+position = Vector2(-2220, -3837)
 
 [node name="SUB-RFL-48-015" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(3471, -3377)
+position = Vector2(-2571, -3468)
 
 [node name="Vampire" parent="." instance=ExtResource("8_ip1i5")]
-position = Vector2(0, 0)
 
 [node name="Camera" type="Camera2D" parent="."]
 position_smoothing_enabled = true

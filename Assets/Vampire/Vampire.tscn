@@ -1,4 +1,4 @@
-[gd_scene load_steps=898 format=3 uid="uid://blriopxiv7rh2"]
+[gd_scene load_steps=900 format=3 uid="uid://blriopxiv7rh2"]
 
 [ext_resource type="Script" path="res://Assets/Vampire/Vampire.gd" id="1_f578t"]
 [ext_resource type="FontFile" uid="uid://drk2hxgvh0f5a" path="res://Assets/MinecraftBold-nMK1.otf" id="2_ck1mv"]
@@ -869,8 +869,10 @@
 [ext_resource type="Texture2D" uid="uid://bbsnibiwq6dyp" path="res://Assets/Vampire/Frames/Deflect/UpRight/0003.png" id="538_hcnxa"]
 [ext_resource type="AudioStream" uid="uid://bhky1mbdi6k8i" path="res://Assets/Vampire/Sound/Parry.wav" id="795_w0h1l"]
 [ext_resource type="AudioStream" uid="uid://m0qwsv2oolwf" path="res://Assets/Vampire/Sound/resource_time_out_2_01.wav" id="796_is7ft"]
-[ext_resource type="Texture2D" uid="uid://dr11atb80kaht" path="res://Assets/SUB-RFL-48/Flashlight.png" id="796_sufom"]
 [ext_resource type="AudioStream" uid="uid://yqvc02bh4p2o" path="res://Assets/Vampire/Sound/resource_time_out_2_02.wav" id="797_8v1ss"]
+[ext_resource type="Texture2D" uid="uid://cem7wdovvmi8f" path="res://Assets/Vampire/PrimeSlice.png" id="867_krf2o"]
+[ext_resource type="Texture2D" uid="uid://csa1gw6plmf11" path="res://Assets/Vampire/PrimeJab.png" id="868_hqo1y"]
+[ext_resource type="Texture2D" uid="uid://bkf0dapfwe42j" path="res://Assets/Vampire/PrimeLight.png" id="869_gupth"]
 [ext_resource type="AudioStream" uid="uid://cq2vlic07f7n2" path="res://Assets/Vampire/Sound/FerrymanSwing1.wav" id="872_3ow0c"]
 [ext_resource type="AudioStream" uid="uid://biw0cc3umav0i" path="res://Assets/Vampire/Sound/electrical_discharge_01.wav" id="872_ajips"]
 [ext_resource type="AudioStream" uid="uid://dmsexvguad4sb" path="res://Assets/Vampire/Sound/gambling _lever_release_01.wav" id="872_ebj4f"]
@@ -3676,15 +3678,13 @@ stream_2/weight = 1.0
 
 [node name="Vampire" type="CharacterBody2D"]
 y_sort_enabled = true
-position = Vector2(-512, -3584)
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_f578t")
 speed = 200
 turnSpeed = 2.0
-SwordDMG = 6
 team = "Sanguinist"
-maxHP = 64
+maxHP = 32
 ARM = 4
 
 [node name="Label" type="Label" parent="."]
@@ -3740,9 +3740,10 @@ z_index = 2
 y_sort_enabled = true
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_xku26")
-animation = &"WalkDown"
+animation = &"DeflectDown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_p2uxg")
 
 [node name="VPNav" type="NavigationAgent2D" parent="."]
@@ -3755,11 +3756,14 @@ debug_path_custom_point_size = 16.0
 debug_path_custom_line_width = 4.0
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-radius = 384.0
+visible = false
+scale = Vector2(2, 2)
+radius = 256.0
 
 [node name="RotateNode" type="Node2D" parent="."]
 
 [node name="ThrustArea" type="Area2D" parent="RotateNode"]
+visible = false
 monitorable = false
 
 [node name="Thrust" type="CollisionShape2D" parent="RotateNode/ThrustArea"]
@@ -3769,6 +3773,7 @@ shape = SubResource("CapsuleShape2D_68ekf")
 debug_color = Color(0.7, 0.0583333, 0, 0.419608)
 
 [node name="SweepArea" type="Area2D" parent="RotateNode"]
+visible = false
 monitorable = false
 
 [node name="Sweep1" type="CollisionShape2D" parent="RotateNode/SweepArea"]
@@ -3784,21 +3789,41 @@ shape = SubResource("CapsuleShape2D_68ekf")
 debug_color = Color(0.7, 0.0583333, 0, 0.419608)
 
 [node name="Vision" type="Area2D" parent="RotateNode"]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RotateNode/Vision"]
 shape = SubResource("CircleShape2D_vje18")
 debug_color = Color(0.6, 0.239216, 0.419608, 0.25098)
 
-[node name="Flashlight" type="PointLight2D" parent="RotateNode"]
-visible = false
-texture_filter = 1
-scale = Vector2(6, 6)
+[node name="Slice" type="PointLight2D" parent="RotateNode"]
 enabled = false
-color = Color(1, 0.2, 0.2, 1)
-energy = 0.8
-shadow_enabled = true
-texture = ExtResource("796_sufom")
+color = Color(1, 0.752941, 0.752941, 1)
+energy = 10.0
+texture = ExtResource("867_krf2o")
 offset = Vector2(0, 128)
+texture_scale = 2.0
+
+[node name="SliceTimer" type="Timer" parent="RotateNode/Slice"]
+wait_time = 0.5
+one_shot = true
+
+[node name="Jab" type="PointLight2D" parent="RotateNode"]
+enabled = false
+color = Color(1, 0.752941, 0.752941, 1)
+energy = 10.0
+texture = ExtResource("868_hqo1y")
+offset = Vector2(96, 192)
+
+[node name="JabTimer" type="Timer" parent="RotateNode/Jab"]
+wait_time = 0.5
+one_shot = true
+
+[node name="DeflectLight" type="PointLight2D" parent="RotateNode"]
+enabled = false
+color = Color(1, 0.752941, 0.752941, 1)
+energy = 8.0
+texture = ExtResource("869_gupth")
+texture_scale = 2.0
 
 [node name="CircleLight" type="PointLight2D" parent="."]
 texture_filter = 1

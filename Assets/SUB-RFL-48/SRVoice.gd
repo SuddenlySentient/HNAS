@@ -5,12 +5,12 @@ var randPitch : float = 0
 @export var aloneChance : int = 4096
 @export var searchChance : int = 4096
 @export var foundEnemiesChance : int = 4
-@export var outnumberChance : int = 2048
-@export var injuredChance : int = 2048
+@export var outnumberChance : int = 4096
+@export var injuredChance : int = 4096
 @export var uhOhChance : int = 1
 @export var getKillChance : int = 4
-@export var noDMGChance : int = 8
-@export var dealDMGChance : int = 16
+@export var noDMGChance : int = 1024
+@export var dealDMGChance : int = 1024
 
 var previousLine = ""
 

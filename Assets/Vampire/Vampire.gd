@@ -13,9 +13,10 @@ var deflectCombo = 0
 @export var turnSpeed : float = 3
 
 @export_subgroup("Prime Sword")
-@export var SwordDMG : int = 12
+@export var JabDMG : int = 6
+@export var SwingDMG : int = 9
 @export var SwordAP : int = 4
-@export var knockback : int = 8192
+@export var knockback : int = 1024
 
 enum States {
 Ready = 0,
@@ -128,6 +129,16 @@ func deflect() :
 
 func _process(_delta):
 	
+	$RotateNode/Slice.energy = $RotateNode/Slice/SliceTimer.time_left * 20 
+	$RotateNode/Jab.energy = $RotateNode/Jab/JabTimer.time_left * 20
+	$RotateNode/DeflectLight.energy = clamp($DeflectTimer.time_left - 0.375, 0, 0.125)  * 32 * $Deflect.pitch_scale
+	if $RotateNode/Slice.energy == 0 : $RotateNode/Slice.enabled = false
+	else : $RotateNode/Slice.enabled = true
+	if $RotateNode/Jab.energy == 0 : $RotateNode/Jab.enabled = false
+	else : $RotateNode/Jab.enabled = true
+	if $RotateNode/DeflectLight.energy == 0 : $RotateNode/DeflectLight.enabled = false
+	else : $RotateNode/DeflectLight.enabled = true
+	
 	var comboScale
 	if $Label/GoAway.time_left <= 1 : 
 		comboScale = $Label/GoAway.time_left
@@ -188,19 +199,23 @@ func _on_vampire_sprite_frame_changed():
 			swungAt.erase(self)
 			$SwordSwingA.play()
 			$SwordSwingB.play()
+			$RotateNode/Jab/JabTimer.start()
 			for unit in swungAt :
 				if unit is Unit :
-					unit.damage(SwordDMG, SwordAP, self, self)
+					unit.damage(JabDMG, SwordAP, self, self)
 					unit.velocity += global_position.direction_to(unit.position) * knockback
 		if sprite.frame == 34 :
 			var swungAt : Array = $RotateNode/ThrustArea.get_overlapping_bodies()
-			swungAt.append_array($RotateNode/SweepArea.get_overlapping_bodies())
+			for unit in $RotateNode/SweepArea.get_overlapping_bodies() :
+				if swungAt.has(unit) == false : swungAt.append(unit)
+			
 			swungAt.erase(self)
 			$SwordSwingA.play()
 			$SwordSwingB.play()
+			$RotateNode/Slice/SliceTimer.start()
 			for unit in swungAt :
 				if unit is Unit :
-					unit.damage(SwordDMG, SwordAP, self, self)
+					unit.damage(SwingDMG, SwordAP, self, self)
 					unit.velocity += global_position.direction_to(unit.position) * knockback
 
 func _on_vampire_sprite_animation_finished():

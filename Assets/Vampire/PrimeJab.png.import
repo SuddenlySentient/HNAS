@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccfhf5ts588ay"
-path="res://.godot/imported/Floor.png-f7a8ab4f3e477107e982c7fb4c8c863b.ctex"
+uid="uid://csa1gw6plmf11"
+path="res://.godot/imported/PrimeJab.png-0d5161b0678a2052cde631b42f881999.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Facility/Floor.png"
-dest_files=["res://.godot/imported/Floor.png-f7a8ab4f3e477107e982c7fb4c8c863b.ctex"]
+source_file="res://Assets/Vampire/PrimeJab.png"
+dest_files=["res://.godot/imported/PrimeJab.png-0d5161b0678a2052cde631b42f881999.ctex"]
 
 [params]
 
