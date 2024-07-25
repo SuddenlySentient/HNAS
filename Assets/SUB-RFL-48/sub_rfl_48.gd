@@ -31,33 +31,51 @@ enum States {
 Unidle = 0,
 Idle = 1,
 Move = 2,
-Shoot = 3
+Shoot = 3,
+Approach = 4
 }
 var State = States.Move
 
 
 
-func _init():
+func _init() :
 	await ready
 	HP = maxHP
 	testTimer.wait_time = randf_range(1.0, 2.0)
 	vision = $Flashlight/Vision
 	nav = $SUBNavigation
 
-func _physics_process(delta):
+func _physics_process(delta) :
 	
-	if voice.playing == false : voice.tryVoice()
-	 
+	#var debugString : String = "Name = A, isLeader = X inSquad = Y Follower Count = Z"
+	#debugString = debugString.replace("A", str(self.name))
+	#debugString = debugString.replace("X", str(isLeader))
+	#debugString = debugString.replace("Y", str(inSquad))
+	#debugString = debugString.replace("Z", str(followers.size()) )
+	#$DebugLabel.set_text(debugString)
+	#$DebugLabel2.set_text(str(followers))
+	
+	if isLeader : 
+		
+		if is_instance_valid(followers[0]) == false :
+			followers.remove_at(0)
+		
+		if followers.size() == 0 : 
+			isLeader = false
+			inSquad = false
+	
+	if HP < ((maxHP/4.0) * 3.0) : voice.tryVoice("Injured")
+	
 	aggroList.clear()
-	if inSquad and !isLeader : aggroList.append_array(getLeader().aggroList)
-	
 	for thing in checkVision() :
 		if thing is Unit :
 			if  thing.team != team : 
 				if aggroList.has(thing) == false : aggroList.append(thing)
 			elif thing is SUBRFL48 : squadLogic(thing)
 	
-	if aggroList.size() > 0 : State = States.Shoot
+	if aggroList.size() > 0 and State != States.Shoot and State != States.Approach : 
+		voice.tryVoice("FoundEnemies")
+		State = States.Shoot
 	if State != States.Idle : actionQuery()
 	
 	velocity = velocity.lerp(Vector2.ZERO, delta)
@@ -65,18 +83,12 @@ func _physics_process(delta):
 	match State :
 		States.Idle : idle(delta)
 		States.Move : move(delta)
+		States.Approach : move(delta)
 		States.Shoot : shoot(delta)
 	
 	flashlight.rotation = direction.angle() - PI/2
 	
-	if move_and_slide() : 
-		var collision = get_last_slide_collision()
-		
-		if collision.get_collider() is PhysicsBody2D :
-			if collision.get_collider() is CharacterBody2D :
-					collision.get_collider().velocity += ( velocity * delta) 
-			if collision.get_collider() is RigidBody2D :
-					collision.get_collider().apply_force(velocity * delta)
+	move_and_slide()
 	
 	if sprite.speed_scale != 0 and sprite.is_playing() == false :
 		sprite.play()
@@ -89,7 +101,7 @@ func _physics_process(delta):
 	if cAni == "Shoot" :
 		if sprite.is_playing() == false : sprite.play()
 		if fireArea.get_overlapping_bodies().any(allies) : 
-			sprite.speed_scale = 0
+			State = States.Approach
 			revved = 0.25
 
 func allies(node) :
@@ -104,26 +116,29 @@ func exchangeTileInfo(node : Unit):
 
 func squadLogic(node : SUBRFL48) :
 	
-	if node != null and node != self and leader != node :
-		
-		#print(self.name," considering joining ", node.name, "'s squad, ", node.name, "'s isLeader : ", node.isLeader,", inSquad : ", node.inSquad)
+	var notTnMySquad : bool = true
+	if inSquad and isLeader == false :
+		for follower in leader.followers : 
+			if follower == node : notTnMySquad = false
+	
+	if node != null and node != self and leader != node and notTnMySquad :
 		
 		match node.isLeader :
 			true : 
 				if inSquad :
 					if isLeader == false :
-						if leader.followers.size() + 1 < node.followers.size() + 1 : joinSquad(node) 
+						if leader.followers.size() + 1 == preferedSquadSize : pass
+						elif leader.followers.size() + 1 <= node.followers.size() + 1 : joinSquad(node) 
 					#they are a leader, I am not a leader, I am in a squad, and their squad has more than mine
 				else : 
-					node.exchangeTileInfo(self)
 					joinSquad(node) 
 				#they are a leader, and I am not in a squad
 			false : 
 				match node.inSquad :
-					true : squadLogic(node.getLeader())
+					true : 
+						squadLogic(node.leader)
 					#they are not a leader, and they are in a squad
 					false :  if inSquad == false : 
-						node.exchangeTileInfo(self)
 						joinSquad(node)
 					#they are not a leader, and they are not in a squad, and I am not in a squad
 
@@ -131,41 +146,39 @@ func joinSquad(node : SUBRFL48) :
 	
 	if inSquad : leaveSquad()
 	
-	node.isLeader = true
-	node.followers.append(self)
-	leader = node
-	leader.inSquad = true
-	inSquad = true
-	
-	if isLeader :
+	if node != self and node != null and node != leader :  
+		node.isLeader = true
+		node.followers.append(self)
+		leader = node
+		leader.inSquad = true
+		inSquad = true
 		isLeader = false
-		for follower in followers :
-			if follower != null :
-				follower.leader = node
-				node.followers.append(follower)
-		followers = []
-	
-	#print(self.name," has joined ", node.name, "'s squad")
+		#print(self.name," : Joined ", node.name, "'s squad")
 
 func leaveSquad() :
 	
 	if isLeader :
-		for follower in followers : follower.leaveSquad()
+		#print(self.name, " : Leaving my Squad")
+		var firstFollower = followers[0]
+		for follower in followers : 
+			if follower == null : 
+				pass
+				#print(self.name, " : Follower Is null")
+			else :
+				#print(self.name, " : Removing ",follower.name, " from my squad")
+				follower.leader = null
+				follower.inSquad = false
+				follower.joinSquad(firstFollower)
+		followers = []
 	if inSquad and leader != null :
 		leader.followers.erase(self)
+		#print(self.name, " : Leaving ", leader.name, "'s Squad")
 		if leader.followers.size() == 0 :
-			leader.leaveSquad()
+			leader.isLeader = false
+			leader.inSquad = false
 	leader = null
 	isLeader = false
 	inSquad = false
-
-func getLeader():
-	if leader != null : return leader
-	else : 
-		#print(self.name, " : ERROR! tried to get leader but I have no leader")
-		inSquad = false
-		isLeader = false
-		return self
 
 func reachable(positionToTest : Vector2) : #finish this
 	var oldNav = nav.target_position
@@ -184,35 +197,53 @@ var avoidenceVelocity : Vector2 = Vector2.ZERO
 
 func actionQuery() :
 	
-	#if leader == null : leaveSquad()
-	
 	match inSquad :
 		false : #alone logic
-			pass
+			voice.tryVoice("Alone")
 		true : 
 			match isLeader :
 				false : #follower logic, probably ask leader
-					lastSeenTile = leader.lastSeenTile
+					
 					var leaderPos : Vector2 = leader.global_position
-					if reachable(leaderPos) == false :
+					
+					if leader == null or reachable(leaderPos) == false :
 						leaveSquad()
 					else :
-						var myPlace = leader.followers.find(self)
-						var tarPos : Vector2
+						var leaderFollowers : Array[SUBRFL48] = leader.followers.duplicate()
+						
+						lastSeenTile = leader.lastSeenTile
+						match State :
+							States.Move :
+								voice.tryVoice("Search")
+							States.Shoot :
+								if leaderFollowers.size() > aggroList.size() :
+									voice.tryVoice("Outnumber")
+							States.Approach :
+								nav.target_position = aggroTarget.position
+						var tarPos : Vector2 
+						var myPlace = leaderFollowers.find(self)
 						if myPlace == 0 : tarPos = leaderPos
-						elif leader.followers[myPlace - 1] != null : tarPos = leader.followers[myPlace - 1].global_position
-						if tarPos.distance_to(position) < 256 : speed = getLeader().speed
+						else : 
+							while leaderFollowers[myPlace - 1] == null : 
+								leaderFollowers.remove_at(myPlace - 1)
+							tarPos = leaderFollowers[myPlace - 1].global_position
+						if tarPos.distance_to(position) < 256 : speed = leader.speed
+						if tarPos.distance_to(position) > 4096 : leaveSquad()
 						else : speed = maxSpeed * clamp((float(HP)/float(maxHP)), 0.5, 1)
 						nav.max_speed = speed
 						Selector.inFrontPos = tarPos
-						nav.target_position = tarPos
-						nav.avoidance_priority = (1.0 / leader.followers.size()) * (myPlace + 1)
+						if State == States.Move :
+							nav.target_position = tarPos
+						nav.avoidance_priority = clampf(((1.0 / leaderFollowers.size()) * (myPlace + 1)), 0, 1)
 				true : #leader Logic
 					pass
 					#var tileToGoTo = getTileToSearch()
 					#nav.set_target_position(map.map_to_local(tileToGoTo))
 
 func move(delta) :
+	
+	cAni = "Walk"
+	
 	var target = nav.get_next_path_position()
 	#print(nav.distance_to_target())
 	
@@ -221,11 +252,18 @@ func move(delta) :
 	direction = lerp(direction, position.direction_to(target), turnSpeed * delta).normalized()
 	direction = direction + Vector2(randf_range(-randoTurn, randoTurn), randf_range(-randoTurn, randoTurn))
 	velocity = velocity.lerp((direction * speed) + (avoidenceVelocity * 0.75), acceleration * delta)
+	
+	if State == States.Approach :
+		nav.target_position = aggroTarget.position
+		if fireArea.overlaps_body(aggroTarget) and fireArea.get_overlapping_bodies().any(allies) == false :
+			State = States.Shoot
 
 func idle(delta) :
 	velocity = velocity.lerp(Vector2.ZERO, acceleration * delta)
 
-func shoot(delta):
+func shoot(delta) :
+	#velocity = velocity.lerp(Vector2.ZERO, acceleration * delta)
+	testTimer.stop()
 	cAni = "Shoot"
 	sprite.speed_scale = 1 * revved
 	if aggroList.is_empty() : 
@@ -237,7 +275,8 @@ func shoot(delta):
 		revved = clampf(revved, 0.5, 2)
 		$Fire.pitch_scale = revved / 2
 		aggroTarget = aggroList[0]
-		nav.target_position = aggroTarget.position
+		if fireArea.overlaps_body(aggroTarget) == false :
+			State = States.Approach
 		direction = lerp(direction, position.direction_to(aggroTarget.position), turnSpeed * delta).normalized()
 		if sprite.speed_scale == 0 : velocity.lerp((aggroTarget.position.direction_to(position) * speed), acceleration * delta)
 
@@ -304,7 +343,6 @@ func _on_sub_navigation_navigation_finished():
 			#print(self.name, " : searching ", tileToGoTo)
 
 func _on_test_timeout():
-	
 	if isLeader or (inSquad == false) :
 		#print("begin")
 		var tileToGoTo = getTileToSearch()
@@ -312,9 +350,20 @@ func _on_test_timeout():
 		#print(self.name, " : searching ", tileToGoTo)
 
 func _on_sub_navigation_velocity_computed(safe_velocity): 
-	
 	avoidenceVelocity = safe_velocity
 
-func die() :
+func die(_source : String) :
+	if $SUBCollision != null :
+		$SUBCollision.free()
+	#print(self.name, " : Died to ", source)
 	leaveSquad()
 	queue_free()
+
+func getKill(_who : Unit) :
+	while State == States.Shoot :
+		await get_tree().physics_frame
+	voice.tryVoice("GetKill")
+
+func indirectDMG(_who : Unit, amount : int) :
+	if amount == 0 : voice.tryVoice("NoDMG")
+	else : voice.tryVoice("DealDMG")

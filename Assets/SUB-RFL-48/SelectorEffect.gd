@@ -16,12 +16,12 @@ func _physics_process(_delta):
 		var length = global_position.distance_to(inFrontPos)/64
 		line.scale.y = length
 		line.rotation = global_position.angle_to_point(inFrontPos) - PI/2
-		LeaderSelector.position = SUB.getLeader().position #+ Vector2(
+		LeaderSelector.position = SUB.leader.position #+ Vector2(
 			#randf_range(-SUB.leader.followers.size(), SUB.leader.followers.size()), 
 			#randf_range(-SUB.leader.followers.size(), SUB.leader.followers.size())
 			#)
-		var hueShift = 1.0 / SUB.getLeader().followers.size()
-		var place : int = SUB.getLeader().followers.find(SUB)
+		var hueShift = 1.0 / SUB.leader.followers.size()
+		var place : int = SUB.leader.followers.find(SUB)
 		var selfColor =  Color.from_hsv(hueShift * place + 0.5, 0.4, 4, 0.6)
 		self_modulate = selfColor
 		line.self_modulate = selfColor

@@ -6,6 +6,7 @@ var distance : float = 256
 @export var speed : float = 4096
 @export var DMG : int = 1
 @export var AP : int = 1
+var shooter : Unit
 
 @onready var sparks = load("res://Assets/SparkParticle.tscn")
 
@@ -32,7 +33,7 @@ func _on_body_entered(body):
 	newSparks.restart()
 	
 	if body is Unit : 
-		var DMGDealt = body.damage(DMG, AP, self)
+		var DMGDealt = body.damage(DMG, AP, shooter, self)
 		if DMGDealt == 0 : 
 			targetVector = targetVector.rotated(deg_to_rad(randf_range(-45, 45) + 180))
 			global_position += targetVector * 192
@@ -42,8 +43,12 @@ func _on_body_entered(body):
 	else : endShot()
 
 func endShot():
-	$CollisionShape2D.queue_free()
+	if $CollisionShape2D != null :
+		$CollisionShape2D.free()
 	hide()
 	$Impact.play()
 	await $Impact.finished
+	queue_free()
+
+func _on_timer_timeout():
 	queue_free()

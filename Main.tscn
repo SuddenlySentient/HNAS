@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ca1pdu3fohe43"]
+[gd_scene load_steps=19 format=3 uid="uid://ca1pdu3fohe43"]
 
 [ext_resource type="Texture2D" uid="uid://ccfhf5ts588ay" path="res://Assets/Facility/Floor.png" id="1_l7q3f"]
 [ext_resource type="PackedScene" uid="uid://6lg6q0wyhlag" path="res://Assets/SUB-RFL-48/sub_rfl_48.tscn" id="1_yof75"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://t6b22wwiv62v" path="res://Assets/Facility/Top.png" id="4_f3sr4"]
 [ext_resource type="Script" path="res://Camera.gd" id="5_ybltu"]
 [ext_resource type="PackedScene" uid="uid://dejvmg55walo3" path="res://Assets/Facility/Mine/mine.tscn" id="6_psqs4"]
+[ext_resource type="PackedScene" uid="uid://blriopxiv7rh2" path="res://Assets/Vampire/Vampire.tscn" id="8_ip1i5"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vf81b"]
 vertices = PackedVector2Array(128, 0, 0, 128, -128, 0, 0, -128)
@@ -100,40 +101,55 @@ layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array(-851968, 4, 65536, -786435, 4, 65536, -851965, 4, 65536, -851962, 4, 65536, -655362, 4, 65536, -720895, 4, 65536, -720892, 4, 65536, -720889, 4, 65536, -524289, 4, 65536, -589822, 4, 65536, -589819, 4, 65536, -589816, 4, 65536, -458746, 4, 65536, -458743, 4, 65536, -327673, 4, 65536, -327670, 4, 65536, -327667, 4, 65536, -458740, 4, 65536, -589813, 4, 65536, -720886, 4, 65536, -458737, 4, 65536, -720883, 4, 65536, -393219, 4, 65536, -262146, 4, 65536, -327679, 4, 65536, -327676, 4, 65536, -917505, 4, 65536, -983038, 4, 65536, -983035, 4, 65536, 589817, 4, 65536, 327672, 4, 65536, 262132, 4, 65536, 327664, 4, 65536, 720881, 4, 65536, 983026, 4, 65536, 1048566, 4, 65536, 983034, 4, 65536)
 
 [node name="SUB-RFL-48-000" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-3472.72, -3680.82)
+position = Vector2(3833, 2590)
 
 [node name="SUB-RFL-48-001" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(3349, -3709)
+position = Vector2(3480, 2156)
 
 [node name="SUB-RFL-48-002" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-3739, -18)
+position = Vector2(3821, 2240)
 
 [node name="SUB-RFL-48-003" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(3187, -322)
+position = Vector2(3470, 2609)
 
 [node name="SUB-RFL-48-004" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-599, -2158)
+position = Vector2(-2706, 2567)
 
 [node name="SUB-RFL-48-005" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-2530, -1111)
+position = Vector2(-3059, 2133)
 
 [node name="SUB-RFL-48-006" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(1509, 1276)
+position = Vector2(-2718, 2217)
 
 [node name="SUB-RFL-48-007" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-3469, 1401)
+position = Vector2(-3069, 2586)
 
 [node name="SUB-RFL-48-008" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-810, 3709)
+position = Vector2(-3475, -3520)
 
 [node name="SUB-RFL-48-009" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(3184, 3098)
+position = Vector2(-3828, -3954)
 
 [node name="SUB-RFL-48-010" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-1930, 3426)
+position = Vector2(-3487, -3870)
 
 [node name="SUB-RFL-48-011" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-504, 530)
+position = Vector2(-3838, -3501)
+
+[node name="SUB-RFL-48-012" parent="." instance=ExtResource("1_yof75")]
+position = Vector2(3834, -3396)
+
+[node name="SUB-RFL-48-013" parent="." instance=ExtResource("1_yof75")]
+position = Vector2(3481, -3830)
+
+[node name="SUB-RFL-48-014" parent="." instance=ExtResource("1_yof75")]
+position = Vector2(3822, -3746)
+
+[node name="SUB-RFL-48-015" parent="." instance=ExtResource("1_yof75")]
+position = Vector2(3471, -3377)
+
+[node name="Vampire" parent="." instance=ExtResource("8_ip1i5")]
+position = Vector2(0, 0)
 
 [node name="Camera" type="Camera2D" parent="."]
 position_smoothing_enabled = true

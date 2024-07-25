@@ -21,6 +21,7 @@ class_name Mine
 @export var AP : int = 5
 
 signal exploded
+signal steppedOn
 var detonating : bool = false
 var steppedOff : bool = false
 
@@ -46,7 +47,8 @@ func _on_timer_timeout():
 func _on_detection_area_body_entered(body):
 	if detonating == false :
 		detonating = true
-		print(body.name)
+		emit_signal("steppedOn")
+		#print(body.name)
 		timer.stop()
 		beep.volume_db = 10
 		beep.max_distance = 4096
@@ -54,6 +56,7 @@ func _on_detection_area_body_entered(body):
 		buzzer.play()
 		ExplosionObstacle.avoidance_enabled = true
 		await detectionArea.body_exited
+		if body is SUBRFL48 : body.voice.tryVoice("UhOh")
 		steppedOff = true
 		timer.start(0.125)
 		explosionTimer.start()
@@ -76,7 +79,7 @@ func explode():
 		var DMGDealt = round(DMG * falloff)
 		var APDealt = round(AP * falloff)
 		#print("DMG : ", DMGDealt, " AP : ", APDealt)
-		unit.damage(DMGDealt, APDealt)
+		unit.damage(DMGDealt, APDealt, unit, self)
 	destroyTimer.start()
 	explosionLight.show()
 	mineSprite.hide()

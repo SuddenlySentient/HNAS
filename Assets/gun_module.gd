@@ -11,4 +11,5 @@ func fire(DMG : int, AP : int, targetVector : Vector2, angleRange : float = 0, s
 	newShot.targetVector = targetVector.rotated(deg_to_rad(randf_range(-angleRange, angleRange)))
 	newShot.speed = speed
 	newShot.global_position = $"..".global_position
+	newShot.shooter = $".."
 	$".".add_child(newShot)

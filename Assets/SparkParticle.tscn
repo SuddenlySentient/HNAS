@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dmlcqx4j20ypv"]
+[gd_scene load_steps=3 format=3 uid="uid://dmlcqx4j20ypv"]
+
+[ext_resource type="Script" path="res://Assets/SparkParticle.gd" id="1_x3j02"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uyp5v"]
 particle_flag_disable_z = true
@@ -26,3 +28,6 @@ interp_to_end = 1.0
 trail_enabled = true
 trail_lifetime = 0.25
 trail_section_subdivisions = 8
+script = ExtResource("1_x3j02")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

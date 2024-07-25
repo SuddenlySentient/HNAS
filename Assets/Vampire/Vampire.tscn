@@ -1,6 +1,7 @@
-[gd_scene load_steps=800 format=3 uid="uid://blriopxiv7rh2"]
+[gd_scene load_steps=898 format=3 uid="uid://blriopxiv7rh2"]
 
 [ext_resource type="Script" path="res://Assets/Vampire/Vampire.gd" id="1_f578t"]
+[ext_resource type="FontFile" uid="uid://drk2hxgvh0f5a" path="res://Assets/MinecraftBold-nMK1.otf" id="2_ck1mv"]
 [ext_resource type="Texture2D" uid="uid://2lq0jjofqjct" path="res://Assets/Vampire/Frames/Walk/Down/0000.png" id="2_g7eyt"]
 [ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/CircleLight.png" id="2_wq3jw"]
 [ext_resource type="Texture2D" uid="uid://f2mvwrvqj286" path="res://Assets/Vampire/Frames/Walk/Down/0001.png" id="3_d8683"]
@@ -551,77 +552,149 @@
 [ext_resource type="Texture2D" uid="uid://4jhxmmwbbg3x" path="res://Assets/Vampire/Frames/Attack/Left/0070.png" id="289_837bl"]
 [ext_resource type="Texture2D" uid="uid://0ai5on1un4kj" path="res://Assets/Vampire/Frames/Attack/Left/0071.png" id="290_h8eqq"]
 [ext_resource type="Texture2D" uid="uid://xcnlvuft4h81" path="res://Assets/Vampire/Frames/Attack/Up/0000.png" id="291_dkocw"]
+[ext_resource type="Texture2D" uid="uid://bp23kxnkgyo4i" path="res://Assets/Vampire/Frames/Attack/Right/0000.png" id="291_g7dke"]
 [ext_resource type="Texture2D" uid="uid://sslsbecxs8i5" path="res://Assets/Vampire/Frames/Attack/Up/0001.png" id="292_b706c"]
+[ext_resource type="Texture2D" uid="uid://bjremvph0tbtc" path="res://Assets/Vampire/Frames/Attack/Right/0001.png" id="292_kg2bw"]
 [ext_resource type="Texture2D" uid="uid://cur0jj5vbag1" path="res://Assets/Vampire/Frames/Attack/Up/0002.png" id="293_8vaot"]
+[ext_resource type="Texture2D" uid="uid://ccc0vors62owj" path="res://Assets/Vampire/Frames/Attack/Right/0002.png" id="293_w81ib"]
+[ext_resource type="Texture2D" uid="uid://c4mkfuk380iio" path="res://Assets/Vampire/Frames/Attack/Right/0003.png" id="294_008vt"]
 [ext_resource type="Texture2D" uid="uid://bn5endsw4x3jf" path="res://Assets/Vampire/Frames/Attack/Up/0003.png" id="294_yyg48"]
 [ext_resource type="Texture2D" uid="uid://cni5nkuui68ms" path="res://Assets/Vampire/Frames/Attack/Up/0004.png" id="295_eyb4q"]
+[ext_resource type="Texture2D" uid="uid://dp25kbrsyrjwy" path="res://Assets/Vampire/Frames/Attack/Right/0004.png" id="295_hkx68"]
+[ext_resource type="Texture2D" uid="uid://dfmjlqjandcmp" path="res://Assets/Vampire/Frames/Attack/Right/0005.png" id="296_6ijf7"]
 [ext_resource type="Texture2D" uid="uid://4tmosuv77gkj" path="res://Assets/Vampire/Frames/Attack/Up/0005.png" id="296_yb58n"]
+[ext_resource type="Texture2D" uid="uid://dsmn0kkcroy5c" path="res://Assets/Vampire/Frames/Attack/Right/0006.png" id="297_3bf83"]
 [ext_resource type="Texture2D" uid="uid://p8jrpi4e4ty3" path="res://Assets/Vampire/Frames/Attack/Up/0006.png" id="297_gyay3"]
 [ext_resource type="Texture2D" uid="uid://5c50qld7ba2y" path="res://Assets/Vampire/Frames/Attack/Up/0007.png" id="298_dwleu"]
+[ext_resource type="Texture2D" uid="uid://bk7qbljjngctx" path="res://Assets/Vampire/Frames/Attack/Right/0007.png" id="298_stsnj"]
 [ext_resource type="Texture2D" uid="uid://dg057qny81wbu" path="res://Assets/Vampire/Frames/Attack/Up/0008.png" id="299_kwnnv"]
+[ext_resource type="Texture2D" uid="uid://cglb1acj0w4q" path="res://Assets/Vampire/Frames/Attack/Right/0008.png" id="299_ut5xb"]
+[ext_resource type="Texture2D" uid="uid://duths100vxfgm" path="res://Assets/Vampire/Frames/Attack/Right/0009.png" id="300_7ead0"]
 [ext_resource type="Texture2D" uid="uid://y8iesalyhv8q" path="res://Assets/Vampire/Frames/Attack/Up/0009.png" id="300_jw3bd"]
 [ext_resource type="Texture2D" uid="uid://c04hy8vqaf4e5" path="res://Assets/Vampire/Frames/Attack/Up/0010.png" id="301_1ednu"]
+[ext_resource type="Texture2D" uid="uid://dchxvjvugxy8n" path="res://Assets/Vampire/Frames/Attack/Right/0010.png" id="301_mxx44"]
+[ext_resource type="Texture2D" uid="uid://dxn5vt0qhimnv" path="res://Assets/Vampire/Frames/Attack/Right/0011.png" id="302_dtvu4"]
 [ext_resource type="Texture2D" uid="uid://b8ke4cbr0vwgw" path="res://Assets/Vampire/Frames/Attack/Up/0011.png" id="302_rjr0x"]
+[ext_resource type="Texture2D" uid="uid://dmlatvufsetr6" path="res://Assets/Vampire/Frames/Attack/Right/0012.png" id="303_8t4pi"]
 [ext_resource type="Texture2D" uid="uid://c8v77laysq3l8" path="res://Assets/Vampire/Frames/Attack/Up/0012.png" id="303_bs3v0"]
+[ext_resource type="Texture2D" uid="uid://d1j1m6fgnfes4" path="res://Assets/Vampire/Frames/Attack/Right/0013.png" id="304_1v6x2"]
 [ext_resource type="Texture2D" uid="uid://pgemkuqtoo7" path="res://Assets/Vampire/Frames/Attack/Up/0013.png" id="304_dmot6"]
 [ext_resource type="Texture2D" uid="uid://dqhxvnu15eb8t" path="res://Assets/Vampire/Frames/Attack/Up/0014.png" id="305_7w7xr"]
+[ext_resource type="Texture2D" uid="uid://dhn63pjws1es" path="res://Assets/Vampire/Frames/Attack/Right/0014.png" id="305_ws0na"]
 [ext_resource type="Texture2D" uid="uid://ch6eevhsk2v77" path="res://Assets/Vampire/Frames/Attack/Up/0015.png" id="306_845s4"]
+[ext_resource type="Texture2D" uid="uid://djsv1jtlqc2s2" path="res://Assets/Vampire/Frames/Attack/Right/0015.png" id="306_ot72v"]
 [ext_resource type="Texture2D" uid="uid://b4ivsi1pyb7w7" path="res://Assets/Vampire/Frames/Attack/Up/0016.png" id="307_tex4n"]
+[ext_resource type="Texture2D" uid="uid://b7tnsffmw6yn4" path="res://Assets/Vampire/Frames/Attack/Right/0016.png" id="307_yyg71"]
+[ext_resource type="Texture2D" uid="uid://be7pekjx5jsdg" path="res://Assets/Vampire/Frames/Attack/Right/0017.png" id="308_bq36a"]
 [ext_resource type="Texture2D" uid="uid://ddupsamhckbxy" path="res://Assets/Vampire/Frames/Attack/Up/0017.png" id="308_n5ew2"]
+[ext_resource type="Texture2D" uid="uid://d4d6uydcw2qtn" path="res://Assets/Vampire/Frames/Attack/Right/0018.png" id="309_0fes8"]
 [ext_resource type="Texture2D" uid="uid://cbumgnp1i4da4" path="res://Assets/Vampire/Frames/Attack/Up/0018.png" id="309_lurm0"]
 [ext_resource type="Texture2D" uid="uid://cg7gqui278713" path="res://Assets/Vampire/Frames/Attack/Up/0019.png" id="310_dgt8f"]
+[ext_resource type="Texture2D" uid="uid://cm23y06caggga" path="res://Assets/Vampire/Frames/Attack/Right/0019.png" id="310_mk8c6"]
 [ext_resource type="Texture2D" uid="uid://cb7d41pttwc0l" path="res://Assets/Vampire/Frames/Attack/Up/0020.png" id="311_hytdk"]
+[ext_resource type="Texture2D" uid="uid://cjishecbm882e" path="res://Assets/Vampire/Frames/Attack/Right/0020.png" id="311_lwk6a"]
+[ext_resource type="Texture2D" uid="uid://clt7xfj375g5d" path="res://Assets/Vampire/Frames/Attack/Right/0021.png" id="312_m7uj8"]
 [ext_resource type="Texture2D" uid="uid://cegkvifej8nke" path="res://Assets/Vampire/Frames/Attack/Up/0021.png" id="312_oi62g"]
+[ext_resource type="Texture2D" uid="uid://gcqymxnr8l06" path="res://Assets/Vampire/Frames/Attack/Right/0022.png" id="313_ptd5w"]
 [ext_resource type="Texture2D" uid="uid://c7gst7eltxdga" path="res://Assets/Vampire/Frames/Attack/Up/0022.png" id="313_ymlgq"]
 [ext_resource type="Texture2D" uid="uid://w24evlojuxtb" path="res://Assets/Vampire/Frames/Attack/Up/0023.png" id="314_ailed"]
+[ext_resource type="Texture2D" uid="uid://cmwa8mham330g" path="res://Assets/Vampire/Frames/Attack/Right/0023.png" id="314_yp5vy"]
 [ext_resource type="Texture2D" uid="uid://cgwpagnrlj70o" path="res://Assets/Vampire/Frames/Attack/Up/0024.png" id="315_52dpd"]
+[ext_resource type="Texture2D" uid="uid://b1wge1hgfgjbl" path="res://Assets/Vampire/Frames/Attack/Right/0024.png" id="315_efngj"]
+[ext_resource type="Texture2D" uid="uid://ct1j5qveh5d21" path="res://Assets/Vampire/Frames/Attack/Right/0025.png" id="316_7bywt"]
 [ext_resource type="Texture2D" uid="uid://cv6kubttvvbab" path="res://Assets/Vampire/Frames/Attack/Up/0025.png" id="316_gim5w"]
 [ext_resource type="Texture2D" uid="uid://ta74yduvggq" path="res://Assets/Vampire/Frames/Attack/Up/0026.png" id="317_a0gll"]
+[ext_resource type="Texture2D" uid="uid://m0d0rulyuji6" path="res://Assets/Vampire/Frames/Attack/Right/0026.png" id="317_looqb"]
+[ext_resource type="Texture2D" uid="uid://crxacn35kh0mu" path="res://Assets/Vampire/Frames/Attack/Right/0027.png" id="318_8rro3"]
 [ext_resource type="Texture2D" uid="uid://cf2rxx6jhst4l" path="res://Assets/Vampire/Frames/Attack/Up/0027.png" id="318_18wmy"]
 [ext_resource type="Texture2D" uid="uid://ckfgnabjtas50" path="res://Assets/Vampire/Frames/Attack/Up/0028.png" id="319_cccbh"]
+[ext_resource type="Texture2D" uid="uid://ddk4vmyfg28og" path="res://Assets/Vampire/Frames/Attack/Right/0028.png" id="319_nll8u"]
 [ext_resource type="Texture2D" uid="uid://b0bymxsv1dgyf" path="res://Assets/Vampire/Frames/Attack/Up/0029.png" id="320_dr5qf"]
+[ext_resource type="Texture2D" uid="uid://dpi4rhej7s2ge" path="res://Assets/Vampire/Frames/Attack/Right/0029.png" id="320_ikstu"]
+[ext_resource type="Texture2D" uid="uid://d3ijrcluu3jdt" path="res://Assets/Vampire/Frames/Attack/Right/0030.png" id="321_7ujq3"]
 [ext_resource type="Texture2D" uid="uid://dcnvm40emvqgc" path="res://Assets/Vampire/Frames/Attack/Up/0030.png" id="321_8evg4"]
 [ext_resource type="Texture2D" uid="uid://dx12e3t5i1r8" path="res://Assets/Vampire/Frames/Attack/Up/0031.png" id="322_ku7wr"]
+[ext_resource type="Texture2D" uid="uid://634e1xot8uj3" path="res://Assets/Vampire/Frames/Attack/Right/0031.png" id="322_x1mqc"]
+[ext_resource type="Texture2D" uid="uid://brfkubs11s7vd" path="res://Assets/Vampire/Frames/Attack/Right/0032.png" id="323_cvidx"]
 [ext_resource type="Texture2D" uid="uid://c5dfhmtssjjkk" path="res://Assets/Vampire/Frames/Attack/Up/0032.png" id="323_fw33k"]
 [ext_resource type="Texture2D" uid="uid://ckw26qvaw3t" path="res://Assets/Vampire/Frames/Attack/Up/0033.png" id="324_5m3j6"]
+[ext_resource type="Texture2D" uid="uid://h0elrxkdu32u" path="res://Assets/Vampire/Frames/Attack/Right/0033.png" id="324_frj46"]
 [ext_resource type="Texture2D" uid="uid://v13kgmj7aawd" path="res://Assets/Vampire/Frames/Attack/Up/0034.png" id="325_fb8uq"]
+[ext_resource type="Texture2D" uid="uid://2cc4uqcfcjc6" path="res://Assets/Vampire/Frames/Attack/Right/0034.png" id="325_u4r30"]
 [ext_resource type="Texture2D" uid="uid://bbbofdkp2pwdv" path="res://Assets/Vampire/Frames/Attack/Up/0035.png" id="326_7ieiq"]
+[ext_resource type="Texture2D" uid="uid://boxafmawoujy" path="res://Assets/Vampire/Frames/Attack/Right/0035.png" id="326_tu2r7"]
 [ext_resource type="Texture2D" uid="uid://r4mw3i70wvjh" path="res://Assets/Vampire/Frames/Attack/Up/0036.png" id="327_814yi"]
+[ext_resource type="Texture2D" uid="uid://db01y6kkamgv8" path="res://Assets/Vampire/Frames/Attack/Right/0036.png" id="327_y1ehy"]
 [ext_resource type="Texture2D" uid="uid://bx6h3s1m15dgj" path="res://Assets/Vampire/Frames/Attack/Up/0037.png" id="328_3na7s"]
+[ext_resource type="Texture2D" uid="uid://l7k354adf4gp" path="res://Assets/Vampire/Frames/Attack/Right/0037.png" id="328_lory0"]
 [ext_resource type="Texture2D" uid="uid://nvoicqg8fue2" path="res://Assets/Vampire/Frames/Attack/Up/0038.png" id="329_cpe64"]
+[ext_resource type="Texture2D" uid="uid://pkquecsjtr86" path="res://Assets/Vampire/Frames/Attack/Right/0038.png" id="329_jck1n"]
+[ext_resource type="Texture2D" uid="uid://wf1orufl0rhr" path="res://Assets/Vampire/Frames/Attack/Right/0039.png" id="330_6ffcw"]
 [ext_resource type="Texture2D" uid="uid://dxmfrorjq1wq0" path="res://Assets/Vampire/Frames/Attack/Up/0039.png" id="330_wned4"]
 [ext_resource type="Texture2D" uid="uid://c16fnthhpy2w2" path="res://Assets/Vampire/Frames/Attack/Up/0040.png" id="331_3ad37"]
+[ext_resource type="Texture2D" uid="uid://c30ygvc003lm5" path="res://Assets/Vampire/Frames/Attack/Right/0040.png" id="331_j0jy1"]
+[ext_resource type="Texture2D" uid="uid://bq67rfow31q2e" path="res://Assets/Vampire/Frames/Attack/Right/0041.png" id="332_dcdyl"]
 [ext_resource type="Texture2D" uid="uid://ddt3dk3x5bw4q" path="res://Assets/Vampire/Frames/Attack/Up/0041.png" id="332_nxubb"]
+[ext_resource type="Texture2D" uid="uid://dtw3bjunshudy" path="res://Assets/Vampire/Frames/Attack/Right/0042.png" id="333_bqthc"]
 [ext_resource type="Texture2D" uid="uid://cf1bu7p1go0vj" path="res://Assets/Vampire/Frames/Attack/Up/0042.png" id="333_jiugx"]
+[ext_resource type="Texture2D" uid="uid://pmeqmalwo0eb" path="res://Assets/Vampire/Frames/Attack/Right/0043.png" id="334_85gpi"]
 [ext_resource type="Texture2D" uid="uid://cjf61hk5h4en8" path="res://Assets/Vampire/Frames/Attack/Up/0043.png" id="334_qcakw"]
+[ext_resource type="Texture2D" uid="uid://dgj8pot67wldd" path="res://Assets/Vampire/Frames/Attack/Right/0044.png" id="335_5n72d"]
 [ext_resource type="Texture2D" uid="uid://qrc07e0drnih" path="res://Assets/Vampire/Frames/Attack/Up/0044.png" id="335_h0i85"]
 [ext_resource type="Texture2D" uid="uid://baxpnsk1xlaqs" path="res://Assets/Vampire/Frames/Attack/Up/0045.png" id="336_1gsie"]
+[ext_resource type="Texture2D" uid="uid://cwyj5ir5ru1rg" path="res://Assets/Vampire/Frames/Attack/Right/0045.png" id="336_myg42"]
+[ext_resource type="Texture2D" uid="uid://72ewba0meium" path="res://Assets/Vampire/Frames/Attack/Right/0046.png" id="337_caqe4"]
 [ext_resource type="Texture2D" uid="uid://bdbgbtufbnike" path="res://Assets/Vampire/Frames/Attack/Up/0046.png" id="337_gksmy"]
 [ext_resource type="Texture2D" uid="uid://bl282m6dd3ix3" path="res://Assets/Vampire/Frames/Attack/Up/0047.png" id="338_gwkvb"]
+[ext_resource type="Texture2D" uid="uid://d0akeip317s3t" path="res://Assets/Vampire/Frames/Attack/Right/0047.png" id="338_l6hdx"]
+[ext_resource type="Texture2D" uid="uid://bs0q2rrpiewlm" path="res://Assets/Vampire/Frames/Attack/Right/0048.png" id="339_3xwb5"]
 [ext_resource type="Texture2D" uid="uid://dvd378mbjqhwi" path="res://Assets/Vampire/Frames/Attack/Up/0048.png" id="339_311hx"]
+[ext_resource type="Texture2D" uid="uid://cbd5he11xbxgw" path="res://Assets/Vampire/Frames/Attack/Right/0049.png" id="340_8ekrm"]
 [ext_resource type="Texture2D" uid="uid://b0p21t56qh8tn" path="res://Assets/Vampire/Frames/Attack/Up/0049.png" id="340_buvls"]
 [ext_resource type="Texture2D" uid="uid://dcdrk8try2wf" path="res://Assets/Vampire/Frames/Attack/Up/0050.png" id="341_ficab"]
+[ext_resource type="Texture2D" uid="uid://bwhmm578kodsx" path="res://Assets/Vampire/Frames/Attack/Right/0050.png" id="341_pcl82"]
+[ext_resource type="Texture2D" uid="uid://ciwmnmods2he0" path="res://Assets/Vampire/Frames/Attack/Right/0051.png" id="342_bjjs5"]
 [ext_resource type="Texture2D" uid="uid://d1mmnxqn4y3sq" path="res://Assets/Vampire/Frames/Attack/Up/0051.png" id="342_wdxux"]
 [ext_resource type="Texture2D" uid="uid://l604bn1235a0" path="res://Assets/Vampire/Frames/Attack/Up/0052.png" id="343_ahtt4"]
+[ext_resource type="Texture2D" uid="uid://d4hrqdagf7g84" path="res://Assets/Vampire/Frames/Attack/Right/0052.png" id="343_wnepb"]
+[ext_resource type="Texture2D" uid="uid://d4dn1lek3vn4m" path="res://Assets/Vampire/Frames/Attack/Right/0053.png" id="344_un6ta"]
 [ext_resource type="Texture2D" uid="uid://w3ctc1kh6c6q" path="res://Assets/Vampire/Frames/Attack/Up/0053.png" id="344_vx0bi"]
 [ext_resource type="Texture2D" uid="uid://wuewoywj08w5" path="res://Assets/Vampire/Frames/Attack/Up/0054.png" id="345_0xgcb"]
+[ext_resource type="Texture2D" uid="uid://y0ln7qrd37jh" path="res://Assets/Vampire/Frames/Attack/Right/0054.png" id="345_f6j4m"]
 [ext_resource type="Texture2D" uid="uid://ccra6nbsgs5si" path="res://Assets/Vampire/Frames/Attack/Up/0055.png" id="346_7gu1o"]
+[ext_resource type="Texture2D" uid="uid://r037lwmiyss0" path="res://Assets/Vampire/Frames/Attack/Right/0055.png" id="346_lqoua"]
+[ext_resource type="Texture2D" uid="uid://bnpfp5dplbihi" path="res://Assets/Vampire/Frames/Attack/Right/0056.png" id="347_74p13"]
 [ext_resource type="Texture2D" uid="uid://b7umyh15udw2r" path="res://Assets/Vampire/Frames/Attack/Up/0056.png" id="347_n65ay"]
 [ext_resource type="Texture2D" uid="uid://sbet2jn35okv" path="res://Assets/Vampire/Frames/Attack/Up/0057.png" id="348_6doeq"]
+[ext_resource type="Texture2D" uid="uid://bak48kdpswm8x" path="res://Assets/Vampire/Frames/Attack/Right/0057.png" id="348_ccm1e"]
+[ext_resource type="Texture2D" uid="uid://b2jxfa8q2ilu1" path="res://Assets/Vampire/Frames/Attack/Right/0058.png" id="349_cxtj0"]
 [ext_resource type="Texture2D" uid="uid://c02h7geiik37j" path="res://Assets/Vampire/Frames/Attack/Up/0058.png" id="349_lvjkf"]
 [ext_resource type="Texture2D" uid="uid://c6iowveo1a2g0" path="res://Assets/Vampire/Frames/Attack/Up/0059.png" id="350_qpkw1"]
+[ext_resource type="Texture2D" uid="uid://mp1qhrwuqjwv" path="res://Assets/Vampire/Frames/Attack/Right/0059.png" id="350_xgq0s"]
 [ext_resource type="Texture2D" uid="uid://y444t4v2wwlp" path="res://Assets/Vampire/Frames/Attack/Up/0060.png" id="351_6sn1a"]
+[ext_resource type="Texture2D" uid="uid://bgn0vndy30i43" path="res://Assets/Vampire/Frames/Attack/Right/0060.png" id="351_qndf3"]
 [ext_resource type="Texture2D" uid="uid://btec13tjejdjc" path="res://Assets/Vampire/Frames/Attack/Up/0061.png" id="352_mke2k"]
+[ext_resource type="Texture2D" uid="uid://bwjh5wkj8if52" path="res://Assets/Vampire/Frames/Attack/Right/0061.png" id="352_wt07v"]
+[ext_resource type="Texture2D" uid="uid://dxvn3gwvhex86" path="res://Assets/Vampire/Frames/Attack/Right/0062.png" id="353_p4ykh"]
 [ext_resource type="Texture2D" uid="uid://l16613at677p" path="res://Assets/Vampire/Frames/Attack/Up/0062.png" id="353_x4lto"]
 [ext_resource type="Texture2D" uid="uid://be2b317ksclwp" path="res://Assets/Vampire/Frames/Attack/Up/0063.png" id="354_ehit2"]
+[ext_resource type="Texture2D" uid="uid://ujcgcdq3bf1n" path="res://Assets/Vampire/Frames/Attack/Right/0063.png" id="354_rm7cm"]
 [ext_resource type="Texture2D" uid="uid://c6gq6gwvrqc1k" path="res://Assets/Vampire/Frames/Attack/Up/0064.png" id="355_6uq1h"]
+[ext_resource type="Texture2D" uid="uid://dpwd5r87ws2ph" path="res://Assets/Vampire/Frames/Attack/Right/0064.png" id="355_uk025"]
+[ext_resource type="Texture2D" uid="uid://dowh06awecp0q" path="res://Assets/Vampire/Frames/Attack/Right/0065.png" id="356_e6grh"]
 [ext_resource type="Texture2D" uid="uid://cbwjtmlf4jr11" path="res://Assets/Vampire/Frames/Attack/Up/0065.png" id="356_n0csd"]
+[ext_resource type="Texture2D" uid="uid://b5ppxx8vcfnyc" path="res://Assets/Vampire/Frames/Attack/Right/0066.png" id="357_770j3"]
 [ext_resource type="Texture2D" uid="uid://otp73lwbw2r7" path="res://Assets/Vampire/Frames/Attack/Up/0066.png" id="357_g3q4q"]
 [ext_resource type="Texture2D" uid="uid://b8c82v66p5n5v" path="res://Assets/Vampire/Frames/Attack/Up/0067.png" id="358_kc0or"]
+[ext_resource type="Texture2D" uid="uid://bawp1w24q0hod" path="res://Assets/Vampire/Frames/Attack/Right/0067.png" id="358_nljxn"]
+[ext_resource type="Texture2D" uid="uid://1jipar8b68ej" path="res://Assets/Vampire/Frames/Attack/Right/0068.png" id="359_k4s7y"]
 [ext_resource type="Texture2D" uid="uid://bhq77bikfftlu" path="res://Assets/Vampire/Frames/Attack/Up/0068.png" id="359_v02ts"]
+[ext_resource type="Texture2D" uid="uid://dwvaqt3edswfa" path="res://Assets/Vampire/Frames/Attack/Right/0069.png" id="360_ei1bm"]
 [ext_resource type="Texture2D" uid="uid://cby8kw8w4qblu" path="res://Assets/Vampire/Frames/Attack/Up/0069.png" id="360_i16ca"]
+[ext_resource type="Texture2D" uid="uid://clrxmav0yl657" path="res://Assets/Vampire/Frames/Attack/Right/0070.png" id="361_47yah"]
 [ext_resource type="Texture2D" uid="uid://dt75sxabssh38" path="res://Assets/Vampire/Frames/Attack/Up/0070.png" id="361_dsan5"]
 [ext_resource type="Texture2D" uid="uid://btlk2r0nlhf2u" path="res://Assets/Vampire/Frames/Attack/Up/0071.png" id="362_yg4u3"]
+[ext_resource type="Texture2D" uid="uid://ck4gt7seery5o" path="res://Assets/Vampire/Frames/Attack/Right/0071.png" id="362_yl20e"]
 [ext_resource type="Texture2D" uid="uid://dtuaroavnn34j" path="res://Assets/Vampire/Frames/Attack/UpLeft/0000.png" id="363_x5egu"]
 [ext_resource type="Texture2D" uid="uid://dvj2f8bxxkeaw" path="res://Assets/Vampire/Frames/Attack/UpLeft/0001.png" id="364_66cjp"]
 [ext_resource type="Texture2D" uid="uid://dpdfr2ptf0fg7" path="res://Assets/Vampire/Frames/Attack/UpLeft/0002.png" id="365_421nh"]
@@ -662,7 +735,6 @@
 [ext_resource type="Texture2D" uid="uid://d2e07elb8127t" path="res://Assets/Vampire/Frames/Attack/UpLeft/0037.png" id="400_qwgff"]
 [ext_resource type="Texture2D" uid="uid://b6lfgra6pfdnx" path="res://Assets/Vampire/Frames/Attack/UpLeft/0038.png" id="401_ahpa4"]
 [ext_resource type="Texture2D" uid="uid://ch5urke6rv2ar" path="res://Assets/Vampire/Frames/Attack/UpLeft/0039.png" id="402_f3xo7"]
-[ext_resource type="AudioStream" uid="uid://dfr7bnr63dgpy" path="res://Assets/Vampire/Sound/punch_projectile.wav" id="403_806lg"]
 [ext_resource type="Texture2D" uid="uid://bdktlb14qwqyq" path="res://Assets/Vampire/Frames/Attack/UpLeft/0040.png" id="403_yawga"]
 [ext_resource type="Texture2D" uid="uid://bvqkuk2mlj3tl" path="res://Assets/Vampire/Frames/Attack/UpLeft/0041.png" id="404_heaap"]
 [ext_resource type="Texture2D" uid="uid://6v861co4pm2y" path="res://Assets/Vampire/Frames/Attack/UpLeft/0042.png" id="405_1ep5w"]
@@ -795,9 +867,25 @@
 [ext_resource type="Texture2D" uid="uid://c33ivaq0j7wv1" path="res://Assets/Vampire/Frames/Deflect/UpRight/0001.png" id="536_1g1fx"]
 [ext_resource type="Texture2D" uid="uid://dribexm7s3nw6" path="res://Assets/Vampire/Frames/Deflect/UpRight/0002.png" id="537_unjju"]
 [ext_resource type="Texture2D" uid="uid://bbsnibiwq6dyp" path="res://Assets/Vampire/Frames/Deflect/UpRight/0003.png" id="538_hcnxa"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_p2uxg"]
-radius = 96.0
+[ext_resource type="AudioStream" uid="uid://bhky1mbdi6k8i" path="res://Assets/Vampire/Sound/Parry.wav" id="795_w0h1l"]
+[ext_resource type="AudioStream" uid="uid://m0qwsv2oolwf" path="res://Assets/Vampire/Sound/resource_time_out_2_01.wav" id="796_is7ft"]
+[ext_resource type="Texture2D" uid="uid://dr11atb80kaht" path="res://Assets/SUB-RFL-48/Flashlight.png" id="796_sufom"]
+[ext_resource type="AudioStream" uid="uid://yqvc02bh4p2o" path="res://Assets/Vampire/Sound/resource_time_out_2_02.wav" id="797_8v1ss"]
+[ext_resource type="AudioStream" uid="uid://cq2vlic07f7n2" path="res://Assets/Vampire/Sound/FerrymanSwing1.wav" id="872_3ow0c"]
+[ext_resource type="AudioStream" uid="uid://biw0cc3umav0i" path="res://Assets/Vampire/Sound/electrical_discharge_01.wav" id="872_ajips"]
+[ext_resource type="AudioStream" uid="uid://dmsexvguad4sb" path="res://Assets/Vampire/Sound/gambling _lever_release_01.wav" id="872_ebj4f"]
+[ext_resource type="AudioStream" uid="uid://cmr2xj2xslwge" path="res://Assets/Vampire/Sound/FerrymanSwing2.wav" id="873_atj2r"]
+[ext_resource type="AudioStream" uid="uid://ck6y1oqgtuh4c" path="res://Assets/Vampire/Sound/gambling _lever_release_02.wav" id="873_i8stl"]
+[ext_resource type="AudioStream" uid="uid://duyywjnvuu3ig" path="res://Assets/Vampire/Sound/electrical_discharge_02.wav" id="873_kxjdd"]
+[ext_resource type="AudioStream" uid="uid://cmc56d3ci7i2x" path="res://Assets/Vampire/Sound/electrical_discharge_03.wav" id="874_fcqhs"]
+[ext_resource type="AudioStream" uid="uid://da4uobtjpl38h" path="res://Assets/Vampire/Sound/gambling _lever_release_03.wav" id="874_vkrxm"]
+[ext_resource type="AudioStream" uid="uid://bor516wi1qxhu" path="res://Assets/Vampire/Sound/gambling _lever_pull_01.wav" id="877_s37x7"]
+[ext_resource type="AudioStream" uid="uid://ma553uioyp10" path="res://Assets/Vampire/Sound/gambling _lever_pull_02.wav" id="878_yvp86"]
+[ext_resource type="AudioStream" uid="uid://dy38rciiphsf4" path="res://Assets/Vampire/Sound/gambling _lever_pull_03.wav" id="879_go4ap"]
+[ext_resource type="AudioStream" uid="uid://rm7ck1iiye0t" path="res://Assets/Vampire/Sound/electric_release_01.wav" id="883_3thnq"]
+[ext_resource type="AudioStream" uid="uid://uut1h6unl5ht" path="res://Assets/Vampire/Sound/electric_release_02.wav" id="884_qosqm"]
+[ext_resource type="AudioStream" uid="uid://cln3hehg50nfl" path="res://Assets/Vampire/Sound/electric_release_03.wav" id="885_cxqhw"]
+[ext_resource type="AudioStream" uid="uid://w5yiakh36sso" path="res://Assets/Vampire/Sound/truck_engine_idle_loop_01.wav" id="886_u4bg1"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xku26"]
 animations = [{
@@ -1685,7 +1773,223 @@ animations = [{
 "name": &"AttackLeft",
 "speed": 20.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("291_g7dke")
+}, {
+"duration": 1.0,
+"texture": ExtResource("292_kg2bw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("293_w81ib")
+}, {
+"duration": 1.0,
+"texture": ExtResource("294_008vt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("295_hkx68")
+}, {
+"duration": 1.0,
+"texture": ExtResource("296_6ijf7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("297_3bf83")
+}, {
+"duration": 1.0,
+"texture": ExtResource("298_stsnj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("299_ut5xb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("300_7ead0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("301_mxx44")
+}, {
+"duration": 1.0,
+"texture": ExtResource("302_dtvu4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("303_8t4pi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("304_1v6x2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("305_ws0na")
+}, {
+"duration": 1.0,
+"texture": ExtResource("306_ot72v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("307_yyg71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("308_bq36a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("309_0fes8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("310_mk8c6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("311_lwk6a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("312_m7uj8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("313_ptd5w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("314_yp5vy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("315_efngj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("316_7bywt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("317_looqb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("318_8rro3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("319_nll8u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("320_ikstu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("321_7ujq3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("322_x1mqc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("323_cvidx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("324_frj46")
+}, {
+"duration": 1.0,
+"texture": ExtResource("325_u4r30")
+}, {
+"duration": 1.0,
+"texture": ExtResource("326_tu2r7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("327_y1ehy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("328_lory0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("329_jck1n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("330_6ffcw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("331_j0jy1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("332_dcdyl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("333_bqthc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("334_85gpi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("335_5n72d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("336_myg42")
+}, {
+"duration": 1.0,
+"texture": ExtResource("337_caqe4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("338_l6hdx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("339_3xwb5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("340_8ekrm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("341_pcl82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("342_bjjs5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("343_wnepb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("344_un6ta")
+}, {
+"duration": 1.0,
+"texture": ExtResource("345_f6j4m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("346_lqoua")
+}, {
+"duration": 1.0,
+"texture": ExtResource("347_74p13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("348_ccm1e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("349_cxtj0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("350_xgq0s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("351_qndf3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("352_wt07v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("353_p4ykh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("354_rm7cm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("355_uk025")
+}, {
+"duration": 1.0,
+"texture": ExtResource("356_e6grh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("357_770j3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("358_nljxn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("359_k4s7y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("360_ei1bm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("361_47yah")
+}, {
+"duration": 1.0,
+"texture": ExtResource("362_yl20e")
+}],
 "loop": false,
 "name": &"AttackRight",
 "speed": 20.0
@@ -3298,37 +3602,160 @@ animations = [{
 "speed": 30.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_p2uxg"]
+radius = 96.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_68ekf"]
 radius = 128.0
 height = 384.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_vje18"]
+radius = 4096.0
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8x1wn"]
-random_pitch = 1.5
+random_pitch = 1.25
 streams_count = 1
-stream_0/stream = ExtResource("403_806lg")
+stream_0/stream = ExtResource("795_w0h1l")
 stream_0/weight = 1.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wswfo"]
+random_pitch = 1.25
+streams_count = 2
+stream_0/stream = ExtResource("796_is7ft")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("797_8v1ss")
+stream_1/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vbp1h"]
+random_pitch = 1.25
+streams_count = 2
+stream_0/stream = ExtResource("872_3ow0c")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("873_atj2r")
+stream_1/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_oo4wx"]
+random_pitch = 1.25
+streams_count = 3
+stream_0/stream = ExtResource("872_ajips")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("873_kxjdd")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("874_fcqhs")
+stream_2/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vcdpt"]
+random_pitch = 1.25
+streams_count = 3
+stream_0/stream = ExtResource("877_s37x7")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("878_yvp86")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("879_go4ap")
+stream_2/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bhq2u"]
+random_pitch = 1.25
+streams_count = 3
+stream_0/stream = ExtResource("872_ebj4f")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("873_i8stl")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("874_vkrxm")
+stream_2/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_007hp"]
+random_pitch = 1.25
+streams_count = 3
+stream_0/stream = ExtResource("883_3thnq")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("884_qosqm")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("885_cxqhw")
+stream_2/weight = 1.0
+
 [node name="Vampire" type="CharacterBody2D"]
+y_sort_enabled = true
 position = Vector2(-512, -3584)
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_f578t")
+speed = 200
+turnSpeed = 2.0
+SwordDMG = 6
+team = "Sanguinist"
+maxHP = 64
+ARM = 4
 
-[node name="CircleLight" type="PointLight2D" parent="."]
-texture_filter = 1
-scale = Vector2(12, 12)
-color = Color(1, 0.8, 0.8, 1)
-shadow_enabled = true
-texture = ExtResource("2_wq3jw")
+[node name="Label" type="Label" parent="."]
+visible = false
+z_index = 16
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -374.5
+offset_top = 96.0
+offset_right = 374.5
+offset_bottom = 166.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(374.5, -96)
+theme_override_fonts/font = ExtResource("2_ck1mv")
+theme_override_font_sizes/font_size = 70
+text = "DEFLECTION COMBO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Combo" type="Label" parent="Label"]
+z_index = 16
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = 29.0
+offset_right = 210.0
+offset_bottom = 229.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("2_ck1mv")
+theme_override_font_sizes/font_size = 150
+text = "50"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GoAway" type="Timer" parent="Label"]
+wait_time = 2.0
+one_shot = true
+
+[node name="VampireSprite" type="AnimatedSprite2D" parent="."]
+z_index = 2
+y_sort_enabled = true
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_xku26")
+animation = &"WalkDown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_p2uxg")
 
-[node name="VampireSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, 0)
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_xku26")
-animation = &"DeflectDown"
+[node name="VPNav" type="NavigationAgent2D" parent="."]
+path_desired_distance = 64.0
+target_desired_distance = 64.0
+path_max_distance = 64.0
+debug_use_custom = true
+debug_path_custom_color = Color(4, 0, 0, 1)
+debug_path_custom_point_size = 16.0
+debug_path_custom_line_width = 4.0
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+radius = 384.0
 
 [node name="RotateNode" type="Node2D" parent="."]
 
@@ -3356,7 +3783,78 @@ rotation = -0.785398
 shape = SubResource("CapsuleShape2D_68ekf")
 debug_color = Color(0.7, 0.0583333, 0, 0.419608)
 
+[node name="Vision" type="Area2D" parent="RotateNode"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RotateNode/Vision"]
+shape = SubResource("CircleShape2D_vje18")
+debug_color = Color(0.6, 0.239216, 0.419608, 0.25098)
+
+[node name="Flashlight" type="PointLight2D" parent="RotateNode"]
+visible = false
+texture_filter = 1
+scale = Vector2(6, 6)
+enabled = false
+color = Color(1, 0.2, 0.2, 1)
+energy = 0.8
+shadow_enabled = true
+texture = ExtResource("796_sufom")
+offset = Vector2(0, 128)
+
+[node name="CircleLight" type="PointLight2D" parent="."]
+texture_filter = 1
+scale = Vector2(12, 12)
+color = Color(1, 0.8, 0.8, 1)
+texture = ExtResource("2_wq3jw")
+
+[node name="NavTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="DeflectTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [node name="Deflect" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_8x1wn")
+volume_db = -15.0
+max_distance = 8192.0
+attenuation = 2.0
+max_polyphony = 16
+
+[node name="DeflectionSpree" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_wswfo")
+volume_db = 5.0
+max_distance = 3072.0
+
+[node name="SwordSwingA" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_vbp1h")
+max_distance = 4096.0
+
+[node name="SwordSwingB" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_oo4wx")
+max_distance = 4096.0
+
+[node name="Pull" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_vcdpt")
 max_distance = 2048.0
-max_polyphony = 8
+
+[node name="Release" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_bhq2u")
+max_distance = 2048.0
+
+[node name="Step" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(1, 0)
+stream = SubResource("AudioStreamRandomizer_007hp")
+max_distance = 2048.0
+
+[node name="Engine" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(1, 0)
+stream = ExtResource("886_u4bg1")
+autoplay = true
+max_distance = 2048.0
+
+[connection signal="animation_finished" from="VampireSprite" to="." method="_on_vampire_sprite_animation_finished"]
+[connection signal="frame_changed" from="VampireSprite" to="." method="_on_vampire_sprite_frame_changed"]
+[connection signal="navigation_finished" from="VPNav" to="." method="_on_vp_nav_navigation_finished"]
+[connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]
+[connection signal="timeout" from="DeflectTimer" to="." method="_on_deflect_timer_timeout"]
+[connection signal="finished" from="Engine" to="." method="_on_engine_finished"]

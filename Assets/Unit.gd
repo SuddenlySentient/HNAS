@@ -9,6 +9,7 @@ var aggroList : Array[Unit] = []
 signal hurt(DMG : int)
 
 
+
 func _init():
 	await ready
 	HP = maxHP
@@ -32,21 +33,24 @@ func checkVision():
 var HP : int = maxHP
 @export_range(1, 100, 1, "or_greater") var ARM : int = 1
 
-func damage(DMG : int, AP : int, _source : Node = null) :
+func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	
-	var reduction = clampf( float(AP) / float(ARM), 0, ARM)
+	var reduction = clampf( float(AP) / float(ARM), 0, 1)
 	var DMGDealt : int = DMG * reduction
 	
 	HP -= DMGDealt
-	
-	if HP <= 0 : die()
+	if source != dealer :
+		dealer.indirectDMG(self, DMGDealt)
+	if HP <= 0 : 
+		dealer.getKill(self)
+		die(source.name)
 	
 	if DMGDealt > 0 : emit_signal("hurt", DMGDealt)
 	
 	#if DMGDealt > 0 : print(DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
 	return DMGDealt
 
-func die() :
+func die(_cause : String) :
 	queue_free()
 
 # Tile Nonsense
@@ -77,7 +81,6 @@ func getLastSearched(tileCoord : Vector2i):
 		return -1
 
 func getTileNavigable(tileCoord : Vector2i):
-	
 	var data = map.get_cell_tile_data(0, tileCoord)
 	return data.get_custom_data("Navigable")
 
@@ -110,3 +113,8 @@ func getDistanceTo(targetPos):
 func newRandomPos(randDist : int = 1024) : 
 	return Vector2(randi_range(-randDist, randDist), randi_range(-randDist, randDist)) + position
 
+func getKill(_who : Unit) :
+	pass
+
+func indirectDMG(_who : Unit, _amount : int) :
+	pass
