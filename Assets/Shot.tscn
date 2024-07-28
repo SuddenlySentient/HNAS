@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://beudw2414os64"]
+[gd_scene load_steps=19 format=3 uid="uid://beudw2414os64"]
 
 [ext_resource type="Script" path="res://Assets/Shot.gd" id="1_i4uir"]
 [ext_resource type="Texture2D" uid="uid://bxkjekiyhci77" path="res://Assets/SUB-RFL-48/SMGShot.png" id="2_57hvw"]
@@ -9,6 +9,12 @@
 [ext_resource type="AudioStream" uid="uid://dvtefxde3jesu" path="res://Assets/Sound/ShotHit/sharp_impact_05.wav" id="7_6s51d"]
 [ext_resource type="AudioStream" uid="uid://i8rg23h3slji" path="res://Assets/Sound/ShotHit/sharp_impact_06.wav" id="8_x0d00"]
 [ext_resource type="AudioStream" uid="uid://c61q1tghqyf03" path="res://Assets/Sound/ShotHit/sharp_impact_01.wav" id="9_5brm0"]
+[ext_resource type="AudioStream" uid="uid://4dl2bxr2esv8" path="res://Assets/Sound/ShotRicochet/western_ricochet_1a.wav" id="10_oa38v"]
+[ext_resource type="AudioStream" uid="uid://cx08ku56vn8v3" path="res://Assets/Sound/ShotRicochet/western_ricochet_1b.wav" id="11_ryngo"]
+[ext_resource type="AudioStream" uid="uid://d3ecoawkyll8m" path="res://Assets/Sound/ShotRicochet/western_ricochet_1c.wav" id="12_dinmp"]
+[ext_resource type="AudioStream" uid="uid://bvad57fvo43km" path="res://Assets/Sound/ShotRicochet/western_ricochet_2a.wav" id="13_qdvkg"]
+[ext_resource type="AudioStream" uid="uid://blvnasxaa2w2y" path="res://Assets/Sound/ShotRicochet/western_ricochet_2b.wav" id="14_7bb1q"]
+[ext_resource type="AudioStream" uid="uid://cbww14sfy67co" path="res://Assets/Sound/ShotRicochet/western_ricochet_2c.wav" id="15_0bapy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3f514"]
 radius = 1.0
@@ -27,6 +33,22 @@ stream_3/weight = 1.0
 stream_4/stream = ExtResource("8_x0d00")
 stream_4/weight = 1.0
 stream_5/stream = ExtResource("9_5brm0")
+stream_5/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_olyr2"]
+random_pitch = 1.5
+streams_count = 6
+stream_0/stream = ExtResource("10_oa38v")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("11_ryngo")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("12_dinmp")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("13_qdvkg")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("14_7bb1q")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("15_0bapy")
 stream_5/weight = 1.0
 
 [node name="Shot" type="RigidBody2D"]
@@ -61,6 +83,10 @@ shape = SubResource("CircleShape2D_3f514")
 
 [node name="Impact" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_qlkel")
+max_distance = 1024.0
+
+[node name="Ricochet" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_olyr2")
 max_distance = 1024.0
 
 [node name="Timer" type="Timer" parent="."]

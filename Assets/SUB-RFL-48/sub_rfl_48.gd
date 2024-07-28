@@ -68,7 +68,7 @@ func _physics_process(delta) :
 	aggroList.clear()
 	for thing in checkVision() :
 		if thing is Unit :
-			if  thing.team != team : 
+			if thing.team != team : 
 				if aggroList.has(thing) == false : aggroList.append(thing)
 			elif thing is SUBRFL48 : squadLogic(thing)
 	
@@ -77,6 +77,7 @@ func _physics_process(delta) :
 		if State != States.Shoot and State != States.Approach : 
 			voice.tryVoice("FoundEnemies")
 			State = States.Shoot
+	else : aggroTarget = null 
 	#elif State == States.Shoot or State == States.Approach : State = States.Idle
 	
 	if State != States.Idle : actionQuery()
@@ -232,7 +233,7 @@ func actionQuery() :
 							tarPos = leaderFollowers[myPlace - 1].global_position
 						if tarPos.distance_to(position) < 256 : speed = leader.speed
 						if tarPos.distance_to(position) > 4096 : leaveSquad()
-						else : speed = maxSpeed * sqrt(clamp((float(HP)/float(maxHP)), 0.5, 1))
+						else : speed = int(maxSpeed * sqrt(clamp((float(HP)/float(maxHP)), 0.5, 1)))
 						nav.max_speed = speed
 						Selector.inFrontPos = tarPos
 						if State == States.Move :
@@ -260,7 +261,9 @@ func move(delta) :
 			direction = direction + Vector2(randf_range(-randoTurn, randoTurn), randf_range(-randoTurn, randoTurn))
 			velocity = velocity.lerp((direction * speed) + (avoidenceVelocity * 0.75), acceleration * delta)
 		States.Approach :
-			if aggroTarget == null : return false
+			if aggroTarget == null : 
+				State = States.Move
+				return false
 			var distanceToTarget = position.distance_to(aggroTarget.position)
 			#if distanceToTarget < 512 : vectorToTarget = vectorToTarget * -1
 			vectorToTarget = vectorToTarget * (-1 * (1 - (clamp(distanceToTarget, 0, 512)/256)))

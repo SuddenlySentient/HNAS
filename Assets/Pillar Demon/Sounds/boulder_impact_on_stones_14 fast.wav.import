@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dvipc0plsga7f"
+path="res://.godot/imported/boulder_impact_on_stones_14 fast.wav-d6663d9b12ef82f92da2c7a2c15c96ac.sample"
+
+[deps]
+
+source_file="res://Assets/Pillar Demon/Sounds/boulder_impact_on_stones_14 fast.wav"
+dest_files=["res://.godot/imported/boulder_impact_on_stones_14 fast.wav-d6663d9b12ef82f92da2c7a2c15c96ac.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

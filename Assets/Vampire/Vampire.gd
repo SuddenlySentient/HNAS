@@ -104,9 +104,7 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	var DMGDealt : int = DMG * reduction
 	
 	if source is Shot :
-		
 		direction = position.direction_to(source.position)
-		
 		deflect()
 		source.changeColor(Color.from_hsv(0, 0.9, 1, 1))
 		DMGDealt = 0

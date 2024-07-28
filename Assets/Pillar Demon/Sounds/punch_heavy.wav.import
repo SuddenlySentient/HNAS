@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://brf4r0oa7ni43"
+path="res://.godot/imported/punch_heavy.wav-84d6d6dbb12926904b805b1f3c198ba5.sample"
+
+[deps]
+
+source_file="res://Assets/Pillar Demon/Sounds/punch_heavy.wav"
+dest_files=["res://.godot/imported/punch_heavy.wav-84d6d6dbb12926904b805b1f3c198ba5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -126,5 +126,5 @@ var dealDMGAudio :AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/Tagged
 func _on_subrfl_48_hurt(_DMG):
 	tryVoice("Hurt")
 
-func speechBubble(speechText : String) :
-	pass
+#func speechBubble(speechText : String) :
+#	pass

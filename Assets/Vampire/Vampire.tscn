@@ -3683,6 +3683,7 @@ wall_min_slide_angle = 0.0
 script = ExtResource("1_f578t")
 turnSpeed = 2.0
 team = "Sanguinist"
+reflectShots = true
 maxHP = 32
 ARM = 4
 
