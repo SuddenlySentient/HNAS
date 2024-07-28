@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cu6nsl2bkmtt7"
+path="res://.godot/imported/MannequinSkitter.wav-9a07905a63883b2ca2c9b796401f2837.sample"
+
+[deps]
+
+source_file="res://Assets/Pillar Demon/Sounds/MannequinSkitter.wav"
+dest_files=["res://.godot/imported/MannequinSkitter.wav-9a07905a63883b2ca2c9b796401f2837.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

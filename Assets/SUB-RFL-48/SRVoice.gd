@@ -11,6 +11,7 @@ var randPitch : float = 0
 @export var getKillChance : int = 4
 @export var noDMGChance : int = 1024
 @export var dealDMGChance : int = 1024
+@onready var SR : SUBRFL48 = $".."
 
 var previousLine = ""
 
@@ -41,19 +42,19 @@ func tryVoice(voiceLine : String):
 					previousLine = voiceLine
 					play()
 			"FoundEnemies" :
-				if randi_range(1, foundEnemiesChance) == 1 :
+				if randi_range(1, foundEnemiesChance) == 1 and SR.inSquad :
 					#print("FoundEnemies")
 					stream = foundEnemiesAudio.pick_random()
 					previousLine = voiceLine
 					play()
 			"Outnumber" :
-				if randi_range(1, outnumberChance) == 1 :
+				if randi_range(1, outnumberChance) == 1 and SR.inSquad :
 					#print("Outnumber")
 					stream = outnumberAudio
 					previousLine = voiceLine
 					play()
 			"Injured" :
-				if randi_range(1, injuredChance) == 1 :
+				if randi_range(1, injuredChance) == 1 and SR.inSquad :
 					#print("Injured")
 					stream = injuredAudio
 					previousLine = voiceLine
@@ -65,19 +66,19 @@ func tryVoice(voiceLine : String):
 					previousLine = voiceLine
 					play()
 			"GetKill" :
-				if randi_range(1, getKillChance) == 1 :
+				if randi_range(1, getKillChance) == 1 and SR.inSquad :
 					#print("GetKil")
 					stream = getKillAudio.pick_random()
 					previousLine = voiceLine
 					play()
 			"NoDMG" :
-				if randi_range(1, noDMGChance) == 1 :
+				if randi_range(1, noDMGChance) == 1 and SR.inSquad :
 					#print("NoDMG")
 					stream = noDMGDealtAudio.pick_random()
 					previousLine = voiceLine
 					play()
 			"DealDMG" :
-				if randi_range(1, dealDMGChance) == 1 :
+				if randi_range(1, dealDMGChance) == 1 and SR.inSquad :
 					#print("DealDMG")
 					stream = dealDMGAudio
 					previousLine = voiceLine
@@ -124,3 +125,6 @@ var dealDMGAudio :AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/Tagged
 
 func _on_subrfl_48_hurt(_DMG):
 	tryVoice("Hurt")
+
+func speechBubble(speechText : String) :
+	pass

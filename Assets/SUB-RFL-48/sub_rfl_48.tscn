@@ -69,14 +69,18 @@ ARM = 2
 wait_time = 2.0
 autostart = true
 
-[node name="Self Selector" type="Sprite2D" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Self Selector" type="Sprite2D" parent="CanvasLayer"]
+visible = false
 show_behind_parent = true
 light_mask = 0
-scale = Vector2(5, 5)
+scale = Vector2(10, 10)
 texture = ExtResource("2_yrspc")
 script = ExtResource("3_mhsra")
 
-[node name="Line" type="Sprite2D" parent="."]
+[node name="Line" type="Sprite2D" parent="CanvasLayer"]
 visible = false
 self_modulate = Color(1, 1, 1, 0.501961)
 show_behind_parent = true
@@ -86,12 +90,12 @@ scale = Vector2(5, 5)
 texture = ExtResource("3_0dplg")
 offset = Vector2(0, 32)
 
-[node name="Leader Selector" type="Sprite2D" parent="."]
+[node name="Leader Selector" type="Sprite2D" parent="CanvasLayer"]
 visible = false
 self_modulate = Color(1, 1, 1, 0.25098)
 top_level = true
 light_mask = 0
-scale = Vector2(5, 5)
+scale = Vector2(10, 10)
 texture = ExtResource("2_yrspc")
 
 [node name="SUBSprite" type="AnimatedSprite2D" parent="."]
@@ -111,6 +115,7 @@ path_max_distance = 64.0
 avoidance_enabled = true
 radius = 32.0
 neighbor_distance = 128.0
+max_neighbors = 8
 time_horizon_agents = 2.0
 debug_use_custom = true
 debug_path_custom_color = Color(4, 1, 1, 1)
@@ -149,6 +154,7 @@ polygon = PackedVector2Array(0, 0, 640, 2048, -640, 2048)
 
 [node name="Vision" type="Area2D" parent="Flashlight"]
 scale = Vector2(0.333333, 0.166667)
+collision_layer = 2
 
 [node name="Vision Shape" type="CollisionShape2D" parent="Flashlight/Vision"]
 visible = false

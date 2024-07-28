@@ -3681,24 +3681,26 @@ y_sort_enabled = true
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_f578t")
-speed = 200
 turnSpeed = 2.0
 team = "Sanguinist"
 maxHP = 32
 ARM = 4
 
-[node name="Label" type="Label" parent="."]
+[node name="ComboCanvas" type="CanvasLayer" parent="."]
 visible = false
+follow_viewport_enabled = true
+
+[node name="Label" type="Label" parent="ComboCanvas"]
 z_index = 16
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -374.5
-offset_top = 96.0
-offset_right = 374.5
-offset_bottom = 166.0
+offset_left = -1014.5
+offset_top = -264.0
+offset_right = -265.5
+offset_bottom = -194.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(374.5, -96)
@@ -3708,7 +3710,7 @@ text = "DEFLECTION COMBO"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Combo" type="Label" parent="Label"]
+[node name="Combo" type="Label" parent="ComboCanvas/Label"]
 z_index = 16
 layout_mode = 1
 anchors_preset = 8
@@ -3716,9 +3718,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -210.0
+offset_left = -315.0
 offset_top = 29.0
-offset_right = 210.0
+offset_right = 315.0
 offset_bottom = 229.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -3727,11 +3729,11 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 16
 theme_override_fonts/font = ExtResource("2_ck1mv")
 theme_override_font_sizes/font_size = 150
-text = "50"
+text = "NUMBER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="GoAway" type="Timer" parent="Label"]
+[node name="GoAway" type="Timer" parent="ComboCanvas"]
 wait_time = 2.0
 one_shot = true
 
@@ -3740,7 +3742,7 @@ z_index = 2
 y_sort_enabled = true
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_xku26")
-animation = &"DeflectDown"
+animation = &"AttackDown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -3790,6 +3792,7 @@ debug_color = Color(0.7, 0.0583333, 0, 0.419608)
 
 [node name="Vision" type="Area2D" parent="RotateNode"]
 visible = false
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RotateNode/Vision"]
 shape = SubResource("CircleShape2D_vje18")

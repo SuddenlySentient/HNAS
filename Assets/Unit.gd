@@ -6,6 +6,8 @@ class_name Unit
 var aggroTarget : Unit
 var aggroList : Array[Unit] = []
 
+@export var canBeSeen : bool = true
+@export var maxSpeed : int= 200
 signal hurt(DMG : int)
 
 
@@ -24,7 +26,9 @@ func checkVision():
 		var query = PhysicsRayQueryParameters2D.create(global_position, thing.global_position, 1)
 		var result = space_state.intersect_ray(query)
 		if result and result.collider != self :
-			seen.append(result.collider)
+			if result.collider is Unit : 
+				if result.collider.canBeSeen : seen.append(result.collider)
+			else : seen.append(result.collider)
 	return seen
 
 # HP, ARM, and stuff related to it
@@ -36,7 +40,7 @@ var HP : int = maxHP
 func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	
 	var reduction = clampf( float(AP) / float(ARM), 0, 1)
-	var DMGDealt : int = DMG * reduction
+	var DMGDealt : int = ceil(DMG * reduction)
 	
 	HP -= DMGDealt
 	if source != dealer :
@@ -47,7 +51,7 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	
 	if DMGDealt > 0 : 
 		emit_signal("hurt", DMGDealt)
-		#print(DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
+		print(DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
 	return DMGDealt
 
 func die(_cause : String) :
@@ -90,7 +94,7 @@ func getTileValue(tileCoord : Vector2i, searchValue : float = -1, distanceValue 
 	var distance = getDistanceTo(map.map_to_local(tileCoord))
 	return (searched * searchValue) + (distance * distanceValue)
 
-func getTileToSearch():
+func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
 	
 	var tilesCoords : Array[Vector2i] = map.get_used_cells(0)
 	var tileValue : Array = []
@@ -98,7 +102,7 @@ func getTileToSearch():
 	
 	for tile in tilesCoords :
 		if getTileNavigable(tile) and (trySeeTile(tile) == false) : #this gets rid of walls from the search since walls
-			var newEntry = getTileValue(tile)
+			var newEntry = getTileValue(tile, searchValue, distanceValue)
 			tileValue.append(newEntry)
 			tileValue.sort()
 			#tileValue.reverse()

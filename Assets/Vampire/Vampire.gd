@@ -1,4 +1,6 @@
+@icon("res://Assets/Vampire/VampireIcon.png")
 extends Unit
+class_name Vampire
 
 @onready var deflectSound : AudioStreamPlayer2D = $Deflect
 @onready var sprite : AnimatedSprite2D = $VampireSprite
@@ -9,7 +11,6 @@ const minDeflectPitch : float = 1
 const maxDeflectPitch : float = 3
 const minCombo = 50
 var deflectCombo = 0
-@export var speed = 100
 @export var turnSpeed : float = 3
 
 @export_subgroup("Prime Sword")
@@ -65,7 +66,7 @@ func _physics_process(delta) :
 			var roundedDirection = Vector2(round(direction.x), round(direction.y))
 			var roundedDesiredDirection = Vector2(round(desiredDirection.x), round(desiredDirection.y))
 			if roundedDirection == roundedDesiredDirection : 
-				velocity = (direction * speed)
+				velocity = (direction * maxSpeed)
 			else :
 				velocity = velocity.lerp(Vector2.ZERO, delta)
 		States.Move :
@@ -78,7 +79,7 @@ func _physics_process(delta) :
 			var roundedDirection = Vector2(round(direction.x), round(direction.y))
 			var roundedDesiredDirection = Vector2(round(desiredDirection.x), round(desiredDirection.y))
 			if roundedDirection == roundedDesiredDirection : 
-				velocity = (direction * speed)
+				velocity = (direction * maxSpeed)
 			else :
 				velocity = velocity.lerp(Vector2.ZERO, delta)
 	
@@ -95,6 +96,7 @@ func _init() :
 	HP = maxHP
 	vision = $RotateNode/Vision
 	nav = $VPNav
+	$ComboCanvas.show()
 
 func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	
@@ -139,12 +141,13 @@ func _process(_delta):
 	if $RotateNode/DeflectLight.energy == 0 : $RotateNode/DeflectLight.enabled = false
 	else : $RotateNode/DeflectLight.enabled = true
 	
+	$ComboCanvas/Label.position = global_position + Vector2(-374.5, 96)
 	var comboScale
-	if $Label/GoAway.time_left <= 1 : 
-		comboScale = $Label/GoAway.time_left
-	else : comboScale = 2 - $Label/GoAway.time_left
-	$Label.scale.x = sqrt(comboScale)
-	$Label.scale.y = sqrt(comboScale)
+	if $ComboCanvas/GoAway.time_left <= 1 : 
+		comboScale = $ComboCanvas/GoAway.time_left
+	else : comboScale = 2 - $ComboCanvas/GoAway.time_left
+	$ComboCanvas/Label.scale.x = sqrt(comboScale)
+	$ComboCanvas/Label.scale.y = sqrt(comboScale)
 	
 	var directionString : String = "Down"
 	var altDirection = Vector2(round(direction.x), round(direction.y))
@@ -174,9 +177,9 @@ func _on_deflect_timer_timeout():
 	if deflectCombo >= minCombo :
 		$DeflectionSpree.pitch_scale = deflectSound.pitch_scale
 		$DeflectionSpree.play()
-		$Label.show()
-		$Label/Combo.text = str(deflectCombo)
-		$Label/GoAway.start()
+		$ComboCanvas/Label.show()
+		$ComboCanvas/Label/Combo.text = str(deflectCombo)
+		$ComboCanvas/GoAway.start()
 		print("Deflect Combo : ", deflectCombo)
 	deflectSound.pitch_scale = minDeflectPitch
 	deflectCombo = 0
@@ -228,3 +231,4 @@ func _on_nav_timer_timeout():
 
 func _on_engine_finished():
 	$Engine.play()
+

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bugyp828ar6u0"
+path="res://.godot/imported/SniffD.wav-624ab89cfb0803bb4744c461befc717e.sample"
+
+[deps]
+
+source_file="res://Assets/Pillar Demon/Sounds/SniffD.wav"
+dest_files=["res://.godot/imported/SniffD.wav-624ab89cfb0803bb4744c461befc717e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

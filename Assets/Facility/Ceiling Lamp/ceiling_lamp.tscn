@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://44y0ibufw40t"]
+
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/CircleLight.png" id="1_aocgp"]
+[ext_resource type="Script" path="res://Assets/Facility/Ceiling Lamp/ceiling_lamp.gd" id="2_vviws"]
+
+[node name="Ceiling Lamp" type="PointLight2D"]
+position = Vector2(128, 128)
+scale = Vector2(1.5, 1.5)
+color = Color(1, 1, 0.878431, 1)
+energy = 1.5
+texture = ExtResource("1_aocgp")
+texture_scale = 14.0
+height = 768.0
+script = ExtResource("2_vviws")

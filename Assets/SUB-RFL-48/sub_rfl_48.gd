@@ -6,7 +6,7 @@ class_name SUBRFL48
 @onready var flashlight : PointLight2D = $Flashlight
 @onready var Step : AudioStreamPlayer2D = $Step
 @onready var Fire : AudioStreamPlayer2D = $Fire
-@onready var Selector : Sprite2D = $"Self Selector"
+@onready var Selector : Sprite2D = $"CanvasLayer/Self Selector"
 @onready var testTimer : Timer = $Test
 @onready var gunModule : GunModule = $GunModule
 @onready var fireArea : Area2D = $Flashlight/FireArea
@@ -14,7 +14,6 @@ class_name SUBRFL48
 @onready var voice : AudioStreamPlayer2D = $Voice
 
 var direction : Vector2 = Vector2(0, 1)
-@export var maxSpeed : int = 200
 var speed : int = 200
 @export var acceleration : float = 5
 @export var turnSpeed : float = 6
@@ -73,9 +72,13 @@ func _physics_process(delta) :
 				if aggroList.has(thing) == false : aggroList.append(thing)
 			elif thing is SUBRFL48 : squadLogic(thing)
 	
-	if aggroList.size() > 0 and State != States.Shoot and State != States.Approach : 
-		voice.tryVoice("FoundEnemies")
-		State = States.Shoot
+	if aggroList.size() > 0 :
+		aggroTarget = aggroList[0]
+		if State != States.Shoot and State != States.Approach : 
+			voice.tryVoice("FoundEnemies")
+			State = States.Shoot
+	#elif State == States.Shoot or State == States.Approach : State = States.Idle
+	
 	if State != States.Idle : actionQuery()
 	
 	velocity = velocity.lerp(Vector2.ZERO, delta)
@@ -219,7 +222,7 @@ func actionQuery() :
 								if leaderFollowers.size() > aggroList.size() :
 									voice.tryVoice("Outnumber")
 							States.Approach :
-								nav.target_position = aggroTarget.position
+								if aggroTarget != null : nav.target_position = aggroTarget.position
 						var tarPos : Vector2 
 						var myPlace = leaderFollowers.find(self)
 						if myPlace == 0 : tarPos = leaderPos
@@ -229,7 +232,7 @@ func actionQuery() :
 							tarPos = leaderFollowers[myPlace - 1].global_position
 						if tarPos.distance_to(position) < 256 : speed = leader.speed
 						if tarPos.distance_to(position) > 4096 : leaveSquad()
-						else : speed = maxSpeed * clamp((float(HP)/float(maxHP)), 0.5, 1)
+						else : speed = maxSpeed * sqrt(clamp((float(HP)/float(maxHP)), 0.5, 1))
 						nav.max_speed = speed
 						Selector.inFrontPos = tarPos
 						if State == States.Move :
@@ -257,6 +260,7 @@ func move(delta) :
 			direction = direction + Vector2(randf_range(-randoTurn, randoTurn), randf_range(-randoTurn, randoTurn))
 			velocity = velocity.lerp((direction * speed) + (avoidenceVelocity * 0.75), acceleration * delta)
 		States.Approach :
+			if aggroTarget == null : return false
 			var distanceToTarget = position.distance_to(aggroTarget.position)
 			#if distanceToTarget < 512 : vectorToTarget = vectorToTarget * -1
 			vectorToTarget = vectorToTarget * (-1 * (1 - (clamp(distanceToTarget, 0, 512)/256)))
@@ -340,7 +344,7 @@ func _on_animated_sprite_2d_frame_changed():
 	if sprite.animation.contains("Shoot") :
 		if sprite.frame == 1 :
 			Fire.play()
-			#gunModule.fire(DMG, AP, direction, inaccuracy * revved)
+			gunModule.fire(DMG, AP, direction, inaccuracy * revved)
 			velocity += (direction * -1) * recoil
 
 func _on_sub_navigation_navigation_finished():
