@@ -1648,7 +1648,7 @@ radius = 48.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_448r3"]
 radius = 64.0
-height = 128.0
+height = 192.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_knsan"]
 radius = 48.0
@@ -1718,6 +1718,9 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_nppuk")
 desiredCompany = 3
+team = "Pillar Demon"
+tags = Array[String](["Demon", "Biological", "HasBlood", "Lesser"])
+canBeSeen = false
 maxSpeed = 250
 maxHP = 8
 ARM = 6
@@ -1727,21 +1730,21 @@ y_sort_enabled = true
 position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_fiel8")
 animation = &"AttackDown"
-frame = 9
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -32)
 shape = SubResource("CircleShape2D_8pdwq")
 
 [node name="RotateNode" type="Node2D" parent="."]
+visible = false
 position = Vector2(0, -48)
 
 [node name="PunchArea" type="Area2D" parent="RotateNode"]
+position = Vector2(0, 64)
 monitorable = false
 
 [node name="Punch" type="CollisionShape2D" parent="RotateNode/PunchArea"]
-position = Vector2(0, 112)
-rotation = 1.5708
 shape = SubResource("CapsuleShape2D_448r3")
 debug_color = Color(0.7, 0.0583333, 0, 0.419608)
 
@@ -1778,6 +1781,7 @@ debug_path_custom_point_size = 16.0
 debug_path_custom_line_width = 4.0
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+visible = false
 position = Vector2(0, -32)
 radius = 96.0
 
@@ -1821,6 +1825,7 @@ max_distance = 2048.0
 one_shot = true
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
 occluder = SubResource("OccluderPolygon2D_pbf14")
 
 [connection signal="hurt" from="." to="." method="_on_hurt"]

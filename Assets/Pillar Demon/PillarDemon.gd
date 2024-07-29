@@ -17,7 +17,7 @@ Emerge = 1,
 Standing = 2,
 UnEmerge = 3
 }
-var PillarState = PillarStates.Standing
+var PillarState = PillarStates.Pillar
 
 @onready var seeable = $Seeable
 @onready var sprite : AnimatedSprite2D = $PDSprite
@@ -35,13 +35,13 @@ var PillarState = PillarStates.Standing
 var recentSeenCheck : bool = false
 var thingsInVision
 var direction : Vector2 = Vector2.DOWN
-var cAni = "Skitter"
+var cAni = "Emerge"
 var avoidenceVelocity : Vector2 = Vector2.ZERO
 
 
 func _init() :
 	await ready
-	unEmerge()
+	idle()
 	$Sniff/SniffTimer.start(randf_range(0, 60))
 	vision = $Vision
 	nav = $PDNav
@@ -90,6 +90,9 @@ func actionQuery(delta) :
 	for thing in thingsInVision :
 		if thing is PillarDemon : pillarArray.append(thing)
 	if pillarArray.size() > 0 :
+		for pillar in pillarArray :
+			if pillar.State == States.Swarm and pillar.aggroTarget != null :
+				swarm(pillar.aggroTarget)
 		if pillarArray.size() >= desiredCompany :
 			if State == States.Wander or State == States.GroupUp :
 				nav.target_position = pillarArray[0].position
@@ -99,9 +102,10 @@ func actionQuery(delta) :
 			if pillarArray[0].PillarState == PillarStates.Pillar and pillarArray[0].recentSeenCheck == false :
 				pillarArray[0].wander()
 	if State == States.Swarm or State == States.Attack :
-		while aggroList.has(null) : aggroList.erase(null)
-		if aggroTarget == null :
-			if aggroList.size() > 0 : aggroTarget = aggroList[0]
+		if aggroList.size() > 0 and aggroList[0] == null : aggroList.remove_at(0)
+		if aggroTarget == null : 
+			if aggroList.size() > 0 : 
+				aggroTarget = aggroList[0]
 			else : wander()
 		else : nav.target_position = aggroTarget.position
 	var target = nav.get_next_path_position()
@@ -125,7 +129,7 @@ func actionQuery(delta) :
 			if State == States.Swarm :
 				if aggroTarget == null : return false
 				var distanceTo = global_position.distance_to(aggroTarget.position)
-				if distanceTo < 128 : 
+				if distanceTo < 192 : 
 					direction = vectorToTarget
 					attack()
 					return false
@@ -139,7 +143,8 @@ func pillarQuery(delta) :
 	reflectShots = true
 	nav.avoidance_enabled = true
 	$NavigationObstacle2D.avoidance_enabled = false
-	velocity = lerp(velocity, Vector2.ZERO, delta * deccelerate) + (avoidenceVelocity * 0.5)  
+	avoidenceVelocity *= 0.5
+	velocity = lerp(velocity, Vector2.ZERO, delta * deccelerate) + avoidenceVelocity 
 	var pillarArray : Array[Unit] = []
 	var enemyArray : Array[Unit] = []
 	for thing in thingsInVision :
@@ -161,11 +166,13 @@ func pillarQuery(delta) :
 		for enemy in enemyArray : theirStrength += enemy.HP
 		if ourStrength > theirStrength :
 			var strengthRatio = theirStrength / ourStrength
-			while aggroList.has(null) : aggroList.erase(null)
 			for enemy in enemyArray :
 				if aggroList.has(enemy) == false :
 					aggroList.append(enemy)
-			if randi_range(1, swarmDesire * strengthRatio) == 1 :
+				$Swarm.volume_db = -30
+				if $Swarm.playing == false : $Swarm.play()
+			while aggroList.has(null) : aggroList.erase(null)
+			if aggroList.size() > 0 and aggroList[0] != null and randi_range(1, swarmDesire * strengthRatio) == 1 :
 				swarm(aggroList[0])
 	
 	if pillarArray.size() < desiredCompany and enemyArray.size() == 0 :
@@ -205,14 +212,16 @@ func wander() :
 	if PillarState == PillarStates.Pillar : emerge()
 
 func swarm(target : Unit) :
-	print("Swarming")
-	$Swarm.play()
+	#print("Swarming")
+	if $Swarm.playing == false : $Swarm.play()
+	$Swarm.volume_db = 0
 	aggroTarget = target
 	State = States.Swarm
 	nav.target_position = aggroTarget.position
 	if PillarState == PillarStates.Pillar : emerge()
 
 func attack() :
+	sprite.speed_scale = 1
 	State = States.Attack
 	cAni = "Attack"
 
@@ -310,9 +319,18 @@ func _on_swarm_finished():
 
 func _on_pd_sprite_frame_changed():
 	if cAni == "Attack" and sprite.frame == 9 :
-		print("PUNCH!")
 		$Punch.play()
 		var punching = $RotateNode/PunchArea.get_overlapping_bodies()
 		for punched in punching :
 			if punched is Unit and punched.team != team :
 				punched.damage(DMG, AP, self, self)
+
+var death = load("res://Assets/Pillar Demon/pd_remains.tscn")
+
+func die(_cause : String) :
+	var newDeath = death.instantiate()
+	newDeath.thisScale = $Sniff.pitch_scale
+	newDeath.global_position = position
+	newDeath.scale = scale * 1.5
+	map.add_child(newDeath)
+	queue_free()

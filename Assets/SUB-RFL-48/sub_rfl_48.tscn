@@ -56,10 +56,10 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_evgs4")
 acceleration = 75.0
-AP = 2
 inaccuracy = 10.0
 recoil = 0.125
 team = "Facility"
+tags = Array[String](["Mechanical", "Robot", "Greater"])
 maxHP = 16
 ARM = 2
 

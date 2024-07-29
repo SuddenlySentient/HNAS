@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ca1pdu3fohe43"]
+[gd_scene load_steps=24 format=3 uid="uid://ca1pdu3fohe43"]
 
 [ext_resource type="PackedScene" uid="uid://44y0ibufw40t" path="res://Assets/Facility/Ceiling Lamp/ceiling_lamp.tscn" id="1_3qcgb"]
 [ext_resource type="Texture2D" uid="uid://ccfhf5ts588ay" path="res://Assets/Vampire/Floor.png" id="1_l7q3f"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://Camera.gd" id="5_ybltu"]
 [ext_resource type="PackedScene" uid="uid://dejvmg55walo3" path="res://Assets/Facility/Mine/mine.tscn" id="6_psqs4"]
 [ext_resource type="PackedScene" uid="uid://cftucttr52n82" path="res://Assets/Pillar Demon/PillarDemon.tscn" id="8_nt3no"]
+[ext_resource type="PackedScene" uid="uid://blriopxiv7rh2" path="res://Assets/Vampire/Vampire.tscn" id="10_faf0b"]
+[ext_resource type="PackedScene" uid="uid://c7w2545ivmvy0" path="res://Assets/Base/hit_mark.tscn" id="11_n34lc"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_f6fuw"]
 tile_data = PackedInt32Array(0, 6, 65536, 524288, 6, 65536, 262146, 6, 65536, 4, 6, 65536, 524292, 6, 65536, 262150, 6, 65536, 8, 6, 65536, 524296, 6, 65536, 262153, 6, 65536, 11, 6, 65536, 524299, 6, 65536)
@@ -109,7 +111,7 @@ layer_0/tile_data = PackedInt32Array(-1, 0, 0, 65535, 0, 0, -65538, 0, 0, -2, 0,
 layer_1/name = "Device"
 layer_1/y_sort_enabled = true
 layer_1/z_index = 1
-layer_1/tile_data = PackedInt32Array(-851968, 4, 65536, -786435, 4, 65536, -851965, 4, 65536, -851962, 4, 65536, -655362, 4, 65536, -720895, 4, 65536, -720892, 4, 65536, -720889, 4, 65536, -524289, 4, 65536, -589822, 4, 65536, -589819, 4, 65536, -589816, 4, 65536, -458746, 4, 65536, -458743, 4, 65536, -327673, 4, 65536, -327670, 4, 65536, -327667, 4, 65536, -458740, 4, 65536, -589813, 4, 65536, -720886, 4, 65536, -458737, 4, 65536, -720883, 4, 65536, -393219, 4, 65536, -262146, 4, 65536, -327679, 4, 65536, -327676, 4, 65536, -917505, 4, 65536, -983038, 4, 65536, -983035, 4, 65536, 589817, 4, 65536, 327672, 4, 65536, 262132, 4, 65536, 327664, 4, 65536, 720881, 4, 65536, 983026, 4, 65536, 1048566, 4, 65536, 983034, 4, 65536, 655349, 4, 65536)
+layer_1/tile_data = PackedInt32Array(-851968, 4, 65536, -786435, 4, 65536, -851965, 4, 65536, -851962, 4, 65536, -655362, 4, 65536, -720895, 4, 65536, -720892, 4, 65536, -720889, 4, 65536, -524289, 4, 65536, -589822, 4, 65536, -589819, 4, 65536, -589816, 4, 65536, -458746, 4, 65536, -458743, 4, 65536, -327673, 4, 65536, -327670, 4, 65536, -327667, 4, 65536, -458740, 4, 65536, -589813, 4, 65536, -720886, 4, 65536, -458737, 4, 65536, -720883, 4, 65536, -393219, 4, 65536, -262146, 4, 65536, -327679, 4, 65536, -327676, 4, 65536, -917505, 4, 65536, -983038, 4, 65536, -983035, 4, 65536)
 
 [node name="Camera" type="Camera2D" parent="."]
 position_smoothing_enabled = true
@@ -181,13 +183,34 @@ position = Vector2(3188, 1469)
 position = Vector2(-1659, -3510)
 
 [node name="SUB-RFL-48-000" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-2428, -379)
+position = Vector2(-3555, -3837)
 
 [node name="SUB-RFL-48-001" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-2179, -368)
+position = Vector2(-3306, -3826)
 
 [node name="SUB-RFL-48-002" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-2435, -137)
+position = Vector2(-3562, -3595)
 
 [node name="SUB-RFL-48-003" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-2186, -126)
+position = Vector2(-3313, -3584)
+
+[node name="SUB-RFL-48-004" parent="." instance=ExtResource("1_yof75")]
+position = Vector2(-1427, -3855)
+
+[node name="SUB-RFL-48-005" parent="." instance=ExtResource("1_yof75")]
+position = Vector2(-1178, -3844)
+
+[node name="SUB-RFL-48-006" parent="." instance=ExtResource("1_yof75")]
+position = Vector2(-1434, -3613)
+
+[node name="SUB-RFL-48-007" parent="." instance=ExtResource("1_yof75")]
+position = Vector2(-1185, -3602)
+
+[node name="Vampire" parent="." instance=ExtResource("10_faf0b")]
+position = Vector2(-2259, -1436)
+
+[node name="Vampire2" parent="." instance=ExtResource("10_faf0b")]
+position = Vector2(1959, 2237)
+team = "NOT Sanguinist"
+
+[node name="HitMark" parent="." instance=ExtResource("11_n34lc")]

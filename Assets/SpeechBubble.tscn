@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://41ewtn37gdwt" path="res://Assets/FSEX300.ttf" id="1_ttbtx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2fnq0"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r5xad"]
 content_margin_left = 16.0
 content_margin_top = 2.0
 content_margin_right = 16.0
@@ -17,10 +17,11 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+corner_detail = 1
 anti_aliasing = false
 
 [sub_resource type="Theme" id="Theme_kfbwi"]
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_2fnq0")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_r5xad")
 
 [node name="SpeechBubble" type="Node2D"]
 z_index = 64

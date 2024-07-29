@@ -11,7 +11,10 @@ const minDeflectPitch : float = 1
 const maxDeflectPitch : float = 3
 const minCombo = 50
 var deflectCombo = 0
+var healthRemaining : float = 1
 @export var turnSpeed : float = 3
+@export var bloodTankMax : int = 16
+var bloodTank : int = 0
 
 @export_subgroup("Prime Sword")
 @export var JabDMG : int = 6
@@ -29,6 +32,8 @@ Approach = 4
 var State = States.Ready
 
 func _physics_process(delta) :
+	
+	healthRemaining = float(HP) / float(maxHP)
 	
 	aggroList.clear()
 	var currentVision : Array = checkVision()
@@ -61,12 +66,15 @@ func _physics_process(delta) :
 			$NavTimer.stop()
 			nav.target_position = aggroTarget.position
 			var desiredDirection = global_position.direction_to(nav.get_next_path_position())
-			direction = lerp(direction, desiredDirection, turnSpeed * delta).normalized()
+			
+			var extraSpeed = lerpf(2, 1, sqrt(healthRemaining))
+			#print("Speed : ",extraSpeed)
+			
+			direction = lerp(direction, desiredDirection, turnSpeed * extraSpeed * delta).normalized()
 			direction = direction + Vector2(randf_range(-0.001, 0.001), randf_range(-0.001, 0.001))
 			var roundedDirection = Vector2(round(direction.x), round(direction.y))
 			var roundedDesiredDirection = Vector2(round(desiredDirection.x), round(desiredDirection.y))
-			if roundedDirection == roundedDesiredDirection : 
-				velocity = (direction * maxSpeed)
+			if roundedDirection == roundedDesiredDirection : velocity = direction * maxSpeed * extraSpeed
 			else :
 				velocity = velocity.lerp(Vector2.ZERO, delta)
 		States.Move :
@@ -87,7 +95,11 @@ func _physics_process(delta) :
 	
 	if round(velocity.length()) < 64 and cAni == "Walk" : 
 		sprite.speed_scale = 0
-	else : sprite.speed_scale = 1
+	else : sprite.speed_scale = velocity.length()/200
+	if cAni == "Attack" : 
+		var extraSpeed = lerpf(3, -1.5, clamp(sqrt(healthRemaining), 0, 0.5))
+		#print("Attack : ", extraSpeed)
+		sprite.speed_scale = extraSpeed
 	
 	move_and_slide()
 
@@ -104,18 +116,24 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	var DMGDealt : int = DMG * reduction
 	
 	if source is Shot :
-		direction = position.direction_to(source.position)
-		deflect()
-		source.changeColor(Color.from_hsv(0, 0.9, 1, 1))
-		DMGDealt = 0
-		dealer.indirectDMG(self, 0)
+		var deflectChance = floor(lerp(1, 16, healthRemaining * healthRemaining))
+		#print("HP : ", healthRemaining, " Deflect Chance : ", deflectChance)
+		
+		if randi_range(1, deflectChance) == 1 or deflectCombo < 1 :
+			direction = position.direction_to(source.position)
+			deflect()
+			source.changeColor(Color.from_hsv(0, 0.9, 1, 1))
+			DMGDealt = 0
+			dealer.indirectDMG(self, 0)
 	
 	HP -= DMGDealt
 	
 	if HP <= 0 : die(source.name)
 	if DMGDealt > 0 : 
 		emit_signal("hurt", DMGDealt)
-		print(DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
+		@warning_ignore("integer_division")
+		addToTank(-DMGDealt / 2)
+		print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
 	return DMGDealt
 
 func deflect() :
@@ -203,7 +221,8 @@ func _on_vampire_sprite_frame_changed():
 			$RotateNode/Jab/JabTimer.start()
 			for unit in swungAt :
 				if unit is Unit :
-					unit.damage(JabDMG, SwordAP, self, self)
+					var dealt = unit.damage(JabDMG, SwordAP, self, self)
+					if unit.tags.has("HasBlood") : addToTank(dealt / 2)
 					unit.velocity += global_position.direction_to(unit.position) * knockback
 		if sprite.frame == 34 :
 			var swungAt : Array = $RotateNode/ThrustArea.get_overlapping_bodies()
@@ -216,7 +235,8 @@ func _on_vampire_sprite_frame_changed():
 			$RotateNode/Slice/SliceTimer.start()
 			for unit in swungAt :
 				if unit is Unit :
-					unit.damage(SwingDMG, SwordAP, self, self)
+					var dealt = unit.damage(SwingDMG, SwordAP, self, self)
+					if unit.tags.has("HasBlood") : addToTank(dealt / 2)
 					unit.velocity += global_position.direction_to(unit.position) * knockback
 
 func _on_vampire_sprite_animation_finished():
@@ -230,3 +250,22 @@ func _on_nav_timer_timeout():
 func _on_engine_finished():
 	$Engine.play()
 
+func addToTank(amount : int) :
+	
+	match amount > 0 :
+		true :
+			if bloodTank != bloodTankMax : 
+				$FillTank.play()
+				bloodTank += amount
+				if bloodTank > bloodTankMax : bloodTank = bloodTankMax
+		false :
+			if bloodTank != 0 : 
+				bloodTank += amount
+				if bloodTank < 0 : bloodTank = 0
+
+func _on_heal_timer_timeout():
+	if bloodTank > 0 and HP < maxHP :
+		bloodTank -= 1
+		heal(1)
+		$Heal.pitch_scale = lerpf(0.5, 1.75, sqrt(healthRemaining))
+		$Heal.play()

@@ -281,7 +281,7 @@ func idle(delta) :
 	velocity = velocity.lerp(Vector2.ZERO, acceleration * delta)
 
 func shoot(delta) :
-	velocity = velocity.lerp(Vector2.ZERO, delta)
+	velocity = velocity.lerp(Vector2.ZERO, delta) + avoidenceVelocity
 	testTimer.stop()
 	cAni = "Shoot"
 	sprite.speed_scale = 1 * revved

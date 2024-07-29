@@ -5,7 +5,7 @@ class_name Unit
 @export var team : String = "Unalligned"
 var aggroTarget : Unit
 var aggroList : Array[Unit] = []
-
+@export var tags : Array[String]
 @export var canBeSeen : bool = true
 @export var maxSpeed : int= 200
 @export var reflectShots : bool = false
@@ -57,8 +57,12 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	
 	if DMGDealt > 0 : 
 		emit_signal("hurt", DMGDealt)
-		print(DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
+		print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
 	return DMGDealt
+
+func heal(amount : int) :
+	HP += amount
+	if HP > maxHP : HP = maxHP
 
 func die(_cause : String) :
 	queue_free()

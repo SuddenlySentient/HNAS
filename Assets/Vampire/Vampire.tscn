@@ -1,4 +1,4 @@
-[gd_scene load_steps=900 format=3 uid="uid://blriopxiv7rh2"]
+[gd_scene load_steps=904 format=3 uid="uid://blriopxiv7rh2"]
 
 [ext_resource type="Script" path="res://Assets/Vampire/Vampire.gd" id="1_f578t"]
 [ext_resource type="FontFile" uid="uid://drk2hxgvh0f5a" path="res://Assets/MinecraftBold-nMK1.otf" id="2_ck1mv"]
@@ -888,6 +888,8 @@
 [ext_resource type="AudioStream" uid="uid://uut1h6unl5ht" path="res://Assets/Vampire/Sound/electric_release_02.wav" id="884_qosqm"]
 [ext_resource type="AudioStream" uid="uid://cln3hehg50nfl" path="res://Assets/Vampire/Sound/electric_release_03.wav" id="885_cxqhw"]
 [ext_resource type="AudioStream" uid="uid://w5yiakh36sso" path="res://Assets/Vampire/Sound/truck_engine_idle_loop_01.wav" id="886_u4bg1"]
+[ext_resource type="AudioStream" uid="uid://djygrpqyv644p" path="res://Assets/Vampire/Sound/Blood.wav" id="889_7lhdf"]
+[ext_resource type="AudioStream" uid="uid://bna6ii4dvowjw" path="res://Assets/Vampire/Sound/HpGet.wav" id="890_cjoen"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xku26"]
 animations = [{
@@ -3676,6 +3678,17 @@ stream_1/weight = 1.0
 stream_2/stream = ExtResource("885_cxqhw")
 stream_2/weight = 1.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_heare"]
+streams_count = 1
+stream_0/stream = ExtResource("889_7lhdf")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_firmp"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("890_cjoen")
+stream_0/weight = 1.0
+
 [node name="Vampire" type="CharacterBody2D"]
 y_sort_enabled = true
 motion_mode = 1
@@ -3683,9 +3696,10 @@ wall_min_slide_angle = 0.0
 script = ExtResource("1_f578t")
 turnSpeed = 2.0
 team = "Sanguinist"
+tags = Array[String](["Mechanical", "Angel", "HasBlood", "Greater"])
 reflectShots = true
 maxHP = 32
-ARM = 4
+ARM = 5
 
 [node name="ComboCanvas" type="CanvasLayer" parent="."]
 visible = false
@@ -3746,7 +3760,6 @@ sprite_frames = SubResource("SpriteFrames_xku26")
 animation = &"AttackDown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_p2uxg")
 
 [node name="VPNav" type="NavigationAgent2D" parent="."]
@@ -3881,9 +3894,28 @@ stream = ExtResource("886_u4bg1")
 autoplay = true
 max_distance = 2048.0
 
+[node name="Heal" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(1, 0)
+stream = SubResource("AudioStreamRandomizer_heare")
+volume_db = 10.0
+autoplay = true
+max_distance = 2048.0
+
+[node name="FillTank" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(1, 0)
+stream = SubResource("AudioStreamRandomizer_firmp")
+autoplay = true
+max_distance = 2048.0
+
+[node name="healTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="animation_finished" from="VampireSprite" to="." method="_on_vampire_sprite_animation_finished"]
 [connection signal="frame_changed" from="VampireSprite" to="." method="_on_vampire_sprite_frame_changed"]
 [connection signal="navigation_finished" from="VPNav" to="." method="_on_vp_nav_navigation_finished"]
 [connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]
 [connection signal="timeout" from="DeflectTimer" to="." method="_on_deflect_timer_timeout"]
 [connection signal="finished" from="Engine" to="." method="_on_engine_finished"]
+[connection signal="finished" from="Heal" to="." method="_on_engine_finished"]
+[connection signal="finished" from="FillTank" to="." method="_on_engine_finished"]
+[connection signal="timeout" from="healTimer" to="." method="_on_heal_timer_timeout"]
