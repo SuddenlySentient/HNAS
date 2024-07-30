@@ -195,22 +195,18 @@ position = Vector2(-3562, -3595)
 position = Vector2(-3313, -3584)
 
 [node name="SUB-RFL-48-004" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-1427, -3855)
+position = Vector2(3548, 2189)
 
 [node name="SUB-RFL-48-005" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-1178, -3844)
+position = Vector2(3797, 2200)
 
 [node name="SUB-RFL-48-006" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-1434, -3613)
+position = Vector2(3541, 2431)
 
 [node name="SUB-RFL-48-007" parent="." instance=ExtResource("1_yof75")]
-position = Vector2(-1185, -3602)
+position = Vector2(3790, 2442)
 
 [node name="Vampire" parent="." instance=ExtResource("10_faf0b")]
-position = Vector2(-2259, -1436)
-
-[node name="Vampire2" parent="." instance=ExtResource("10_faf0b")]
-position = Vector2(1959, 2237)
-team = "NOT Sanguinist"
+position = Vector2(791, -53)
 
 [node name="HitMark" parent="." instance=ExtResource("11_n34lc")]

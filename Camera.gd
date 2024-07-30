@@ -8,8 +8,8 @@ var zipZoom : float = 0.25
 
 func _process(_delta):
 	
-	zoom.x = lerpf(0.2, 1, zipZoom)
-	zoom.y = lerpf(0.2, 1, zipZoom)
+	zoom.x = lerpf(0.125, 1, zipZoom)
+	zoom.y = lerpf(0.125, 1, zipZoom)
 
 func _input(_event) :
 	

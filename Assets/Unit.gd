@@ -9,6 +9,7 @@ var aggroList : Array[Unit] = []
 @export var canBeSeen : bool = true
 @export var maxSpeed : int= 200
 @export var reflectShots : bool = false
+@onready var marker = load("res://Assets/Base/hit_mark.tscn")
 signal hurt(DMG : int)
 
 
@@ -57,7 +58,10 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	
 	if DMGDealt > 0 : 
 		emit_signal("hurt", DMGDealt)
-		print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
+		var markSize = sqrt(float(DMGDealt) / 2.0)
+		hitmarker(str(DMGDealt), markSize)
+		#print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
+	elif DMGDealt == 0 : hitmarker("0", 1, Color.from_hsv(0.6, 0.8, 1, 1))
 	return DMGDealt
 
 func heal(amount : int) :
@@ -132,3 +136,12 @@ func getKill(_who : Unit) :
 
 func indirectDMG(_who : Unit, _amount : int) :
 	pass
+
+func hitmarker(text : String = "NULL", size : float = 1, color : Color = Color.from_hsv(0, 0.8, 1, 1)) :
+	var mark = marker.instantiate()
+	mark.initalPos = global_position
+	mark.vector += velocity
+	mark.text = text
+	mark.color = color
+	mark.size = size
+	map.add_child(mark)

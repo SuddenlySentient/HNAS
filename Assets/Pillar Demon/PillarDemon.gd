@@ -106,7 +106,7 @@ func actionQuery(delta) :
 		if aggroTarget == null : 
 			if aggroList.size() > 0 : 
 				aggroTarget = aggroList[0]
-			else : wander()
+			else : idle()
 		else : nav.target_position = aggroTarget.position
 	var target = nav.get_next_path_position()
 	var vectorToTarget = position.direction_to(target)

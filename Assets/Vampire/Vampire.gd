@@ -118,7 +118,6 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	if source is Shot :
 		var deflectChance = floor(lerp(1, 16, healthRemaining * healthRemaining))
 		#print("HP : ", healthRemaining, " Deflect Chance : ", deflectChance)
-		
 		if randi_range(1, deflectChance) == 1 or deflectCombo < 1 :
 			direction = position.direction_to(source.position)
 			deflect()
@@ -131,9 +130,12 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	if HP <= 0 : die(source.name)
 	if DMGDealt > 0 : 
 		emit_signal("hurt", DMGDealt)
+		var markSize = sqrt(float(DMGDealt) / 2.0)
+		hitmarker(str(DMGDealt), markSize)
 		@warning_ignore("integer_division")
 		addToTank(-DMGDealt / 2)
-		print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
+		#print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
+	elif DMGDealt == 0 : hitmarker("0", 1, Color.from_hsv(0.6, 0.8, 1, 1))
 	return DMGDealt
 
 func deflect() :
