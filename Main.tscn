@@ -1,15 +1,13 @@
-[gd_scene load_steps=24 format=3 uid="uid://ca1pdu3fohe43"]
+[gd_scene load_steps=22 format=3 uid="uid://ca1pdu3fohe43"]
 
 [ext_resource type="PackedScene" uid="uid://44y0ibufw40t" path="res://Assets/Facility/Ceiling Lamp/ceiling_lamp.tscn" id="1_3qcgb"]
 [ext_resource type="Texture2D" uid="uid://ccfhf5ts588ay" path="res://Assets/Vampire/Floor.png" id="1_l7q3f"]
-[ext_resource type="PackedScene" uid="uid://6lg6q0wyhlag" path="res://Assets/SUB-RFL-48/sub_rfl_48.tscn" id="1_yof75"]
 [ext_resource type="Texture2D" uid="uid://dlkbyhdbm6w5h" path="res://Assets/Facility/Wall.png" id="2_24oxp"]
 [ext_resource type="Texture2D" uid="uid://b42r3578uyte3" path="res://Assets/Facility/Block.png" id="3_ti7vl"]
 [ext_resource type="Texture2D" uid="uid://t6b22wwiv62v" path="res://Assets/Facility/Top.png" id="4_f3sr4"]
 [ext_resource type="Script" path="res://Camera.gd" id="5_ybltu"]
 [ext_resource type="PackedScene" uid="uid://dejvmg55walo3" path="res://Assets/Facility/Mine/mine.tscn" id="6_psqs4"]
-[ext_resource type="PackedScene" uid="uid://cftucttr52n82" path="res://Assets/Pillar Demon/PillarDemon.tscn" id="8_nt3no"]
-[ext_resource type="PackedScene" uid="uid://blriopxiv7rh2" path="res://Assets/Vampire/Vampire.tscn" id="10_faf0b"]
+[ext_resource type="PackedScene" uid="uid://blriopxiv7rh2" path="res://Assets/Vampire/Vampire.tscn" id="8_xlhd6"]
 [ext_resource type="PackedScene" uid="uid://bw5uu54rasmh7" path="res://Assets/Seraph/seraph.tscn" id="11_kwko2"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_f6fuw"]
@@ -118,81 +116,9 @@ layer_1/z_index = 1
 layer_1/tile_data = PackedInt32Array(-851968, 4, 65536, -786435, 4, 65536, -851965, 4, 65536, -851962, 4, 65536, -655362, 4, 65536, -720895, 4, 65536, -720892, 4, 65536, -720889, 4, 65536, -524289, 4, 65536, -589822, 4, 65536, -589819, 4, 65536, -589816, 4, 65536, -458746, 4, 65536, -458743, 4, 65536, -327673, 4, 65536, -327670, 4, 65536, -327667, 4, 65536, -458740, 4, 65536, -589813, 4, 65536, -720886, 4, 65536, -458737, 4, 65536, -720883, 4, 65536, -393219, 4, 65536, -262146, 4, 65536, -327679, 4, 65536, -327676, 4, 65536, -917505, 4, 65536, -983038, 4, 65536, -983035, 4, 65536)
 
 [node name="Seraph" parent="TileMap" instance=ExtResource("11_kwko2")]
-position = Vector2(640, 1152)
 
-[node name="PillarDemon" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(640, -128)
-
-[node name="PillarDemon2" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(-3647, 1947)
-
-[node name="PillarDemon3" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(3658, 3621)
-
-[node name="PillarDemon4" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(3615, -277)
-
-[node name="PillarDemon5" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(-3898, -2731)
-
-[node name="PillarDemon6" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(-2338, -1105)
-
-[node name="PillarDemon7" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(-482, 3447)
-
-[node name="PillarDemon8" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(2640, -3504)
-
-[node name="PillarDemon9" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(2551, 1296)
-
-[node name="PillarDemon10" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(1397, 3405)
-
-[node name="PillarDemon11" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(-1887, 3453)
-
-[node name="PillarDemon12" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(-3925, -3547)
-
-[node name="PillarDemon13" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(-3961, -348)
-
-[node name="PillarDemon14" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(359, 2609)
-
-[node name="PillarDemon15" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(3188, 1469)
-
-[node name="PillarDemon16" parent="TileMap" instance=ExtResource("8_nt3no")]
-position = Vector2(-1659, -3510)
-
-[node name="SUB-RFL-48-000" parent="TileMap" instance=ExtResource("1_yof75")]
-position = Vector2(-3555, -3837)
-
-[node name="SUB-RFL-48-001" parent="TileMap" instance=ExtResource("1_yof75")]
-position = Vector2(-3306, -3826)
-
-[node name="SUB-RFL-48-002" parent="TileMap" instance=ExtResource("1_yof75")]
-position = Vector2(-3562, -3595)
-
-[node name="SUB-RFL-48-003" parent="TileMap" instance=ExtResource("1_yof75")]
-position = Vector2(-3313, -3584)
-
-[node name="SUB-RFL-48-004" parent="TileMap" instance=ExtResource("1_yof75")]
-position = Vector2(3548, 2189)
-
-[node name="SUB-RFL-48-005" parent="TileMap" instance=ExtResource("1_yof75")]
-position = Vector2(3797, 2200)
-
-[node name="SUB-RFL-48-006" parent="TileMap" instance=ExtResource("1_yof75")]
-position = Vector2(3541, 2431)
-
-[node name="SUB-RFL-48-007" parent="TileMap" instance=ExtResource("1_yof75")]
-position = Vector2(3790, 2442)
-
-[node name="Vampire" parent="TileMap" instance=ExtResource("10_faf0b")]
+[node name="Vampire" parent="TileMap" instance=ExtResource("8_xlhd6")]
+position = Vector2(-512, 0)
 
 [node name="Camera" type="Camera2D" parent="."]
 position_smoothing_enabled = true

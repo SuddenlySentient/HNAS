@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bw5uu54rasmh7"]
+[gd_scene load_steps=48 format=3 uid="uid://bw5uu54rasmh7"]
 
 [ext_resource type="Script" path="res://Assets/Seraph/seraph.gd" id="1_ysqkr"]
 [ext_resource type="Texture2D" uid="uid://b272kobaantw5" path="res://Assets/Seraph/Frames/Idle/0000.png" id="2_xshpf"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://vrvddxe6q3pp" path="res://Assets/Seraph/Frames/Idle/0015.png" id="17_5agxm"]
 [ext_resource type="Texture2D" uid="uid://dgh1vjryvn46d" path="res://Assets/Seraph/SeraphLight.png" id="18_xk5uv"]
 [ext_resource type="AudioStream" uid="uid://cw4p72ekoh37s" path="res://Assets/Seraph/Sounds/FireStart.wav" id="19_2sfs8"]
+[ext_resource type="Texture2D" uid="uid://hhxch26uhqyu" path="res://icon.svg" id="19_pm4ci"]
 [ext_resource type="AudioStream" uid="uid://84pw4vgf7rcm" path="res://Assets/Seraph/Sounds/angelic_choirs_01.wav" id="19_w07jj"]
 [ext_resource type="AudioStream" uid="uid://b8lc0pfmh1eva" path="res://Assets/Seraph/Sounds/steamLoop1.wav" id="19_y320f"]
 [ext_resource type="AudioStream" uid="uid://cwbtxs47qnlf3" path="res://Assets/Seraph/Sounds/steamLoop2.wav" id="20_7ohao"]
@@ -95,13 +96,13 @@ bake_resolution = 128
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_gtp2m"]
+[sub_resource type="CurveTexture" id="CurveTexture_gyd15"]
 curve = SubResource("Curve_tmas7")
 
 [sub_resource type="Gradient" id="Gradient_dmjcd"]
 colors = PackedColorArray(1, 0.86, 0.6, 1, 0.901961, 0.223529, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_s4put"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6e8c0"]
 gradient = SubResource("Gradient_dmjcd")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_busj4"]
@@ -120,8 +121,8 @@ tangential_accel_min = -128.0
 tangential_accel_max = 128.0
 scale_max = 10.0
 scale_over_velocity_max = 512.0
-color_ramp = SubResource("GradientTexture1D_s4put")
-alpha_curve = SubResource("CurveTexture_gtp2m")
+color_ramp = SubResource("GradientTexture1D_6e8c0")
+alpha_curve = SubResource("CurveTexture_gyd15")
 turbulence_noise_strength = 0.0
 turbulence_noise_speed = Vector3(1, 0, 0)
 collision_mode = 2
@@ -180,18 +181,18 @@ stream_3/weight = 1.0
 z_index = 1
 y_sort_enabled = true
 motion_mode = 1
-wall_min_slide_angle = 0.0
 script = ExtResource("1_ysqkr")
 tags = Array[String](["Angel", "Magic", "Greater", "Hover"])
 maxSpeed = 50
 maxHP = 14
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.2, 0.2, 0.2, 1)
 y_sort_enabled = true
-position = Vector2(0, -48)
+position = Vector2(-1, -1)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_cops4")
-frame_progress = 0.197098
+frame_progress = 0.916927
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -212,10 +213,10 @@ trail_enabled = true
 trail_lifetime = 0.1
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 48)
 shape = SubResource("CircleShape2D_svpai")
 
 [node name="HeavenlyLight" type="PointLight2D" parent="."]
-color = Color(1, 1, 1, 0)
 energy = 5.0
 shadow_enabled = true
 texture = ExtResource("18_xk5uv")
@@ -229,11 +230,19 @@ visible = false
 shape = SubResource("CircleShape2D_lxgww")
 debug_color = Color(0.6, 0.239216, 0.419608, 0.25098)
 
+[node name="RayCast" type="RayCast2D" parent="."]
+position = Vector2(0, 48)
+target_position = Vector2(0, 512)
+
+[node name="Sprite2D" type="Sprite2D" parent="RayCast"]
+position = Vector2(0, 512)
+texture = ExtResource("19_pm4ci")
+
 [node name="TestTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="StaminaRegen" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 8.0
 autostart = true
 
 [node name="Regen" type="AudioStreamPlayer2D" parent="StaminaRegen"]
@@ -286,101 +295,6 @@ max_polyphony = 3
 
 [node name="Fail" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_yt5w5")
-
-[node name="RayCast" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-target_position = Vector2(0, 512)
-
-[node name="RayCast2" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = 1.5708
-target_position = Vector2(0, 512)
-
-[node name="RayCast3" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = -1.5708
-target_position = Vector2(0, 512)
-
-[node name="RayCast4" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = -3.14159
-target_position = Vector2(0, 512)
-
-[node name="RayCast5" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = -0.785397
-target_position = Vector2(0, 512)
-
-[node name="RayCast6" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = 0.785397
-target_position = Vector2(0, 512)
-
-[node name="RayCast7" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = -2.35619
-target_position = Vector2(0, 512)
-
-[node name="RayCast8" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = 2.35619
-target_position = Vector2(0, 512)
-
-[node name="RayCast9" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = 0.393245
-target_position = Vector2(0, 512)
-
-[node name="RayCast10" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = 1.96404
-target_position = Vector2(0, 512)
-
-[node name="RayCast11" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = -1.17755
-target_position = Vector2(0, 512)
-
-[node name="RayCast12" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = -2.74834
-target_position = Vector2(0, 512)
-
-[node name="RayCast13" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = -0.392152
-target_position = Vector2(0, 512)
-
-[node name="RayCast14" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = 1.17864
-target_position = Vector2(0, 512)
-
-[node name="RayCast15" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = -1.96295
-target_position = Vector2(0, 512)
-
-[node name="RayCast16" type="RayCast2D" parent="."]
-visible = false
-z_index = 64
-rotation = 2.74944
-target_position = Vector2(0, 512)
 
 [connection signal="timeout" from="TestTimer" to="." method="_on_test_timer_timeout"]
 [connection signal="timeout" from="StaminaRegen" to="." method="_on_stamina_regen_timeout"]

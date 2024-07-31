@@ -46,6 +46,7 @@ func _on_timer_timeout():
 
 func _on_detection_area_body_entered(body):
 	if detonating == false :
+		if body is Unit and body.tags.has("Hover") : return false 
 		detonating = true
 		emit_signal("steppedOn")
 		#print(body.name)

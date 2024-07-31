@@ -1,0 +1,206 @@
+[gd_scene load_steps=34 format=3 uid="uid://bw5uu54rasmh7"]
+
+[ext_resource type="Script" path="res://Assets/Seraph/seraph.gd" id="1_ysqkr"]
+[ext_resource type="Texture2D" uid="uid://b272kobaantw5" path="res://Assets/Seraph/Frames/Idle/0000.png" id="2_xshpf"]
+[ext_resource type="Texture2D" uid="uid://djqe5p2k85cmx" path="res://Assets/Seraph/Frames/Idle/0001.png" id="3_df4xn"]
+[ext_resource type="Texture2D" uid="uid://trsqq7nvneeq" path="res://Assets/Seraph/Frames/Idle/0002.png" id="4_s0p03"]
+[ext_resource type="Texture2D" uid="uid://d1o31ax04mmmf" path="res://Assets/Seraph/Frames/Idle/0003.png" id="5_jo1ab"]
+[ext_resource type="Texture2D" uid="uid://c8m2ms0kx4jjj" path="res://Assets/Seraph/Frames/Idle/0004.png" id="6_wsfgt"]
+[ext_resource type="Texture2D" uid="uid://bqdpcuoer543b" path="res://Assets/Seraph/Frames/Idle/0005.png" id="7_kaybq"]
+[ext_resource type="Texture2D" uid="uid://scuxf5ogyecb" path="res://Assets/Seraph/Frames/Idle/0006.png" id="8_ox1d4"]
+[ext_resource type="Texture2D" uid="uid://b0utnsr2kp1q" path="res://Assets/Seraph/Frames/Idle/0007.png" id="9_7g5fr"]
+[ext_resource type="Texture2D" uid="uid://c8incffldijbr" path="res://Assets/Seraph/Frames/Idle/0008.png" id="10_e804x"]
+[ext_resource type="Texture2D" uid="uid://djlexjbbx4n1u" path="res://Assets/Seraph/Frames/Idle/0009.png" id="11_ejmna"]
+[ext_resource type="Texture2D" uid="uid://cpmrs63meld36" path="res://Assets/Seraph/Frames/Idle/0010.png" id="12_kj7y4"]
+[ext_resource type="Texture2D" uid="uid://b6pb7dhuxhj22" path="res://Assets/Seraph/Frames/Idle/0011.png" id="13_2lw75"]
+[ext_resource type="Texture2D" uid="uid://csb73tikxsuhq" path="res://Assets/Seraph/Frames/Idle/0012.png" id="14_qcypm"]
+[ext_resource type="Texture2D" uid="uid://hr8x5w8mgv0u" path="res://Assets/Seraph/Frames/Idle/0013.png" id="15_oa7ib"]
+[ext_resource type="Texture2D" uid="uid://b05d1ph31s57n" path="res://Assets/Seraph/Frames/Idle/0014.png" id="16_ve86f"]
+[ext_resource type="Texture2D" uid="uid://vrvddxe6q3pp" path="res://Assets/Seraph/Frames/Idle/0015.png" id="17_5agxm"]
+[ext_resource type="Texture2D" uid="uid://dgh1vjryvn46d" path="res://Assets/Seraph/SeraphLight.png" id="18_xk5uv"]
+[ext_resource type="AudioStream" uid="uid://84pw4vgf7rcm" path="res://Assets/Seraph/Sounds/angelic_choirs_01.wav" id="19_w07jj"]
+[ext_resource type="AudioStream" uid="uid://b8lc0pfmh1eva" path="res://Assets/Seraph/Sounds/steamLoop1.wav" id="19_y320f"]
+[ext_resource type="AudioStream" uid="uid://cwbtxs47qnlf3" path="res://Assets/Seraph/Sounds/steamLoop2.wav" id="20_7ohao"]
+[ext_resource type="AudioStream" uid="uid://ephobs6eyjb8" path="res://Assets/Seraph/Sounds/angelic_choirs_02.wav" id="20_et37m"]
+[ext_resource type="AudioStream" uid="uid://dft3puw27ayun" path="res://Assets/Seraph/Sounds/angelic_choirs_03.wav" id="21_hhpn6"]
+[ext_resource type="AudioStream" uid="uid://dfkgb3h48rltw" path="res://Assets/Seraph/Sounds/FireSmall.wav" id="22_cfuak"]
+[ext_resource type="AudioStream" uid="uid://bb6od85n0qfpl" path="res://Assets/Seraph/Sounds/FireBig.wav" id="23_0codi"]
+
+[sub_resource type="Curve" id="Curve_tmas7"]
+bake_resolution = 128
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_gyd15"]
+curve = SubResource("Curve_tmas7")
+
+[sub_resource type="Gradient" id="Gradient_dmjcd"]
+offsets = PackedFloat32Array(0.0188679, 1)
+colors = PackedColorArray(0.901961, 0.223529, 0, 1, 1, 0.86, 0.6, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6e8c0"]
+gradient = SubResource("Gradient_dmjcd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_busj4"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 96.0
+angle_max = 360.0
+spread = 180.0
+gravity = Vector3(0, -64, 0)
+radial_accel_min = -256.0
+tangential_accel_min = -128.0
+tangential_accel_max = 128.0
+scale_max = 10.0
+scale_over_velocity_max = 512.0
+color_ramp = SubResource("GradientTexture1D_6e8c0")
+alpha_curve = SubResource("CurveTexture_gyd15")
+turbulence_noise_strength = 0.0
+turbulence_noise_speed = Vector3(1, 0, 0)
+collision_mode = 2
+collision_use_scale = true
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cops4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_xshpf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_df4xn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_s0p03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jo1ab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_wsfgt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_kaybq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ox1d4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_7g5fr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_e804x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ejmna")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_kj7y4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_2lw75")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_qcypm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_oa7ib")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ve86f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_5agxm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_twegr"]
+playback_mode = 1
+streams_count = 2
+stream_0/stream = ExtResource("19_y320f")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("20_7ohao")
+stream_1/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_41tj3"]
+streams_count = 3
+stream_0/stream = ExtResource("19_w07jj")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("20_et37m")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("21_hhpn6")
+stream_2/weight = 1.0
+
+[node name="Seraph" type="CharacterBody2D"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("1_ysqkr")
+tags = Array[String](["Angel", "Magic", "Greater"])
+
+[node name="FireEmbers" type="GPUParticles2D" parent="."]
+modulate = Color(0.4, 0.4, 0.4, 1)
+clip_children = 1
+position = Vector2(-1, -1)
+scale = Vector2(1.5, 1.5)
+amount = 512
+process_material = SubResource("ParticleProcessMaterial_busj4")
+lifetime = 8.0
+speed_scale = 0.75
+randomness = 1.0
+draw_order = 0
+trail_enabled = true
+trail_lifetime = 0.1
+
+[node name="HeavenlyLight" type="PointLight2D" parent="FireEmbers"]
+position = Vector2(0.666667, 0.666667)
+scale = Vector2(0.666667, 0.666667)
+color = Color(1, 0.916667, 0.75, 1)
+energy = 5.0
+shadow_enabled = true
+texture = ExtResource("18_xk5uv")
+texture_scale = 6.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.25, 0.25, 0.25, 1)
+y_sort_enabled = true
+position = Vector2(-1, -1)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_cops4")
+frame_progress = 0.987792
+
+[node name="Steam" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_twegr")
+volume_db = -5.0
+autoplay = true
+max_distance = 1024.0
+
+[node name="BurningA" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("22_cfuak")
+autoplay = true
+max_distance = 2048.0
+attenuation = 2.0
+
+[node name="BurningB" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("23_0codi")
+autoplay = true
+max_distance = 1024.0
+attenuation = 2.0
+
+[node name="Choir" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_41tj3")
+volume_db = -10.0
+pitch_scale = 0.5
+max_distance = 2048.0
+attenuation = 2.0
+max_polyphony = 8
+
+[node name="ChoirTimer" type="Timer" parent="Choir"]
+autostart = true
+
+[connection signal="finished" from="Steam" to="." method="_on_steam_finished"]
+[connection signal="finished" from="BurningA" to="." method="_on_burning_a_finished"]
+[connection signal="finished" from="BurningB" to="." method="_on_burning_b_finished"]
+[connection signal="timeout" from="Choir/ChoirTimer" to="." method="_on_choir_timer_timeout"]

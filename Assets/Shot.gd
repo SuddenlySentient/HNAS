@@ -40,7 +40,7 @@ func _on_body_entered(body):
 			global_position += targetVector * 192
 			rotation = targetVector.angle() + PI/2
 			linear_velocity = targetVector * speed
-		else : endShot()
+		elif DMGDealt != -1 : endShot()
 	else : endShot()
 
 func endShot():
