@@ -1,4 +1,4 @@
-[gd_scene load_steps=404 format=3 uid="uid://cftucttr52n82"]
+[gd_scene load_steps=405 format=3 uid="uid://cftucttr52n82"]
 
 [ext_resource type="Script" path="res://Assets/Pillar Demon/PillarDemon.gd" id="1_nppuk"]
 [ext_resource type="Texture2D" uid="uid://f1q4glwpwlba" path="res://Assets/Pillar Demon/Frames/Emerge/Down/0001.png" id="2_c4ee4"]
@@ -390,6 +390,7 @@
 [ext_resource type="Texture2D" uid="uid://wtrkpq1cyv3x" path="res://Assets/Pillar Demon/Frames/Skitter/UpRight/0012.png" id="225_d3ol1"]
 [ext_resource type="AudioStream" uid="uid://bwbxxa60g4okm" path="res://Assets/Pillar Demon/Sounds/Skitter.wav" id="237_e3bsr"]
 [ext_resource type="AudioStream" uid="uid://cpe028fyogbe0" path="res://Assets/Pillar Demon/Sounds/SwarmingBuzz.wav" id="238_grsr5"]
+[ext_resource type="Texture2D" uid="uid://c1l0iqkkj2qo0" path="res://Assets/Pillar Demon/Jab.png" id="378_ksvep"]
 [ext_resource type="AudioStream" uid="uid://brf4r0oa7ni43" path="res://Assets/Pillar Demon/Sounds/punch_heavy.wav" id="391_2u5fi"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fiel8"]
@@ -1711,7 +1712,7 @@ cull_mode = 1
 polygon = PackedVector2Array(20, -80, -20, -80, -20, 16, 20, 16)
 
 [node name="PillarDemon" type="CharacterBody2D"]
-z_index = 2
+z_index = 1
 y_sort_enabled = true
 scale = Vector2(1.5, 1.5)
 motion_mode = 1
@@ -1726,6 +1727,7 @@ maxHP = 8
 ARM = 6
 
 [node name="PDSprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
 y_sort_enabled = true
 position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_fiel8")
@@ -1737,7 +1739,6 @@ position = Vector2(0, -32)
 shape = SubResource("CircleShape2D_8pdwq")
 
 [node name="RotateNode" type="Node2D" parent="."]
-visible = false
 position = Vector2(0, -48)
 
 [node name="PunchArea" type="Area2D" parent="RotateNode"]
@@ -1745,8 +1746,19 @@ position = Vector2(0, 64)
 monitorable = false
 
 [node name="Punch" type="CollisionShape2D" parent="RotateNode/PunchArea"]
+visible = false
 shape = SubResource("CapsuleShape2D_448r3")
 debug_color = Color(0.7, 0.0583333, 0, 0.419608)
+
+[node name="JabLight" type="PointLight2D" parent="RotateNode"]
+position = Vector2(0, 96)
+rotation = 1.5708
+scale = Vector2(2, 1)
+enabled = false
+color = Color(1, 1, 1, 0.752941)
+energy = 8.0
+blend_mode = 2
+texture = ExtResource("378_ksvep")
 
 [node name="Seeable" type="Area2D" parent="."]
 collision_mask = 2

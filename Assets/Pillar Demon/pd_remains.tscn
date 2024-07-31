@@ -95,8 +95,6 @@ stream_0/stream = ExtResource("4_3mx5j")
 stream_0/weight = 1.0
 
 [node name="PDRemains" type="Node2D"]
-z_index = 1
-y_sort_enabled = true
 scale = Vector2(2, 2)
 script = SubResource("GDScript_owqho")
 

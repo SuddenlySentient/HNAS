@@ -72,7 +72,7 @@ func die(_cause : String) :
 	queue_free()
 
 # Tile Nonsense
-@onready var map : TileMap = $"../TileMap"
+@onready var map : TileMap = $".."
 var lastSeenTile : Dictionary = {}
 var nav : NavigationAgent2D
 

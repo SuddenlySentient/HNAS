@@ -19,7 +19,7 @@ func _enter_tree() :
 	timer.start(wait)
 	initalPos += Vector2(randf_range(-64, 64), randf_range(-64, 64))
 
-func _process(delta):
+func _process(_delta):
 	var completion = timer.time_left/timer.wait_time
 	mark.position = lerp(initalPos + vector + offsetPos, initalPos + offsetPos, completion * completion)
 	var compe = sqrt(completion)

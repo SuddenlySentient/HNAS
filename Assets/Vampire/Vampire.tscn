@@ -3690,13 +3690,14 @@ stream_0/stream = ExtResource("890_cjoen")
 stream_0/weight = 1.0
 
 [node name="Vampire" type="CharacterBody2D"]
+z_index = 1
 y_sort_enabled = true
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_f578t")
 turnSpeed = 2.0
 team = "Sanguinist"
-tags = Array[String](["Mechanical", "Angel", "HasBlood", "Greater"])
+tags = Array[String](["Mechanical", "Angel", "HasBlood", "Greater", "Magic"])
 reflectShots = true
 maxHP = 32
 ARM = 5
@@ -3753,13 +3754,13 @@ wait_time = 2.0
 one_shot = true
 
 [node name="VampireSprite" type="AnimatedSprite2D" parent="."]
-z_index = 2
 y_sort_enabled = true
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_xku26")
 animation = &"AttackDown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_p2uxg")
 
 [node name="VPNav" type="NavigationAgent2D" parent="."]

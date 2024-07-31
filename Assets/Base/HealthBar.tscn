@@ -1,31 +1,48 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwdvmsp702krt"]
+[gd_scene load_steps=10 format=3 uid="uid://bwdvmsp702krt"]
 
 [ext_resource type="FontFile" uid="uid://41ewtn37gdwt" path="res://Assets/FSEX300.ttf" id="1_5b7ea"]
+[ext_resource type="Texture2D" uid="uid://vkveobs3i0op" path="res://Assets/Base/HealthBack.png" id="2_nkiuq"]
+[ext_resource type="Texture2D" uid="uid://br3e5ld1iunb4" path="res://Assets/Base/HealthFill.png" id="3_6s1mh"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x4u4x"]
+texture = ExtResource("2_nkiuq")
+expand_margin_left = 1.0
+expand_margin_right = 1.0
+axis_stretch_horizontal = 1
+region_rect = Rect2(0, 0, 5, 8)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l4swm"]
+texture = ExtResource("3_6s1mh")
+axis_stretch_horizontal = 1
+region_rect = Rect2(1, 0, 5, 8)
+modulate_color = Color(0.9, 0.9, 0.9, 1)
+
+[sub_resource type="Theme" id="Theme_lt7nv"]
+ProgressBar/styles/background = SubResource("StyleBoxTexture_x4u4x")
+ProgressBar/styles/fill = SubResource("StyleBoxTexture_l4swm")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nb6bl"]
 bg_color = Color(0.25098, 0.25098, 0.25098, 0)
-border_width_left = 8
 border_width_top = 8
-border_width_right = 8
 border_width_bottom = 8
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
+border_color = Color(0.75, 0.75, 0.75, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 corner_detail = 1
-expand_margin_left = 16.0
+expand_margin_left = 12.0
 expand_margin_top = 16.0
-expand_margin_right = 16.0
+expand_margin_right = 12.0
 expand_margin_bottom = 16.0
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igcyc"]
-bg_color = Color(1, 0, 0, 1)
-border_color = Color(1, 0, 0, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
+bg_color = Color(0.9, 0.09, 0.09, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 corner_detail = 1
 anti_aliasing = false
 
@@ -35,9 +52,32 @@ default_font_size = 32
 ProgressBar/styles/background = SubResource("StyleBoxFlat_nb6bl")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_igcyc")
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="HealthBar" type="CanvasLayer"]
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="Health3" type="ProgressBar" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -832.0
+offset_top = -392.0
+offset_right = -783.0
+offset_bottom = -384.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(8, 8)
+size_flags_vertical = 4
+theme = SubResource("Theme_lt7nv")
+max_value = 16.0
+step = 1.0
+value = 16.0
+rounded = true
+allow_lesser = true
+show_percentage = false
+
+[node name="Health2" type="ProgressBar" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -45,14 +85,13 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -832.0
 offset_top = -384.0
-offset_right = -448.0
+offset_right = -440.0
 offset_bottom = -336.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
 theme = SubResource("Theme_ufwt4")
 max_value = 16.0
-value = 12.0
+step = 1.0
+value = 8.0
 rounded = true
-allow_lesser = true
-show_percentage = false
