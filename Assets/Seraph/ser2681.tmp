@@ -194,7 +194,7 @@ y_sort_enabled = true
 position = Vector2(0, -48)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_cops4")
-frame_progress = 0.269207
+frame_progress = 0.197098
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2

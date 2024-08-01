@@ -7,6 +7,7 @@ var distance : float = 256
 @export var DMG : int = 1
 @export var AP : int = 1
 var shooter : Unit
+var distanceFromShooter = 192
 
 @onready var sparks = load("res://Assets/SparkParticle.tscn")
 
@@ -17,7 +18,7 @@ func _physics_process(_delta):
 
 func _enter_tree():
 	#print("BANG")
-	global_position += targetVector * 256
+	global_position += targetVector * distanceFromShooter
 	rotation = targetVector.angle() + PI/2
 	linear_velocity = targetVector * speed
 
@@ -26,6 +27,7 @@ func changeColor(newColor : Color):
 	$PointLight2D.color = newColor
 
 func _on_body_entered(body):
+	print(speed)
 	var newSparks = sparks.instantiate()
 	newSparks.position = global_position
 	newSparks.rotation = rotation + PI/2

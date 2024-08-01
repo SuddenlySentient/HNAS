@@ -4,7 +4,8 @@ class_name Seraph
 
 @export var lightRotateSpeed : float = 0.25
 @onready var sprite : AnimatedSprite2D = $Sprite
-@export var maxStamina : int = 3
+@onready var fireball : GunModule = $Fireball
+@export var maxStamina : int = 4
 var stamina : float
 var brightness : float = 0
 @export var teleportTimePerTile : float = 0.125
@@ -14,7 +15,7 @@ Relaxed = 0,
 Searching = 1,
 Enraged = 2
 }
-var State = States.Relaxed
+var State = States.Enraged
 
 
 
@@ -36,8 +37,15 @@ func _physics_process(delta) :
 	
 	match State :
 		States.Searching :
-			if stamina > 2 and $TestTimer.is_stopped() and $TeleportTimer.is_stopped() : 
+			if stamina > 4 and $TestTimer.is_stopped() and $TeleportTimer.is_stopped() : 
 				$TestTimer.start()
+		States.Enraged :
+			if stamina > 4 :
+				var randNum = randi_range(0, 0)
+				print("ATTACK!")
+				match randNum :
+					0 :
+						fireFireball(Vector2(-2048, 0))
 
 func _process(delta) :
 	brightness = lerpf(brightness, ((float(stamina) / float(maxStamina)) * (3.0 / 5.0)) + 0.4, delta)
@@ -63,8 +71,10 @@ func teleport(location : Vector2) :
 		sprite.hide()
 		$HeavenlyLight.hide()
 		var distance = (global_position.distance_to(location))/256
-		$TeleportTimer.start(teleportTimePerTile * distance)
-		await $TeleportTimer.timeout
+		if cost == 1 : 
+			$TeleportTimer.start(teleportTimePerTile * distance)
+			await $TeleportTimer.timeout
+		else : await get_tree().process_frame
 		brightness = 0
 		global_position = location
 		velocity = Vector2.ZERO
@@ -96,8 +106,7 @@ func teleport(location : Vector2) :
 	$RayCast13,
 	$RayCast14,
 	$RayCast15,
-	$RayCast16
-]
+	$RayCast16]
 
 func move(delta) :
 	
@@ -118,16 +127,25 @@ func move(delta) :
 	
 	move_and_slide()
 
+@export_subgroup("Fireball")
+@export var fireballDMG : int = 12
+@export var fireballAP : int = 3
+@export var fireballInaccuracy : float = 0
+
+func fireFireball(location : Vector2) :
+	if useStamina(1) :
+		var vectorToTarget = global_position.direction_to(location)
+		fireball.fire(fireballDMG, fireballAP, vectorToTarget, fireballInaccuracy, 256, 64)
+		velocity += vectorToTarget * -128
+
 func useStamina(amount : float) :
 	
 	$StaminaRegen.start()
 	
 	if stamina >= amount :
 		stamina -= amount
-		print(stamina)
 		return true
 	else : 
-		print(stamina)
 		return false
 
 @onready var sparks = load("res://Assets/Seraph/seraph_spark.tscn")

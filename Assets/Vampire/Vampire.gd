@@ -53,7 +53,6 @@ func _physics_process(delta) :
 		else :
 			if State != States.Move :
 				State = States.Move
-				nav.target_position = map.map_to_local(getTileToSearch())
 	
 	match State :
 		States.Attack :
@@ -248,6 +247,8 @@ func _on_vampire_sprite_animation_finished():
 func _on_nav_timer_timeout():
 	if State == States.Approach :
 		nav.target_position = aggroTarget.position
+	if State == States.Move :
+		nav.target_position = map.map_to_local(getTileToSearch())
 
 func _on_engine_finished():
 	$Engine.play()

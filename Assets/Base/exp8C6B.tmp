@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmxuayyp4q1o5"]
+
+[ext_resource type="Texture2D" uid="uid://cohxcdlm2jwgw" path="res://Assets/Base/ExplosionMark.png" id="1_n35ni"]
+
+[sub_resource type="GDScript" id="GDScript_h2pc5"]
+script/source = "extends Node2D
+
+
+
+func _init():
+	rotation = randf_range(0, PI * 2)
+
+func _process(delta):
+	modulate = lerp(Color(\"ffffff60\"), Color(\"ffffff00\"), $Timer.time_left/$Timer.wait_time)
+
+func _on_timer_timeout():
+	queue_free()
+"
+
+[node name="ExplosionMark" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0.376471)
+texture = ExtResource("1_n35ni")
+script = SubResource("GDScript_h2pc5")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 300.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

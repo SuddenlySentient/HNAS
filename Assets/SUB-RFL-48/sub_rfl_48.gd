@@ -347,7 +347,7 @@ func _on_animated_sprite_2d_frame_changed():
 	if sprite.animation.contains("Shoot") :
 		if sprite.frame == 1 :
 			Fire.play()
-			gunModule.fire(DMG, AP, direction, inaccuracy * revved)
+			gunModule.fire(DMG, AP, direction, inaccuracy * revved, 64)
 			velocity += (direction * -1) * recoil
 
 func _on_sub_navigation_navigation_finished():
