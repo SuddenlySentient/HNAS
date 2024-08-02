@@ -1,10 +1,10 @@
 [gd_scene load_steps=39 format=3 uid="uid://bdo86ison3jql"]
 
-[ext_resource type="Script" path="res://Fireball.gd" id="1_sw5jt"]
-[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/CircleLight.png" id="2_2eto7"]
+[ext_resource type="Script" path="res://Assets/Seraph/Fireball.gd" id="1_oxxyh"]
 [ext_resource type="Texture2D" uid="uid://bwa2xm636kgrq" path="res://Assets/Seraph/Fireball.png" id="2_3x3o7"]
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/Base/CircleLight.png" id="3_1xqs3"]
 [ext_resource type="AudioStream" uid="uid://c4axl1xucd84f" path="res://Assets/Seraph/Sounds/fireball_01.wav" id="3_r3eis"]
-[ext_resource type="Texture2D" uid="uid://242uhlivgsok" path="res://Assets/Smoke.png" id="4_2lm21"]
+[ext_resource type="Texture2D" uid="uid://242uhlivgsok" path="res://Assets/Base/Smoke.png" id="4_2h7h5"]
 [ext_resource type="AudioStream" uid="uid://bbpme0lb35uv5" path="res://Assets/Seraph/Sounds/fireball_02.wav" id="4_xw8br"]
 [ext_resource type="AudioStream" uid="uid://bng4obuvci5ky" path="res://Assets/Seraph/Sounds/fireball_03.wav" id="5_3hnso"]
 [ext_resource type="AudioStream" uid="uid://b8rpnyftpqyr" path="res://Assets/Seraph/Sounds/276968__hoffy1138__my-first-recorded-explosion.wav" id="5_d6ug7"]
@@ -163,7 +163,7 @@ continuous_cd = 2
 max_contacts_reported = 64
 contact_monitor = true
 linear_damp_mode = 1
-script = ExtResource("1_sw5jt")
+script = ExtResource("1_oxxyh")
 speed = 8.0
 DMG = 12
 AP = 2
@@ -175,7 +175,7 @@ texture = ExtResource("2_3x3o7")
 color = Color(0.886275, 0.223529, 0.00392157, 1)
 energy = 4.0
 shadow_enabled = true
-texture = ExtResource("2_2eto7")
+texture = ExtResource("3_1xqs3")
 texture_scale = 6.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -192,7 +192,7 @@ enabled = false
 color = Color(1, 0.6, 0.4, 1)
 energy = 0.0
 shadow_enabled = true
-texture = ExtResource("2_2eto7")
+texture = ExtResource("3_1xqs3")
 texture_scale = 20.0
 
 [node name="Smoke" type="GPUParticles2D" parent="."]
@@ -200,7 +200,7 @@ z_index = 4
 emitting = false
 amount = 512
 process_material = SubResource("ParticleProcessMaterial_r22ah")
-texture = ExtResource("4_2lm21")
+texture = ExtResource("4_2h7h5")
 lifetime = 3.0
 one_shot = true
 speed_scale = 2.0

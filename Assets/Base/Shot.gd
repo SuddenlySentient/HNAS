@@ -8,8 +8,9 @@ var distance : float = 256
 @export var AP : int = 1
 var shooter : Unit
 var distanceFromShooter = 192
+var over = false
 
-@onready var sparks = load("res://Assets/SparkParticle.tscn")
+@onready var sparks = load("res://Assets/Base/SparkParticle.tscn")
 
 func _physics_process(_delta):
 	if linear_velocity.length() < (speed/16) : queue_free()
@@ -45,12 +46,13 @@ func _on_body_entered(body):
 	else : endShot()
 
 func endShot():
-	if $CollisionShape2D != null :
+	if over == false :
 		$CollisionShape2D.free()
-	hide()
-	$Impact.play()
-	await $Impact.finished
-	queue_free()
+		over = true
+		hide()
+		$Impact.play()
+		await $Impact.finished
+		queue_free()
 
 func _on_timer_timeout():
 	queue_free()

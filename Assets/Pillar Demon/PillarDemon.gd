@@ -272,8 +272,10 @@ func _on_sniff_timer_timeout():
 	randTime = randTime * 60
 	if recentSeenCheck : randTime *= 4
 	randTime = round(randTime)
-	#print(randTime)
 	$Sniff/SniffTimer.start(randTime)
+	if PillarState == PillarStates.Pillar and HP < maxHP : 
+		print(PillarState)
+		heal(1)
 
 func _on_hurt(_DMG):
 	if State != States.Swarm and State != States.Attack : scatter(false)

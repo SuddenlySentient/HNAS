@@ -1,8 +1,8 @@
 [gd_scene load_steps=19 format=3 uid="uid://beudw2414os64"]
 
-[ext_resource type="Script" path="res://Assets/Shot.gd" id="1_i4uir"]
+[ext_resource type="Script" path="res://Assets/Base/Shot.gd" id="1_i4uir"]
 [ext_resource type="Texture2D" uid="uid://bxkjekiyhci77" path="res://Assets/SUB-RFL-48/SMGShot.png" id="2_57hvw"]
-[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/CircleLight.png" id="2_rmboh"]
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/Base/CircleLight.png" id="2_rmboh"]
 [ext_resource type="AudioStream" uid="uid://b3d8nyqetdtd2" path="res://Assets/Sound/ShotHit/sharp_impact_02.wav" id="4_ustme"]
 [ext_resource type="AudioStream" uid="uid://bwuqyprutwy8k" path="res://Assets/Sound/ShotHit/sharp_impact_03.wav" id="5_d14l3"]
 [ext_resource type="AudioStream" uid="uid://bfiel3f4xfij2" path="res://Assets/Sound/ShotHit/sharp_impact_04.wav" id="6_0sf3i"]

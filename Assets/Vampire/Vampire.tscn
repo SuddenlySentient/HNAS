@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Assets/Vampire/Vampire.gd" id="1_f578t"]
 [ext_resource type="FontFile" uid="uid://drk2hxgvh0f5a" path="res://Assets/MinecraftBold-nMK1.otf" id="2_ck1mv"]
 [ext_resource type="Texture2D" uid="uid://2lq0jjofqjct" path="res://Assets/Vampire/Frames/Walk/Down/0000.png" id="2_g7eyt"]
-[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/CircleLight.png" id="2_wq3jw"]
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/Base/CircleLight.png" id="2_wq3jw"]
 [ext_resource type="Texture2D" uid="uid://f2mvwrvqj286" path="res://Assets/Vampire/Frames/Walk/Down/0001.png" id="3_d8683"]
 [ext_resource type="Texture2D" uid="uid://dieqormxojemf" path="res://Assets/Vampire/Frames/Attack/Down/0000.png" id="3_ej73q"]
 [ext_resource type="Texture2D" uid="uid://ckshaaen0576n" path="res://Assets/Vampire/Frames/Attack/Down/0001.png" id="4_s8bjl"]

@@ -30,7 +30,7 @@ func _physics_process(delta):
 		rotate((linear_velocity.length() / 64) * delta)
 		linear_velocity += targetVector * speed
 		if is_nan(linear_velocity.length()) : 
-			print("Velocity Error")
+			push_error("Fireball Velocity Error")
 			queue_free()
 			return false
 		var rand = 1.0 / size

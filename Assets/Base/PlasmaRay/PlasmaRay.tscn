@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dbede2m166te" path="res://Assets/Base/PlasmaRay/PlasmaRayRotated.png" id="1_jrnfp"]
 [ext_resource type="AudioStream" uid="uid://cpxfk2ar02h7b" path="res://Assets/Base/PlasmaRay/fire_touch_01.wav" id="2_bs4ds"]
-[ext_resource type="Texture2D" uid="uid://242uhlivgsok" path="res://Assets/Smoke.png" id="2_f0evs"]
+[ext_resource type="Texture2D" uid="uid://242uhlivgsok" path="res://Assets/Base/Smoke.png" id="2_f0evs"]
 [ext_resource type="Texture2D" uid="uid://dgh1vjryvn46d" path="res://Assets/Seraph/SeraphLight.png" id="2_w44gr"]
 [ext_resource type="AudioStream" uid="uid://vptk3e0ecewr" path="res://Assets/Base/PlasmaRay/flame_thrower_01.wav" id="2_y2esf"]
 [ext_resource type="AudioStream" uid="uid://61jakgqmqupp" path="res://Assets/Base/PlasmaRay/flame_thrower_02.wav" id="3_of3a0"]

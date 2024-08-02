@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://Assets/Facility/Mine/mine.gd" id="1_8fbj4"]
 [ext_resource type="Texture2D" uid="uid://dyy7phya7pwt2" path="res://Assets/Facility/Mine/Mine.png" id="1_lqqgo"]
-[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/CircleLight.png" id="2_ytl8x"]
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/Base/CircleLight.png" id="2_ytl8x"]
 [ext_resource type="AudioStream" uid="uid://b4f1paxsj52bd" path="res://Assets/Facility/Mine/alarm_beep.wav" id="4_h4q2m"]
 [ext_resource type="AudioStream" uid="uid://d3ol6xlwv4hdo" path="res://Assets/Facility/Mine/buzzer_01.wav" id="5_awxno"]
 [ext_resource type="AudioStream" uid="uid://cxevvxxws5olg" path="res://Assets/Facility/Mine/245372__quaker540__hq-explosion.wav" id="6_3438f"]
 [ext_resource type="Texture2D" uid="uid://y0uu0slm04wh" path="res://Assets/Explosion.png" id="7_im8o6"]
-[ext_resource type="Texture2D" uid="uid://242uhlivgsok" path="res://Assets/Smoke.png" id="8_noj26"]
+[ext_resource type="Texture2D" uid="uid://242uhlivgsok" path="res://Assets/Base/Smoke.png" id="8_noj26"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pj4l0"]
 radius = 256.0

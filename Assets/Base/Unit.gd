@@ -60,7 +60,7 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 		emit_signal("hurt", DMGDealt)
 		var markSize = sqrt(float(DMGDealt) / 2.0)
 		hitmarker(str(DMGDealt), markSize)
-		print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
+		#print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
 	elif DMGDealt == 0 : hitmarker("0", 1, Color.from_hsv(0.6, 0.8, 1, 1))
 	return DMGDealt
 

@@ -1,7 +1,7 @@
 extends Node
 class_name GunModule
 
-@export var shot = load("res://Assets/Shot.tscn")
+@export var shot = load("res://Assets/Base/Shot.tscn")
 
 func fire(DMG : int, AP : int, targetVector : Vector2, angleRange : float = 0, shooterDistance : float = 256, speed : float = 16384):
 	

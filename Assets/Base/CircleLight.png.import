@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://242uhlivgsok"
-path="res://.godot/imported/Smoke.png-dfeb1851cd419078470dfc4cd16dfe51.ctex"
+uid="uid://8rmbi5y2rliy"
+path="res://.godot/imported/CircleLight.png-e82b5e525789deabdfe330fcce213237.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Smoke.png"
-dest_files=["res://.godot/imported/Smoke.png-dfeb1851cd419078470dfc4cd16dfe51.ctex"]
+source_file="res://Assets/Base/CircleLight.png"
+dest_files=["res://.godot/imported/CircleLight.png-e82b5e525789deabdfe330fcce213237.ctex"]
 
 [params]
 

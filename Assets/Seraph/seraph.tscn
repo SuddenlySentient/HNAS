@@ -33,7 +33,7 @@
 [ext_resource type="AudioStream" uid="uid://cgmfdciaq45yb" path="res://Assets/Seraph/Sounds/malfunction2.wav" id="31_ybh2h"]
 [ext_resource type="AudioStream" uid="uid://dhcxgi2y21vkh" path="res://Assets/Seraph/Sounds/malfunction3.wav" id="32_17bbr"]
 [ext_resource type="AudioStream" uid="uid://bo1xsexelaynd" path="res://Assets/Seraph/Sounds/malfunction4.wav" id="33_83ggn"]
-[ext_resource type="Script" path="res://Assets/gun_module.gd" id="34_somv2"]
+[ext_resource type="Script" path="res://Assets/Base/gun_module.gd" id="34_somv2"]
 [ext_resource type="PackedScene" uid="uid://bdo86ison3jql" path="res://Assets/Seraph/fireball.tscn" id="35_4m7t2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cops4"]

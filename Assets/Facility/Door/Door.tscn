@@ -1,9 +1,10 @@
-[gd_scene load_steps=33 format=3 uid="uid://cp6nhmxkbitfh"]
+[gd_scene load_steps=37 format=3 uid="uid://cp6nhmxkbitfh"]
 
 [ext_resource type="Texture2D" uid="uid://cnwqmia4df13q" path="res://Assets/Facility/Door/Frames/0000.png" id="1_a5dif"]
 [ext_resource type="Script" path="res://Assets/Facility/Door/Door.gd" id="1_v7e0l"]
 [ext_resource type="Texture2D" uid="uid://155384oah3wf" path="res://Assets/Facility/Door/Frames/0001.png" id="2_jxeao"]
 [ext_resource type="Texture2D" uid="uid://ccfhf5ts588ay" path="res://Assets/Facility/Floor.png" id="2_y3lp7"]
+[ext_resource type="Texture2D" uid="uid://b8gg3c5d04teb" path="res://Assets/Facility/Door/Frames/Sideways.png" id="3_d0cly"]
 [ext_resource type="Texture2D" uid="uid://dbnt0bdyxotqd" path="res://Assets/Facility/Door/Frames/0002.png" id="3_vlmta"]
 [ext_resource type="Texture2D" uid="uid://erepmxpb0jkv" path="res://Assets/Facility/Door/Frames/0003.png" id="4_j8lmx"]
 [ext_resource type="Texture2D" uid="uid://4l4jaxlhklp5" path="res://Assets/Facility/Door/Frames/0004.png" id="5_l74e5"]
@@ -20,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://lsmeymx4fvb" path="res://Assets/Facility/Door/Frames/0015.png" id="16_k3qy0"]
 [ext_resource type="AudioStream" uid="uid://cirlekt3sbc68" path="res://Assets/Facility/Door/Sounds/lift_start.wav" id="18_clvv2"]
 [ext_resource type="AudioStream" uid="uid://bm3tgqsy7mlvl" path="res://Assets/Facility/Door/Sounds/lift_rel.wav" id="19_mly81"]
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/Base/CircleLight.png" id="20_0doaa"]
 [ext_resource type="AudioStream" uid="uid://cfmgairfofgir" path="res://Assets/Facility/Door/Sounds/servo_motor_01.wav" id="20_crl4d"]
 [ext_resource type="AudioStream" uid="uid://1u83y7b60bsu" path="res://Assets/Facility/Door/Sounds/servo_motor_switch_01.wav" id="21_4tu43"]
 [ext_resource type="AudioStream" uid="uid://ndxqf6nf7igx" path="res://Assets/Facility/Door/Sounds/servo_motor_switch_02.wav" id="22_8fpad"]
@@ -80,19 +82,22 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_3wjuv"]
+closed = false
+cull_mode = 2
+polygon = PackedVector2Array(-128, -248, -128, -336, 128, -336, 128, -248, -128, -248, 0, -248, 0, -200, -64, -200, -64, -64, -64, -200, 64, -200, 64, -64)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_555r8"]
 size = Vector2(160, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5llg"]
 size = Vector2(48, 192)
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_3wjuv"]
-closed = false
-cull_mode = 2
-polygon = PackedVector2Array(-128, -248, -128, -336, 128, -336, 128, -248, -128, -248, 0, -248, 0, -200, -64, -200, -64, -64, -64, -200, 64, -200, 64, -64)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8sca"]
+size = Vector2(128, 160)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2fn6"]
-size = Vector2(512, 1024)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fh5t"]
+size = Vector2(192, 48)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_51eux"]
 vertices = PackedVector2Array(72, -128, 0, 0, -72, -128, 0, -256)
@@ -100,6 +105,9 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(0, -256, -72, -128, 0, 0, 72, -128)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 agent_radius = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2fn6"]
+size = Vector2(512, 1024)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_v8al6"]
 random_pitch = 1.25
@@ -124,6 +132,7 @@ stream_1/weight = 1.0
 z_index = 1
 y_sort_enabled = true
 position = Vector2(0, 128)
+collision_layer = 5
 script = ExtResource("1_v7e0l")
 
 [node name="Floor" type="Sprite2D" parent="."]
@@ -132,6 +141,15 @@ z_as_relative = false
 y_sort_enabled = true
 position = Vector2(0, -128)
 texture = ExtResource("2_y3lp7")
+
+[node name="SidewaysSprite" type="Sprite2D" parent="."]
+z_index = 2
+y_sort_enabled = true
+position = Vector2(0, -271.072)
+scale = Vector2(1, 1.85635)
+texture = ExtResource("3_d0cly")
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 181)
 
 [node name="DoorSprite" type="AnimatedSprite2D" parent="."]
 z_index = 1
@@ -142,37 +160,69 @@ frame = 15
 frame_progress = 1.0
 offset = Vector2(0, -199.5)
 
+[node name="DoorOccluder" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_3wjuv")
+
+[node name="DoorLight" type="PointLight2D" parent="."]
+position = Vector2(0, -128)
+color = Color(0.4, 1, 0.4, 1)
+energy = 0.5
+texture = ExtResource("20_0doaa")
+texture_scale = 6.0
+
 [node name="DoorCollision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -160)
 shape = SubResource("RectangleShape2D_555r8")
 disabled = true
 
 [node name="DoorCollisionLeft" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-104, -160)
 shape = SubResource("RectangleShape2D_q5llg")
 
 [node name="DoorCollisionRight" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(104, -160)
 shape = SubResource("RectangleShape2D_q5llg")
 
-[node name="DoorOccluder" type="LightOccluder2D" parent="."]
-occluder = SubResource("OccluderPolygon2D_3wjuv")
+[node name="SidewaysDoorCollision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -128)
+shape = SubResource("RectangleShape2D_u8sca")
+disabled = true
 
-[node name="UnitSensor" type="Area2D" parent="."]
+[node name="SidewaysDoorCollisionLeft" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_4fh5t")
+
+[node name="SidewaysDoorCollisionRight" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -232)
+shape = SubResource("RectangleShape2D_4fh5t")
+
+[node name="Node2D" type="Node2D" parent="."]
+visible = false
+position = Vector2(0, -128)
+
+[node name="NavigationLink" type="NavigationLink2D" parent="Node2D"]
+start_position = Vector2(0, 128)
+end_position = Vector2(0, -128)
+enter_cost = 4.0
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Node2D"]
+position = Vector2(0, 128)
+navigation_polygon = SubResource("NavigationPolygon_51eux")
+enter_cost = 4.0
+
+[node name="UnitSensor" type="Area2D" parent="Node2D"]
+position = Vector2(0, 128)
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UnitSensor"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/UnitSensor"]
 position = Vector2(0, -128)
 shape = SubResource("RectangleShape2D_u2fn6")
-
-[node name="NavigationLink" type="NavigationLink2D" parent="."]
-position = Vector2(0, -160)
-start_position = Vector2(0, 160)
-end_position = Vector2(0, -160)
-enter_cost = 8.0
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-navigation_polygon = SubResource("NavigationPolygon_51eux")
 
 [node name="Open" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_v8al6")
@@ -186,6 +236,7 @@ attenuation = 2.0
 
 [node name="Working" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("20_crl4d")
+volume_db = -5.0
 max_distance = 2048.0
 attenuation = 2.0
 
@@ -196,6 +247,10 @@ attenuation = 2.0
 
 [node name="CloseTimer" type="Timer" parent="."]
 wait_time = 4.0
+one_shot = true
+
+[node name="LightTimer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 
 [connection signal="animation_finished" from="DoorSprite" to="." method="_on_door_sprite_animation_finished"]
