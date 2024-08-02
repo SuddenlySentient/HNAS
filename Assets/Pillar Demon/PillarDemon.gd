@@ -260,7 +260,10 @@ func _process(_delta):
 	elif cAni == "Skitter" : 
 		if $Skitter.playing == false : $Skitter.play()
 		sprite.play()
-		sprite.speed_scale = (velocity.length() / 250) / scale.x
+		var moveDirection = velocity.normalized()
+		if moveDirection.dot(direction) > 0.5 :
+			sprite.speed_scale = (velocity.length() / 250) / scale.x
+		else : sprite.speed_scale = 0
 	else : sprite.speed_scale = 1
 
 func _on_sniff_timer_timeout():

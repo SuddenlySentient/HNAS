@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq35taog7dml5"]
+
+[ext_resource type="Texture2D" uid="uid://dbede2m166te" path="res://Assets/Base/PlasmaRay/PlasmaRayRotated.png" id="1_jrnfp"]
+
+[sub_resource type="GDScript" id="GDScript_nc8io"]
+script/source = "extends Node2D
+
+@onready var line = $CanvasLayer/Plasma
+@onready var ray = $Ray
+@onready var waxTimer = $WaxTimer
+
+var minWidth = 96
+var maxWidth = 128
+var length = 256000
+
+func _process(delta):
+	
+	line.width = (sin((waxTimer.time_left / waxTimer.wait_time) * PI) * (maxWidth - minWidth)) + minWidth
+	if ray.is_colliding() :
+		line.points[1] = ray.get_collision_point()
+	
+	
+"
+
+[sub_resource type="Gradient" id="Gradient_amfp1"]
+interpolation_mode = 2
+colors = PackedColorArray(1, 0.913725, 0.745098, 1, 0.886275, 0.223529, 0.00392157, 1)
+
+[node name="PlasmaRay" type="Node2D"]
+script = SubResource("GDScript_nc8io")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Plasma" type="Line2D" parent="CanvasLayer"]
+visible = false
+texture_repeat = 3
+points = PackedVector2Array(0, 0, 0, 512)
+width = 128.0
+gradient = SubResource("Gradient_amfp1")
+texture = ExtResource("1_jrnfp")
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 6
+
+[node name="Ray" type="RayCast2D" parent="."]
+target_position = Vector2(0, 256000)
+
+[node name="WaxTimer" type="Timer" parent="."]
+wait_time = 1.25
+autostart = true
+
+[node name="ArcTimer" type="Timer" parent="."]
+wait_time = 4.0

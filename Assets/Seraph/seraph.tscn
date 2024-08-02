@@ -187,14 +187,14 @@ script = ExtResource("1_ysqkr")
 maxStamina = 5
 tags = Array[String](["Angel", "Magic", "Greater", "Hover"])
 maxSpeed = 50
-maxHP = 14
+maxHP = 16
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 position = Vector2(0, -48)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_cops4")
-frame_progress = 0.269207
+frame_progress = 0.919613
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -240,7 +240,7 @@ shot = ExtResource("35_4m7t2")
 one_shot = true
 
 [node name="StaminaRegen" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 2.0
 autostart = true
 
 [node name="Regen" type="AudioStreamPlayer2D" parent="StaminaRegen"]
@@ -293,6 +293,13 @@ max_polyphony = 3
 
 [node name="Fail" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_yt5w5")
+volume_db = 5.0
+
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+top_level = true
+points = PackedVector2Array(0, 0, 0, 256)
+default_color = Color(1, 0, 0, 1)
 
 [node name="RayCast" type="RayCast2D" parent="."]
 visible = false

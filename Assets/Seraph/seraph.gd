@@ -15,14 +15,13 @@ Relaxed = 0,
 Searching = 1,
 Enraged = 2
 }
-var State = States.Enraged
+var State = States.Searching
 
 
 
 func _init():
 	await ready
 	stamina = maxStamina
-	print("START")
 	HP = maxHP
 	sprite.play()
 	vision = $Vision
@@ -30,22 +29,61 @@ func _init():
 func _physics_process(delta) :
 	
 	velocity = lerp(velocity, Vector2.ZERO, delta)
-	move(delta)
 	move_and_slide()
 	
 	$CanvasLayer/FireEmbers.position = global_position
 	
+	var recentVision = checkVision()
+	
+	for thing in recentVision :
+		if thing is Unit :
+			if thing.team != team : aggroList.append(thing)
+	
+	var newAggroList : Array[Unit] = []
+	for thing in aggroList :
+		if thing != null and newAggroList.has(thing) == false : newAggroList.append(thing)
+	aggroList = newAggroList
+	
+	if aggroList.size() > 0 : 
+		var newAggro = null
+		for aggro in aggroList :
+			if canSeeTarget(global_position, aggro.global_position) :
+				newAggro = aggro
+		if newAggro != null : aggroTarget = newAggro
+		State = States.Enraged
+	else : 
+		aggroTarget = null
+	
+	if aggroTarget == null :
+		State = States.Searching
+	
+	#if aggroTarget != null :
+	#	$Line2D.points[0] = global_position
+	#	$Line2D.points[1] = aggroTarget.global_position
+	
+	
 	match State :
 		States.Searching :
+			move(delta)
+			if HP < maxHP : 
+				if useStamina(1) : heal(1)
 			if stamina > 4 and $TestTimer.is_stopped() and $TeleportTimer.is_stopped() : 
 				$TestTimer.start()
 		States.Enraged :
 			if stamina > 4 :
-				var randNum = randi_range(0, 0)
-				print("ATTACK!")
-				match randNum :
-					0 :
-						fireFireball(Vector2(-2048, 0))
+				if aggroTarget == null : 
+					State = States.Searching
+					return false
+				match canSeeTarget() :
+					false :
+						var dodgeTile = getSeeingTile()
+						if dodgeTile is Vector2i :
+							await teleport(map.map_to_local(dodgeTile))
+						else : 
+							#aggroTarget = null
+							aggroList.erase(aggroTarget)
+					true :
+						attack()
 
 func _process(delta) :
 	brightness = lerpf(brightness, ((float(stamina) / float(maxStamina)) * (3.0 / 5.0)) + 0.4, delta)
@@ -56,11 +94,11 @@ func _process(delta) :
 	$Choir.pitch_scale = brightness * (3.0/4.0)
 	#print(brightness)
 
-func teleport(location : Vector2) :
-	
+func teleport(location, dodgeing = false) :
 	var cost = 1
-	if getDistanceTo(location) <= 384 : cost = 0.5
-	if useStamina(cost) and $TeleportTimer.is_stopped() :
+	if location is Vector2 == false : return false
+	#if getDistanceTo(location) <= 384 : cost = 0.5
+	if useStamina(cost) and ($TeleportTimer.is_stopped() or dodgeing) :
 		$Choir/ChoirTimer.stop()
 		$Choir.stop()
 		newSpark()
@@ -71,12 +109,15 @@ func teleport(location : Vector2) :
 		sprite.hide()
 		$HeavenlyLight.hide()
 		var distance = (global_position.distance_to(location))/256
-		if cost == 1 : 
-			$TeleportTimer.start(teleportTimePerTile * distance)
-			await $TeleportTimer.timeout
-		else : await get_tree().process_frame
+		#if dodgeing == false : 
+		$TeleportTimer.start(teleportTimePerTile * distance)
+		await $TeleportTimer.timeout
+		#else : await get_tree().process_frame
+		#print("Test")
 		brightness = 0
 		global_position = location
+		#print(aggroTarget.name)
+		if aggroTarget != null and canSeeTarget() : attack()
 		velocity = Vector2.ZERO
 		getTileToSearch(-1, 0.125)
 		newSpark()
@@ -88,7 +129,11 @@ func teleport(location : Vector2) :
 		$Collision.set_deferred("disabled", false)
 		canBeSeen = true
 		$Teleport.play()
-	else : $Fail.play()
+		return true
+	else : 
+		newSpark()
+		$Fail.play()
+		return false
 
 @onready var raycasts : Array[RayCast2D] = [
 	$RayCast,
@@ -127,23 +172,76 @@ func move(delta) :
 	
 	move_and_slide()
 
+func getSeeingTile():
+	
+	var target = aggroTarget.global_position
+	
+	var tilesCoords : Array[Vector2i] = map.get_used_cells(0)
+	var tileValue : Array = []
+	var theOne = null
+	
+	for tile in tilesCoords :
+		
+		var distanceTo = getDistanceTo(target)
+		
+		if getTileNavigable(tile) and canSeeTarget(map.map_to_local(tile)) :
+			var newEntry = -distanceTo
+			tileValue.append(newEntry)
+			tileValue.sort()
+			#tileValue.reverse()
+			if newEntry == tileValue[0] : 
+				theOne = tile
+	
+	#if theOne == null :
+	#	aggroList.erase(aggroTarget)
+	#	aggroTarget = null
+	
+	return theOne
+
 @export_subgroup("Fireball")
 @export var fireballDMG : int = 12
 @export var fireballAP : int = 3
 @export var fireballInaccuracy : float = 0
 
+@export_subgroup("PlasmaRay")
+@export var plasmaRayDMG : int = 16
+@export var plasmaRayAP : int = 7
+@export var plasmaRayArc : float = 10
+
+@onready var plasmaRay = load("res://Assets/Base/PlasmaRay/PlasmaRay.tscn")
+
+func attack() :
+	var aggroTargetPos = aggroTarget.position
+	var randNum = randi_range(0, 1)
+	match randNum :
+		0 :
+			fireFireball(aggroTargetPos)
+		1 :
+			firePlasmaRay(aggroTargetPos)
+
+func firePlasmaRay(location : Vector2) :
+	if useStamina(2) :
+		var vectorToTarget = global_position.direction_to(location)
+		var newPlasmaRay = plasmaRay.instantiate()
+		newPlasmaRay.DMG = plasmaRayDMG
+		newPlasmaRay.AP = plasmaRayAP
+		newPlasmaRay.targetVector = vectorToTarget
+		newPlasmaRay.arcLength = deg_to_rad(plasmaRayArc) / 2
+		newPlasmaRay.myOwner = self
+		add_child(newPlasmaRay)
+		newPlasmaRay.global_position = global_position + (vectorToTarget * 256)
+
 func fireFireball(location : Vector2) :
 	if useStamina(1) :
 		var vectorToTarget = global_position.direction_to(location)
-		fireball.fire(fireballDMG, fireballAP, vectorToTarget, fireballInaccuracy, 256, 64)
+		fireball.fire(fireballDMG, fireballAP, vectorToTarget, fireballInaccuracy, 384, 64)
 		velocity += vectorToTarget * -128
 
 func useStamina(amount : float) :
 	
-	$StaminaRegen.start()
-	
 	if stamina >= amount :
 		stamina -= amount
+		$StaminaRegen.start()
 		return true
 	else : 
 		return false
@@ -176,11 +274,21 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 		var chance = round((remainder * 100))
 		if randi_range(1, 100) < chance : DMGDealt += 1
 	
+	if dealer != self :
+		aggroList.append(dealer)
+		aggroTarget = dealer
+	else :
+		DMGDealt = 0
+	
+	
 	if stamina > 0 : 
-		var teleportHere = getNearTile()
-		if teleportHere is Vector2i :
-			teleport(map.map_to_local(teleportHere)) 
-			DMGDealt = -1
+		if aggroTarget != null : 
+			var seeingTile = getSeeingTile()
+			if seeingTile is Vector2i :
+				teleport(map.map_to_local(seeingTile), true)
+			else : teleport(map.map_to_local(getNearTile()), true) 
+		else : teleport(map.map_to_local(getNearTile()), true) 
+		DMGDealt = -1
 	
 	if DMGDealt > 0 : HP -= DMGDealt
 	if source != dealer :
@@ -196,6 +304,23 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 		print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
 	elif DMGDealt == 0 : hitmarker("0", 1, Color.from_hsv(0.6, 0.8, 1, 1))
 	return DMGDealt
+
+func canSeeTarget(testPosition : Vector2 = global_position, targPosition : Vector2 = aggroTarget.global_position) :
+	
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsRayQueryParameters2D.create(targPosition, testPosition, 3)
+	var result = space_state.intersect_ray(query)
+	
+	$Line2D.points[0] = testPosition
+	
+	if result  :
+		$Line2D.points[1] = result.position
+		#print("Borp")
+		return false
+	else :
+		$Line2D.points[1] = targPosition
+		#print("BErp")
+		return true
 
 
 
@@ -221,3 +346,7 @@ func _on_stamina_regen_timeout():
 
 func _on_test_timer_timeout():
 	teleport(map.map_to_local(getTileToSearch(-1, 0.125)))
+
+func die(_cause : String) :
+	newSpark()
+	queue_free()

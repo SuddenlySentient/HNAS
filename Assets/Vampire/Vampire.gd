@@ -111,8 +111,13 @@ func _init() :
 
 func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	
-	var reduction = clampf( float(AP) / float(ARM), 0, ARM)
-	var DMGDealt : int = DMG * reduction
+	var reduction = clampf( float(AP) / float(ARM), 0, 1)
+	var DMGDealt = DMG * reduction
+	var remainder = fmod(DMGDealt, 1)
+	if remainder != 0 :
+		DMGDealt = floor(DMGDealt)
+		var chance = round((remainder * 100))
+		if randi_range(1, 100) < chance : DMGDealt += 1
 	
 	if source is Shot :
 		var deflectChance = floor(lerp(1, 16, healthRemaining * healthRemaining))

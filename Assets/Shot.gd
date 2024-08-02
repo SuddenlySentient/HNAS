@@ -27,7 +27,6 @@ func changeColor(newColor : Color):
 	$PointLight2D.color = newColor
 
 func _on_body_entered(body):
-	print(speed)
 	var newSparks = sparks.instantiate()
 	newSparks.position = global_position
 	newSparks.rotation = rotation + PI/2

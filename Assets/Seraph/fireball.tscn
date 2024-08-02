@@ -28,7 +28,7 @@ radius = 512.0
 offsets = PackedFloat32Array(0.00833333, 1)
 colors = PackedColorArray(0.1, 0.1, 0.1, 1, 0.3, 0.3, 0.3, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_pojyc"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_th7rw"]
 gradient = SubResource("Gradient_rnvwo")
 
 [sub_resource type="Curve" id="Curve_y4nib"]
@@ -37,7 +37,7 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 0.5), 0.0, 0.0, 0, 0, V
 point_count = 3
 metadata/_snap_enabled = true
 
-[sub_resource type="CurveTexture" id="CurveTexture_if5oh"]
+[sub_resource type="CurveTexture" id="CurveTexture_ckl4d"]
 curve = SubResource("Curve_y4nib")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r22ah"]
@@ -56,8 +56,8 @@ damping_max = 256.0
 scale_min = 4.0
 scale_max = 32.0
 scale_over_velocity_max = 512.0
-scale_over_velocity_curve = SubResource("CurveTexture_if5oh")
-color_ramp = SubResource("GradientTexture1D_pojyc")
+scale_over_velocity_curve = SubResource("CurveTexture_ckl4d")
+color_ramp = SubResource("GradientTexture1D_th7rw")
 turbulence_noise_speed = Vector3(1, 0, 0)
 collision_mode = 1
 collision_friction = 0.0
@@ -67,19 +67,19 @@ collision_bounce = 0.0
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_7hul1"]
+[sub_resource type="CurveTexture" id="CurveTexture_j57bq"]
 curve = SubResource("Curve_lcurp")
 
 [sub_resource type="Gradient" id="Gradient_4cy3y"]
 colors = PackedColorArray(0.952941, 0.67451, 0.407843, 1, 1, 0.913725, 0.745098, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_2aos3"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qaw7x"]
 gradient = SubResource("Gradient_4cy3y")
 
 [sub_resource type="Gradient" id="Gradient_dtxav"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_5r78a"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_o6ujj"]
 gradient = SubResource("Gradient_dtxav")
 
 [sub_resource type="Curve" id="Curve_hxh2x"]
@@ -87,7 +87,7 @@ bake_resolution = 128
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_yis8l"]
+[sub_resource type="CurveTexture" id="CurveTexture_cetck"]
 curve = SubResource("Curve_hxh2x")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_64cgp"]
@@ -102,10 +102,10 @@ tangential_accel_max = 128.0
 scale_min = 2.0
 scale_max = 8.0
 scale_over_velocity_max = 1.0
-scale_over_velocity_curve = SubResource("CurveTexture_yis8l")
-color_ramp = SubResource("GradientTexture1D_5r78a")
-color_initial_ramp = SubResource("GradientTexture1D_2aos3")
-alpha_curve = SubResource("CurveTexture_7hul1")
+scale_over_velocity_curve = SubResource("CurveTexture_cetck")
+color_ramp = SubResource("GradientTexture1D_o6ujj")
+color_initial_ramp = SubResource("GradientTexture1D_qaw7x")
+alpha_curve = SubResource("CurveTexture_j57bq")
 hue_variation_max = 0.1
 collision_mode = 2
 
@@ -251,7 +251,6 @@ max_distance = 1024.0
 
 [node name="Whistle" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_4v5jo")
-autoplay = true
 max_distance = 4096.0
 attenuation = 2.0
 

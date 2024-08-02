@@ -1,0 +1,275 @@
+[gd_scene load_steps=24 format=3 uid="uid://dq35taog7dml5"]
+
+[ext_resource type="Texture2D" uid="uid://dbede2m166te" path="res://Assets/Base/PlasmaRay/PlasmaRayRotated.png" id="1_jrnfp"]
+[ext_resource type="AudioStream" uid="uid://cpxfk2ar02h7b" path="res://Assets/Base/PlasmaRay/fire_touch_01.wav" id="2_bs4ds"]
+[ext_resource type="Texture2D" uid="uid://dgh1vjryvn46d" path="res://Assets/Seraph/SeraphLight.png" id="2_w44gr"]
+[ext_resource type="AudioStream" uid="uid://vptk3e0ecewr" path="res://Assets/Base/PlasmaRay/flame_thrower_01.wav" id="2_y2esf"]
+[ext_resource type="AudioStream" uid="uid://61jakgqmqupp" path="res://Assets/Base/PlasmaRay/flame_thrower_02.wav" id="3_of3a0"]
+[ext_resource type="AudioStream" uid="uid://dydsvj0rmm72t" path="res://Assets/Base/PlasmaRay/PlasmaRayLoop.wav" id="3_sqxcy"]
+[ext_resource type="AudioStream" uid="uid://fncgttrp2g7a" path="res://Assets/Base/PlasmaRay/flame_thrower_03.wav" id="4_xi3w8"]
+[ext_resource type="AudioStream" uid="uid://btdl6jp0xp78w" path="res://Assets/Base/PlasmaRay/fire_burst_01.wav" id="7_ogult"]
+
+[sub_resource type="GDScript" id="GDScript_nc8io"]
+script/source = "extends Node2D
+
+@onready var line = $CanvasLayer/Plasma
+@onready var ray = $Ray
+@onready var waxTimer = $WaxTimer
+@onready var arcTimer = $ArcTimer
+
+var minPitch = 1
+var maxPitch = 2
+
+@export var DMG = 12
+@export var AP = 7
+var myOwner
+
+var minWidth = 96
+var maxWidth = 128
+var length = 256000
+var arcLength = deg_to_rad(5) / 2
+var targetVector = Vector2.LEFT
+var firing = false
+var hurted = []
+
+#func _enter_tree():
+	#await ready
+	#$Start.play()
+	#$PlasmaRayA.play()
+	#$PlasmaRayB.play()
+	#$ArcTimer.start()
+	#firing = true
+
+func _process(_delta):
+	if firing :
+		line.width = (sin((waxTimer.time_left / waxTimer.wait_time) * PI) * (maxWidth - minWidth)) + minWidth
+
+func _physics_process(delta):
+	line.position = global_position
+	$CanvasLayer/SparksA.position = global_position
+	if firing :
+		if ray.is_colliding() :
+			var collsionPoint =ray.get_collision_point()
+			line.points[1] = collsionPoint - global_position
+			$CanvasLayer/SparksB.position = collsionPoint
+			$CanvasLayer/SparksB.rotation = ray.get_collision_normal().angle() + (PI / 2)
+			$HitLight.global_position = collsionPoint
+			$PlasmaRayB.position = collsionPoint
+			var hit = ray.get_collider()
+			if hit is Unit :
+				hit.velocity += Vector2.from_angle(ray.rotation - (PI / 2)).normalized() * 262144 * delta
+				if hurted.has(hit) == false :
+					hurted.append(hit)
+					if hit.damage(DMG, AP, hit, self) :
+						$Damage.global_position = collsionPoint
+						$Damage.play()
+		var arcTime = arcTimer.time_left / arcTimer.wait_time
+		$StartLight.texture_scale = clampf(sin(arcTime * PI) * 6, 3, 6)
+		$StartLight.energy = clampf(sin(arcTime * PI) * 5, 3, 5)
+		$StartLight.rotate(delta * sin(arcTime * PI))
+		arcTime = sin(arcTime * PI / 2)
+		$HitLight.rotate(delta * arcTime)
+		$PlasmaRayA.pitch_scale = lerpf(maxPitch, minPitch, arcTime)
+		$PlasmaRayB.pitch_scale = lerpf(maxPitch, minPitch, arcTime)
+		ray.rotation = lerp_angle(-arcLength, arcLength, arcTime) + targetVector.angle() - (PI /2)
+
+func _on_arc_timer_timeout():
+	$End.play()
+
+func _on_plasma_ray_a_finished():
+	$PlasmaRayA.play()
+
+func _on_plasma_ray_b_finished():
+	$PlasmaRayB.play()
+"
+
+[sub_resource type="Gradient" id="Gradient_amfp1"]
+interpolation_mode = 2
+colors = PackedColorArray(1, 0.913725, 0.745098, 1, 0.886275, 0.223529, 0.00392157, 1)
+
+[sub_resource type="Curve" id="Curve_qhcus"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_7hul1"]
+curve = SubResource("Curve_qhcus")
+
+[sub_resource type="Gradient" id="Gradient_5iv2r"]
+colors = PackedColorArray(0.952941, 0.67451, 0.407843, 1, 1, 0.913725, 0.745098, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2aos3"]
+gradient = SubResource("Gradient_5iv2r")
+
+[sub_resource type="Gradient" id="Gradient_8pypd"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5r78a"]
+gradient = SubResource("Gradient_8pypd")
+
+[sub_resource type="Curve" id="Curve_v0dnj"]
+bake_resolution = 128
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_yis8l"]
+curve = SubResource("Curve_v0dnj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vbm0g"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 256.0
+initial_velocity_max = 512.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -384.0
+tangential_accel_min = -128.0
+tangential_accel_max = 128.0
+scale_min = 2.0
+scale_max = 8.0
+scale_over_velocity_max = 1.0
+scale_over_velocity_curve = SubResource("CurveTexture_yis8l")
+color_ramp = SubResource("GradientTexture1D_5r78a")
+color_initial_ramp = SubResource("GradientTexture1D_2aos3")
+alpha_curve = SubResource("CurveTexture_7hul1")
+hue_variation_max = 0.1
+collision_mode = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vkyoq"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 90.0
+initial_velocity_min = 256.0
+initial_velocity_max = 512.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -384.0
+tangential_accel_max = 128.0
+scale_min = 2.0
+scale_max = 8.0
+scale_over_velocity_max = 1.0
+scale_over_velocity_curve = SubResource("CurveTexture_yis8l")
+color_ramp = SubResource("GradientTexture1D_5r78a")
+color_initial_ramp = SubResource("GradientTexture1D_2aos3")
+alpha_curve = SubResource("CurveTexture_7hul1")
+hue_variation_max = 0.1
+collision_mode = 2
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vm2h2"]
+random_pitch = 1.25
+streams_count = 3
+stream_0/stream = ExtResource("2_y2esf")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("3_of3a0")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("4_xi3w8")
+stream_2/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_w3r1e"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("2_bs4ds")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uweqw"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("7_ogult")
+stream_0/weight = 1.0
+
+[node name="PlasmaRay" type="Node2D"]
+script = SubResource("GDScript_nc8io")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Plasma" type="Line2D" parent="CanvasLayer"]
+texture_repeat = 3
+points = PackedVector2Array(0, 0, 0, 2048)
+width = 128.0
+gradient = SubResource("Gradient_amfp1")
+texture = ExtResource("1_jrnfp")
+texture_mode = 1
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 6
+
+[node name="SparksA" type="GPUParticles2D" parent="CanvasLayer"]
+amount = 64
+process_material = SubResource("ParticleProcessMaterial_vbm0g")
+lifetime = 16.0
+speed_scale = 8.0
+randomness = 1.0
+fixed_fps = 60
+visibility_rect = Rect2(-2048, -2048, 4096, 4096)
+trail_enabled = true
+trail_lifetime = 0.1
+trail_sections = 12
+
+[node name="SparksB" type="GPUParticles2D" parent="CanvasLayer"]
+position = Vector2(0, 2048)
+amount = 128
+process_material = SubResource("ParticleProcessMaterial_vkyoq")
+lifetime = 16.0
+speed_scale = 8.0
+randomness = 1.0
+fixed_fps = 60
+visibility_rect = Rect2(-2048, -2048, 4096, 4096)
+trail_enabled = true
+trail_lifetime = 0.1
+trail_sections = 12
+
+[node name="Ray" type="RayCast2D" parent="."]
+target_position = Vector2(0, 256000)
+
+[node name="StartLight" type="PointLight2D" parent="."]
+color = Color(1, 0.913725, 0.745098, 1)
+energy = 5.0
+shadow_enabled = true
+texture = ExtResource("2_w44gr")
+texture_scale = 6.0
+
+[node name="HitLight" type="PointLight2D" parent="."]
+position = Vector2(0, 2048)
+color = Color(0.886275, 0.223529, 0.00392157, 1)
+energy = 5.0
+shadow_enabled = true
+texture = ExtResource("2_w44gr")
+texture_scale = 6.0
+
+[node name="Start" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_vm2h2")
+volume_db = 10.0
+max_distance = 4096.0
+attenuation = 2.0
+
+[node name="Damage" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_w3r1e")
+max_distance = 2048.0
+attenuation = 2.0
+max_polyphony = 8
+
+[node name="PlasmaRayA" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_sqxcy")
+max_distance = 4096.0
+attenuation = 2.0
+
+[node name="PlasmaRayB" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_sqxcy")
+max_distance = 4096.0
+attenuation = 2.0
+
+[node name="End" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_uweqw")
+volume_db = 15.0
+max_distance = 4096.0
+attenuation = 2.0
+
+[node name="WaxTimer" type="Timer" parent="."]
+wait_time = 1.25
+autostart = true
+
+[node name="ArcTimer" type="Timer" parent="."]
+wait_time = 4.0
+
+[connection signal="finished" from="PlasmaRayA" to="." method="_on_plasma_ray_a_finished"]
+[connection signal="finished" from="PlasmaRayB" to="." method="_on_plasma_ray_b_finished"]
+[connection signal="timeout" from="ArcTimer" to="." method="_on_arc_timer_timeout"]

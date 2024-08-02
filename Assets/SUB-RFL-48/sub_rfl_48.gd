@@ -98,8 +98,11 @@ func _physics_process(delta) :
 		sprite.play()
 	
 	if cAni == "Walk" :
-		sprite.speed_scale = velocity.length()/100
-		Step.volume_db = round(((velocity.length()/speed) * 15) - 30)
+		var moveDirection = velocity.normalized()
+		if moveDirection.dot(direction) > 0.5 :
+			sprite.speed_scale = velocity.length()/100
+			Step.volume_db = round(((velocity.length()/speed) * 15) - 30)
+		else :  sprite.speed_scale = 0
 		if sprite.speed_scale == 0 :
 			sprite.frame = 0
 	if cAni == "Shoot" :

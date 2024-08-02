@@ -18,6 +18,8 @@ func _physics_process(delta):
 		$ExplosionLight.energy = 16 * ($ExplostionTimer.time_left/$ExplostionTimer.wait_time) 
 	else :
 		size = linear_velocity.length() / 1536.0
+		if size < 1 : $Whistle.stop()
+		elif $Whistle.playing == false : $Whistle.play()
 		$Light.texture_scale = 8 * sqrt(size)
 		size = clampf(size, 1, 6)
 		$Light.energy = size
@@ -42,14 +44,15 @@ func _on_body_entered(_body):
 func endShot():
 	if explode == true : return false
 	explode = true
+	#print("Exploded")
 	createMark()
 	$NavigationObstacle2D.avoidance_enabled = false
 	$ExplosionLight.enabled = true
 	$CollisionShape2D.free()
 	$Light.enabled = false
 	$Sprite.hide()
-	$Impact.play()
-	$Explode.play()
+	#$Impact.play()
+	#$Explode.play()
 	$Whistle.stop()
 	$ExplostionTimer.start()
 	$Smoke.restart()
@@ -71,6 +74,7 @@ func newSpark() :
 func createMark() :
 	var newMark = mark.instantiate()
 	newMark.position = global_position
+	size = clampf(size, 3, 6)
 	newMark.scale = Vector2(size, size) / 1.5
 	$"..".add_child(newMark)
 

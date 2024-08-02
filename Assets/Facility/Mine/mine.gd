@@ -66,6 +66,7 @@ func _on_explostion_timer_timeout():
 	explode()
 
 func explode():
+	#print("Mine")
 	emit_signal("exploded")
 	explosionLight.enabled = true
 	timer.stop()

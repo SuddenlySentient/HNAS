@@ -66,7 +66,11 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 
 func heal(amount : int) :
 	HP += amount
-	if HP > maxHP : HP = maxHP
+	if HP > maxHP : 
+		HP = maxHP
+	else : 
+		var markSize = sqrt(float(amount)) * 2
+		hitmarker(str(amount), markSize, Color.from_hsv(0.3, 0.8, 1, 1))
 
 func die(_cause : String) :
 	queue_free()
@@ -79,7 +83,7 @@ var nav : NavigationAgent2D
 func trySeeTile(tileCoord : Vector2i):
 	
 	var space_state = get_world_2d().direct_space_state
-	var query = PhysicsRayQueryParameters2D.create(global_position, map.map_to_local(tileCoord), 1)
+	var query = PhysicsRayQueryParameters2D.create(global_position, map.map_to_local(tileCoord), 3)
 	var result = space_state.intersect_ray(query)
 	
 	if result :
@@ -112,7 +116,7 @@ func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
 	
 	var tilesCoords : Array[Vector2i] = map.get_used_cells(0)
 	var tileValue : Array = []
-	var theOne
+	var theOne = map.local_to_map(global_position)
 	
 	for tile in tilesCoords :
 		if getTileNavigable(tile) and (trySeeTile(tile) == false) : #this gets rid of walls from the search since walls
