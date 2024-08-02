@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccfhf5ts588ay"
-path="res://.godot/imported/Floor.png-3888f27bd75a022753e263dbae917c7a.ctex"
+uid="uid://b8gg3c5d04teb"
+path="res://.godot/imported/Sideways.png-38a99bf90714541ae64f05f48b9dbaff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Vampire/Floor.png"
-dest_files=["res://.godot/imported/Floor.png-3888f27bd75a022753e263dbae917c7a.ctex"]
+source_file="res://Assets/Facility/Door/Frames/Sideways.png"
+dest_files=["res://.godot/imported/Sideways.png-38a99bf90714541ae64f05f48b9dbaff.ctex"]
 
 [params]
 

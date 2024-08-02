@@ -18,6 +18,7 @@ func _physics_process(delta):
 		$ExplosionLight.energy = 16 * ($ExplostionTimer.time_left/$ExplostionTimer.wait_time) 
 	else :
 		size = linear_velocity.length() / 1536.0
+		size = 1
 		if size < 1 : $Whistle.stop()
 		elif $Whistle.playing == false : $Whistle.play()
 		$Light.texture_scale = 8 * sqrt(size)
@@ -28,6 +29,10 @@ func _physics_process(delta):
 		$Whistle.pitch_scale = 1 / size
 		rotate((linear_velocity.length() / 64) * delta)
 		linear_velocity += targetVector * speed
+		if is_nan(linear_velocity.length()) : 
+			print("Velocity Error")
+			queue_free()
+			return false
 		var rand = 1.0 / size
 		targetVector += Vector2(randf_range(-rand, rand), randf_range(-rand, rand)) * delta
 		targetVector.normalized()
@@ -51,8 +56,8 @@ func endShot():
 	$CollisionShape2D.free()
 	$Light.enabled = false
 	$Sprite.hide()
-	#$Impact.play()
-	#$Explode.play()
+	$Impact.play()
+	$Explode.play()
 	$Whistle.stop()
 	$ExplostionTimer.start()
 	$Smoke.restart()

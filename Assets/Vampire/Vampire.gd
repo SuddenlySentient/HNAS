@@ -275,5 +275,5 @@ func _on_heal_timer_timeout():
 	if bloodTank > 0 and HP < maxHP :
 		bloodTank -= 1
 		heal(1)
-		$Heal.pitch_scale = lerpf(0.5, 1.75, sqrt(healthRemaining))
+		$Heal.pitch_scale = lerpf(0.5, 1.5, sqrt(healthRemaining))
 		$Heal.play()

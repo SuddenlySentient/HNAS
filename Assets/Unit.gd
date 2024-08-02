@@ -104,7 +104,8 @@ func getLastSearched(tileCoord : Vector2i):
 
 func getTileNavigable(tileCoord : Vector2i):
 	var data = map.get_cell_tile_data(0, tileCoord)
-	return data.get_custom_data("Navigable")
+	if data == null : return false
+	else : return data.get_custom_data("Navigable")
 
 func getTileValue(tileCoord : Vector2i, searchValue : float = -1, distanceValue : float = 1):
 	

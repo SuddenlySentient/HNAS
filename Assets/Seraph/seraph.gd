@@ -28,6 +28,11 @@ func _init():
 
 func _physics_process(delta) :
 	
+	if is_nan(position.x) : 
+		print("Seraph Velocity Error")
+		global_position = Vector2.ZERO
+		velocity = Vector2.ZERO
+	
 	velocity = lerp(velocity, Vector2.ZERO, delta)
 	move_and_slide()
 	
@@ -262,7 +267,7 @@ func getNearTile() :
 		if getTileNavigable(adjTile) and trySeeTile(adjTile) :
 			potentialTiles.append(adjTile)
 	if potentialTiles.size() > 0 : return potentialTiles.pick_random()
-	else : return false
+	else : return map.local_to_map(global_position)
 
 func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	
@@ -278,10 +283,11 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 		aggroList.append(dealer)
 		aggroTarget = dealer
 	else :
+		heal(DMG)
 		DMGDealt = 0
 	
 	
-	if stamina > 0 : 
+	if stamina > 0 and DMGDealt > 0 : 
 		if aggroTarget != null : 
 			var seeingTile = getSeeingTile()
 			if seeingTile is Vector2i :

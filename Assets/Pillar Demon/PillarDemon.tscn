@@ -1727,14 +1727,12 @@ maxHP = 8
 ARM = 6
 
 [node name="PDSprite" type="AnimatedSprite2D" parent="."]
-z_index = 1
 y_sort_enabled = true
 position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_fiel8")
 animation = &"AttackDown"
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -32)
 shape = SubResource("CircleShape2D_8pdwq")
 

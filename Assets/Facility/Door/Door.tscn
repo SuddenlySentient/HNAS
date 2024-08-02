@@ -1,0 +1,203 @@
+[gd_scene load_steps=33 format=3 uid="uid://cp6nhmxkbitfh"]
+
+[ext_resource type="Texture2D" uid="uid://cnwqmia4df13q" path="res://Assets/Facility/Door/Frames/0000.png" id="1_a5dif"]
+[ext_resource type="Script" path="res://Assets/Facility/Door/Door.gd" id="1_v7e0l"]
+[ext_resource type="Texture2D" uid="uid://155384oah3wf" path="res://Assets/Facility/Door/Frames/0001.png" id="2_jxeao"]
+[ext_resource type="Texture2D" uid="uid://ccfhf5ts588ay" path="res://Assets/Facility/Floor.png" id="2_y3lp7"]
+[ext_resource type="Texture2D" uid="uid://dbnt0bdyxotqd" path="res://Assets/Facility/Door/Frames/0002.png" id="3_vlmta"]
+[ext_resource type="Texture2D" uid="uid://erepmxpb0jkv" path="res://Assets/Facility/Door/Frames/0003.png" id="4_j8lmx"]
+[ext_resource type="Texture2D" uid="uid://4l4jaxlhklp5" path="res://Assets/Facility/Door/Frames/0004.png" id="5_l74e5"]
+[ext_resource type="Texture2D" uid="uid://dskqxft757sqm" path="res://Assets/Facility/Door/Frames/0005.png" id="6_pyixo"]
+[ext_resource type="Texture2D" uid="uid://cc4ah64vvr85w" path="res://Assets/Facility/Door/Frames/0006.png" id="7_yenqj"]
+[ext_resource type="Texture2D" uid="uid://chqkntglvjsad" path="res://Assets/Facility/Door/Frames/0007.png" id="8_ufmre"]
+[ext_resource type="Texture2D" uid="uid://bqx6i8ypi8ug6" path="res://Assets/Facility/Door/Frames/0008.png" id="9_jvxb2"]
+[ext_resource type="Texture2D" uid="uid://d4g1kaxu84yis" path="res://Assets/Facility/Door/Frames/0009.png" id="10_uvqke"]
+[ext_resource type="Texture2D" uid="uid://ccp1x2ohvb36u" path="res://Assets/Facility/Door/Frames/0010.png" id="11_278we"]
+[ext_resource type="Texture2D" uid="uid://b88mp1olp4cw1" path="res://Assets/Facility/Door/Frames/0011.png" id="12_8js2s"]
+[ext_resource type="Texture2D" uid="uid://2rmtrgwlm3gi" path="res://Assets/Facility/Door/Frames/0012.png" id="13_rp0of"]
+[ext_resource type="Texture2D" uid="uid://jotg54vfg1ki" path="res://Assets/Facility/Door/Frames/0013.png" id="14_pke24"]
+[ext_resource type="Texture2D" uid="uid://djsqx3kc0fpuj" path="res://Assets/Facility/Door/Frames/0014.png" id="15_dgwkg"]
+[ext_resource type="Texture2D" uid="uid://lsmeymx4fvb" path="res://Assets/Facility/Door/Frames/0015.png" id="16_k3qy0"]
+[ext_resource type="AudioStream" uid="uid://cirlekt3sbc68" path="res://Assets/Facility/Door/Sounds/lift_start.wav" id="18_clvv2"]
+[ext_resource type="AudioStream" uid="uid://bm3tgqsy7mlvl" path="res://Assets/Facility/Door/Sounds/lift_rel.wav" id="19_mly81"]
+[ext_resource type="AudioStream" uid="uid://cfmgairfofgir" path="res://Assets/Facility/Door/Sounds/servo_motor_01.wav" id="20_crl4d"]
+[ext_resource type="AudioStream" uid="uid://1u83y7b60bsu" path="res://Assets/Facility/Door/Sounds/servo_motor_switch_01.wav" id="21_4tu43"]
+[ext_resource type="AudioStream" uid="uid://ndxqf6nf7igx" path="res://Assets/Facility/Door/Sounds/servo_motor_switch_02.wav" id="22_8fpad"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s2pq6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_a5dif")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_jxeao")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_vlmta")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_j8lmx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_l74e5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_pyixo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_yenqj")
+}, {
+"duration": 0.5,
+"texture": ExtResource("8_ufmre")
+}, {
+"duration": 0.25,
+"texture": ExtResource("9_jvxb2")
+}, {
+"duration": 0.5,
+"texture": ExtResource("10_uvqke")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_278we")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_8js2s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_rp0of")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_pke24")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_dgwkg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_k3qy0")
+}],
+"loop": false,
+"name": &"Door",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_555r8"]
+size = Vector2(160, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q5llg"]
+size = Vector2(48, 192)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_3wjuv"]
+closed = false
+cull_mode = 2
+polygon = PackedVector2Array(-128, -248, -128, -336, 128, -336, 128, -248, -128, -248, 0, -248, 0, -200, -64, -200, -64, -64, -64, -200, 64, -200, 64, -64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2fn6"]
+size = Vector2(512, 1024)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_51eux"]
+vertices = PackedVector2Array(72, -128, 0, 0, -72, -128, 0, -256)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, -256, -72, -128, 0, 0, 72, -128)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_v8al6"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("18_clvv2")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_p4qly"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("19_mly81")
+stream_0/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6c4fx"]
+streams_count = 2
+stream_0/stream = ExtResource("21_4tu43")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("22_8fpad")
+stream_1/weight = 1.0
+
+[node name="Door" type="StaticBody2D"]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, 128)
+script = ExtResource("1_v7e0l")
+
+[node name="Floor" type="Sprite2D" parent="."]
+z_index = -1
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(0, -128)
+texture = ExtResource("2_y3lp7")
+
+[node name="DoorSprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+sprite_frames = SubResource("SpriteFrames_s2pq6")
+animation = &"Door"
+frame = 15
+frame_progress = 1.0
+offset = Vector2(0, -199.5)
+
+[node name="DoorCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -160)
+shape = SubResource("RectangleShape2D_555r8")
+disabled = true
+
+[node name="DoorCollisionLeft" type="CollisionShape2D" parent="."]
+position = Vector2(-104, -160)
+shape = SubResource("RectangleShape2D_q5llg")
+
+[node name="DoorCollisionRight" type="CollisionShape2D" parent="."]
+position = Vector2(104, -160)
+shape = SubResource("RectangleShape2D_q5llg")
+
+[node name="DoorOccluder" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_3wjuv")
+
+[node name="UnitSensor" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UnitSensor"]
+position = Vector2(0, -128)
+shape = SubResource("RectangleShape2D_u2fn6")
+
+[node name="NavigationLink" type="NavigationLink2D" parent="."]
+position = Vector2(0, -160)
+start_position = Vector2(0, 160)
+end_position = Vector2(0, -160)
+enter_cost = 8.0
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_51eux")
+
+[node name="Open" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_v8al6")
+max_distance = 2048.0
+attenuation = 2.0
+
+[node name="Close" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_p4qly")
+max_distance = 2048.0
+attenuation = 2.0
+
+[node name="Working" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_crl4d")
+max_distance = 2048.0
+attenuation = 2.0
+
+[node name="Switch" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_6c4fx")
+max_distance = 2048.0
+attenuation = 2.0
+
+[node name="CloseTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="animation_finished" from="DoorSprite" to="." method="_on_door_sprite_animation_finished"]
+[connection signal="frame_changed" from="DoorSprite" to="." method="_on_door_sprite_frame_changed"]
+[connection signal="timeout" from="CloseTimer" to="." method="_on_close_timer_timeout"]
