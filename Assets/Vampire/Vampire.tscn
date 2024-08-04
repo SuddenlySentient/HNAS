@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://Assets/Vampire/Vampire.gd" id="1_f578t"]
 [ext_resource type="FontFile" uid="uid://drk2hxgvh0f5a" path="res://Assets/MinecraftBold-nMK1.otf" id="2_ck1mv"]
 [ext_resource type="Texture2D" uid="uid://2lq0jjofqjct" path="res://Assets/Vampire/Frames/Walk/Down/0000.png" id="2_g7eyt"]
-[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/Base/CircleLight.png" id="2_wq3jw"]
 [ext_resource type="Texture2D" uid="uid://f2mvwrvqj286" path="res://Assets/Vampire/Frames/Walk/Down/0001.png" id="3_d8683"]
 [ext_resource type="Texture2D" uid="uid://dieqormxojemf" path="res://Assets/Vampire/Frames/Attack/Down/0000.png" id="3_ej73q"]
 [ext_resource type="Texture2D" uid="uid://ckshaaen0576n" path="res://Assets/Vampire/Frames/Attack/Down/0001.png" id="4_s8bjl"]
@@ -873,6 +872,7 @@
 [ext_resource type="Texture2D" uid="uid://cem7wdovvmi8f" path="res://Assets/Vampire/PrimeSlice.png" id="867_krf2o"]
 [ext_resource type="Texture2D" uid="uid://csa1gw6plmf11" path="res://Assets/Vampire/PrimeJab.png" id="868_hqo1y"]
 [ext_resource type="Texture2D" uid="uid://bkf0dapfwe42j" path="res://Assets/Vampire/PrimeLight.png" id="869_gupth"]
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/Base/CircleLight.png" id="870_fbrqh"]
 [ext_resource type="AudioStream" uid="uid://cq2vlic07f7n2" path="res://Assets/Vampire/Sound/FerrymanSwing1.wav" id="872_3ow0c"]
 [ext_resource type="AudioStream" uid="uid://biw0cc3umav0i" path="res://Assets/Vampire/Sound/electrical_discharge_01.wav" id="872_ajips"]
 [ext_resource type="AudioStream" uid="uid://dmsexvguad4sb" path="res://Assets/Vampire/Sound/gambling _lever_release_01.wav" id="872_ebj4f"]
@@ -3846,7 +3846,7 @@ texture_scale = 2.0
 texture_filter = 1
 scale = Vector2(12, 12)
 color = Color(1, 0.8, 0.8, 1)
-texture = ExtResource("2_wq3jw")
+texture = ExtResource("870_fbrqh")
 
 [node name="NavTimer" type="Timer" parent="."]
 autostart = true
@@ -3857,7 +3857,7 @@ one_shot = true
 
 [node name="Deflect" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_8x1wn")
-volume_db = -15.0
+volume_db = -25.0
 max_distance = 8192.0
 attenuation = 2.0
 max_polyphony = 16

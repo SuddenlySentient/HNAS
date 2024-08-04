@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://vrvddxe6q3pp" path="res://Assets/Seraph/Frames/Idle/0015.png" id="17_5agxm"]
 [ext_resource type="Texture2D" uid="uid://dgh1vjryvn46d" path="res://Assets/Seraph/SeraphLight.png" id="18_xk5uv"]
 [ext_resource type="AudioStream" uid="uid://cw4p72ekoh37s" path="res://Assets/Seraph/Sounds/FireStart.wav" id="19_2sfs8"]
+[ext_resource type="Script" path="res://Assets/Base/gun_module.gd" id="19_h7nq4"]
 [ext_resource type="AudioStream" uid="uid://84pw4vgf7rcm" path="res://Assets/Seraph/Sounds/angelic_choirs_01.wav" id="19_w07jj"]
 [ext_resource type="AudioStream" uid="uid://b8lc0pfmh1eva" path="res://Assets/Seraph/Sounds/steamLoop1.wav" id="19_y320f"]
 [ext_resource type="AudioStream" uid="uid://cwbtxs47qnlf3" path="res://Assets/Seraph/Sounds/steamLoop2.wav" id="20_7ohao"]
@@ -33,7 +34,6 @@
 [ext_resource type="AudioStream" uid="uid://cgmfdciaq45yb" path="res://Assets/Seraph/Sounds/malfunction2.wav" id="31_ybh2h"]
 [ext_resource type="AudioStream" uid="uid://dhcxgi2y21vkh" path="res://Assets/Seraph/Sounds/malfunction3.wav" id="32_17bbr"]
 [ext_resource type="AudioStream" uid="uid://bo1xsexelaynd" path="res://Assets/Seraph/Sounds/malfunction4.wav" id="33_83ggn"]
-[ext_resource type="Script" path="res://Assets/Base/gun_module.gd" id="34_somv2"]
 [ext_resource type="PackedScene" uid="uid://bdo86ison3jql" path="res://Assets/Seraph/fireball.tscn" id="35_4m7t2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cops4"]
@@ -184,7 +184,6 @@ y_sort_enabled = true
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_ysqkr")
-maxStamina = 5
 tags = Array[String](["Angel", "Magic", "Greater", "Hover"])
 maxSpeed = 50
 maxHP = 16
@@ -233,7 +232,7 @@ shape = SubResource("CircleShape2D_lxgww")
 debug_color = Color(0.6, 0.239216, 0.419608, 0.25098)
 
 [node name="Fireball" type="Node" parent="."]
-script = ExtResource("34_somv2")
+script = ExtResource("19_h7nq4")
 shot = ExtResource("35_4m7t2")
 
 [node name="TestTimer" type="Timer" parent="."]
@@ -243,19 +242,22 @@ one_shot = true
 wait_time = 2.0
 autostart = true
 
-[node name="Regen" type="AudioStreamPlayer2D" parent="StaminaRegen"]
-stream = ExtResource("19_2sfs8")
-volume_db = -10.0
-
 [node name="TeleportTimer" type="Timer" parent="."]
 wait_time = 0.25
 one_shot = true
+
+[node name="Regen" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_2sfs8")
+volume_db = -10.0
+max_distance = 2048.0
+attenuation = 2.0
 
 [node name="Steam" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_twegr")
 volume_db = -5.0
 autoplay = true
-max_distance = 1024.0
+max_distance = 2048.0
+attenuation = 2.0
 
 [node name="BurningA" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("22_cfuak")
@@ -289,11 +291,14 @@ max_polyphony = 3
 [node name="Poof" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_x10cv")
 max_distance = 2048.0
+attenuation = 2.0
 max_polyphony = 3
 
 [node name="Fail" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_yt5w5")
 volume_db = 5.0
+max_distance = 2048.0
+attenuation = 2.0
 
 [node name="Line2D" type="Line2D" parent="."]
 visible = false

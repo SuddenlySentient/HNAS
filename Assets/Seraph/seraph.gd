@@ -5,8 +5,9 @@ class_name Seraph
 @export var lightRotateSpeed : float = 0.25
 @onready var sprite : AnimatedSprite2D = $Sprite
 @onready var fireball : GunModule = $Fireball
-@export var maxStamina : int = 4
-var stamina : float
+@export var maxStamina : int = 5
+@export var staminaRegen : float = 2
+var stamina : int
 var brightness : float = 0
 @export var teleportTimePerTile : float = 0.125
 
@@ -25,6 +26,7 @@ func _init():
 	HP = maxHP
 	sprite.play()
 	vision = $Vision
+	$StaminaRegen.wait_time = staminaRegen
 
 func _physics_process(delta) :
 	
@@ -37,6 +39,9 @@ func _physics_process(delta) :
 	move_and_slide()
 	
 	$CanvasLayer/FireEmbers.position = global_position
+	var hpRemaining = 1 - (float(HP) / float(maxHP))
+	$Steam.volume_db = lerp(-50, 0, hpRemaining)
+	
 	
 	var recentVision = checkVision()
 	
@@ -59,7 +64,8 @@ func _physics_process(delta) :
 	else : 
 		aggroTarget = null
 	
-	if aggroTarget == null :
+	if aggroTarget == null or aggroTarget.canBeSeen == false :
+		aggroTarget = null
 		State = States.Searching
 	
 	#if aggroTarget != null :
@@ -91,19 +97,18 @@ func _physics_process(delta) :
 						attack()
 
 func _process(delta) :
-	brightness = lerpf(brightness, ((float(stamina) / float(maxStamina)) * (3.0 / 5.0)) + 0.4, delta)
+	brightness = lerpf(brightness, ((float(stamina) / float(maxStamina)) * 0.6) + 0.4, delta)
 	$HeavenlyLight.texture_scale = brightness * 6
 	$HeavenlyLight.rotate(delta * (lightRotateSpeed / (brightness * brightness)))
 	$HeavenlyLight.color = lerp(Color("e63900"), Color("ffeabf"), brightness)
 	sprite.modulate = lerp(Color("cccccc"), Color("404040"), brightness)
 	$Choir.pitch_scale = brightness * (3.0/4.0)
-	#print(brightness)
 
 func teleport(location, dodgeing = false) :
 	var cost = 1
 	if location is Vector2 == false : return false
 	#if getDistanceTo(location) <= 384 : cost = 0.5
-	if useStamina(cost) and ($TeleportTimer.is_stopped() or dodgeing) :
+	if ($TeleportTimer.is_stopped() or dodgeing) and useStamina(cost) :
 		$Choir/ChoirTimer.stop()
 		$Choir.stop()
 		newSpark()
@@ -211,7 +216,8 @@ func getSeeingTile():
 @export_subgroup("PlasmaRay")
 @export var plasmaRayDMG : int = 16
 @export var plasmaRayAP : int = 7
-@export var plasmaRayArc : float = 10
+@export var plasmaRayMaxArc : float = 90
+@export var plasmaRayMinArc : float = 5
 
 @onready var plasmaRay = load("res://Assets/Base/PlasmaRay/PlasmaRay.tscn")
 
@@ -225,13 +231,16 @@ func attack() :
 			firePlasmaRay(aggroTargetPos)
 
 func firePlasmaRay(location : Vector2) :
-	if useStamina(2) :
+	if useStamina(1) :
 		var vectorToTarget = global_position.direction_to(location)
+		var distanceToTarget = global_position.distance_to(location)
+		distanceToTarget = clampf(distanceToTarget / 4096, 0, 1)
 		var newPlasmaRay = plasmaRay.instantiate()
 		newPlasmaRay.DMG = plasmaRayDMG
 		newPlasmaRay.AP = plasmaRayAP
 		newPlasmaRay.targetVector = vectorToTarget
-		newPlasmaRay.arcLength = deg_to_rad(plasmaRayArc) / 2
+		var arc = lerpf(plasmaRayMinArc, plasmaRayMaxArc, distanceToTarget)
+		newPlasmaRay.arcLength = deg_to_rad(arc) / 2.0
 		newPlasmaRay.myOwner = self
 		add_child(newPlasmaRay)
 		newPlasmaRay.global_position = global_position + (vectorToTarget * 256)
@@ -242,7 +251,7 @@ func fireFireball(location : Vector2) :
 		fireball.fire(fireballDMG, fireballAP, vectorToTarget, fireballInaccuracy, 384, 64)
 		velocity += vectorToTarget * -128
 
-func useStamina(amount : float) :
+func useStamina(amount : int) :
 	
 	if stamina >= amount :
 		stamina -= amount
@@ -284,17 +293,19 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 		aggroTarget = dealer
 	else :
 		heal(DMG)
+		print("Self DMG, Healed ", DMG, "HP")
 		DMGDealt = 0
 	
-	
-	if stamina > 0 and DMGDealt > 0 : 
+	if stamina >= 1 and DMGDealt > 0 : 
+		var teleportTarget = map.map_to_local(getNearTile())
 		if aggroTarget != null : 
 			var seeingTile = getSeeingTile()
 			if seeingTile is Vector2i :
-				teleport(map.map_to_local(seeingTile), true)
-			else : teleport(map.map_to_local(getNearTile()), true) 
-		else : teleport(map.map_to_local(getNearTile()), true) 
-		DMGDealt = -1
+				teleportTarget = map.map_to_local(seeingTile)
+		if teleportTarget is Vector2 :
+			teleport(teleportTarget, true)
+			hitmarker("AVOIDED", 2, Color.from_hsv(0.1, 0.8, 1, 1))
+			DMGDealt = -1
 	
 	if DMGDealt > 0 : HP -= DMGDealt
 	if source != dealer :
@@ -347,8 +358,8 @@ func _on_stamina_regen_timeout():
 	if stamina < maxStamina : 
 		stamina += 1
 		if stamina > maxStamina : stamina = maxStamina
-		$StaminaRegen/Regen.pitch_scale = (maxRegenPitch / float(maxStamina)) * stamina
-		$StaminaRegen/Regen.play()
+		$Regen.pitch_scale = (maxRegenPitch / float(maxStamina)) * stamina
+		$Regen.play()
 
 func _on_test_timer_timeout():
 	teleport(map.map_to_local(getTileToSearch(-1, 0.125)))

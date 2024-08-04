@@ -1,9 +1,11 @@
-[gd_scene load_steps=37 format=3 uid="uid://cp6nhmxkbitfh"]
+[gd_scene load_steps=49 format=3 uid="uid://cp6nhmxkbitfh"]
 
 [ext_resource type="Texture2D" uid="uid://cnwqmia4df13q" path="res://Assets/Facility/Door/Frames/0000.png" id="1_a5dif"]
 [ext_resource type="Script" path="res://Assets/Facility/Door/Door.gd" id="1_v7e0l"]
+[ext_resource type="Texture2D" uid="uid://bu4i8lka5ke41" path="res://Assets/Facility/Door/Unlocked.png" id="2_4yeo0"]
 [ext_resource type="Texture2D" uid="uid://155384oah3wf" path="res://Assets/Facility/Door/Frames/0001.png" id="2_jxeao"]
 [ext_resource type="Texture2D" uid="uid://ccfhf5ts588ay" path="res://Assets/Facility/Floor.png" id="2_y3lp7"]
+[ext_resource type="Texture2D" uid="uid://c8qi0xuysomo" path="res://Assets/Facility/Door/Locked.png" id="3_af66c"]
 [ext_resource type="Texture2D" uid="uid://b8gg3c5d04teb" path="res://Assets/Facility/Door/Frames/Sideways.png" id="3_d0cly"]
 [ext_resource type="Texture2D" uid="uid://dbnt0bdyxotqd" path="res://Assets/Facility/Door/Frames/0002.png" id="3_vlmta"]
 [ext_resource type="Texture2D" uid="uid://erepmxpb0jkv" path="res://Assets/Facility/Door/Frames/0003.png" id="4_j8lmx"]
@@ -25,6 +27,27 @@
 [ext_resource type="AudioStream" uid="uid://cfmgairfofgir" path="res://Assets/Facility/Door/Sounds/servo_motor_01.wav" id="20_crl4d"]
 [ext_resource type="AudioStream" uid="uid://1u83y7b60bsu" path="res://Assets/Facility/Door/Sounds/servo_motor_switch_01.wav" id="21_4tu43"]
 [ext_resource type="AudioStream" uid="uid://ndxqf6nf7igx" path="res://Assets/Facility/Door/Sounds/servo_motor_switch_02.wav" id="22_8fpad"]
+[ext_resource type="AudioStream" uid="uid://cyj7163506erk" path="res://Assets/Facility/Door/Sounds/synthy_squelch_01.wav" id="27_7awio"]
+[ext_resource type="AudioStream" uid="uid://c2ftqwq6eoixr" path="res://Assets/Facility/Door/Sounds/synthy_squelch_02.wav" id="28_7pkxj"]
+[ext_resource type="AudioStream" uid="uid://bpfljhcbf0qux" path="res://Assets/Facility/Door/Sounds/synthy_squelch_03.wav" id="29_56yst"]
+[ext_resource type="AudioStream" uid="uid://bn6v6ua5wct2g" path="res://Assets/Facility/Door/Sounds/synthy_squelch_04.wav" id="30_e23t7"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_26f16"]
+texture = ExtResource("2_4yeo0")
+modulate_color = Color(1, 0.5, 0.5, 0.752941)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ty322"]
+texture = ExtResource("2_4yeo0")
+modulate_color = Color(1, 1, 1, 0.235294)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0iow3"]
+texture = ExtResource("3_af66c")
+modulate_color = Color(1, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_np0na"]
+Button/styles/hover = SubResource("StyleBoxTexture_26f16")
+Button/styles/normal = SubResource("StyleBoxTexture_ty322")
+Button/styles/pressed = SubResource("StyleBoxTexture_0iow3")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_s2pq6"]
 animations = [{
@@ -87,6 +110,10 @@ closed = false
 cull_mode = 2
 polygon = PackedVector2Array(-128, -248, -128, -336, 128, -336, 128, -248, -128, -248, 0, -248, 0, -200, -64, -200, -64, -64, -64, -200, 64, -200, 64, -64)
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_sggo6"]
+cull_mode = 1
+polygon = PackedVector2Array(-64, -104, 64, -104, 64, -440, -64, -440)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_555r8"]
 size = Vector2(160, 128)
 
@@ -128,12 +155,52 @@ stream_0/weight = 1.0
 stream_1/stream = ExtResource("22_8fpad")
 stream_1/weight = 1.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_h7uv2"]
+random_pitch = 1.25
+streams_count = 4
+stream_0/stream = ExtResource("27_7awio")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("28_7pkxj")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("29_56yst")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("30_e23t7")
+stream_3/weight = 1.0
+
 [node name="Door" type="StaticBody2D"]
 z_index = 1
 y_sort_enabled = true
 position = Vector2(0, 128)
 collision_layer = 5
 script = ExtResource("1_v7e0l")
+scaleSpeed = 8
+
+[node name="Node2D2" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(0, -128)
+rect = Rect2(-128, -128, 256, 256)
+enable_node_path = NodePath("CanvasLayer")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Node2D2"]
+layer = 2
+follow_viewport_enabled = true
+
+[node name="Button" type="Button" parent="Node2D2/CanvasLayer"]
+custom_minimum_size = Vector2(192, 192)
+anchors_preset = -1
+anchor_left = -0.075
+anchor_top = -0.133333
+anchor_right = -0.075
+anchor_bottom = -0.133
+offset_right = 192.0
+offset_bottom = 191.76
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(96, 96)
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_np0na")
+toggle_mode = true
 
 [node name="Floor" type="Sprite2D" parent="."]
 z_index = -1
@@ -163,10 +230,13 @@ offset = Vector2(0, -199.5)
 [node name="DoorOccluder" type="LightOccluder2D" parent="."]
 occluder = SubResource("OccluderPolygon2D_3wjuv")
 
+[node name="SidewaysDoorOccluder" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_sggo6")
+
 [node name="DoorLight" type="PointLight2D" parent="."]
 position = Vector2(0, -128)
 color = Color(0.4, 1, 0.4, 1)
-energy = 0.5
+energy = 0.0
 texture = ExtResource("20_0doaa")
 texture_scale = 6.0
 
@@ -174,7 +244,6 @@ texture_scale = 6.0
 visible = false
 position = Vector2(0, -160)
 shape = SubResource("RectangleShape2D_555r8")
-disabled = true
 
 [node name="DoorCollisionLeft" type="CollisionShape2D" parent="."]
 visible = false
@@ -190,7 +259,6 @@ shape = SubResource("RectangleShape2D_q5llg")
 visible = false
 position = Vector2(0, -128)
 shape = SubResource("RectangleShape2D_u8sca")
-disabled = true
 
 [node name="SidewaysDoorCollisionLeft" type="CollisionShape2D" parent="."]
 visible = false
@@ -214,6 +282,7 @@ enter_cost = 4.0
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="Node2D"]
 position = Vector2(0, 128)
 navigation_polygon = SubResource("NavigationPolygon_51eux")
+enabled = false
 enter_cost = 4.0
 
 [node name="UnitSensor" type="Area2D" parent="Node2D"]
@@ -245,6 +314,11 @@ stream = SubResource("AudioStreamRandomizer_6c4fx")
 max_distance = 2048.0
 attenuation = 2.0
 
+[node name="Lock" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_h7uv2")
+max_distance = 4096.0
+attenuation = 2.0
+
 [node name="CloseTimer" type="Timer" parent="."]
 wait_time = 4.0
 one_shot = true
@@ -253,6 +327,9 @@ one_shot = true
 wait_time = 2.0
 one_shot = true
 
+[connection signal="screen_entered" from="Node2D2" to="." method="_on_node_2d_2_screen_entered"]
+[connection signal="screen_exited" from="Node2D2" to="." method="_on_node_2d_2_screen_exited"]
+[connection signal="toggled" from="Node2D2/CanvasLayer/Button" to="." method="_on_button_toggled"]
 [connection signal="animation_finished" from="DoorSprite" to="." method="_on_door_sprite_animation_finished"]
 [connection signal="frame_changed" from="DoorSprite" to="." method="_on_door_sprite_frame_changed"]
 [connection signal="timeout" from="CloseTimer" to="." method="_on_close_timer_timeout"]

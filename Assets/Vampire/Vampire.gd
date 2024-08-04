@@ -43,14 +43,15 @@ func _physics_process(delta) :
 			if thing is Unit :
 				if  thing.team != team : 
 					if aggroList.has(thing) == false : aggroList.append(thing)
-		if aggroList.is_empty() == false and aggroList[0] != null :
+		if aggroList.is_empty() == false and (aggroList[0] != null and aggroList[0].canBeSeen) :
 			aggroTarget = aggroList[0]
-		if aggroTarget != null  :
+		if aggroTarget != null and aggroTarget.canBeSeen :
 			if $RotateNode/ThrustArea.overlaps_body(aggroTarget) : 
 				State = States.Attack
 			else : 
 				State = States.Approach
 		else :
+			aggroTarget = null
 			if State != States.Move :
 				State = States.Move
 	

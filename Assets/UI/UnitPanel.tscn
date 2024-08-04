@@ -1,0 +1,410 @@
+[gd_scene load_steps=20 format=3 uid="uid://dv0l0ok4t12e5"]
+
+[ext_resource type="FontFile" uid="uid://drk2hxgvh0f5a" path="res://Assets/MinecraftBold-nMK1.otf" id="1_4grkk"]
+[ext_resource type="Theme" uid="uid://d3md10mt5mmql" path="res://Assets/UI/Default.tres" id="1_opmqu"]
+[ext_resource type="FontFile" uid="uid://41ewtn37gdwt" path="res://Assets/FSEX300.ttf" id="1_woa1j"]
+[ext_resource type="Texture2D" uid="uid://sqmmklvl0n5r" path="res://Assets/Facility/FacilityLogo.png" id="2_asd6x"]
+[ext_resource type="StyleBox" uid="uid://bvgpjjcco2bn8" path="res://Assets/UI/Console.tres" id="3_7vp0t"]
+[ext_resource type="Theme" uid="uid://d2jc1x1yhcre" path="res://Assets/UI/HealthBar.tres" id="3_hqsn6"]
+[ext_resource type="Theme" uid="uid://cxjspidddob3y" path="res://Assets/UI/StatusBar.tres" id="4_1biv4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xf8q6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jxv6y"]
+
+[sub_resource type="Theme" id="Theme_67tyc"]
+Label/styles/normal = SubResource("StyleBoxEmpty_jxv6y")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l2m82"]
+bg_color = Color(0.72, 0.72, 0.8, 0.376471)
+border_width_left = 6
+border_width_right = 6
+border_color = Color(0.901961, 0.901961, 1, 0.752941)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r8cvr"]
+bg_color = Color(0.9, 0.6975, 0.09, 1)
+border_width_left = 12
+border_width_right = 12
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gnjk6"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.901961, 0.901961, 1, 0.25098)
+border_width_left = 8
+border_width_top = 4
+border_width_right = 8
+border_width_bottom = 4
+border_color = Color(0.901961, 0.901961, 1, 0.501961)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_05lno"]
+bg_color = Color(0.85, 0, 0.141667, 1)
+border_width_left = 12
+border_width_top = 8
+border_width_right = 12
+border_width_bottom = 8
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="GDScript" id="GDScript_x113k"]
+resource_name = "dotDotDot"
+script/source = "extends Label
+
+
+
+func _process(_delta):
+	var ratio : float = 1 - ($EllipseTimer.time_left / $EllipseTimer.wait_time)
+	$\".\".visible_characters = (4.0 * ratio)
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c1v3j"]
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.48, 0.48, 0.8, 1)
+border_width_left = 8
+border_width_right = 8
+border_color = Color(0.42, 0.28, 0.7, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s0far"]
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.56, 0.8, 0.32, 1)
+border_width_left = 8
+border_width_right = 8
+border_color = Color(0.12, 0.6, 0.12, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfkqw"]
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.24, 0.6, 0.6, 1)
+border_width_left = 8
+border_width_right = 8
+border_color = Color(0.08, 0.346667, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lpaer"]
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.6, 0.2, 1)
+border_width_left = 8
+border_width_right = 8
+border_color = Color(0.8, 0.266667, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+anti_aliasing = false
+
+[node name="UnitPanel" type="PanelContainer"]
+offset_right = 284.0
+offset_bottom = 108.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme = ExtResource("1_opmqu")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_xf8q6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Icon" type="TextureRect" parent="VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_asd6x")
+expand_mode = 2
+
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 0
+theme = SubResource("Theme_67tyc")
+theme_override_fonts/font = ExtResource("1_4grkk")
+theme_override_font_sizes/font_size = 20
+text = "EXAMPLE NAME OF AN UNIT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Health" type="ProgressBar" parent="VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme = ExtResource("3_hqsn6")
+max_value = 16.0
+step = 1.0
+value = 13.0
+rounded = true
+show_percentage = false
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer2/Health"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -5.0
+offset_right = 20.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "13 / 16"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SeraphStamina" type="ProgressBar" parent="VBoxContainer/VBoxContainer2"]
+visible = false
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme = ExtResource("3_hqsn6")
+theme_override_styles/background = SubResource("StyleBoxFlat_l2m82")
+theme_override_styles/fill = SubResource("StyleBoxFlat_r8cvr")
+max_value = 5.0
+step = 1.0
+value = 1.0
+rounded = true
+show_percentage = false
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer2/SeraphStamina"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -5.0
+offset_right = 20.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "1 / 5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VampireBlood" type="ProgressBar" parent="VBoxContainer/VBoxContainer2"]
+visible = false
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme = ExtResource("3_hqsn6")
+theme_override_styles/background = SubResource("StyleBoxFlat_gnjk6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_05lno")
+max_value = 16.0
+step = 1.0
+value = 12.0
+rounded = true
+fill_mode = 3
+show_percentage = false
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer2/VampireBlood"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -5.0
+offset_right = 20.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.2, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "12 / 16"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="StatePanel" type="PanelContainer" parent="VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+size_flags_vertical = 2
+theme = ExtResource("4_1biv4")
+
+[node name="State" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/StatePanel"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="StateLabel" type="Label" parent="VBoxContainer/VBoxContainer/StatePanel/State"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4grkk")
+theme_override_font_sizes/font_size = 20
+text = "Attacking"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Ellipse" type="Label" parent="VBoxContainer/VBoxContainer/StatePanel/State"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4grkk")
+theme_override_font_sizes/font_size = 20
+text = "..."
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_x113k")
+
+[node name="EllipseTimer" type="Timer" parent="VBoxContainer/VBoxContainer/StatePanel/State/Ellipse"]
+wait_time = 2.0
+autostart = true
+
+[node name="SR" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="Alone" type="PanelContainer" parent="VBoxContainer/VBoxContainer/SR"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme = ExtResource("1_opmqu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_c1v3j")
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SR/Alone"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4grkk")
+theme_override_font_sizes/font_size = 20
+text = "Alone"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InSquad" type="PanelContainer" parent="VBoxContainer/VBoxContainer/SR"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme = ExtResource("1_opmqu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_s0far")
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SR/InSquad"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4grkk")
+theme_override_font_sizes/font_size = 20
+text = "Squad"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NotALeader" type="PanelContainer" parent="VBoxContainer/VBoxContainer/SR"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme = ExtResource("1_opmqu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_qfkqw")
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SR/NotALeader"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4grkk")
+theme_override_font_sizes/font_size = 20
+text = "Not a Leader"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Leader" type="PanelContainer" parent="VBoxContainer/VBoxContainer/SR"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme = ExtResource("1_opmqu")
+theme_override_styles/panel = SubResource("StyleBoxFlat_lpaer")
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SR/Leader"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4grkk")
+theme_override_font_sizes/font_size = 20
+text = "Leader"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Console" type="PanelContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_7vp0t")
+
+[node name="Squad" type="HBoxContainer" parent="VBoxContainer/Console"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="SquadLabelA" type="RichTextLabel" parent="VBoxContainer/Console/Squad"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("1_woa1j")
+theme_override_font_sizes/normal_font_size = 16
+text = "Squad :
+SUB-RFL-48-001
+SUB-RFL-48-002
+SUB-RFL-48-003
+SUB-RFL-48-004"
+
+[node name="SquadLabelB" type="RichTextLabel" parent="VBoxContainer/Console/Squad"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("1_woa1j")
+theme_override_font_sizes/normal_font_size = 16
+text = "SUB-RFL-48-005
+SUB-RFL-48-006
+SUB-RFL-48-007
+SUB-RFL-48-008
+SUB-RFL-48-009"

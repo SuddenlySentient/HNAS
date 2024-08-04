@@ -1,0 +1,35 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d2jc1x1yhcre"]
+
+[ext_resource type="FontFile" uid="uid://drk2hxgvh0f5a" path="res://Assets/MinecraftBold-nMK1.otf" id="1_c3qgk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nb6bl"]
+bg_color = Color(0.721569, 0.721569, 0.8, 0.376471)
+border_width_top = 4
+border_width_bottom = 4
+border_color = Color(0.901961, 0.901961, 1, 0.752941)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igcyc"]
+bg_color = Color(0.9, 0.1575, 0.09, 1)
+border_width_left = 4
+border_width_top = 8
+border_width_right = 4
+border_width_bottom = 8
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+anti_aliasing = false
+
+[resource]
+default_font = ExtResource("1_c3qgk")
+default_font_size = 10
+ProgressBar/styles/background = SubResource("StyleBoxFlat_nb6bl")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_igcyc")

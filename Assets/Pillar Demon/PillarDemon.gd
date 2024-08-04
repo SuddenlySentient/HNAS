@@ -27,7 +27,7 @@ var PillarState = PillarStates.Pillar
 @export var deccelerate : float = 100
 @export var runSpeedMult : float = 2
 @export var seekOthersDesire : int = 4096
-@export var swarmDesire : int = 512
+@export var swarmDesire : int = 2048
 @export var desiredCompany : int = 2
 @export_subgroup("Punch")
 @export var DMG : int = 5
@@ -102,7 +102,7 @@ func actionQuery(delta) :
 			if pillarArray[0].PillarState == PillarStates.Pillar and pillarArray[0].recentSeenCheck == false :
 				pillarArray[0].wander()
 	if State == States.Swarm or State == States.Attack :
-		if aggroList.size() > 0 and aggroList[0] == null : aggroList.remove_at(0)
+		if aggroList.size() > 0 and (aggroList[0] == null or aggroList[0].canBeSeen == false) : aggroList.remove_at(0)
 		if aggroTarget == null : 
 			if aggroList.size() > 0 : 
 				aggroTarget = aggroList[0]
@@ -274,7 +274,7 @@ func _on_sniff_timer_timeout():
 	randTime = round(randTime)
 	$Sniff/SniffTimer.start(randTime)
 	if PillarState == PillarStates.Pillar and HP < maxHP : 
-		print(PillarState)
+		#print(PillarState)
 		heal(1)
 
 func _on_hurt(_DMG):
@@ -299,8 +299,9 @@ func _on_pd_nav_navigation_finished():
 		States.Wander : 
 			if trySeeTile(map.local_to_map(nav.target_position)) :
 				nav.target_position = map.map_to_local(getTileToSearch())
-		States.GroupUp :
+		States.GroupUp, States.Swarm :
 			idle()
+			if State == States.Swarm and aggroTarget.canBeSeen == false : aggroTarget = null
 
 func _on_nav_timer_timeout():
 	match State :

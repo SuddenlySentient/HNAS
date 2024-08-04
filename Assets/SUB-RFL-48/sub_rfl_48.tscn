@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://Assets/SUB-RFL-48/sub_rfl_48.gd" id="1_evgs4"]
 [ext_resource type="SpriteFrames" uid="uid://dixx16d0v7joh" path="res://Assets/SUB-RFL-48/Frames.tres" id="1_mp564"]
-[ext_resource type="PackedScene" uid="uid://gtu06q71hu4e" path="res://Assets/Base/gun_module.tscn" id="2_oyipb"]
+[ext_resource type="PackedScene" uid="uid://gtu06q71hu4e" path="res://Assets/Base/gun_module.tscn" id="2_1dwod"]
 [ext_resource type="Texture2D" uid="uid://dnykk038hfxt7" path="res://Assets/UnitSelector.png" id="2_yrspc"]
-[ext_resource type="Texture2D" uid="uid://0eseirpqcd5k" path="res://Assets/Base/Line.png" id="3_0dplg"]
 [ext_resource type="Script" path="res://Assets/SUB-RFL-48/SelectorEffect.gd" id="3_mhsra"]
 [ext_resource type="Texture2D" uid="uid://dr11atb80kaht" path="res://Assets/SUB-RFL-48/Flashlight.png" id="3_rjy8v"]
 [ext_resource type="Texture2D" uid="uid://pgv3ew48ufou" path="res://Assets/SUB-RFL-48/SquadMarker.png" id="3_ylgks"]
-[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/Base/CircleLight.png" id="6_elam6"]
+[ext_resource type="Texture2D" uid="uid://0eseirpqcd5k" path="res://Assets/Base/Line.png" id="5_nsdnd"]
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/Base/CircleLight.png" id="8_1riiv"]
 [ext_resource type="AudioStream" uid="uid://is867bturdyx" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_01.wav" id="8_cu81f"]
 [ext_resource type="AudioStream" uid="uid://rhtoivdcpvx5" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_02.wav" id="9_7x3it"]
 [ext_resource type="AudioStream" uid="uid://cimsf8ydh2tmn" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_03.wav" id="10_2wk2a"]
@@ -65,7 +65,7 @@ tags = Array[String](["Mechanical", "Robot", "Greater"])
 maxHP = 16
 ARM = 2
 
-[node name="GunModule" parent="." instance=ExtResource("2_oyipb")]
+[node name="GunModule" parent="." instance=ExtResource("2_1dwod")]
 
 [node name="Test" type="Timer" parent="."]
 wait_time = 2.0
@@ -89,7 +89,7 @@ show_behind_parent = true
 light_mask = 0
 z_index = 4
 scale = Vector2(5, 5)
-texture = ExtResource("3_0dplg")
+texture = ExtResource("5_nsdnd")
 offset = Vector2(0, 32)
 
 [node name="Leader Selector" type="Sprite2D" parent="CanvasLayer"]
@@ -120,7 +120,6 @@ neighbor_distance = 128.0
 max_neighbors = 8
 time_horizon_agents = 2.0
 debug_use_custom = true
-debug_path_custom_color = Color(4, 1, 1, 1)
 debug_path_custom_point_size = 16.0
 debug_path_custom_line_width = 4.0
 
@@ -135,7 +134,7 @@ texture_filter = 1
 scale = Vector2(4, 4)
 color = Color(0.752941, 1, 1, 1)
 energy = 0.6
-texture = ExtResource("6_elam6")
+texture = ExtResource("8_1riiv")
 
 [node name="Flashlight" type="PointLight2D" parent="."]
 texture_filter = 1

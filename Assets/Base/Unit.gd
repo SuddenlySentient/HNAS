@@ -115,12 +115,13 @@ func getTileValue(tileCoord : Vector2i, searchValue : float = -1, distanceValue 
 
 func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
 	
+	var myTile = map.local_to_map(global_position)
 	var tilesCoords : Array[Vector2i] = map.get_used_cells(0)
 	var tileValue : Array = []
-	var theOne = map.local_to_map(global_position)
+	var theOne = Vector2.ZERO
 	
 	for tile in tilesCoords :
-		if getTileNavigable(tile) and (trySeeTile(tile) == false) : #this gets rid of walls from the search since walls
+		if getTileNavigable(tile) and trySeeTile(tile) == false and tile != myTile :
 			var newEntry = getTileValue(tile, searchValue, distanceValue)
 			tileValue.append(newEntry)
 			tileValue.sort()
@@ -144,9 +145,11 @@ func indirectDMG(_who : Unit, _amount : int) :
 
 func hitmarker(text : String = "NULL", size : float = 1, color : Color = Color.from_hsv(0, 0.8, 1, 1)) :
 	var mark = marker.instantiate()
+	mark.hide()
 	mark.initalPos = global_position
 	mark.vector += velocity
 	mark.text = text
 	mark.color = color
 	mark.size = size
 	map.add_child(mark)
+	mark.show()
