@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bmkc1qgs776ut"]
+[gd_scene load_steps=3 format=3 uid="uid://bmkc1qgs776ut"]
 
 [ext_resource type="Script" path="res://Assets/UI/UI.gd" id="1_2s0pg"]
+[ext_resource type="PackedScene" uid="uid://tv4jdog6wsyu" path="res://Assets/UI/SpawnPanel.tscn" id="2_xdxlc"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_2s0pg")
@@ -13,6 +14,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="SpawnPanel" parent="Control" instance=ExtResource("2_xdxlc")]
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Control"]
 layout_mode = 1

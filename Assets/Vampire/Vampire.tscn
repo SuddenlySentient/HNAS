@@ -3760,6 +3760,7 @@ sprite_frames = SubResource("SpriteFrames_xku26")
 animation = &"AttackDown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_p2uxg")
 
 [node name="VPNav" type="NavigationAgent2D" parent="."]

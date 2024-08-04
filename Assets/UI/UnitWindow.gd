@@ -8,9 +8,10 @@ var observedUnit : Unit
 @onready var healthBarLabel : Label = $VBoxContainer/VBoxContainer2/Health/Label
 @export var updateHPSpeed = 16
 
-var mouseOnWindow = false
+var mouseHeld = false
 var closing = false
 @export var postionSnapSpeed = 16
+@export var positionSnap = 32
 
 var type = ""
 
@@ -43,12 +44,11 @@ func _physics_process(delta) :
 	
 	reset_size()
 	
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) : mouseOnWindow = true
-	else : mouseOnWindow = false
-	
-	if mouseOnWindow == false :
-		position.x = lerp(position.x, snapped(position.x, 64), delta * postionSnapSpeed)
-		position.y = lerp(position.y, snapped(position.y, 64), delta * postionSnapSpeed)
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) : mouseHeld = true
+	else : mouseHeld = false
+	if mouseHeld == false :
+		position.x = lerp(position.x, snapped(position.x, positionSnap), delta * postionSnapSpeed)
+		position.y = lerp(position.y, snapped(position.y, positionSnap), delta * postionSnapSpeed)
 	
 	
 	if observedUnit == null :

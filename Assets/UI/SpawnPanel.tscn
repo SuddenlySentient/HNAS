@@ -1,0 +1,194 @@
+[gd_scene load_steps=13 format=3 uid="uid://tv4jdog6wsyu"]
+
+[ext_resource type="Theme" uid="uid://i5wcemsxfl4u" path="res://Assets/UI/Window.tres" id="1_pff0r"]
+[ext_resource type="Theme" uid="uid://d3md10mt5mmql" path="res://Assets/UI/Default.tres" id="2_liqo0"]
+[ext_resource type="Texture2D" uid="uid://hdtofdx8mo8p" path="res://Assets/SUB-RFL-48/ShootFrames/Down/0000.png" id="3_3nevc"]
+[ext_resource type="Texture2D" uid="uid://c6qj75agmqi8l" path="res://Assets/Pillar Demon/Frames/Emerge/Down/0016.png" id="4_3paoi"]
+[ext_resource type="Texture2D" uid="uid://bnh108nrvye4l" path="res://Assets/Vampire/Frames/Icon.png" id="5_ab8wy"]
+[ext_resource type="Texture2D" uid="uid://b272kobaantw5" path="res://Assets/Seraph/Frames/Idle/0000.png" id="6_22tp7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8tr1"]
+bg_color = Color(0.1, 0.1, 0.1, 0.752941)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16k62"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tsiq4"]
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.313726)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uumwx"]
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.627451)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hnbbq"]
+bg_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_c7048"]
+Button/styles/focus = SubResource("StyleBoxEmpty_16k62")
+Button/styles/hover = SubResource("StyleBoxFlat_tsiq4")
+Button/styles/normal = SubResource("StyleBoxFlat_uumwx")
+Button/styles/pressed = SubResource("StyleBoxFlat_hnbbq")
+
+[node name="SpawnPanel" type="Window"]
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+title = "NPC Spawner"
+position = Vector2i(32, 472)
+size = Vector2i(292, 144)
+wrap_controls = true
+transient = true
+min_size = Vector2i(144, 144)
+max_size = Vector2i(16384, 256)
+theme = ExtResource("1_pff0r")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_liqo0")
+follow_focus = true
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SRPanel" type="PanelContainer" parent="ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(144, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/HBoxContainer/SRPanel"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = ExtResource("3_3nevc")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/SRPanel"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "SUB-RFL-48"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SRButton" type="Button" parent="ScrollContainer/HBoxContainer/SRPanel"]
+layout_mode = 2
+theme = SubResource("Theme_c7048")
+toggle_mode = true
+action_mode = 0
+
+[node name="PDPanel" type="PanelContainer" parent="ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(144, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/HBoxContainer/PDPanel"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = ExtResource("4_3paoi")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/PDPanel"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Pillar Demon"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PDButton" type="Button" parent="ScrollContainer/HBoxContainer/PDPanel"]
+layout_mode = 2
+theme = SubResource("Theme_c7048")
+toggle_mode = true
+action_mode = 0
+
+[node name="VPPanel" type="PanelContainer" parent="ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(144, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/HBoxContainer/VPPanel"]
+layout_mode = 2
+texture = ExtResource("5_ab8wy")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/VPPanel"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Vampire"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VPButton" type="Button" parent="ScrollContainer/HBoxContainer/VPPanel"]
+layout_mode = 2
+theme = SubResource("Theme_c7048")
+toggle_mode = true
+action_mode = 0
+
+[node name="SEPanel" type="PanelContainer" parent="ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(144, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/HBoxContainer/SEPanel"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = ExtResource("6_22tp7")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/SEPanel"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Seraph"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SEButton" type="Button" parent="ScrollContainer/HBoxContainer/SEPanel"]
+layout_mode = 2
+theme = SubResource("Theme_c7048")
+toggle_mode = true
+action_mode = 0

@@ -1,0 +1,59 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://i5wcemsxfl4u"]
+
+[ext_resource type="FontFile" uid="uid://drk2hxgvh0f5a" path="res://Assets/MinecraftBold-nMK1.otf" id="1_kp68h"]
+[ext_resource type="Texture2D" uid="uid://baltxqnf6u62c" path="res://Assets/UI/XB.png" id="2_4ensl"]
+[ext_resource type="Texture2D" uid="uid://dfx382wcv2uor" path="res://Assets/UI/XA.png" id="3_bn4d5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3a7gi"]
+bg_color = Color(0.34902, 0.34902, 0.4, 0.501961)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.14902, 0.14902, 0.2, 0.752941)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 4
+expand_margin_left = 12.0
+expand_margin_top = 32.0
+expand_margin_right = 12.0
+expand_margin_bottom = 12.0
+shadow_color = Color(0, 0, 0, 0.501961)
+shadow_size = 8
+shadow_offset = Vector2(8, 8)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hnfdv"]
+bg_color = Color(0.34902, 0.34902, 0.4, 0.501961)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.14902, 0.14902, 0.2, 0.752941)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 4
+expand_margin_left = 12.0
+expand_margin_top = 32.0
+expand_margin_right = 12.0
+expand_margin_bottom = 12.0
+shadow_color = Color(0, 0, 0, 0.501961)
+shadow_size = 8
+shadow_offset = Vector2(8, 8)
+anti_aliasing = false
+
+[resource]
+Window/colors/title_color = Color(1, 1, 1, 1)
+Window/constants/close_h_offset = 20
+Window/constants/close_v_offset = 20
+Window/constants/title_height = 24
+Window/font_sizes/title_font_size = 20
+Window/fonts/title_font = ExtResource("1_kp68h")
+Window/icons/close = ExtResource("2_4ensl")
+Window/icons/close_pressed = ExtResource("3_bn4d5")
+Window/styles/embedded_border = SubResource("StyleBoxFlat_3a7gi")
+Window/styles/embedded_unfocused_border = SubResource("StyleBoxFlat_hnfdv")
