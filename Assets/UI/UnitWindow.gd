@@ -18,29 +18,26 @@ var type = ""
 
 
 func _enter_tree():
+	await ready
+	$Open.play()
 	
-	var unitName = observedUnit.name
-	
-	if unitName.contains("SUB-RFL-48")  :
-		type = "SUB-RFL-48"
-		$VBoxContainer/VBoxContainer/SR.show()
-	elif unitName.contains("PillarDemon")  :
-		type = "Pillar Demon"
-		$VBoxContainer/VBoxContainer/PD.show()
-	elif unitName.contains("Seraph")  :
-		type = "Seraph"
-		$VBoxContainer/VBoxContainer2/SeraphStamina.show()
-	elif unitName.contains("Vampire")  :
-		type = "Vampire"
-		$VBoxContainer/VBoxContainer2/VampireBlood.show()
-	else :
-		push_warning("Weird unit name ''", unitName, "'' ")
-	#print(type)
+	type = observedUnit.type
+	match type :
+		"SUB-RFL-48"  :
+			$VBoxContainer/VBoxContainer/SR.show()
+		"Pillar Demon"  :
+			$VBoxContainer/VBoxContainer/PD.show()
+		"Seraph"  :
+			$VBoxContainer/VBoxContainer2/SeraphStamina.show()
+		"Vampire"  :
+			$VBoxContainer/VBoxContainer2/VampireBlood.show()
+		_ :
+			push_warning("Weird unit type ''", type, "'' ")
 	
 	const maxRand = int(512)
 	position += Vector2i(int(randf_range(-1, 1) * maxRand), int(randf_range(-1, 1) * maxRand))
 
-func _physics_process(delta) :
+func _process(delta) :
 	
 	reset_size()
 	
@@ -49,7 +46,6 @@ func _physics_process(delta) :
 	if mouseHeld == false :
 		position.x = lerp(position.x, snapped(position.x, positionSnap), delta * postionSnapSpeed)
 		position.y = lerp(position.y, snapped(position.y, positionSnap), delta * postionSnapSpeed)
-	
 	
 	if observedUnit == null :
 		#print("No Observed Unit")
@@ -182,5 +178,6 @@ func close() :
 	await $Close.finished
 	queue_free()
 
-func _on_about_to_popup():
-	$Open.play()
+func _on_zoom_to_button_pressed():
+	var camera = UI.world.get_children()[2]
+	camera.moveTo(observedUnit.position)

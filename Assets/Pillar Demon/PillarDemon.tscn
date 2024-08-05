@@ -1719,6 +1719,7 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_nppuk")
 desiredCompany = 3
+type = "Pillar Demon"
 team = "Pillar Demon"
 tags = Array[String](["Demon", "Biological", "HasBlood", "Lesser"])
 canBeSeen = false

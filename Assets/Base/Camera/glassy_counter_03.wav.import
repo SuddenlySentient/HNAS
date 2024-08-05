@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://ckhl7vyv4mowp"
-path="res://.godot/imported/glassy_counter_03.wav-881024121c044fa6b19204d77c30a07b.sample"
+path="res://.godot/imported/glassy_counter_03.wav-50478155df8b427c0ddc3d5dfaeb50ed.sample"
 
 [deps]
 
-source_file="res://Assets/Base/CameraClick/glassy_counter_03.wav"
-dest_files=["res://.godot/imported/glassy_counter_03.wav-881024121c044fa6b19204d77c30a07b.sample"]
+source_file="res://Assets/Base/Camera/glassy_counter_03.wav"
+dest_files=["res://.godot/imported/glassy_counter_03.wav-50478155df8b427c0ddc3d5dfaeb50ed.sample"]
 
 [params]
 

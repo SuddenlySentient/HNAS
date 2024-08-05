@@ -109,6 +109,7 @@ func _init() :
 	vision = $RotateNode/Vision
 	nav = $VPNav
 	$ComboCanvas.show()
+	name = getName()
 
 func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 	

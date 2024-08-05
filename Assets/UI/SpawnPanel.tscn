@@ -1,11 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://tv4jdog6wsyu"]
+[gd_scene load_steps=16 format=3 uid="uid://tv4jdog6wsyu"]
 
 [ext_resource type="Theme" uid="uid://i5wcemsxfl4u" path="res://Assets/UI/Window.tres" id="1_pff0r"]
 [ext_resource type="Theme" uid="uid://d3md10mt5mmql" path="res://Assets/UI/Default.tres" id="2_liqo0"]
+[ext_resource type="Script" path="res://Assets/UI/SpawnPanel.gd" id="2_xidro"]
 [ext_resource type="Texture2D" uid="uid://hdtofdx8mo8p" path="res://Assets/SUB-RFL-48/ShootFrames/Down/0000.png" id="3_3nevc"]
 [ext_resource type="Texture2D" uid="uid://c6qj75agmqi8l" path="res://Assets/Pillar Demon/Frames/Emerge/Down/0016.png" id="4_3paoi"]
 [ext_resource type="Texture2D" uid="uid://bnh108nrvye4l" path="res://Assets/Vampire/Frames/Icon.png" id="5_ab8wy"]
 [ext_resource type="Texture2D" uid="uid://b272kobaantw5" path="res://Assets/Seraph/Frames/Idle/0000.png" id="6_22tp7"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_i5e58"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_gse3p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8tr1"]
 bg_color = Color(0.1, 0.1, 0.1, 0.752941)
@@ -55,13 +60,15 @@ Button/styles/pressed = SubResource("StyleBoxFlat_hnbbq")
 transparent_bg = true
 canvas_item_default_texture_filter = 0
 title = "NPC Spawner"
-position = Vector2i(32, 472)
-size = Vector2i(292, 144)
+size = Vector2i(256, 192)
 wrap_controls = true
 transient = true
-min_size = Vector2i(144, 144)
-max_size = Vector2i(16384, 256)
+min_size = Vector2i(256, 192)
+max_size = Vector2i(720, 192)
 theme = ExtResource("1_pff0r")
+theme_override_icons/close = SubResource("ImageTexture_i5e58")
+theme_override_icons/close_pressed = SubResource("ImageTexture_gse3p")
+script = ExtResource("2_xidro")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 anchors_preset = 15
@@ -192,3 +199,7 @@ layout_mode = 2
 theme = SubResource("Theme_c7048")
 toggle_mode = true
 action_mode = 0
+
+[node name="Spawn Cooldown" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true

@@ -3696,9 +3696,11 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_f578t")
 turnSpeed = 2.0
+type = "Vampire"
 team = "Sanguinist"
 tags = Array[String](["Mechanical", "Angel", "HasBlood", "Greater", "Magic"])
 reflectShots = true
+nameList = Array[StringName]([&"Lady Grace", &"Commander Rosso", &"Lieutenant Scarlet", &"Sir Sangue", &"Ruash Vad", &"Vincent", &"Stranger", &"Mistress Death"])
 maxHP = 32
 ARM = 5
 

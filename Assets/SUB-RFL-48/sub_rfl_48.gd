@@ -43,6 +43,14 @@ func _init() :
 	testTimer.wait_time = randf_range(1.0, 2.0)
 	vision = $Flashlight/Vision
 	nav = $SUBNavigation
+	name = getName()
+
+func getName() :
+	var newName = type + "-" + str(randi_range(0 , 9)) + str(randi_range(0 , 9)) + str(randi_range(0 , 9))
+	var everythingInMap = map.get_children()
+	for thing in everythingInMap :
+		if thing.name == newName : newName = getName()
+	return newName
 
 func _physics_process(delta) :
 	
@@ -211,11 +219,11 @@ func actionQuery() :
 			match isLeader :
 				false : #follower logic, probably ask leader
 					
-					var leaderPos : Vector2 = leader.global_position
-					
-					if leader == null or reachable(leaderPos) == false :
+					if leader == null :
 						leaveSquad()
 					else :
+						
+						var leaderPos : Vector2 = leader.global_position
 						var leaderFollowers : Array[SUBRFL48] = leader.followers.duplicate()
 						
 						lastSeenTile = leader.lastSeenTile
@@ -375,8 +383,8 @@ func _on_sub_navigation_velocity_computed(safe_velocity):
 	avoidenceVelocity = safe_velocity
 
 func die(_source : String) :
-	if $SUBCollision != null :
-		$SUBCollision.free()
+	#if $SUBCollision != null :
+	#	$SUBCollision.free()
 	#print(self.name, " : Died to ", source)
 	leaveSquad()
 	queue_free()

@@ -27,6 +27,14 @@ func _init():
 	sprite.play()
 	vision = $Vision
 	$StaminaRegen.wait_time = staminaRegen
+	name = getName()
+
+func getName() :
+	var newName = nameList.pick_random() + "-" + str(randi_range(0 , 9))
+	var everythingInMap = map.get_children()
+	for thing in everythingInMap :
+		if thing.name == newName : newName = getName()
+	return newName
 
 func _physics_process(delta) :
 	
@@ -141,8 +149,8 @@ func teleport(location, dodgeing = false) :
 		$Teleport.play()
 		return true
 	else : 
-		newSpark()
-		$Fail.play()
+		#newSpark()
+		#$Fail.play()
 		return false
 
 @onready var raycasts : Array[RayCast2D] = [
@@ -293,7 +301,7 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 		aggroTarget = dealer
 	else :
 		heal(DMG)
-		print("Self DMG, Healed ", DMG, "HP")
+		#print("Self DMG, Healed ", DMG, "HP")
 		DMGDealt = 0
 	
 	if stamina >= 1 and DMGDealt > 0 : 

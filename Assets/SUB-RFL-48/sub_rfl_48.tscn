@@ -60,6 +60,7 @@ script = ExtResource("1_evgs4")
 acceleration = 75.0
 inaccuracy = 10.0
 recoil = 0.125
+type = "SUB-RFL-48"
 team = "Facility"
 tags = Array[String](["Mechanical", "Robot", "Greater"])
 maxHP = 16

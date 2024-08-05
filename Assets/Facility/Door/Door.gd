@@ -19,7 +19,7 @@ var locked = false
 func _ready():
 	
 	button.position = global_position + Vector2(-96, -96 -128)
-	
+	$Node2D2/CanvasLayer.show()
 	var randPitch = randf_range(0.8, 1.25)
 	$Working.pitch_scale = randPitch
 	$Open.pitch_scale = randPitch

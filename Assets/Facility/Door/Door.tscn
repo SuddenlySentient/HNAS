@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://cp6nhmxkbitfh"]
+[gd_scene load_steps=50 format=3 uid="uid://cp6nhmxkbitfh"]
 
 [ext_resource type="Texture2D" uid="uid://cnwqmia4df13q" path="res://Assets/Facility/Door/Frames/0000.png" id="1_a5dif"]
 [ext_resource type="Script" path="res://Assets/Facility/Door/Door.gd" id="1_v7e0l"]
@@ -32,6 +32,8 @@
 [ext_resource type="AudioStream" uid="uid://bpfljhcbf0qux" path="res://Assets/Facility/Door/Sounds/synthy_squelch_03.wav" id="29_56yst"]
 [ext_resource type="AudioStream" uid="uid://bn6v6ua5wct2g" path="res://Assets/Facility/Door/Sounds/synthy_squelch_04.wav" id="30_e23t7"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eee2o"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_26f16"]
 texture = ExtResource("2_4yeo0")
 modulate_color = Color(1, 0.5, 0.5, 0.752941)
@@ -45,6 +47,7 @@ texture = ExtResource("3_af66c")
 modulate_color = Color(1, 0, 0, 1)
 
 [sub_resource type="Theme" id="Theme_np0na"]
+Button/styles/focus = SubResource("StyleBoxEmpty_eee2o")
 Button/styles/hover = SubResource("StyleBoxTexture_26f16")
 Button/styles/normal = SubResource("StyleBoxTexture_ty322")
 Button/styles/pressed = SubResource("StyleBoxTexture_0iow3")
@@ -182,6 +185,7 @@ enable_node_path = NodePath("CanvasLayer")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Node2D2"]
 layer = 2
+visible = false
 follow_viewport_enabled = true
 
 [node name="Button" type="Button" parent="Node2D2/CanvasLayer"]

@@ -1,7 +1,7 @@
 @icon("res://Assets/UnitIcon.png")
 extends CharacterBody2D
 class_name Unit
-
+@export var type = "None"
 @export var team : String = "Unalligned"
 var aggroTarget : Unit
 var aggroList : Array[Unit] = []
@@ -11,12 +11,34 @@ var aggroList : Array[Unit] = []
 @export var reflectShots : bool = false
 @onready var marker = load("res://Assets/Base/hit_mark.tscn")
 signal hurt(DMG : int)
+@export var nameList : Array[StringName] = [
+	"Blank",
+	"Null",
+	"Nunya",
+	"Nobody",
+	"Unnamed",
+	"Something",
+	"Someone",
+	"A Name",
+	"Mother failed to name me, she died",
+	"Had a name once",
+	"Insert Name",
+	"Bartholomew",
+	]
 
 
 
 func _init():
 	await ready
 	HP = maxHP
+	name = getName()
+
+func getName() :
+	var newName = nameList.pick_random()
+	var everythingInMap = map.get_children()
+	for thing in everythingInMap :
+		if thing.name == newName : newName = getName()
+	return newName
 
 var vision : Area2D
 func checkVision(ignoreHiding : bool = false):

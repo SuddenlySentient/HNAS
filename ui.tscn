@@ -16,6 +16,8 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="SpawnPanel" parent="Control" instance=ExtResource("2_xdxlc")]
+position = Vector2i(16, 512)
+mouse_passthrough = true
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Control"]
 layout_mode = 1

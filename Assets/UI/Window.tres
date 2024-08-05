@@ -10,7 +10,7 @@ border_width_left = 6
 border_width_top = 6
 border_width_right = 6
 border_width_bottom = 6
-border_color = Color(0.14902, 0.14902, 0.2, 0.752941)
+border_color = Color(0.54, 0.54, 0.6, 0.752941)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -48,7 +48,7 @@ anti_aliasing = false
 
 [resource]
 Window/colors/title_color = Color(1, 1, 1, 1)
-Window/constants/close_h_offset = 20
+Window/constants/close_h_offset = 16
 Window/constants/close_v_offset = 20
 Window/constants/title_height = 24
 Window/font_sizes/title_font_size = 20

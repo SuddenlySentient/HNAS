@@ -41,6 +41,7 @@ var avoidenceVelocity : Vector2 = Vector2.ZERO
 
 func _init() :
 	await ready
+	name = getName()
 	idle()
 	$Sniff/SniffTimer.start(randf_range(0, 60))
 	vision = $Vision
@@ -65,6 +66,10 @@ func _init() :
 	modulate = randColor
 	position += Vector2(randf_range(-64, 64), randf_range(-64, 64))
 	$NavTimer.start(randf_range(1, 2))
+
+func getName() :
+	var newName = type + " " + "1"
+	return newName
 
 func _physics_process(delta) :
 	

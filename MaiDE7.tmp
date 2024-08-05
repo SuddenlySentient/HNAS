@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://ca1pdu3fohe43"]
+[gd_scene load_steps=43 format=3 uid="uid://ca1pdu3fohe43"]
 
 [ext_resource type="PackedScene" uid="uid://44y0ibufw40t" path="res://Assets/Facility/Ceiling Lamp/ceiling_lamp.tscn" id="1_3qcgb"]
 [ext_resource type="PackedScene" uid="uid://bmkc1qgs776ut" path="res://ui.tscn" id="1_3utnm"]
@@ -14,16 +14,20 @@
 [ext_resource type="PackedScene" uid="uid://dejvmg55walo3" path="res://Assets/Facility/Mine/mine.tscn" id="6_psqs4"]
 [ext_resource type="PackedScene" uid="uid://cp6nhmxkbitfh" path="res://Assets/Facility/Door/Door.tscn" id="6_qvbh8"]
 [ext_resource type="AudioStream" uid="uid://dp7msieocqlp6" path="res://Assets/Base/Camera/camera_servo_loop_01.wav" id="7_rreya"]
+[ext_resource type="PackedScene" uid="uid://6lg6q0wyhlag" path="res://Assets/SUB-RFL-48/sub_rfl_48.tscn" id="7_vk3o8"]
 [ext_resource type="AudioStream" uid="uid://c4lqvjgv1yc0e" path="res://Assets/Base/Camera/camera_servo_loop_02.wav" id="8_7kki8"]
+[ext_resource type="PackedScene" uid="uid://cftucttr52n82" path="res://Assets/Pillar Demon/PillarDemon.tscn" id="8_ib42i"]
 [ext_resource type="AudioStream" uid="uid://cwc2bbevr2tom" path="res://Assets/Base/Camera/camera_servo_key_on_01.wav" id="9_mlh3m"]
 [ext_resource type="AudioStream" uid="uid://d0b6blurj0qnk" path="res://Assets/Base/Camera/camera_servo_key_on_02.wav" id="10_6u03b"]
+[ext_resource type="PackedScene" uid="uid://blriopxiv7rh2" path="res://Assets/Vampire/Vampire.tscn" id="11_it3tq"]
+[ext_resource type="PackedScene" uid="uid://bw5uu54rasmh7" path="res://Assets/Seraph/seraph.tscn" id="11_kwko2"]
 [ext_resource type="AudioStream" uid="uid://d0qwg6lbjkmjf" path="res://Assets/Base/Camera/camera_servo_key_on_03.wav" id="11_x4g6t"]
 [ext_resource type="AudioStream" uid="uid://cmg030ot4qm52" path="res://Assets/Base/Camera/camera_servo_key_off_01.wav" id="12_ryo1t"]
 [ext_resource type="AudioStream" uid="uid://cfxeygpdmto5g" path="res://Assets/Base/Camera/camera_servo_key_off_02.wav" id="13_kym8x"]
 [ext_resource type="AudioStream" uid="uid://dyca2egl4xcvj" path="res://Assets/Base/Camera/camera_servo_key_off_03.wav" id="14_y1wne"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nogmr"]
-radius = 192.0
+radius = 64.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7rwmj"]
 random_pitch = 1.25
@@ -161,10 +165,6 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_nogmr")
 
-[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
-scale = Vector2(3, 3)
-texture = ExtResource("3_3cdt8")
-
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(128, 128)
 position_smoothing_speed = 8.0
@@ -175,25 +175,25 @@ zoomSpeed = 0.125
 [node name="Timer" type="Timer" parent="Camera"]
 one_shot = true
 
+[node name="Sprite2D" type="Sprite2D" parent="Camera"]
+visible = false
+texture = ExtResource("3_3cdt8")
+
 [node name="Click" type="AudioStreamPlayer" parent="Camera"]
 stream = SubResource("AudioStreamRandomizer_7rwmj")
 volume_db = -5.0
 
 [node name="ServoIn" type="AudioStreamPlayer" parent="Camera"]
 stream = ExtResource("7_rreya")
-volume_db = -10.0
 
 [node name="ServoOut" type="AudioStreamPlayer" parent="Camera"]
 stream = ExtResource("8_7kki8")
-volume_db = -10.0
 
 [node name="StartZoom" type="AudioStreamPlayer" parent="Camera"]
 stream = SubResource("AudioStreamRandomizer_tqitl")
-volume_db = -10.0
 
 [node name="StopZoom" type="AudioStreamPlayer" parent="Camera"]
 stream = SubResource("AudioStreamRandomizer_l2sd8")
-volume_db = -10.0
 
 [node name="TileMap" type="TileMap" parent="."]
 y_sort_enabled = true
@@ -208,6 +208,73 @@ layer_1/y_sort_enabled = true
 layer_1/z_index = 1
 layer_1/navigation_enabled = false
 layer_1/tile_data = PackedInt32Array(-851968, 4, 65536, -786435, 4, 65536, -851965, 4, 65536, -851962, 4, 65536, -655362, 4, 65536, -720895, 4, 65536, -720892, 4, 65536, -720889, 4, 65536, -524289, 4, 65536, -589822, 4, 65536, -589819, 4, 65536, -589816, 4, 65536, -458746, 4, 65536, -458743, 4, 65536, -327673, 4, 65536, -327670, 4, 65536, -327667, 4, 65536, -458740, 4, 65536, -589813, 4, 65536, -720886, 4, 65536, -458737, 4, 65536, -720883, 4, 65536, -393219, 4, 65536, -262146, 4, 65536, -327679, 4, 65536, -327676, 4, 65536, -917505, 4, 65536, -983038, 4, 65536, -983035, 4, 65536)
+
+[node name="SUB-RFL-48-000" parent="TileMap" instance=ExtResource("7_vk3o8")]
+position = Vector2(-3852, -3890)
+
+[node name="SUB-RFL-48-001" parent="TileMap" instance=ExtResource("7_vk3o8")]
+position = Vector2(-3403, -3890)
+
+[node name="SUB-RFL-48-002" parent="TileMap" instance=ExtResource("7_vk3o8")]
+position = Vector2(-3413, -3610)
+
+[node name="SUB-RFL-48-003" parent="TileMap" instance=ExtResource("7_vk3o8")]
+position = Vector2(-3811, -3587)
+
+[node name="PillarDemon" parent="TileMap" instance=ExtResource("8_ib42i")]
+visible = false
+position = Vector2(1024, 0)
+
+[node name="PillarDemon2" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(2048, 0)
+
+[node name="PillarDemon3" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(2593, 1308)
+
+[node name="PillarDemon4" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(399, 977)
+
+[node name="PillarDemon5" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(-2048, 977)
+
+[node name="PillarDemon6" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(-3293, 3184)
+
+[node name="PillarDemon7" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(-864, 3904)
+
+[node name="PillarDemon8" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(1329, 3379)
+
+[node name="PillarDemon9" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(3843, 3817)
+
+[node name="PillarDemon10" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(-3251, -1025)
+
+[node name="PillarDemon11" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(-1163, -921)
+
+[node name="PillarDemon12" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(-2560, -2560)
+
+[node name="PillarDemon13" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(3904, -3897)
+
+[node name="PillarDemon14" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(2182, -3331)
+
+[node name="PillarDemon15" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(2767, 1930)
+
+[node name="PillarDemon16" parent="TileMap" instance=ExtResource("8_ib42i")]
+position = Vector2(3956, -2323)
+
+[node name="Seraph" parent="TileMap" instance=ExtResource("11_kwko2")]
+position = Vector2(3968, 0)
+
+[node name="Vampire" parent="TileMap" instance=ExtResource("11_it3tq")]
+position = Vector2(-3558, -1343)
 
 [node name="Darkness" type="DirectionalLight2D" parent="."]
 color = Color(1, 1, 0.909804, 1)

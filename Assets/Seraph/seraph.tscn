@@ -184,8 +184,10 @@ y_sort_enabled = true
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_ysqkr")
+type = "Seraph"
 tags = Array[String](["Angel", "Magic", "Greater", "Hover"])
 maxSpeed = 50
+nameList = Array[StringName]([&"Alpha", &"Beta", &"Gamma", &"Delta", &"Epsilon", &"Zeta", &"Eta", &"Theta", &"Iota", &"Kappa", &"Lambda", &"Mu", &"Nu", &"Xi", &"Omicron", &"Pi", &"Rho", &"Sigma", &"Tau", &"Upsilon", &"Phi", &"Chi", &"Phi", &"Chi", &"Psi", &"Omega", &"Digamma", &"San", &"Tsan", &"Heta", &"Koppa", &"Sampi"])
 maxHP = 16
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
