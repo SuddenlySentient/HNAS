@@ -197,12 +197,12 @@ func getSeeingTile():
 	var tilesCoords : Array[Vector2i] = map.get_used_cells(0)
 	var tileValue : Array = []
 	var theOne = null
+	const maxSearchDistance = 2048
 	
 	for tile in tilesCoords :
-		
 		var distanceTo = getDistanceTo(target)
-		
-		if getTileNavigable(tile) and canSeeTarget(map.map_to_local(tile)) :
+		var distanceToTile = getDistanceTo(map.map_to_local(tile))
+		if distanceToTile <= maxSearchDistance and getTileNavigable(tile) and canSeeTarget(map.map_to_local(tile)) :
 			var newEntry = -distanceTo
 			tileValue.append(newEntry)
 			tileValue.sort()
@@ -222,8 +222,8 @@ func getSeeingTile():
 @export var fireballInaccuracy : float = 0
 
 @export_subgroup("PlasmaRay")
-@export var plasmaRayDMG : int = 16
-@export var plasmaRayAP : int = 7
+@export var plasmaRayDMG : int = 14
+@export var plasmaRayAP : int = 4
 @export var plasmaRayMaxArc : float = 90
 @export var plasmaRayMinArc : float = 5
 

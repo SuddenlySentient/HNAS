@@ -135,6 +135,8 @@ func getTileValue(tileCoord : Vector2i, searchValue : float = -1, distanceValue 
 	var distance = getDistanceTo(map.map_to_local(tileCoord))
 	return (searched * searchValue) + (distance * distanceValue)
 
+
+
 func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
 	
 	var myTile = map.local_to_map(global_position)
@@ -142,14 +144,27 @@ func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
 	var tileValue : Array = []
 	var theOne = Vector2.ZERO
 	
+	const maxSearchDistance = 2048
+	@warning_ignore("unused_variable")
+	var tilesSearched = 0
+	@warning_ignore("unused_variable")
+	var allTiles = 0
+	
 	for tile in tilesCoords :
-		if getTileNavigable(tile) and trySeeTile(tile) == false and tile != myTile :
+		allTiles += 1
+		var distanceToTile = getDistanceTo(map.map_to_local(tile))
+		if distanceToTile <= maxSearchDistance and getTileNavigable(tile) and trySeeTile(tile) == false and tile != myTile :
+			tilesSearched += 1
 			var newEntry = getTileValue(tile, searchValue, distanceValue)
 			tileValue.append(newEntry)
 			tileValue.sort()
 			#tileValue.reverse()
 			if newEntry == tileValue[0] : 
 				theOne = tile
+	
+	#print("All Tiles : ", allTiles)
+	#print("Tiles Searched : ", tilesSearched)
+	#print("Tiles Search % : ", round((float(tilesSearched) / float(allTiles)) * 100), "%")
 	
 	return theOne
 

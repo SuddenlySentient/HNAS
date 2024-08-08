@@ -4,8 +4,8 @@ extends Window
 
 var observedUnit : Unit
 
-@onready var healthBar : ProgressBar = $VBoxContainer/VBoxContainer2/Health
-@onready var healthBarLabel : Label = $VBoxContainer/VBoxContainer2/Health/Label
+@onready var healthBar : ProgressBar = $VBoxContainer/VBoxContainer2/HBoxContainer/Health
+@onready var healthBarLabel : Label = $VBoxContainer/VBoxContainer2/HBoxContainer/Health/Label
 @export var updateHPSpeed = 16
 
 var mouseHeld = false

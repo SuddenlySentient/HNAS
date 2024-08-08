@@ -211,10 +211,9 @@ var followers : Array[SUBRFL48] = []
 var avoidenceVelocity : Vector2 = Vector2.ZERO
 
 func actionQuery() :
-	
 	match inSquad :
 		false : #alone logic
-			voice.tryVoice("Alone")
+			if State == States.Move : voice.tryVoice("Alone")
 		true : 
 			match isLeader :
 				false : #follower logic, probably ask leader
@@ -242,18 +241,22 @@ func actionQuery() :
 							while leaderFollowers[myPlace - 1] == null : 
 								leaderFollowers.remove_at(myPlace - 1)
 							tarPos = leaderFollowers[myPlace - 1].global_position
-						if tarPos.distance_to(position) < 256 : speed = leader.speed
+						#if tarPos.distance_to(position) < 256 : speed = leader.speed
 						if tarPos.distance_to(position) > 4096 : leaveSquad()
-						else : speed = int(maxSpeed * sqrt(clamp((float(HP)/float(maxHP)), 0.5, 1)))
-						nav.max_speed = speed
+						#else : speed = int(maxSpeed * sqrt(clamp((float(HP)/float(maxHP)), 0.5, 1)))
+						#nav.max_speed = speed
 						Selector.inFrontPos = tarPos
 						if State == States.Move :
 							nav.target_position = tarPos
 						nav.avoidance_priority = clampf(((1.0 / leaderFollowers.size()) * (myPlace + 1)), 0, 1)
 				true : #leader Logic
-					pass
-					#var tileToGoTo = getTileToSearch()
-					#nav.set_target_position(map.map_to_local(tileToGoTo))
+					#print(followers.size() + 1, " VS ", preferedSquadSize)
+					if followers.size() + 1 >= preferedSquadSize * 2 :
+						var secondLeader = followers[0]
+						secondLeader.leaveSquad()
+						for x in preferedSquadSize - 1 :
+							followers[x + 1].joinSquad(secondLeader)
+						print(name, " : split squad")
 
 func move(delta) :
 	

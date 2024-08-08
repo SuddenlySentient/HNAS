@@ -25,7 +25,6 @@ load("res://Assets/Pillar Demon/PillarDemon.tscn"),
 load("res://Assets/Vampire/Vampire.tscn"),
 load("res://Assets/Seraph/seraph.tscn"),
 ]
-@onready var spawnParticles = load("res://Assets/Base/spawnParticles.tscn")
 
 func _process(delta):
 	var index = 0
@@ -64,5 +63,13 @@ func spawnUnit(location : Vector2, unit = unitScenes[selectedUnit - 1]) :
 	var newUnit = unit.instantiate()
 	newUnit.global_position = location
 	UI.tileMap.add_child(newUnit)
+	particles(location)
 	print("Spawned : ", newUnit.name)
 	return true
+
+@onready var spawnParticles = load("res://Assets/Base/spawnParticles.tscn")
+
+func particles(location : Vector2) :
+	var newParticles = spawnParticles.instantiate()
+	newParticles.get_child(0).global_position = location
+	UI.tileMap.add_child(newParticles)

@@ -3700,7 +3700,7 @@ type = "Vampire"
 team = "Sanguinist"
 tags = Array[String](["Mechanical", "Angel", "HasBlood", "Greater", "Magic"])
 reflectShots = true
-nameList = Array[StringName]([&"Lady Grace", &"Commander Rosso", &"Lieutenant Scarlet", &"Sir Sangue", &"Ruash Vad", &"Vincent", &"Stranger", &"Mistress Death"])
+nameList = Array[StringName]([&"Lady Grace", &"Commander Rosso", &"Lieutenant Scarlet", &"Sir Sangue", &"Ruash Vad", &"Vincent", &"Stranger", &"Mistress Immortali"])
 maxHP = 32
 ARM = 5
 

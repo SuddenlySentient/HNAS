@@ -1,4 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cgfbc5e3gjsl3"]
+[gd_scene load_steps=13 format=3 uid="uid://cgfbc5e3gjsl3"]
+
+[ext_resource type="AudioStream" uid="uid://3605vi8v75jf" path="res://Assets/Sound/Spawn/digiglob_01.wav" id="1_tn10e"]
+[ext_resource type="AudioStream" uid="uid://5floxi4owbmp" path="res://Assets/Sound/Spawn/digiglob_02.wav" id="2_hccki"]
+[ext_resource type="AudioStream" uid="uid://dxni2vh61pai8" path="res://Assets/Sound/Spawn/digiglob_03.wav" id="3_wort2"]
 
 [sub_resource type="GDScript" id="GDScript_1jixc"]
 script/source = "extends CanvasLayer
@@ -6,14 +10,15 @@ script/source = "extends CanvasLayer
 var modu = Color.from_hsv(0, 0, 1, 1)
 
 func _enter_tree():
-	$GPUParticles2D2.modulate = modu
+	#$GPUParticles2D2.modulate = modu
+	$GPUParticles2D2.restart()
 
 func _on_gpu_particles_2d_2_finished():
 	queue_free()
 "
 
 [sub_resource type="Gradient" id="Gradient_p0emb"]
-colors = PackedColorArray(0.4, 0.4, 0.4, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0, 0.5, 1, 1, 0, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_rrpdh"]
 gradient = SubResource("Gradient_p0emb")
@@ -36,24 +41,32 @@ curve = SubResource("Curve_b8pj2")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v3blp"]
 particle_flag_align_y = true
 particle_flag_disable_z = true
-emission_shape = 6
-emission_ring_axis = Vector3(0, 0, 1)
-emission_ring_height = 1.0
-emission_ring_radius = 16.0
-emission_ring_inner_radius = 8.0
 spread = 0.0
-radial_velocity_min = 16.0
-radial_velocity_max = 128.0
+radial_velocity_min = 64.0
+radial_velocity_max = 512.0
 radial_velocity_curve = SubResource("CurveTexture_mlgft")
 gravity = Vector3(0, 0, 0)
 damping_min = 64.0
 damping_max = 64.0
-scale_max = 2.0
+scale_min = 2.0
+scale_max = 8.0
 scale_over_velocity_max = 1.0
 scale_over_velocity_curve = SubResource("CurveTexture_rs01b")
 color_initial_ramp = SubResource("GradientTexture1D_rrpdh")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3cdb0"]
+random_pitch = 1.25
+streams_count = 3
+stream_0/stream = ExtResource("1_tn10e")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_hccki")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_wort2")
+stream_2/weight = 1.0
+
 [node name="spawnParticles" type="CanvasLayer"]
+layer = 2
+follow_viewport_enabled = true
 script = SubResource("GDScript_1jixc")
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
@@ -62,9 +75,16 @@ amount = 64
 process_material = SubResource("ParticleProcessMaterial_v3blp")
 lifetime = 2.0
 one_shot = true
-speed_scale = 2.0
+speed_scale = 5.0
 explosiveness = 1.0
-visibility_rect = Rect2(-96, -96, 192, 192)
+visibility_rect = Rect2(-320, -320, 640, 640)
 trail_enabled = true
+trail_lifetime = 0.25
+
+[node name="Spawn" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_3cdb0")
+autoplay = true
+max_distance = 2048.0
+attenuation = 2.0
 
 [connection signal="finished" from="GPUParticles2D2" to="." method="_on_gpu_particles_2d_2_finished"]

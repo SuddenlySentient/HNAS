@@ -311,28 +311,23 @@ size_flags_vertical = 3
 layout_mode = 2
 alignment = 2
 
-[node name="ZoomToButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 4
-theme_override_styles/normal = SubResource("StyleBoxTexture_smsfe")
-theme_override_styles/hover = SubResource("StyleBoxTexture_7um46")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_hqddt")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_gq7vp")
-
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Health" type="ProgressBar" parent="VBoxContainer/VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+
+[node name="Health" type="ProgressBar" parent="VBoxContainer/VBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
 theme = ExtResource("3_ggcsh")
 max_value = 1.0
 show_percentage = false
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer2/Health"]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer2/HBoxContainer/Health"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -349,6 +344,16 @@ theme_override_font_sizes/font_size = 20
 text = "0 / 1"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ZoomToButton" type="Button" parent="VBoxContainer/VBoxContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_smsfe")
+theme_override_styles/hover = SubResource("StyleBoxTexture_7um46")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hqddt")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gq7vp")
 
 [node name="SeraphStamina" type="ProgressBar" parent="VBoxContainer/VBoxContainer2"]
 visible = false
@@ -758,4 +763,4 @@ stream = SubResource("AudioStreamRandomizer_0y33u")
 stream = SubResource("AudioStreamRandomizer_t35w2")
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/ZoomToButton" to="." method="_on_zoom_to_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer2/HBoxContainer/ZoomToButton" to="." method="_on_zoom_to_button_pressed"]

@@ -7,8 +7,8 @@ extends Node2D
 var minPitch = 1
 var maxPitch = 2
 
-@export var DMG = 16
-@export var AP = 7
+@export var DMG = 14
+@export var AP = 4
 var myOwner
 
 var minWidth = 32

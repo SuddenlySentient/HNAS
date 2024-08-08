@@ -201,5 +201,5 @@ toggle_mode = true
 action_mode = 0
 
 [node name="Spawn Cooldown" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.125
 one_shot = true

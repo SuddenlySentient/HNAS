@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://ca1pdu3fohe43"]
+[gd_scene load_steps=40 format=3 uid="uid://ca1pdu3fohe43"]
 
 [ext_resource type="PackedScene" uid="uid://44y0ibufw40t" path="res://Assets/Facility/Ceiling Lamp/ceiling_lamp.tscn" id="1_3qcgb"]
 [ext_resource type="PackedScene" uid="uid://bmkc1qgs776ut" path="res://ui.tscn" id="1_3utnm"]
@@ -23,7 +23,7 @@
 [ext_resource type="AudioStream" uid="uid://dyca2egl4xcvj" path="res://Assets/Base/Camera/camera_servo_key_off_03.wav" id="14_y1wne"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nogmr"]
-radius = 192.0
+radius = 128.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7rwmj"]
 random_pitch = 1.25
@@ -150,6 +150,21 @@ sources/6 = SubResource("TileSetScenesCollectionSource_7o208")
 sources/5 = SubResource("TileSetScenesCollectionSource_5rcqk")
 pattern_0 = SubResource("TileMapPattern_f6fuw")
 
+[sub_resource type="GDScript" id="GDScript_ko4dk"]
+script/source = "extends TileMap
+
+
+
+func _ready():
+	await get_tree().process_frame
+	unFuck()
+
+func unFuck():
+	var navMap = get_navigation_map(0)
+	#navMap.set_deferred(\"\")
+	NavigationServer2D.map_set_cell_size(navMap, 128)
+"
+
 [node name="Node2D" type="Node2D"]
 
 [node name="UI" parent="." instance=ExtResource("1_3utnm")]
@@ -162,6 +177,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_nogmr")
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+visible = false
 scale = Vector2(3, 3)
 texture = ExtResource("3_3cdt8")
 
@@ -208,6 +224,7 @@ layer_1/y_sort_enabled = true
 layer_1/z_index = 1
 layer_1/navigation_enabled = false
 layer_1/tile_data = PackedInt32Array(-851968, 4, 65536, -786435, 4, 65536, -851965, 4, 65536, -851962, 4, 65536, -655362, 4, 65536, -720895, 4, 65536, -720892, 4, 65536, -720889, 4, 65536, -524289, 4, 65536, -589822, 4, 65536, -589819, 4, 65536, -589816, 4, 65536, -458746, 4, 65536, -458743, 4, 65536, -327673, 4, 65536, -327670, 4, 65536, -327667, 4, 65536, -458740, 4, 65536, -589813, 4, 65536, -720886, 4, 65536, -458737, 4, 65536, -720883, 4, 65536, -393219, 4, 65536, -262146, 4, 65536, -327679, 4, 65536, -327676, 4, 65536, -917505, 4, 65536, -983038, 4, 65536, -983035, 4, 65536)
+script = SubResource("GDScript_ko4dk")
 
 [node name="Darkness" type="DirectionalLight2D" parent="."]
 color = Color(1, 1, 0.909804, 1)

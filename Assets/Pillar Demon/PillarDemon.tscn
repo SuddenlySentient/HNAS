@@ -1772,7 +1772,6 @@ shape = SubResource("CircleShape2D_knsan")
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
-visible = false
 shape = SubResource("CircleShape2D_emmqb")
 debug_color = Color(0.6, 0.239216, 0.419608, 0.25098)
 
