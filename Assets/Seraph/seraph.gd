@@ -46,6 +46,10 @@ func _physics_process(delta) :
 	velocity = lerp(velocity, Vector2.ZERO, delta)
 	move_and_slide()
 	
+	#if velocity != Vector2.ZERO :
+	#	direction = velocity.normalized()
+	#else : direction = Vector2.DOWN
+	
 	$CanvasLayer/FireEmbers.position = global_position
 	var hpRemaining = 1 - (float(HP) / float(maxHP))
 	$Steam.volume_db = lerp(-50, 0, hpRemaining)
@@ -55,7 +59,7 @@ func _physics_process(delta) :
 	
 	for thing in recentVision :
 		if thing is Unit :
-			if thing.team != team : aggroList.append(thing)
+			if isFoe(thing) : aggroList.append(thing)
 	
 	var newAggroList : Array[Unit] = []
 	for thing in aggroList :
@@ -173,7 +177,7 @@ func teleport(location, dodgeing = false) :
 
 func move(delta) :
 	
-	var direction : Vector2 = Vector2.ZERO
+	direction = Vector2.ZERO
 	
 	#print(raycast.rotation_degrees, " : ", Vector2.from_angle(raycast.rotation))
 	
@@ -286,24 +290,14 @@ func getNearTile() :
 	if potentialTiles.size() > 0 : return potentialTiles.pick_random()
 	else : return map.local_to_map(global_position)
 
-func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
-	
-	var reduction = clampf( float(AP) / float(ARM), 0, 1)
-	var DMGDealt = DMG * reduction
-	var remainder = fmod(DMGDealt, 1)
-	if remainder != 0 :
-		DMGDealt = floor(DMGDealt)
-		var chance = round((remainder * 100))
-		if randi_range(1, 100) < chance : DMGDealt += 1
-	
+func adjustDMG(DMGDealt : int, dealer : Unit, _DMGtype : String, _source : Node = null) :
 	if dealer != self :
 		aggroList.append(dealer)
 		aggroTarget = dealer
 	else :
-		heal(DMG)
+		heal(DMGDealt)
 		#print("Self DMG, Healed ", DMG, "HP")
 		DMGDealt = 0
-	
 	if stamina >= 1 and DMGDealt > 0 : 
 		var teleportTarget = map.map_to_local(getNearTile())
 		if aggroTarget != null : 
@@ -313,39 +307,8 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 		if teleportTarget is Vector2 :
 			teleport(teleportTarget, true)
 			hitmarker("AVOIDED", 2, Color.from_hsv(0.1, 0.8, 1, 1))
-			DMGDealt = -1
-	
-	if DMGDealt > 0 : HP -= DMGDealt
-	if source != dealer :
-		dealer.indirectDMG(self, DMGDealt)
-	if HP <= 0 : 
-		dealer.getKill(self)
-		die(source.name)
-	
-	if DMGDealt > 0 : 
-		emit_signal("hurt", DMGDealt)
-		var markSize = sqrt(float(DMGDealt) / 2.0)
-		hitmarker(str(DMGDealt), markSize)
-		#print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
-	elif DMGDealt == 0 : hitmarker("0", 1, Color.from_hsv(0.6, 0.8, 1, 1))
+			DMGDealt = 0
 	return DMGDealt
-
-func canSeeTarget(testPosition : Vector2 = global_position, targPosition : Vector2 = aggroTarget.global_position) :
-	
-	var space_state = get_world_2d().direct_space_state
-	var query = PhysicsRayQueryParameters2D.create(targPosition, testPosition, 3)
-	var result = space_state.intersect_ray(query)
-	
-	$Line2D.points[0] = testPosition
-	
-	if result  :
-		$Line2D.points[1] = result.position
-		#print("Borp")
-		return false
-	else :
-		$Line2D.points[1] = targPosition
-		#print("BErp")
-		return true
 
 
 

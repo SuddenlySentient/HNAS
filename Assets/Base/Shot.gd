@@ -35,7 +35,7 @@ func _on_body_entered(body):
 	newSparks.restart()
 	
 	if body is Unit : 
-		var DMGDealt = body.damage(DMG, AP, shooter, self)
+		var DMGDealt = body.damage(DMG, AP, shooter, "Projectile",  self)
 		if DMGDealt == 0 and body.reflectShots : 
 			$Ricochet.play()
 			targetVector = targetVector.rotated(deg_to_rad(randf_range(-45, 45) + 180))

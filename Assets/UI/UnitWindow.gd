@@ -31,6 +31,8 @@ func _enter_tree():
 			$VBoxContainer/VBoxContainer2/SeraphStamina.show()
 		"Vampire"  :
 			$VBoxContainer/VBoxContainer2/VampireBlood.show()
+		"Sentry"  :
+			pass
 		_ :
 			push_warning("Weird unit type ''", type, "'' ")
 	

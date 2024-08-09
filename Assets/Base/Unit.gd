@@ -10,7 +10,7 @@ var aggroList : Array[Unit] = []
 @export var maxSpeed : int= 200
 @export var reflectShots : bool = false
 @onready var marker = load("res://Assets/Base/hit_mark.tscn")
-signal hurt(DMG : int)
+signal hurt(DMG : int, DMGtype : String)
 @export var nameList : Array[StringName] = [
 	"Blank",
 	"Null",
@@ -25,7 +25,7 @@ signal hurt(DMG : int)
 	"Insert Name",
 	"Bartholomew",
 	]
-
+var direction : Vector2 = Vector2.DOWN
 
 
 func _init():
@@ -61,7 +61,7 @@ func checkVision(ignoreHiding : bool = false):
 var HP : int = maxHP
 @export_range(1, 100, 1, "or_greater") var ARM : int = 1
 
-func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
+func damage(DMG : int, AP : int, dealer : Unit, DMGtype : String, source : Node = null) :
 	
 	var reduction = clampf( float(AP) / float(ARM), 0, 1)
 	var DMGDealt = DMG * reduction
@@ -71,6 +71,8 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 		var chance = round((remainder * 100))
 		if randi_range(1, 100) < chance : DMGDealt += 1
 	
+	DMGDealt = adjustDMG(DMGDealt, dealer, DMGtype, source)
+	
 	HP -= DMGDealt
 	if source != dealer :
 		dealer.indirectDMG(self, DMGDealt)
@@ -79,11 +81,14 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 		die(source.name)
 	
 	if DMGDealt > 0 : 
-		emit_signal("hurt", DMGDealt)
+		emit_signal("hurt", DMGDealt, DMGtype)
 		var markSize = sqrt(float(DMGDealt) / 2.0)
 		hitmarker(str(DMGDealt), markSize)
 		#print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
 	elif DMGDealt == 0 : hitmarker("0", 1, Color.from_hsv(0.6, 0.8, 1, 1))
+	return DMGDealt
+
+func adjustDMG(DMGDealt : int, _dealer : Unit, _DMGtype : String, _source : Node = null) :
 	return DMGDealt
 
 func heal(amount : int) :
@@ -135,7 +140,8 @@ func getTileValue(tileCoord : Vector2i, searchValue : float = -1, distanceValue 
 	var distance = getDistanceTo(map.map_to_local(tileCoord))
 	return (searched * searchValue) + (distance * distanceValue)
 
-
+func isFoe(thing : Unit) :
+	return thing != self and (thing.team != team or team == "Unalligned")
 
 func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
 	
@@ -190,3 +196,14 @@ func hitmarker(text : String = "NULL", size : float = 1, color : Color = Color.f
 	mark.size = size
 	map.add_child(mark)
 	mark.show()
+
+func canSeeTarget(testPosition : Vector2 = global_position, targPosition : Vector2 = aggroTarget.global_position) :
+	
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsRayQueryParameters2D.create(targPosition, testPosition, 3)
+	var result = space_state.intersect_ray(query)
+	
+	if result  :
+		return false
+	else :
+		return true

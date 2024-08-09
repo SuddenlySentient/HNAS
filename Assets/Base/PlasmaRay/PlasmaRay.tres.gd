@@ -55,7 +55,7 @@ func _physics_process(delta):
 				hit.velocity -= Vector2.from_angle(ray.rotation - (PI / 2)).normalized() * 65536 * delta
 				if hurted.has(hit) == false :
 					hurted.append(hit)
-					if hit.damage(DMG, AP, myOwner, self) :
+					if hit.damage(DMG, AP, myOwner, "Ray", self) :
 						$Damage.global_position = collsionPoint
 						$Damage.play()
 		var arcTime = arcTimer.time_left / arcTimer.wait_time

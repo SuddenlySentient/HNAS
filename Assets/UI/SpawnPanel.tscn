@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://tv4jdog6wsyu"]
+[gd_scene load_steps=17 format=3 uid="uid://tv4jdog6wsyu"]
 
 [ext_resource type="Theme" uid="uid://i5wcemsxfl4u" path="res://Assets/UI/Window.tres" id="1_pff0r"]
 [ext_resource type="Theme" uid="uid://d3md10mt5mmql" path="res://Assets/UI/Default.tres" id="2_liqo0"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c6qj75agmqi8l" path="res://Assets/Pillar Demon/Frames/Emerge/Down/0016.png" id="4_3paoi"]
 [ext_resource type="Texture2D" uid="uid://bnh108nrvye4l" path="res://Assets/Vampire/Frames/Icon.png" id="5_ab8wy"]
 [ext_resource type="Texture2D" uid="uid://b272kobaantw5" path="res://Assets/Seraph/Frames/Idle/0000.png" id="6_22tp7"]
+[ext_resource type="Texture2D" uid="uid://dvaqbulvuugka" path="res://Assets/Sentry/Frames/Icon.png" id="8_36q3w"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_i5e58"]
 
@@ -195,6 +196,35 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SEButton" type="Button" parent="ScrollContainer/HBoxContainer/SEPanel"]
+layout_mode = 2
+theme = SubResource("Theme_c7048")
+toggle_mode = true
+action_mode = 0
+
+[node name="SNPanel" type="PanelContainer" parent="ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(144, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/HBoxContainer/SNPanel"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+texture = ExtResource("8_36q3w")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/SNPanel"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Sentry"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SNButton" type="Button" parent="ScrollContainer/HBoxContainer/SNPanel"]
 layout_mode = 2
 theme = SubResource("Theme_c7048")
 toggle_mode = true

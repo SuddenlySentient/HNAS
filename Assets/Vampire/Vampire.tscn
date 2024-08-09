@@ -3702,7 +3702,7 @@ tags = Array[String](["Mechanical", "Angel", "HasBlood", "Greater", "Magic"])
 reflectShots = true
 nameList = Array[StringName]([&"Lady Grace", &"Commander Rosso", &"Lieutenant Scarlet", &"Sir Sangue", &"Ruash Vad", &"Vincent", &"Stranger", &"Mistress Immortali"])
 maxHP = 32
-ARM = 5
+ARM = 6
 
 [node name="ComboCanvas" type="CanvasLayer" parent="."]
 visible = false
@@ -3760,6 +3760,7 @@ y_sort_enabled = true
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_xku26")
 animation = &"AttackDown"
+frame = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -3783,7 +3784,7 @@ radius = 256.0
 
 [node name="ThrustArea" type="Area2D" parent="RotateNode"]
 visible = false
-monitorable = false
+collision_layer = 8
 
 [node name="Thrust" type="CollisionShape2D" parent="RotateNode/ThrustArea"]
 position = Vector2(0, 224)
@@ -3793,6 +3794,7 @@ debug_color = Color(0.7, 0.0583333, 0, 0.419608)
 
 [node name="SweepArea" type="Area2D" parent="RotateNode"]
 visible = false
+collision_layer = 8
 monitorable = false
 
 [node name="Sweep1" type="CollisionShape2D" parent="RotateNode/SweepArea"]

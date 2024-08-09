@@ -10,6 +10,7 @@ $ScrollContainer/HBoxContainer/SRPanel,
 $ScrollContainer/HBoxContainer/PDPanel,
 $ScrollContainer/HBoxContainer/VPPanel,
 $ScrollContainer/HBoxContainer/SEPanel,
+$ScrollContainer/HBoxContainer/SNPanel
 ]
 enum units {
 None = 0,
@@ -17,6 +18,7 @@ SR = 1,
 PD = 2,
 VP = 3,
 SE = 4,
+SN = 4
 }
 var selectedUnit : units = units.None
 @onready var unitScenes = [
@@ -24,6 +26,7 @@ load("res://Assets/SUB-RFL-48/sub_rfl_48.tscn"),
 load("res://Assets/Pillar Demon/PillarDemon.tscn"),
 load("res://Assets/Vampire/Vampire.tscn"),
 load("res://Assets/Seraph/seraph.tscn"),
+load("res://Assets/Sentry/Sentry.tscn")
 ]
 
 func _process(delta):

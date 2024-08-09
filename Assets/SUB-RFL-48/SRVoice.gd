@@ -119,11 +119,11 @@ load("res://Assets/SUB-RFL-48/Sound/Voice/NeedSupport.wav"),
 load("res://Assets/SUB-RFL-48/Sound/Voice/MaydayMayday.wav"),
 ]
 var outnumberAudio : AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/TargetsAreOutnumbered.wav")
-var injuredAudio :AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/ImLow.wav")
-var uhOhAudio :AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/UhOh.wav")
-var dealDMGAudio :AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/Tagged.wav")
+var injuredAudio : AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/ImLow.wav")
+var uhOhAudio : AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/UhOh.wav")
+var dealDMGAudio : AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/Tagged.wav")
 
-func _on_subrfl_48_hurt(_DMG):
+func _on_hurt(_DMG, _DMGtype):
 	tryVoice("Hurt")
 
 #func speechBubble(speechText : String) :

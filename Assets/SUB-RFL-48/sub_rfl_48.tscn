@@ -218,6 +218,7 @@ text = "
 "
 horizontal_alignment = 1
 
+[connection signal="hurt" from="." to="." method="_on_hurt"]
 [connection signal="hurt" from="." to="Voice" method="_on_subrfl_48_hurt"]
 [connection signal="timeout" from="Test" to="." method="_on_test_timeout"]
 [connection signal="frame_changed" from="SUBSprite" to="." method="_on_animated_sprite_2d_frame_changed"]

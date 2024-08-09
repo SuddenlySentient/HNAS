@@ -65,7 +65,7 @@ func endShot():
 	for weakling in $Explosion.get_overlapping_bodies() :
 		if weakling is Unit :
 			var falloff = sqrt(1.0 - (position.distance_to(weakling.position)/(512 * size)))
-			weakling.damage((DMG + size) * falloff, AP, shooter, self)
+			weakling.damage((DMG + size) * falloff, AP, shooter, "AOE", self)
 			var directionTo = global_position.direction_to(weakling.position)
 			if weakling != self : weakling.velocity += directionTo * 1024 * falloff
 	await $ExplostionTimer.timeout

@@ -16,7 +16,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="SpawnPanel" parent="Control" instance=ExtResource("2_xdxlc")]
-position = Vector2i(16, 32)
+position = Vector2i(16, 31)
 size = Vector2i(384, 192)
 mouse_passthrough = true
 

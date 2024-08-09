@@ -81,7 +81,7 @@ func explode():
 		var DMGDealt = round(DMG * falloff)
 		var APDealt = round(AP * falloff)
 		#print("DMG : ", DMGDealt, " AP : ", APDealt)
-		unit.damage(DMGDealt, APDealt, unit, self)
+		unit.damage(DMGDealt, APDealt, unit, "AOE", self)
 	destroyTimer.start()
 	explosionLight.show()
 	mineSprite.hide()

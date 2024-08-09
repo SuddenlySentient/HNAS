@@ -6,7 +6,6 @@ class_name Vampire
 @onready var sprite : AnimatedSprite2D = $VampireSprite
 
 var cAni = "Walk"
-var direction : Vector2 = Vector2.RIGHT
 const minDeflectPitch : float = 1
 const maxDeflectPitch : float = 3
 const minCombo = 50
@@ -41,7 +40,7 @@ func _physics_process(delta) :
 	if State != States.Deflect and State != States.Attack :
 		for thing in currentVision :
 			if thing is Unit :
-				if  thing.team != team : 
+				if isFoe(thing) :
 					if aggroList.has(thing) == false : aggroList.append(thing)
 		if aggroList.is_empty() == false and (aggroList[0] != null and aggroList[0].canBeSeen) :
 			aggroTarget = aggroList[0]
@@ -111,16 +110,7 @@ func _init() :
 	$ComboCanvas.show()
 	name = getName()
 
-func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
-	
-	var reduction = clampf( float(AP) / float(ARM), 0, 1)
-	var DMGDealt = DMG * reduction
-	var remainder = fmod(DMGDealt, 1)
-	if remainder != 0 :
-		DMGDealt = floor(DMGDealt)
-		var chance = round((remainder * 100))
-		if randi_range(1, 100) < chance : DMGDealt += 1
-	
+func adjustDMG(DMGDealt : int, dealer : Unit, _DMGtype : String, source : Node = null) :
 	if source is Shot :
 		var deflectChance = floor(lerp(1, 16, healthRemaining * healthRemaining))
 		#print("HP : ", healthRemaining, " Deflect Chance : ", deflectChance)
@@ -130,18 +120,6 @@ func damage(DMG : int, AP : int, dealer : Unit, source : Node = null) :
 			source.changeColor(Color.from_hsv(0, 0.9, 1, 1))
 			DMGDealt = 0
 			dealer.indirectDMG(self, 0)
-	
-	HP -= DMGDealt
-	
-	if HP <= 0 : die(source.name)
-	if DMGDealt > 0 : 
-		emit_signal("hurt", DMGDealt)
-		var markSize = sqrt(float(DMGDealt) / 2.0)
-		hitmarker(str(DMGDealt), markSize)
-		@warning_ignore("integer_division")
-		addToTank(-DMGDealt / 2)
-		#print(name, " : ", DMGDealt, " DMG, ", round( (float(HP) / float(maxHP) ) * 100), "% HP")
-	elif DMGDealt == 0 : hitmarker("0", 1, Color.from_hsv(0.6, 0.8, 1, 1))
 	return DMGDealt
 
 func deflect() :
@@ -229,7 +207,7 @@ func _on_vampire_sprite_frame_changed():
 			$RotateNode/Jab/JabTimer.start()
 			for unit in swungAt :
 				if unit is Unit :
-					var dealt = unit.damage(JabDMG, SwordAP, self, self)
+					var dealt = unit.damage(JabDMG, SwordAP, self, "Melee", self)
 					if unit.tags.has("HasBlood") : addToTank(dealt / 2)
 					unit.velocity += global_position.direction_to(unit.position) * knockback
 		if sprite.frame == 34 :
@@ -243,7 +221,7 @@ func _on_vampire_sprite_frame_changed():
 			$RotateNode/Slice/SliceTimer.start()
 			for unit in swungAt :
 				if unit is Unit :
-					var dealt = unit.damage(SwingDMG, SwordAP, self, self)
+					var dealt = unit.damage(SwingDMG, SwordAP, self, "Melee", self)
 					if unit.tags.has("HasBlood") : addToTank(dealt / 2)
 					unit.velocity += global_position.direction_to(unit.position) * knockback
 

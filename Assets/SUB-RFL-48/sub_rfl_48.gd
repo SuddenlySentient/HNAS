@@ -13,7 +13,6 @@ class_name SUBRFL48
 @onready var test : Timer = $Test
 @onready var voice : AudioStreamPlayer2D = $Voice
 
-var direction : Vector2 = Vector2(0, 1)
 var speed : int = 200
 @export var acceleration : float = 5
 @export var turnSpeed : float = 6
@@ -76,7 +75,7 @@ func _physics_process(delta) :
 	aggroList.clear()
 	for thing in checkVision() :
 		if thing is Unit :
-			if thing.team != team : 
+			if isFoe(thing) : 
 				if aggroList.has(thing) == false : aggroList.append(thing)
 			elif thing is SUBRFL48 : squadLogic(thing)
 	
@@ -121,7 +120,7 @@ func _physics_process(delta) :
 
 func allies(node) :
 	if node != self :
-		if node is Unit and node.team == team :
+		if node is Unit and isFoe(node) == false :
 			return true
 	return false
 
@@ -252,6 +251,9 @@ func actionQuery() :
 				true : #leader Logic
 					#print(followers.size() + 1, " VS ", preferedSquadSize)
 					if followers.size() + 1 >= preferedSquadSize * 2 :
+						if followers[0] == null : 
+							followers.remove_at(0)
+							return false
 						var secondLeader = followers[0]
 						secondLeader.leaveSquad()
 						for x in preferedSquadSize - 1 :
@@ -393,10 +395,17 @@ func die(_source : String) :
 	queue_free()
 
 func getKill(_who : Unit) :
-	while State == States.Shoot :
+	while State == States.Shoot or State == States.Approach :
 		await get_tree().physics_frame
 	voice.tryVoice("GetKill")
 
 func indirectDMG(_who : Unit, amount : int) :
 	if amount == 0 : voice.tryVoice("NoDMG")
 	else : voice.tryVoice("DealDMG")
+
+func _on_hurt(_DMG, DMGtype):
+	match DMGtype :
+		"Melee" :
+			revved = 0.5
+		_ :
+			revved = revved / 1.5

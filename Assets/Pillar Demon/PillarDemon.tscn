@@ -1657,6 +1657,10 @@ radius = 48.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_emmqb"]
 radius = 2048.0
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_pbf14"]
+cull_mode = 1
+polygon = PackedVector2Array(20, -80, -20, -80, -20, 16, 20, 16)
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_68vvq"]
 random_pitch = 1.25
 streams_count = 4
@@ -1706,10 +1710,6 @@ random_pitch = 1.5
 streams_count = 1
 stream_0/stream = ExtResource("391_2u5fi")
 stream_0/weight = 1.0
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_pbf14"]
-cull_mode = 1
-polygon = PackedVector2Array(20, -80, -20, -80, -20, 16, 20, 16)
 
 [node name="PillarDemon" type="CharacterBody2D"]
 z_index = 1
@@ -1795,6 +1795,10 @@ visible = false
 position = Vector2(0, -32)
 radius = 96.0
 
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
+occluder = SubResource("OccluderPolygon2D_pbf14")
+
 [node name="Sniff" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_68vvq")
 volume_db = -10.0
@@ -1833,10 +1837,6 @@ max_distance = 2048.0
 
 [node name="ScatterTimer" type="Timer" parent="."]
 one_shot = true
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-visible = false
-occluder = SubResource("OccluderPolygon2D_pbf14")
 
 [connection signal="hurt" from="." to="." method="_on_hurt"]
 [connection signal="animation_finished" from="PDSprite" to="." method="_on_pd_sprite_animation_finished"]

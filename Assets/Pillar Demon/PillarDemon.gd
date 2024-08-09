@@ -17,6 +17,7 @@ Emerge = 1,
 Standing = 2,
 UnEmerge = 3
 }
+
 var PillarState = PillarStates.Pillar
 
 @onready var seeable = $Seeable
@@ -34,7 +35,6 @@ var PillarState = PillarStates.Pillar
 @export var AP : int = 1
 var recentSeenCheck : bool = false
 var thingsInVision
-var direction : Vector2 = Vector2.DOWN
 var cAni = "Emerge"
 var avoidenceVelocity : Vector2 = Vector2.ZERO
 
@@ -93,7 +93,7 @@ func actionQuery(delta) :
 		scatter(State != States.Scatter)
 	var pillarArray : Array = []
 	for thing in thingsInVision :
-		if thing is PillarDemon : pillarArray.append(thing)
+		if thing is Unit and isFoe(thing) == false : pillarArray.append(thing)
 	if pillarArray.size() > 0 :
 		for pillar in pillarArray :
 			if pillar.State == States.Swarm and pillar.aggroTarget != null :
@@ -154,7 +154,7 @@ func pillarQuery(delta) :
 	var enemyArray : Array[Unit] = []
 	for thing in thingsInVision :
 		if thing is Unit :
-			if thing is PillarDemon : 
+			if thing is PillarDemon and isFoe(thing) == false : 
 				if global_position.distance_to(thing.position) < 1024 :
 					pillarArray.append(thing)
 			else : enemyArray.append(thing)
@@ -193,7 +193,7 @@ func seenCheck() :
 			var query = PhysicsRayQueryParameters2D.create(global_position, observer.owner.position, 1)
 			var result = space_state.intersect_ray(query)
 			if result and result.collider is Unit :
-				if result.collider is PillarDemon == false : seen = true
+				if isFoe(result.collider) : seen = true
 	return seen
 
 func scatter(new : bool):
@@ -282,7 +282,7 @@ func _on_sniff_timer_timeout():
 		#print(PillarState)
 		heal(1)
 
-func _on_hurt(_DMG):
+func _on_hurt(_DMG, _DMGtype):
 	if State != States.Swarm and State != States.Attack : scatter(false)
 
 func _on_pd_sprite_animation_finished():
@@ -333,8 +333,8 @@ func _on_pd_sprite_frame_changed():
 		$Punch.play()
 		var punching = $RotateNode/PunchArea.get_overlapping_bodies()
 		for punched in punching :
-			if punched is Unit and punched.team != team :
-				punched.damage(DMG, AP, self, self)
+			if punched is Unit and isFoe(punched) :
+				punched.damage(DMG, AP, self, "Melee", self)
 
 var death = load("res://Assets/Pillar Demon/pd_remains.tscn")
 
