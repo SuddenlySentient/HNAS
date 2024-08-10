@@ -14,6 +14,8 @@ Knocked = 8
 }
 var State : States = States.Rest
 var vulnerable = false
+var guardPos : Vector2 = Vector2.ZERO
+var guardDirection : Vector2 = Vector2.DOWN
 
 @export_group("Sword")
 @export_subgroup("Slice")
@@ -37,10 +39,29 @@ func _init() :
 	name = getName()
 	vision = $Rotate/Vision
 	nav = $nav
+	guardPos = global_position
+	guardDirection = backToTheWall()
+	direction = guardDirection
+	sprite.frame = 0
+	sprite.speed_scale = -1
 
 func getName() :
 	var newName = type + " " + "1"
 	return newName
+
+func backToTheWall() :
+	var myTileCoords = map.local_to_map(global_position)
+	var bottomTile = map.get_neighbor_cell(myTileCoords, TileSet.CELL_NEIGHBOR_BOTTOM_SIDE)
+	var leftTile = map.get_neighbor_cell(myTileCoords, TileSet.CELL_NEIGHBOR_LEFT_SIDE)
+	var rightTile = map.get_neighbor_cell(myTileCoords, TileSet.CELL_NEIGHBOR_RIGHT_SIDE)
+	
+	var backDirection = Vector2.DOWN
+	
+	if getTileNavigable(bottomTile) == false : backDirection = Vector2.UP
+	elif getTileNavigable(leftTile) == false : backDirection = Vector2.RIGHT
+	elif getTileNavigable(rightTile) == false : backDirection = Vector2.LEFT
+	
+	return backDirection
 
 func _physics_process(delta) :
 	
@@ -48,33 +69,38 @@ func _physics_process(delta) :
 	
 	#print(str(State))
 	
-	velocity = velocity.lerp(Vector2.ZERO, delta * weight)
+	velocity = velocity.lerp(Vector2.ZERO, delta * weight / 2.0)
 	move_and_slide()
-	
+	#print((velocity).length() / (direction * maxSpeed).length())
 	dealAggro()
 	
 	match cAni :
 		"Walk" :
 			@warning_ignore("integer_division")
-			var sped = velocity.length() / (maxSpeed / 2)
+			var sped = velocity.length() / (maxSpeed * 0.8)
 			sped = sped * velocity.normalized().dot(direction)
 			sprite.speed_scale = sped
+		"Awake" : pass
 		_ :
 			sprite.speed_scale = lerp(sprite.speed_scale, 1.0, delta)
+	
+	const mult = 1.5
 	
 	match State :
 		States.Walk :
 			cAni = "Walk"
+			nav.target_position = guardPos
+			direction = global_position.direction_to(nav.get_next_path_position())
+			velocity = lerp(velocity, direction * maxSpeed * mult, delta * weight)
 		States.Approach :
 			cAni = "Walk"
 			var aggroPos = aggroTarget.position
 			nav.target_position = aggroPos
 			var distranceToTarget = getDistanceTo(aggroPos)
-			if canSeeTarget() : direction = global_position.direction_to(aggroPos)
-			else : direction = global_position.direction_to(nav.get_next_path_position())
+			direction = global_position.direction_to(nav.get_next_path_position())
 			#print(distranceToTarget)
 			var dodgeTime = $DodgeTimer.time_left / $DodgeTimer.wait_time
-			if distranceToTarget < 128 :
+			if enemiesInRange([$Rotate/Slice, $Rotate/Thrust]) :
 				if dodgeTime <= 0.5 :
 					match randi_range(0, 3) :
 						0 : thrustAttack()
@@ -84,7 +110,11 @@ func _physics_process(delta) :
 				var offsetDirection = direction.rotated(PI / 2.0)
 				var dooply = clamp(distranceToTarget, 0, 256) / 256.0
 				offsetDirection = (offsetDirection * (1 - dooply)) + (direction * dooply) 
-				velocity = lerp(velocity, offsetDirection * maxSpeed , delta * weight)
+				velocity = lerp(velocity, offsetDirection * maxSpeed * mult, delta * weight)
+		States.Rest :
+			direction = guardDirection
+			position = lerp(position, guardPos, delta)
+			velocity = Vector2.ZERO
 
 func _process(_delta) :
 	var directionString : String = "Down"
@@ -105,20 +135,33 @@ func _process(_delta) :
 	sprite.set_animation(cType + cAni + directionString)
 	if sprite.animation.contains("Thrust") or sprite.animation.contains("Knocked") or sprite.animation.contains("Attack") or sprite.animation.contains("Walk") :
 		if sprite.is_playing() == false : sprite.play()
-	if sprite.animation.contains("Awake") and State == States.Awake :
-		if sprite.is_playing() == false : sprite.play()
+	if sprite.animation.contains("Awake") :
+		if State == States.Awake :
+			sprite.speed_scale = 1
+			if sprite.is_playing() == false : sprite.play()
+		else :
+			if sprite.speed_scale != -1 : 
+				sprite.frame = 31
+				sprite.speed_scale = -1
+			if sprite.is_playing() == false and sprite.frame != 0 : sprite.play()
 
 func _on_sprite_animation_finished():
 	match cAni :
-		"Awake", "Thrust", "Knocked", "Attack" :
+		"Thrust", "Knocked", "Attack" :
 			State = States.Ready
-			canBeSeen = true
 		"ThrustPrepare" :
 			cAni = "Thrust"
+		"Awake" :
+			if State == States.Awake :
+				State = States.Ready
+				canBeSeen = true
+			elif State == States.Rest :
+				canBeSeen = false
 
 func dodge() :
 	#print("Dodge")
 	if $DodgeTimer.is_stopped() :
+		$Dodge.play()
 		$DodgeTimer.start()
 		var randAng = ((randi_range(0, 1) * 2) - 1)  * (PI / 2.0)
 		velocity += direction.rotated(randAng) * -1024
@@ -142,7 +185,7 @@ func dealAggro() :
 	
 	var newAggroList : Array[Unit] = []
 	for thing in aggroList :
-		if thing != null and newAggroList.has(thing) == false : newAggroList.append(thing)
+		if thing != null and thing.canBeSeen and newAggroList.has(thing) == false : newAggroList.append(thing)
 	aggroList = newAggroList
 	
 	if aggroList.size() > 0 : 
@@ -152,18 +195,23 @@ func dealAggro() :
 			States.Rest : awake()
 	else : 
 		aggroTarget = null
-		if State == States.Approach : State = States.Ready
+		if State == States.Approach or State == States.Ready : State = States.Walk
 
 func awake() :
 	State = States.Awake
 	cAni = "Awake"
 
+func rest() :
+	State = States.Rest
+	cAni = "Awake"
+	direction = guardDirection
+
 func setVulnerable(setV : bool) :
-	vulnerable = setV
 	if setV :
-		pass
-	else :
-		pass
+		if setV != vulnerable : $Vulnerable.play()
+	elif setV != vulnerable :
+		$Invulnerable.play()
+	vulnerable = setV
 
 func adjustDMG(DMGDealt : int, dealer : Unit, DMGtype : String, source : Node = null) :
 	if DMGtype == "Melee" :
@@ -188,6 +236,7 @@ func adjustDMG(DMGDealt : int, dealer : Unit, DMGtype : String, source : Node = 
 	elif DMGtype == "Projectile" : 
 		velocity += direction * 256
 		dodge()
+		$Ping.play()
 	return DMGDealt
 
 func knocked() :
@@ -245,3 +294,7 @@ func _on_sprite_frame_changed():
 			match sprite.frame :
 				8, 24 :
 					$Step.play()
+
+func _on_nav_navigation_finished():
+	if State == States.Walk :
+		rest()

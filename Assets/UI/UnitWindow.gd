@@ -48,6 +48,7 @@ func _process(delta) :
 	if mouseHeld == false :
 		position.x = lerp(position.x, snapped(position.x, positionSnap), delta * postionSnapSpeed)
 		position.y = lerp(position.y, snapped(position.y, positionSnap), delta * postionSnapSpeed)
+		moveIntoFrame()
 	
 	if observedUnit == null :
 		#print("No Observed Unit")
@@ -183,3 +184,21 @@ func close() :
 func _on_zoom_to_button_pressed():
 	var camera = UI.world.get_children()[2]
 	camera.moveTo(observedUnit.position)
+
+func moveIntoFrame() :
+	var window : Rect2i = Rect2i(position, size)
+	var frame : Rect2i = $"..".get_rect()
+	frame.position += Vector2i(16, 32)
+	frame.size -= Vector2i(16, 32)
+	var fullsize = frame.size
+	var maxX = fullsize.x - window.size.x
+	var maxY = fullsize.y - window.size.y
+	
+	#print("Pos : ", position, " Frame : ", frame.position)
+	if frame.encloses(window) == false :
+		#print("Pos : ", position, " Frame : ", frame.position)
+		if position.x < frame.position.x : position.x = frame.position.x
+		elif position.x > maxX : position.x = maxX
+		if position.y < frame.position.y : position.y = frame.position.y
+		elif position.y > maxY : position.y = maxY
+		$IntoFrame.play()

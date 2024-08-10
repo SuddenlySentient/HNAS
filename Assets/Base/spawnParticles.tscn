@@ -81,7 +81,7 @@ visibility_rect = Rect2(-320, -320, 640, 640)
 trail_enabled = true
 trail_lifetime = 0.25
 
-[node name="Spawn" type="AudioStreamPlayer2D" parent="."]
+[node name="Spawn" type="AudioStreamPlayer2D" parent="GPUParticles2D2"]
 stream = SubResource("AudioStreamRandomizer_3cdb0")
 autoplay = true
 max_distance = 2048.0

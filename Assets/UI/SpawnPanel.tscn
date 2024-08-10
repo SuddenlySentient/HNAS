@@ -1,25 +1,84 @@
-[gd_scene load_steps=17 format=3 uid="uid://tv4jdog6wsyu"]
+[gd_scene load_steps=38 format=3 uid="uid://tv4jdog6wsyu"]
 
 [ext_resource type="Theme" uid="uid://i5wcemsxfl4u" path="res://Assets/UI/Window.tres" id="1_pff0r"]
 [ext_resource type="Theme" uid="uid://d3md10mt5mmql" path="res://Assets/UI/Default.tres" id="2_liqo0"]
 [ext_resource type="Script" path="res://Assets/UI/SpawnPanel.gd" id="2_xidro"]
 [ext_resource type="Texture2D" uid="uid://hdtofdx8mo8p" path="res://Assets/SUB-RFL-48/ShootFrames/Down/0000.png" id="3_3nevc"]
+[ext_resource type="Texture2D" uid="uid://c0sgrnr0ltigj" path="res://Assets/UI/R.png" id="3_452en"]
 [ext_resource type="Texture2D" uid="uid://c6qj75agmqi8l" path="res://Assets/Pillar Demon/Frames/Emerge/Down/0016.png" id="4_3paoi"]
+[ext_resource type="Texture2D" uid="uid://bra4ksdibuswy" path="res://Assets/UI/B.png" id="4_7er5w"]
 [ext_resource type="Texture2D" uid="uid://bnh108nrvye4l" path="res://Assets/Vampire/Frames/Icon.png" id="5_ab8wy"]
+[ext_resource type="Texture2D" uid="uid://o5sa1oilvvpy" path="res://Assets/UI/G.png" id="5_yf68j"]
 [ext_resource type="Texture2D" uid="uid://b272kobaantw5" path="res://Assets/Seraph/Frames/Idle/0000.png" id="6_22tp7"]
+[ext_resource type="Texture2D" uid="uid://ddkjs582xgqpl" path="res://Assets/UI/Y.png" id="6_yefg4"]
 [ext_resource type="Texture2D" uid="uid://dvaqbulvuugka" path="res://Assets/Sentry/Frames/Icon.png" id="8_36q3w"]
+[ext_resource type="AudioStream" uid="uid://bob070kkm2nik" path="res://Assets/UI/Sounds/bubbly_counter_01.wav" id="13_obc2y"]
+[ext_resource type="AudioStream" uid="uid://drkexaibko8yr" path="res://Assets/UI/Sounds/bubbly_counter_02.wav" id="14_ux4k3"]
+[ext_resource type="AudioStream" uid="uid://cvi1a2cjb506r" path="res://Assets/UI/Sounds/bubbly_counter_03.wav" id="15_hmya3"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_i5e58"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_gse3p"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_11qww"]
+texture = ExtResource("3_452en")
+modulate_color = Color(0.6, 0.12, 0.12, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jb1dn"]
+texture = ExtResource("3_452en")
+modulate_color = Color(0.8, 0.160784, 0.160784, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kauk3"]
+texture = ExtResource("3_452en")
+modulate_color = Color(1, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i30ua"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d30p6"]
+texture = ExtResource("5_yf68j")
+modulate_color = Color(0.12, 0.6, 0.2, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gpymm"]
+texture = ExtResource("5_yf68j")
+modulate_color = Color(0.16, 0.8, 0.266667, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_45uob"]
+texture = ExtResource("5_yf68j")
+modulate_color = Color(0.2, 1, 0.333333, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ytvkg"]
+texture = ExtResource("4_7er5w")
+modulate_color = Color(0.12, 0.44, 0.6, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_edphp"]
+texture = ExtResource("4_7er5w")
+modulate_color = Color(0.16, 0.586667, 0.8, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ham08"]
+texture = ExtResource("4_7er5w")
+modulate_color = Color(0.2, 0.733333, 1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o0xxb"]
+texture = ExtResource("6_yefg4")
+modulate_color = Color(0.6, 0.52, 0.12, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_137dl"]
+texture = ExtResource("6_yefg4")
+modulate_color = Color(0.8, 0.693333, 0.16, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dec0u"]
+texture = ExtResource("6_yefg4")
+modulate_color = Color(1, 0.866667, 0.2, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8tr1"]
+content_margin_left = 4.0
+content_margin_right = 4.0
 bg_color = Color(0.1, 0.1, 0.1, 0.752941)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-corner_detail = 1
+corner_detail = 2
 anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16k62"]
@@ -30,7 +89,7 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-corner_detail = 1
+corner_detail = 2
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uumwx"]
@@ -39,7 +98,7 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-corner_detail = 1
+corner_detail = 2
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hnbbq"]
@@ -48,7 +107,7 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-corner_detail = 1
+corner_detail = 2
 anti_aliasing = false
 
 [sub_resource type="Theme" id="Theme_c7048"]
@@ -57,43 +116,103 @@ Button/styles/hover = SubResource("StyleBoxFlat_tsiq4")
 Button/styles/normal = SubResource("StyleBoxFlat_uumwx")
 Button/styles/pressed = SubResource("StyleBoxFlat_hnbbq")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ph7db"]
+random_pitch = 1.5
+streams_count = 3
+stream_0/stream = ExtResource("13_obc2y")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("14_ux4k3")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("15_hmya3")
+stream_2/weight = 1.0
+
 [node name="SpawnPanel" type="Window"]
 transparent_bg = true
 canvas_item_default_texture_filter = 0
 title = "NPC Spawner"
-size = Vector2i(256, 192)
+position = Vector2i(0, 24)
+size = Vector2i(256, 208)
 wrap_controls = true
 transient = true
-min_size = Vector2i(256, 192)
-max_size = Vector2i(720, 192)
+min_size = Vector2i(256, 208)
+max_size = Vector2i(720, 208)
+keep_title_visible = true
 theme = ExtResource("1_pff0r")
 theme_override_icons/close = SubResource("ImageTexture_i5e58")
 theme_override_icons/close_pressed = SubResource("ImageTexture_gse3p")
 script = ExtResource("2_xidro")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="Control" type="VBoxContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TeamButtons" type="HBoxContainer" parent="Control"]
+layout_mode = 2
+alignment = 1
+
+[node name="R" type="Button" parent="Control/TeamButtons"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/normal = SubResource("StyleBoxTexture_11qww")
+theme_override_styles/hover = SubResource("StyleBoxTexture_jb1dn")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_kauk3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i30ua")
+toggle_mode = true
+
+[node name="G" type="Button" parent="Control/TeamButtons"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/normal = SubResource("StyleBoxTexture_d30p6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gpymm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_45uob")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i30ua")
+toggle_mode = true
+
+[node name="B" type="Button" parent="Control/TeamButtons"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/normal = SubResource("StyleBoxTexture_ytvkg")
+theme_override_styles/hover = SubResource("StyleBoxTexture_edphp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ham08")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i30ua")
+toggle_mode = true
+
+[node name="Y" type="Button" parent="Control/TeamButtons"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/normal = SubResource("StyleBoxTexture_o0xxb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_137dl")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_dec0u")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i30ua")
+toggle_mode = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control"]
+layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("2_liqo0")
 follow_focus = true
 vertical_scroll_mode = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ScrollContainer"]
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="SRPanel" type="PanelContainer" parent="ScrollContainer/HBoxContainer"]
+[node name="SRPanel" type="PanelContainer" parent="Control/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(144, 128)
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
 
-[node name="TextureRect" type="TextureRect" parent="ScrollContainer/HBoxContainer/SRPanel"]
+[node name="TextureRect" type="TextureRect" parent="Control/ScrollContainer/HBoxContainer/SRPanel"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
@@ -101,7 +220,7 @@ texture = ExtResource("3_3nevc")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/SRPanel"]
+[node name="Label" type="Label" parent="Control/ScrollContainer/HBoxContainer/SRPanel"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_vertical = 0
@@ -110,19 +229,39 @@ text = "SUB-RFL-48"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SRButton" type="Button" parent="ScrollContainer/HBoxContainer/SRPanel"]
+[node name="SRButton" type="Button" parent="Control/ScrollContainer/HBoxContainer/SRPanel"]
 layout_mode = 2
 theme = SubResource("Theme_c7048")
 toggle_mode = true
 action_mode = 0
 
-[node name="PDPanel" type="PanelContainer" parent="ScrollContainer/HBoxContainer"]
+[node name="Count" type="Label" parent="Control/ScrollContainer/HBoxContainer/SRPanel"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 30
+text = "x8"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Numb" type="Label" parent="Control/ScrollContainer/HBoxContainer/SRPanel"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 30
+text = "0/8"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PDPanel" type="PanelContainer" parent="Control/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(144, 128)
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
 
-[node name="TextureRect" type="TextureRect" parent="ScrollContainer/HBoxContainer/PDPanel"]
+[node name="TextureRect" type="TextureRect" parent="Control/ScrollContainer/HBoxContainer/PDPanel"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
@@ -130,7 +269,7 @@ texture = ExtResource("4_3paoi")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/PDPanel"]
+[node name="Label" type="Label" parent="Control/ScrollContainer/HBoxContainer/PDPanel"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_vertical = 0
@@ -139,25 +278,25 @@ text = "Pillar Demon"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PDButton" type="Button" parent="ScrollContainer/HBoxContainer/PDPanel"]
+[node name="PDButton" type="Button" parent="Control/ScrollContainer/HBoxContainer/PDPanel"]
 layout_mode = 2
 theme = SubResource("Theme_c7048")
 toggle_mode = true
 action_mode = 0
 
-[node name="VPPanel" type="PanelContainer" parent="ScrollContainer/HBoxContainer"]
+[node name="VPPanel" type="PanelContainer" parent="Control/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(144, 128)
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
 
-[node name="TextureRect" type="TextureRect" parent="ScrollContainer/HBoxContainer/VPPanel"]
+[node name="TextureRect" type="TextureRect" parent="Control/ScrollContainer/HBoxContainer/VPPanel"]
 layout_mode = 2
 texture = ExtResource("5_ab8wy")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/VPPanel"]
+[node name="Label" type="Label" parent="Control/ScrollContainer/HBoxContainer/VPPanel"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_vertical = 0
@@ -166,19 +305,19 @@ text = "Vampire"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VPButton" type="Button" parent="ScrollContainer/HBoxContainer/VPPanel"]
+[node name="VPButton" type="Button" parent="Control/ScrollContainer/HBoxContainer/VPPanel"]
 layout_mode = 2
 theme = SubResource("Theme_c7048")
 toggle_mode = true
 action_mode = 0
 
-[node name="SEPanel" type="PanelContainer" parent="ScrollContainer/HBoxContainer"]
+[node name="SEPanel" type="PanelContainer" parent="Control/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(144, 128)
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
 
-[node name="TextureRect" type="TextureRect" parent="ScrollContainer/HBoxContainer/SEPanel"]
+[node name="TextureRect" type="TextureRect" parent="Control/ScrollContainer/HBoxContainer/SEPanel"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
@@ -186,7 +325,7 @@ texture = ExtResource("6_22tp7")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/SEPanel"]
+[node name="Label" type="Label" parent="Control/ScrollContainer/HBoxContainer/SEPanel"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_vertical = 0
@@ -195,19 +334,19 @@ text = "Seraph"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SEButton" type="Button" parent="ScrollContainer/HBoxContainer/SEPanel"]
+[node name="SEButton" type="Button" parent="Control/ScrollContainer/HBoxContainer/SEPanel"]
 layout_mode = 2
 theme = SubResource("Theme_c7048")
 toggle_mode = true
 action_mode = 0
 
-[node name="SNPanel" type="PanelContainer" parent="ScrollContainer/HBoxContainer"]
+[node name="SNPanel" type="PanelContainer" parent="Control/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(144, 128)
 layout_mode = 2
 size_flags_horizontal = 6
 theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
 
-[node name="TextureRect" type="TextureRect" parent="ScrollContainer/HBoxContainer/SNPanel"]
+[node name="TextureRect" type="TextureRect" parent="Control/ScrollContainer/HBoxContainer/SNPanel"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
@@ -215,7 +354,7 @@ texture = ExtResource("8_36q3w")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/SNPanel"]
+[node name="Label" type="Label" parent="Control/ScrollContainer/HBoxContainer/SNPanel"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 size_flags_vertical = 0
@@ -224,7 +363,7 @@ text = "Sentry"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SNButton" type="Button" parent="ScrollContainer/HBoxContainer/SNPanel"]
+[node name="SNButton" type="Button" parent="Control/ScrollContainer/HBoxContainer/SNPanel"]
 layout_mode = 2
 theme = SubResource("Theme_c7048")
 toggle_mode = true
@@ -233,3 +372,6 @@ action_mode = 0
 [node name="Spawn Cooldown" type="Timer" parent="."]
 wait_time = 0.125
 one_shot = true
+
+[node name="IntoFrame" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_ph7db")

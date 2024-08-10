@@ -15,21 +15,27 @@ var initalColor = Color(\"cc2944\")
 var finalColor = Color(\"991f33\")
 
 func _enter_tree():
+	
 	$Blood.restart()
 	$Marble.restart()
 	$Death.pitch_scale = thisScale
-	#$Timer.start(randf_range(512, 1024))
+	
 	$Splat.rotation = randf_range(0, 2 * PI)
 	$Splat.frame = randi_range(0, 2)
+	
 	initalScale = scale
 	spillScale = scale * 1.5
 	await ready
+	$Timer.start(randf_range(512, 1024))
 	$Spill.start(randf_range(20, 30))
 	$Death.play()
 
 func _process(_delta):
 	var spillCompletion = 1 - ($Spill.time_left/$Spill.wait_time)
 	scale = lerp(initalScale, spillScale, spillCompletion)
+	var opacity = ($Timer.time_left / $Timer.wait_time)
+	opacity = sin(opacity * (PI / 2.0))
+	modulate = Color.from_hsv(0, 0, 1, opacity)
 	$Splat.modulate = lerp(initalColor, finalColor, spillCompletion)
 
 func _on_timer_timeout():
@@ -95,11 +101,13 @@ stream_0/stream = ExtResource("4_3mx5j")
 stream_0/weight = 1.0
 
 [node name="PDRemains" type="Node2D"]
+y_sort_enabled = true
 scale = Vector2(2, 2)
 script = SubResource("GDScript_owqho")
 
 [node name="Splat" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.8, 0.16, 0.266667, 1)
+y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_16npn")
 animation = &"Splat"
 

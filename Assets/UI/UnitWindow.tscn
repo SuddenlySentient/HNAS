@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b7e87pw36756c"]
+[gd_scene load_steps=43 format=3 uid="uid://b7e87pw36756c"]
 
 [ext_resource type="Theme" uid="uid://i5wcemsxfl4u" path="res://Assets/UI/Window.tres" id="1_3p5ce"]
 [ext_resource type="FontFile" uid="uid://drk2hxgvh0f5a" path="res://Assets/MinecraftBold-nMK1.otf" id="1_4s5y7"]
@@ -16,6 +16,9 @@
 [ext_resource type="AudioStream" uid="uid://c0p44qxrgldv5" path="res://Assets/UI/Sounds/score_counter_off_01.wav" id="13_dk5kj"]
 [ext_resource type="AudioStream" uid="uid://yil5s5pnmub" path="res://Assets/UI/Sounds/score_counter_off_02.wav" id="14_ja863"]
 [ext_resource type="AudioStream" uid="uid://cr00j1r4sietq" path="res://Assets/UI/Sounds/score_counter_off_03.wav" id="15_vuygw"]
+[ext_resource type="AudioStream" uid="uid://bob070kkm2nik" path="res://Assets/UI/Sounds/bubbly_counter_01.wav" id="17_idfkq"]
+[ext_resource type="AudioStream" uid="uid://drkexaibko8yr" path="res://Assets/UI/Sounds/bubbly_counter_02.wav" id="18_hqrqt"]
+[ext_resource type="AudioStream" uid="uid://cvi1a2cjb506r" path="res://Assets/UI/Sounds/bubbly_counter_03.wav" id="19_gmyya"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_smsfe"]
 texture = ExtResource("7_fbe7m")
@@ -281,6 +284,16 @@ stream_0/weight = 1.0
 stream_1/stream = ExtResource("14_ja863")
 stream_1/weight = 1.0
 stream_2/stream = ExtResource("15_vuygw")
+stream_2/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7ob2m"]
+random_pitch = 1.5
+streams_count = 3
+stream_0/stream = ExtResource("17_idfkq")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("18_hqrqt")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("19_gmyya")
 stream_2/weight = 1.0
 
 [node name="Window" type="Window"]
@@ -761,6 +774,9 @@ stream = SubResource("AudioStreamRandomizer_0y33u")
 
 [node name="Close" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_t35w2")
+
+[node name="IntoFrame" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_7ob2m")
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="pressed" from="VBoxContainer/VBoxContainer2/HBoxContainer/ZoomToButton" to="." method="_on_zoom_to_button_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=1265 format=3 uid="uid://7ro4fd0cmsvf"]
+[gd_scene load_steps=1282 format=3 uid="uid://7ro4fd0cmsvf"]
 
 [ext_resource type="Script" path="res://Assets/Sentry/Sentry.gd" id="1_pws73"]
 [ext_resource type="Texture2D" uid="uid://bhvkqgfy2ryd0" path="res://Assets/Sentry/Frames/Normal/SwordAttack/Down/0001.png" id="2_7xkrq"]
@@ -1251,6 +1251,19 @@
 [ext_resource type="AudioStream" uid="uid://jrtpi44a215j" path="res://Assets/Sentry/Sound/hollow_metal_2_02.wav" id="1249_x1hch"]
 [ext_resource type="AudioStream" uid="uid://chmjgv8ynyc8e" path="res://Assets/Sentry/Sound/hollow_metal_2_03.wav" id="1250_tmgt8"]
 [ext_resource type="AudioStream" uid="uid://c8kixg7dxqv0x" path="res://Assets/Sentry/Sound/hollow_metal_2_04.wav" id="1251_3s7nq"]
+[ext_resource type="AudioStream" uid="uid://dwxly4d7b0w75" path="res://Assets/Sentry/Sound/Dodge.wav" id="1252_cug77"]
+[ext_resource type="AudioStream" uid="uid://cqqp2le0ixwo3" path="res://Assets/Sentry/Sound/Dodge2.wav" id="1253_gfd2f"]
+[ext_resource type="AudioStream" uid="uid://wcdco4hjv460" path="res://Assets/Sentry/Sound/Dodge3.wav" id="1254_4d8hf"]
+[ext_resource type="AudioStream" uid="uid://pukp8vc065k1" path="res://Assets/Sentry/Sound/metal_ping_01.wav" id="1255_yn1ss"]
+[ext_resource type="AudioStream" uid="uid://coavdvqy41wic" path="res://Assets/Sentry/Sound/metal_ping_02.wav" id="1256_dn5x4"]
+[ext_resource type="AudioStream" uid="uid://dv65xv51gvd7s" path="res://Assets/Sentry/Sound/metal_ping_03.wav" id="1257_8qm6l"]
+[ext_resource type="AudioStream" uid="uid://6ktdhypvihw8" path="res://Assets/Sentry/Sound/metal_ping_04.wav" id="1258_qqw6k"]
+[ext_resource type="AudioStream" uid="uid://78kfgwnt1u43" path="res://Assets/Sentry/Sound/vintage_switch_down_01.wav" id="1259_gij1q"]
+[ext_resource type="AudioStream" uid="uid://cxn8nh38sryqa" path="res://Assets/Sentry/Sound/vintage_switch_up_01.wav" id="1259_l6epd"]
+[ext_resource type="AudioStream" uid="uid://bax6xaf5d6r4j" path="res://Assets/Sentry/Sound/vintage_switch_up_02.wav" id="1260_4mo4l"]
+[ext_resource type="AudioStream" uid="uid://bcv5ms35hqu6c" path="res://Assets/Sentry/Sound/vintage_switch_down_02.wav" id="1260_tj4yj"]
+[ext_resource type="AudioStream" uid="uid://bngr8d758hd6k" path="res://Assets/Sentry/Sound/vintage_switch_down_03.wav" id="1261_hlq3c"]
+[ext_resource type="AudioStream" uid="uid://dh3e105vpv37e" path="res://Assets/Sentry/Sound/vintage_switch_up_03.wav" id="1261_wqlaw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xnwpj"]
 animations = [{
@@ -5208,7 +5221,7 @@ radius = 48.0
 height = 160.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_11hgn"]
-radius = 2048.0
+radius = 4096.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5ggm8"]
 random_pitch = 1.25
@@ -5272,6 +5285,48 @@ stream_2/weight = 1.0
 stream_3/stream = ExtResource("1251_3s7nq")
 stream_3/weight = 1.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_11rva"]
+random_pitch = 1.25
+streams_count = 3
+stream_0/stream = ExtResource("1252_cug77")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("1253_gfd2f")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("1254_4d8hf")
+stream_2/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xripu"]
+random_pitch = 1.25
+streams_count = 4
+stream_0/stream = ExtResource("1255_yn1ss")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("1256_dn5x4")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("1257_8qm6l")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("1258_qqw6k")
+stream_3/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0et12"]
+random_pitch = 1.25
+streams_count = 3
+stream_0/stream = ExtResource("1259_gij1q")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("1260_tj4yj")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("1261_hlq3c")
+stream_2/weight = 1.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y1d05"]
+random_pitch = 1.25
+streams_count = 3
+stream_0/stream = ExtResource("1259_l6epd")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("1260_4mo4l")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("1261_wqlaw")
+stream_2/weight = 1.0
+
 [node name="Sentry" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
@@ -5281,15 +5336,17 @@ floor_max_angle = 0.0
 script = ExtResource("1_pws73")
 type = "Sentry"
 team = "Sentry"
+tags = Array[String](["Angel", "Lesser", "Magic"])
 canBeSeen = false
-maxSpeed = 400
 maxHP = 15
 ARM = 4
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_xnwpj")
-animation = &"SwordWalkDown"
+animation = &"SwordThrustDown"
+frame = 30
+frame_progress = 1.0
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 visible = false
@@ -5297,18 +5354,18 @@ shape = SubResource("CircleShape2D_wr1it")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(0.4, 0.8, 1, 1)
-energy = 0.5
+energy = 0.25
 texture = ExtResource("1194_u736u")
 offset = Vector2(0, -32)
-texture_scale = 8.0
+texture_scale = 5.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 visible = false
 occluder = SubResource("OccluderPolygon2D_npmot")
 
 [node name="nav" type="NavigationAgent2D" parent="."]
-path_desired_distance = 64.0
-target_desired_distance = 64.0
+path_desired_distance = 128.0
+target_desired_distance = 32.0
 path_max_distance = 64.0
 debug_use_custom = true
 debug_path_custom_color = Color(4, 0, 0, 1)
@@ -5337,7 +5394,7 @@ debug_color = Color(0.7, 0, 0.116667, 0.419608)
 
 [node name="Vision" type="Area2D" parent="Rotate"]
 visible = false
-position = Vector2(0, 1024)
+position = Vector2(0, 2048)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Rotate/Vision"]
@@ -5388,5 +5445,30 @@ max_distance = 2048.0
 attenuation = 2.0
 max_polyphony = 2
 
+[node name="Dodge" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_11rva")
+max_distance = 2048.0
+attenuation = 2.0
+
+[node name="Ping" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_xripu")
+volume_db = 10.0
+max_distance = 2048.0
+attenuation = 2.0
+max_polyphony = 8
+
+[node name="Vulnerable" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_0et12")
+volume_db = 5.0
+max_distance = 2048.0
+attenuation = 2.0
+
+[node name="Invulnerable" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_y1d05")
+volume_db = 5.0
+max_distance = 2048.0
+attenuation = 2.0
+
 [connection signal="animation_finished" from="Sprite" to="." method="_on_sprite_animation_finished"]
 [connection signal="frame_changed" from="Sprite" to="." method="_on_sprite_frame_changed"]
+[connection signal="navigation_finished" from="nav" to="." method="_on_nav_navigation_finished"]

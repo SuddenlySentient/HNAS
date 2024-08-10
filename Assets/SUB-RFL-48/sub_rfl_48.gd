@@ -53,22 +53,9 @@ func getName() :
 
 func _physics_process(delta) :
 	
-	#var debugString : String = "Name = A, isLeader = X inSquad = Y Follower Count = Z"
-	#debugString = debugString.replace("A", str(self.name))
-	#debugString = debugString.replace("X", str(isLeader))
-	#debugString = debugString.replace("Y", str(inSquad))
-	#debugString = debugString.replace("Z", str(followers.size()) )
-	#$DebugLabel.set_text(debugString)
-	#$DebugLabel2.set_text(str(followers))
-	
-	if isLeader : 
-		
-		if is_instance_valid(followers[0]) == false :
-			followers.remove_at(0)
-		
-		if followers.size() == 0 : 
-			isLeader = false
-			inSquad = false
+	if isLeader and followers.size() == 0 : 
+		isLeader = false
+		inSquad = false
 	
 	if HP < ((maxHP/4.0) * 3.0) : voice.tryVoice("Injured")
 	
@@ -249,7 +236,13 @@ func actionQuery() :
 							nav.target_position = tarPos
 						nav.avoidance_priority = clampf(((1.0 / leaderFollowers.size()) * (myPlace + 1)), 0, 1)
 				true : #leader Logic
-					#print(followers.size() + 1, " VS ", preferedSquadSize)
+					
+					var newFollowerList : Array[SUBRFL48] = []
+					for thing in followers :
+						#if thing == null : print("purged")
+						if thing != null and newFollowerList.has(thing) == false : newFollowerList.append(thing)
+					followers = newFollowerList
+					
 					if followers.size() + 1 >= preferedSquadSize * 2 :
 						if followers[0] == null : 
 							followers.remove_at(0)

@@ -93,7 +93,7 @@ func actionQuery(delta) :
 		scatter(State != States.Scatter)
 	var pillarArray : Array = []
 	for thing in thingsInVision :
-		if thing is Unit and isFoe(thing) == false : pillarArray.append(thing)
+		if thing is PillarDemon and isFoe(thing) == false : pillarArray.append(thing)
 	if pillarArray.size() > 0 :
 		for pillar in pillarArray :
 			if pillar.State == States.Swarm and pillar.aggroTarget != null :
@@ -133,9 +133,8 @@ func actionQuery(delta) :
 		States.Scatter, States.Swarm :
 			if State == States.Swarm :
 				if aggroTarget == null : return false
-				var distanceTo = global_position.distance_to(aggroTarget.position)
-				if distanceTo < 192 : 
-					direction = vectorToTarget
+				direction = vectorToTarget
+				if enemiesInRange([$RotateNode/PunchArea]) : 
 					attack()
 					return false
 			cAni = "Skitter"
@@ -157,7 +156,7 @@ func pillarQuery(delta) :
 			if thing is PillarDemon and isFoe(thing) == false : 
 				if global_position.distance_to(thing.position) < 1024 :
 					pillarArray.append(thing)
-			else : enemyArray.append(thing)
+			elif isFoe(thing) : enemyArray.append(thing)
 	
 	if pillarArray.size() > 0 :
 		for pillar in pillarArray :

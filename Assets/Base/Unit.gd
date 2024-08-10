@@ -150,7 +150,7 @@ func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
 	var tileValue : Array = []
 	var theOne = Vector2.ZERO
 	
-	const maxSearchDistance = 2048
+	var maxSearchDistance = 2048
 	@warning_ignore("unused_variable")
 	var tilesSearched = 0
 	@warning_ignore("unused_variable")
@@ -158,19 +158,31 @@ func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
 	
 	for tile in tilesCoords :
 		allTiles += 1
-		var distanceToTile = getDistanceTo(map.map_to_local(tile))
-		if distanceToTile <= maxSearchDistance and getTileNavigable(tile) and trySeeTile(tile) == false and tile != myTile :
-			tilesSearched += 1
-			var newEntry = getTileValue(tile, searchValue, distanceValue)
-			tileValue.append(newEntry)
-			tileValue.sort()
-			#tileValue.reverse()
-			if newEntry == tileValue[0] : 
-				theOne = tile
+	
+	var newTileCoords : Array[Vector2i] = []
+	while newTileCoords.size() == 0 :
+		for tile in tilesCoords :
+			var distanceToTile = getDistanceTo(map.map_to_local(tile))
+			if distanceToTile <= maxSearchDistance and tile != myTile and getTileNavigable(tile) and trySeeTile(tile) == false : 
+				newTileCoords.append(tile)
+		if newTileCoords.size() == 0 : 
+			maxSearchDistance += 1024
+			print("Increasing Search Size")
+	
+	tilesCoords = newTileCoords
+	
+	for tile in tilesCoords :
+		tilesSearched += 1
+		var newEntry = getTileValue(tile, searchValue, distanceValue)
+		tileValue.append(newEntry)
+		tileValue.sort()
+		#tileValue.reverse()
+		if newEntry == tileValue[0] : 
+			theOne = tile
 	
 	#print("All Tiles : ", allTiles)
 	#print("Tiles Searched : ", tilesSearched)
-	#print("Tiles Search % : ", round((float(tilesSearched) / float(allTiles)) * 100), "%")
+	#print("Tiles Search Percent : ", round((float(tilesSearched) / float(allTiles)) * 100), "%")
 	
 	return theOne
 
@@ -207,3 +219,9 @@ func canSeeTarget(testPosition : Vector2 = global_position, targPosition : Vecto
 		return false
 	else :
 		return true
+
+func enemiesInRange(areas : Array[Area2D]) :
+	for area in areas :
+		for thing in area.get_overlapping_bodies() :
+			if thing is Unit and isFoe(thing) : return true
+	return false

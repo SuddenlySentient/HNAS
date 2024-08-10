@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bmkc1qgs776ut"]
+[gd_scene load_steps=6 format=3 uid="uid://bmkc1qgs776ut"]
 
 [ext_resource type="Script" path="res://Assets/UI/UI.gd" id="1_2s0pg"]
 [ext_resource type="PackedScene" uid="uid://tv4jdog6wsyu" path="res://Assets/UI/SpawnPanel.tscn" id="2_xdxlc"]
+[ext_resource type="PackedScene" uid="uid://dwdkt61j36h1x" path="res://Assets/UI/PointPanel.tscn" id="3_oxc1j"]
+[ext_resource type="Texture2D" uid="uid://b1p1446vt2310" path="res://Assets/UI/NinePatch/Monitor.png" id="4_76mpa"]
+[ext_resource type="Texture2D" uid="uid://bo5j36v8v1gt7" path="res://Assets/UI/NinePatch/Frame.png" id="5_7rjcg"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_2s0pg")
@@ -16,9 +19,12 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="SpawnPanel" parent="Control" instance=ExtResource("2_xdxlc")]
-position = Vector2i(16, 31)
-size = Vector2i(384, 192)
+position = Vector2i(16, 32)
+size = Vector2i(384, 208)
 mouse_passthrough = true
+
+[node name="PointPanel" parent="Control" instance=ExtResource("3_oxc1j")]
+position = Vector2i(880, 36)
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Control"]
 layout_mode = 1
@@ -30,6 +36,41 @@ grow_vertical = 2
 mouse_filter = 2
 border_color = Color(0.4, 0, 0, 1)
 border_width = 4.0
+
+[node name="Control2" type="Control" parent="Control"]
+visible = false
+custom_minimum_size = Vector2(64, 64)
+anchors_preset = 0
+offset_right = 256.0
+offset_bottom = 256.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Control/Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_76mpa")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Frame" type="NinePatchRect" parent="Control/Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_7rjcg")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
 
 [node name="Top" type="Label" parent="Control"]
 visible = false
