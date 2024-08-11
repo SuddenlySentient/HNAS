@@ -24,7 +24,7 @@ size = Vector2i(384, 208)
 mouse_passthrough = true
 
 [node name="PointPanel" parent="Control" instance=ExtResource("3_oxc1j")]
-position = Vector2i(880, 36)
+position = Vector2i(865, 36)
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Control"]
 layout_mode = 1

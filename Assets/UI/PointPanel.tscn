@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dwdkt61j36h1x"]
+[gd_scene load_steps=34 format=3 uid="uid://dwdkt61j36h1x"]
 
 [ext_resource type="Theme" uid="uid://i5wcemsxfl4u" path="res://Assets/UI/Window.tres" id="1_omuef"]
 [ext_resource type="Theme" uid="uid://d3md10mt5mmql" path="res://Assets/UI/Default.tres" id="1_vyba7"]
@@ -12,9 +12,14 @@
 [ext_resource type="AudioStream" uid="uid://dp13y2070b3ur" path="res://Assets/UI/Sounds/Bell_10_b.wav" id="9_hxfha"]
 [ext_resource type="Texture2D" uid="uid://b1p1446vt2310" path="res://Assets/UI/NinePatch/Monitor.png" id="10_sksrm"]
 [ext_resource type="Texture2D" uid="uid://bo5j36v8v1gt7" path="res://Assets/UI/NinePatch/Frame.png" id="11_cwom4"]
+[ext_resource type="Texture2D" uid="uid://dal2uw4sqn80f" path="res://Assets/UI/TextDot.png" id="13_62td4"]
 [ext_resource type="AudioStream" uid="uid://bob070kkm2nik" path="res://Assets/UI/Sounds/bubbly_counter_01.wav" id="13_jvhb5"]
 [ext_resource type="AudioStream" uid="uid://drkexaibko8yr" path="res://Assets/UI/Sounds/bubbly_counter_02.wav" id="14_lhmm4"]
 [ext_resource type="AudioStream" uid="uid://cvi1a2cjb506r" path="res://Assets/UI/Sounds/bubbly_counter_03.wav" id="15_2lpx0"]
+[ext_resource type="AudioStream" uid="uid://bfcpd2nm5n0nk" path="res://Assets/UI/Sounds/keystroke_01.wav" id="17_1444d"]
+[ext_resource type="AudioStream" uid="uid://fb863tffdbgy" path="res://Assets/UI/Sounds/keystroke_02.wav" id="18_xlx24"]
+[ext_resource type="AudioStream" uid="uid://bmcpwkpkomg3w" path="res://Assets/UI/Sounds/keystroke_03.wav" id="19_5x30e"]
+[ext_resource type="AudioStream" uid="uid://bqa1a4tkyuc0b" path="res://Assets/UI/Sounds/keystroke_04.wav" id="20_bruoq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p2olo"]
 atlas = ExtResource("3_7p5ee")
@@ -56,6 +61,10 @@ streams_count = 1
 stream_0/stream = ExtResource("9_hxfha")
 stream_0/weight = 1.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_bujds"]
+atlas = ExtResource("3_7p5ee")
+region = Rect2(0, 20, 12, 20)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_srk6a"]
 atlas = ExtResource("3_7p5ee")
 region = Rect2(0, 0, 12, 20)
@@ -74,10 +83,23 @@ stream_1/weight = 1.0
 stream_2/stream = ExtResource("15_2lpx0")
 stream_2/weight = 1.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qg7go"]
+random_pitch = 1.1
+streams_count = 4
+stream_0/stream = ExtResource("17_1444d")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("18_xlx24")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("19_5x30e")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("20_bruoq")
+stream_3/weight = 1.0
+
 [node name="PointPanel" type="Window"]
 transparent_bg = true
 canvas_item_default_texture_filter = 0
 title = "POINT PANEL"
+position = Vector2i(0, 24)
 size = Vector2i(256, 256)
 wrap_controls = true
 transient = true
@@ -143,15 +165,11 @@ texture = SubResource("AtlasTexture_kfngl")
 
 [node name="Beep" type="AudioStreamPlayer" parent="VBoxContainer/Ticker"]
 stream = SubResource("AudioStreamRandomizer_htj6p")
-volume_db = -20.0
+volume_db = -15.0
 max_polyphony = 4
 
 [node name="MaxReached" type="AudioStreamPlayer" parent="VBoxContainer/Ticker"]
 stream = SubResource("AudioStreamRandomizer_5f3pp")
-
-[node name="Timer" type="Timer" parent="VBoxContainer/Ticker"]
-wait_time = 0.125
-autostart = true
 
 [node name="Console" type="Control" parent="VBoxContainer"]
 custom_minimum_size = Vector2(64, 64)
@@ -199,18 +217,12 @@ theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 32
 
 [node name="Label" type="RichTextLabel" parent="VBoxContainer/Console/MarginContainer"]
+modulate = Color(0.12549, 0.878431, 0.12549, 1)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("6_p7yrg")
-text = "TEXT
-TEXT
-TEST
-LORP
-LERP
-BOOP
-BEEP
-BOOF"
 scroll_active = false
 scroll_following = true
+tab_size = 7
 
 [node name="Multiplier" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -220,6 +232,7 @@ theme = ExtResource("1_vyba7")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Multiplier"]
 layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="Control2" type="Control" parent="VBoxContainer/Multiplier/HBoxContainer"]
 custom_minimum_size = Vector2(24, 40)
@@ -237,13 +250,24 @@ size_flags_horizontal = 3
 texture = ExtResource("2_1xool")
 stretch_mode = 1
 
+[node name="DigitDot" type="TextureRect" parent="VBoxContainer/Multiplier/HBoxContainer/Control2"]
+modulate = Color(1, 0.25098, 0, 1)
+custom_minimum_size = Vector2(24, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_62td4")
+
 [node name="Digit0" type="TextureRect" parent="VBoxContainer/Multiplier/HBoxContainer/Control2"]
 modulate = Color(1, 0.25098, 0, 1)
 custom_minimum_size = Vector2(24, 40)
 layout_mode = 2
 offset_right = 24.0
 offset_bottom = 40.0
-texture = SubResource("AtlasTexture_srk6a")
+texture = SubResource("AtlasTexture_bujds")
 
 [node name="Control" type="Control" parent="VBoxContainer/Multiplier/HBoxContainer"]
 custom_minimum_size = Vector2(48, 40)
@@ -285,4 +309,24 @@ texture = SubResource("AtlasTexture_c46f5")
 [node name="IntoFrame" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_jllfr")
 
-[connection signal="timeout" from="VBoxContainer/Ticker/Timer" to="." method="_on_timer_timeout"]
+[node name="KeyStroke" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_qg7go")
+volume_db = -20.0
+max_polyphony = 8
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="WaneTimer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="TypeTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="TypeTimer" to="." method="_on_type_timer_timeout"]
