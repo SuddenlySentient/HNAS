@@ -2,9 +2,10 @@ extends CanvasLayer
 
 @onready var world = $".."
 @onready var tileMap = $"../TileMap"
-@onready var detector = $"../Area2D"
-@onready var control = $Control
-@onready var spawnPanel = $Control/SpawnPanel
+@onready var detector = $"../Detector"
+@onready var control = %Control
+@onready var spawnPanel = %SpawnPanel
+@onready var pointPanel = %PointPanel
 @onready var unitWindow = load("res://Assets/UI/UnitWindow.tscn")
 var unitWindows = []   
 
@@ -39,3 +40,6 @@ func checkWindowsForUnit(unitToCheck : Unit) :
 func detectorToMousePos() :
 	var mousePos = world.get_global_mouse_position()
 	detector.global_position = mousePos
+
+func givePoints(amount : int, reason : String, period : float = 1) :
+	pointPanel.givePoints(amount, reason, period)

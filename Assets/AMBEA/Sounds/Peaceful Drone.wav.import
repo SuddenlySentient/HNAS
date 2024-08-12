@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b3d8sivtevljj"
+path="res://.godot/imported/Peaceful Drone.wav-4583d1aca1ac558f57e8272b849f0214.sample"
+
+[deps]
+
+source_file="res://Assets/AMBEA/Sounds/Peaceful Drone.wav"
+dest_files=["res://.godot/imported/Peaceful Drone.wav-4583d1aca1ac558f57e8272b849f0214.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -5338,6 +5338,7 @@ type = "Sentry"
 team = "Sentry"
 tags = Array[String](["Angel", "Lesser", "Magic"])
 canBeSeen = false
+pointsOnDeath = 6
 maxHP = 15
 ARM = 4
 

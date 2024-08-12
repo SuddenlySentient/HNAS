@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://ca1pdu3fohe43"]
+[gd_scene load_steps=41 format=3 uid="uid://ca1pdu3fohe43"]
 
 [ext_resource type="PackedScene" uid="uid://44y0ibufw40t" path="res://Assets/Facility/Ceiling Lamp/ceiling_lamp.tscn" id="1_3qcgb"]
 [ext_resource type="PackedScene" uid="uid://bmkc1qgs776ut" path="res://ui.tscn" id="1_3utnm"]
@@ -21,6 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://cmg030ot4qm52" path="res://Assets/Base/Camera/camera_servo_key_off_01.wav" id="12_ryo1t"]
 [ext_resource type="AudioStream" uid="uid://cfxeygpdmto5g" path="res://Assets/Base/Camera/camera_servo_key_off_02.wav" id="13_kym8x"]
 [ext_resource type="AudioStream" uid="uid://dyca2egl4xcvj" path="res://Assets/Base/Camera/camera_servo_key_off_03.wav" id="14_y1wne"]
+[ext_resource type="PackedScene" uid="uid://dmtei2h0el0pw" path="res://Assets/AMBEA/AMBEA.tscn" id="22_as5w8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nogmr"]
 radius = 128.0
@@ -165,24 +166,23 @@ func unFuck():
 	NavigationServer2D.map_set_cell_size(navMap, 128)
 "
 
-[node name="Node2D" type="Node2D"]
+[node name="World" type="Node2D"]
 
 [node name="UI" parent="." instance=ExtResource("1_3utnm")]
 layer = 4
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Detector" type="Area2D" parent="."]
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
 shape = SubResource("CircleShape2D_nogmr")
 
-[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Detector"]
 visible = false
 scale = Vector2(3, 3)
 texture = ExtResource("3_3cdt8")
 
 [node name="Camera" type="Camera2D" parent="."]
-position = Vector2(128, 128)
 position_smoothing_speed = 8.0
 editor_draw_limits = true
 script = ExtResource("5_ybltu")
@@ -225,6 +225,9 @@ layer_1/z_index = 1
 layer_1/navigation_enabled = false
 layer_1/tile_data = PackedInt32Array(-851968, 4, 65536, -786435, 4, 65536, -851965, 4, 65536, -851962, 4, 65536, -655362, 4, 65536, -720895, 4, 65536, -720892, 4, 65536, -720889, 4, 65536, -524289, 4, 65536, -589822, 4, 65536, -589819, 4, 65536, -589816, 4, 65536, -458746, 4, 65536, -458743, 4, 65536, -327673, 4, 65536, -327670, 4, 65536, -327667, 4, 65536, -458740, 4, 65536, -589813, 4, 65536, -720886, 4, 65536, -458737, 4, 65536, -720883, 4, 65536, -393219, 4, 65536, -262146, 4, 65536, -327679, 4, 65536, -327676, 4, 65536, -917505, 4, 65536, -983038, 4, 65536, -983035, 4, 65536)
 script = SubResource("GDScript_ko4dk")
+
+[node name="AMBEA" parent="TileMap" instance=ExtResource("22_as5w8")]
+position = Vector2(0, -384)
 
 [node name="Darkness" type="DirectionalLight2D" parent="."]
 color = Color(1, 1, 0.909804, 1)

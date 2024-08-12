@@ -100,10 +100,10 @@ transparent_bg = true
 canvas_item_default_texture_filter = 0
 title = "POINT PANEL"
 position = Vector2i(0, 24)
-size = Vector2i(256, 256)
+size = Vector2i(384, 384)
 wrap_controls = true
 transient = true
-min_size = Vector2i(256, 256)
+min_size = Vector2i(384, 384)
 theme = ExtResource("1_omuef")
 script = ExtResource("2_uxglo")
 
@@ -314,11 +314,6 @@ stream = SubResource("AudioStreamRandomizer_qg7go")
 volume_db = -20.0
 max_polyphony = 8
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-autostart = true
-
 [node name="WaneTimer" type="Timer" parent="."]
 wait_time = 4.0
 autostart = true
@@ -328,5 +323,4 @@ wait_time = 0.05
 one_shot = true
 autostart = true
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="TypeTimer" to="." method="_on_type_timer_timeout"]

@@ -10,6 +10,7 @@
 script = ExtResource("1_2s0pg")
 
 [node name="Control" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,12 +20,14 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="SpawnPanel" parent="Control" instance=ExtResource("2_xdxlc")]
-position = Vector2i(16, 32)
+unique_name_in_owner = true
+position = Vector2i(16, 24)
 size = Vector2i(384, 208)
 mouse_passthrough = true
 
 [node name="PointPanel" parent="Control" instance=ExtResource("3_oxc1j")]
-position = Vector2i(865, 36)
+unique_name_in_owner = true
+position = Vector2i(354, 24)
 
 [node name="ReferenceRect" type="ReferenceRect" parent="Control"]
 layout_mode = 1

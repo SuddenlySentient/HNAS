@@ -26,6 +26,9 @@ signal hurt(DMG : int, DMGtype : String)
 	"Bartholomew",
 	]
 var direction : Vector2 = Vector2.DOWN
+@export var pointsOnDeath : int = 5 
+
+
 
 
 func _init():
@@ -78,6 +81,14 @@ func damage(DMG : int, AP : int, dealer : Unit, DMGtype : String, source : Node 
 		dealer.indirectDMG(self, DMGDealt)
 	if HP <= 0 : 
 		dealer.getKill(self)
+		if dealer == self : givePoints(pointsOnDeath * 2, "Self Kill")
+		elif dealer.team == team : 
+			print(team, " VS ", dealer.team)
+			givePoints(pointsOnDeath * 2, "Team Kill")
+		elif dealer.type == type : 
+			@warning_ignore("narrowing_conversion")
+			givePoints(pointsOnDeath * 1.5, "Infighting")
+		else : givePoints(pointsOnDeath, "Kill")
 		die(source.name)
 	
 	if DMGDealt > 0 : 
@@ -225,3 +236,9 @@ func enemiesInRange(areas : Array[Area2D]) :
 		for thing in area.get_overlapping_bodies() :
 			if thing is Unit and isFoe(thing) : return true
 	return false
+
+@onready var UI = $"../../UI"
+
+func givePoints(amount : int, reason : String, period : float = 1) :
+	reason += " : " + name
+	UI.givePoints(amount, reason, period)

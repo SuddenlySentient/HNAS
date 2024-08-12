@@ -108,7 +108,7 @@ func spawnUnit(location : Vector2, unit = unitScenes[selectedUnit - 1]) :
 	#print(team)
 	UI.tileMap.add_child(newUnit)
 	particles(location)
-	print("Spawned : ", newUnit.name)
+	#print("Spawned : ", newUnit.name)
 	return true
 
 @onready var spawnParticles = load("res://Assets/Base/spawnParticles.tscn")

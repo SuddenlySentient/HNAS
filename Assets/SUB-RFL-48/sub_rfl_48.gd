@@ -17,6 +17,7 @@ var speed : int = 200
 @export var acceleration : float = 5
 @export var turnSpeed : float = 6
 @export var preferedSquadSize : int = 4
+@export var pointsOnSplit : int = 10
 
 @export_subgroup("SMG")
 @export var DMG : int = 2
@@ -181,13 +182,14 @@ func leaveSquad() :
 	isLeader = false
 	inSquad = false
 
-func reachable(positionToTest : Vector2) : #finish this
-	var oldNav = nav.target_position
-	nav.target_position = positionToTest
-	nav.get_next_path_position()
-	var value = nav.is_target_reachable()
-	nav.target_position = oldNav
-	return value
+func reachable(_positionToTest : Vector2) : #finish this
+	return true
+	#var oldNav = nav.target_position
+	#nav.target_position = positionToTest
+	#nav.get_next_path_position()
+	#var value = nav.is_target_reachable()
+	#nav.target_position = oldNav
+	#return value
 
 var inSquad : bool = false
 var isLeader : bool = false
@@ -252,6 +254,7 @@ func actionQuery() :
 						for x in preferedSquadSize - 1 :
 							followers[x + 1].joinSquad(secondLeader)
 						print(name, " : split squad")
+						givePoints(pointsOnSplit, "Squad Split")
 
 func move(delta) :
 	

@@ -3701,6 +3701,7 @@ team = "Sanguinist"
 tags = Array[String](["Mechanical", "Angel", "HasBlood", "Greater", "Magic"])
 reflectShots = true
 nameList = Array[StringName]([&"Lady Grace", &"Commander Rosso", &"Lieutenant Scarlet", &"Sir Sangue", &"Ruash Vad", &"Vincent", &"Stranger", &"Mistress Immortali"])
+pointsOnDeath = 15
 maxHP = 32
 ARM = 6
 
@@ -3914,6 +3915,10 @@ max_distance = 2048.0
 
 [node name="healTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="FillCooldown" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
 
 [connection signal="animation_finished" from="VampireSprite" to="." method="_on_vampire_sprite_animation_finished"]
 [connection signal="frame_changed" from="VampireSprite" to="." method="_on_vampire_sprite_frame_changed"]

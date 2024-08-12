@@ -30,6 +30,7 @@ var PillarState = PillarStates.Pillar
 @export var seekOthersDesire : int = 4096
 @export var swarmDesire : int = 2048
 @export var desiredCompany : int = 2
+@export var pointsOnSwarm : int = 3
 @export_subgroup("Punch")
 @export var DMG : int = 5
 @export var AP : int = 1
@@ -37,6 +38,7 @@ var recentSeenCheck : bool = false
 var thingsInVision
 var cAni = "Emerge"
 var avoidenceVelocity : Vector2 = Vector2.ZERO
+
 
 
 func _init() :
@@ -107,6 +109,7 @@ func actionQuery(delta) :
 			if pillarArray[0].PillarState == PillarStates.Pillar and pillarArray[0].recentSeenCheck == false :
 				pillarArray[0].wander()
 	if State == States.Swarm or State == States.Attack :
+		$SwarmCooldown.start()
 		if aggroList.size() > 0 and (aggroList[0] == null or aggroList[0].canBeSeen == false) : aggroList.remove_at(0)
 		if aggroTarget == null : 
 			if aggroList.size() > 0 : 
@@ -220,6 +223,9 @@ func swarm(target : Unit) :
 	if $Swarm.playing == false : $Swarm.play()
 	$Swarm.volume_db = 0
 	aggroTarget = target
+	if State != States.Swarm and $SwarmCooldown.is_stopped() : 
+		$SwarmCooldown.start()
+		givePoints(pointsOnSwarm, "Swarm")
 	State = States.Swarm
 	nav.target_position = aggroTarget.position
 	if PillarState == PillarStates.Pillar : emerge()

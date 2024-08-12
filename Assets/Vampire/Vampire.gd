@@ -9,11 +9,13 @@ var cAni = "Walk"
 const minDeflectPitch : float = 1
 const maxDeflectPitch : float = 3
 const minCombo = 50
-var deflectCombo = 0
+var deflectCombo : int = 0
 var healthRemaining : float = 1
 @export var turnSpeed : float = 3
 @export var bloodTankMax : int = 16
 var bloodTank : int = 0
+@export var deflectPointMult = 1.5
+@export var pointsOnTankFill = 20
 
 @export_subgroup("Prime Sword")
 @export var JabDMG : int = 6
@@ -182,7 +184,8 @@ func _on_deflect_timer_timeout():
 		$ComboCanvas/Label.show()
 		$ComboCanvas/Label/Combo.text = str(deflectCombo)
 		$ComboCanvas/GoAway.start()
-		print("Deflect Combo : ", deflectCombo)
+		@warning_ignore("narrowing_conversion")
+		givePoints(sqrt(deflectCombo * deflectPointMult), "Deflection Combo x" + str(deflectCombo))
 	deflectSound.pitch_scale = minDeflectPitch
 	deflectCombo = 0
 
@@ -244,8 +247,13 @@ func addToTank(amount : int) :
 		true :
 			if bloodTank != bloodTankMax : 
 				$FillTank.play()
+				var oldTank = bloodTank
 				bloodTank += amount
-				if bloodTank > bloodTankMax : bloodTank = bloodTankMax
+				if bloodTank >= bloodTankMax : 
+					bloodTank = bloodTankMax
+					if bloodTank != oldTank and $FillCooldown.is_stopped() : 
+						givePoints(pointsOnTankFill, "Blood Tank Filled")
+						$FillCooldown.start()
 		false :
 			if bloodTank != 0 : 
 				bloodTank += amount

@@ -33,7 +33,8 @@ signal doneTyping()
 signal donePointing()
 var capped = false
 var pointing = false
-
+var typing = false
+var queue = 0
 
 func _init() :
 	await ready
@@ -69,11 +70,19 @@ func givePoints(amount : int, reason : String, period : float = 1) :
 	if multiplier != 1 and sign(amount) == 1 : outputText += "(" + str(originalAmount) + "p x" + str(multiplier) + ")"
 	else : outputText += "\t"
 	outputText += "\t: " + reason + "\n" 
+	
+	if typing : 
+		queue += 1
+		for x in queue : await doneTyping
+		queue -= 1
+	
 	consoleText.visible_characters = consoleText.text.length()
 	consoleText.text += outputText
 	
 	$TypeTimer.start()
+	typing = true
 	await doneTyping
+	typing = false
 	if pointing : await donePointing
 	pointing = true
 	
@@ -84,7 +93,6 @@ func givePoints(amount : int, reason : String, period : float = 1) :
 		while givenPoints < abs(amount) :
 			if capped and sign(amount) == 1 :
 				emit_signal("donePointing")
-				print("Canceled")
 				pointing = false
 				return false
 			await get_tree().create_timer(time).timeout
@@ -168,11 +176,6 @@ func updateCap(newCap : int) :
 		var x = newCap - y - 1
 		digits[x].self_modulate = Color("ffffff")
 	scoreCap = newCap
-
-func _on_timer_timeout() :
-	await givePoints(randi_range(-1000, 500), "Cause I said so", 1)
-	setMultiplier(snappedf(randf_range(0.25, 4), 0.125))
-	$Timer.start()
 
 func _on_type_timer_timeout():
 	if consoleText.visible_characters < consoleText.text.length() :

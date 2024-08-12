@@ -1724,6 +1724,7 @@ team = "Pillar Demon"
 tags = Array[String](["Demon", "Biological", "HasBlood", "Lesser"])
 canBeSeen = false
 maxSpeed = 250
+pointsOnDeath = 2
 maxHP = 8
 ARM = 6
 
@@ -1836,6 +1837,9 @@ max_distance = 2048.0
 [node name="NavTimer" type="Timer" parent="."]
 
 [node name="ScatterTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SwarmCooldown" type="Timer" parent="."]
 one_shot = true
 
 [connection signal="hurt" from="." to="." method="_on_hurt"]
