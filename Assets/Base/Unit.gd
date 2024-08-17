@@ -10,6 +10,7 @@ var aggroList : Array[Unit] = []
 @export var maxSpeed : int= 200
 @export var reflectShots : bool = false
 @onready var marker = load("res://Assets/Base/hit_mark.tscn")
+@warning_ignore("unused_signal")
 signal hurt(DMG : int, DMGtype : String)
 @export var nameList : Array[StringName] = [
 	"Blank",
@@ -114,7 +115,7 @@ func die(_cause : String) :
 	queue_free()
 
 # Tile Nonsense
-@onready var map : TileMap = $".."
+@onready var map : TileMapLayer = $".."
 var lastSeenTile : Dictionary = {}
 var nav : NavigationAgent2D
 
@@ -141,7 +142,7 @@ func getLastSearched(tileCoord : Vector2i):
 		return -1
 
 func getTileNavigable(tileCoord : Vector2i):
-	var data = map.get_cell_tile_data(0, tileCoord)
+	var data = map.get_cell_tile_data(tileCoord)
 	if data == null : return false
 	else : return data.get_custom_data("Navigable")
 
@@ -157,7 +158,7 @@ func isFoe(thing : Unit) :
 func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
 	
 	var myTile = map.local_to_map(global_position)
-	var tilesCoords : Array[Vector2i] = map.get_used_cells(0)
+	var tilesCoords : Array[Vector2i] = map.get_used_cells()
 	var tileValue : Array = []
 	var theOne = Vector2.ZERO
 	

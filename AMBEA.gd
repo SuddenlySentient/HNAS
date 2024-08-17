@@ -13,7 +13,6 @@ Firing = 3
 }
 var State = States.Ready
 var charge = 0
-signal charged()
 
 
 
@@ -109,7 +108,6 @@ func chargingEffects() :
 	var cam = $"../../Camera"
 	var camShakeMult = 64 * (1 - sqrt(clamp(getDistanceTo(cam.global_position), 0, 8192) / 8192))
 	cam.offset = Vector2(randf_range(-1, 1) * (charge * charge) * camShakeMult, randf_range(-1, 1) * (charge * charge) * camShakeMult)
-	print((charge * charge) * camShakeMult)
 	
 	orb.scale = Vector2(lerp(0, 4, charge), lerp(0, 4, charge))
 	orbParticles.amount_ratio = charge

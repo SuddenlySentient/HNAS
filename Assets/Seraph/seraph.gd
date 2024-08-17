@@ -198,7 +198,7 @@ func getSeeingTile():
 	
 	var target = aggroTarget.global_position
 	
-	var tilesCoords : Array[Vector2i] = map.get_used_cells(0)
+	var tilesCoords : Array[Vector2i] = map.get_used_cells()
 	var tileValue : Array = []
 	var theOne = null
 	const maxSearchDistance = 2048

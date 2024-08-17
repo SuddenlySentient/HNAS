@@ -5227,105 +5227,75 @@ radius = 4096.0
 random_pitch = 1.25
 streams_count = 2
 stream_0/stream = ExtResource("1235_8acel")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("1236_bo3xw")
-stream_1/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0bdsx"]
 random_pitch = 1.25
 streams_count = 3
 stream_0/stream = ExtResource("1237_dk6hu")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("1238_c35mc")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("1239_co8af")
-stream_2/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_naba3"]
 random_pitch = 1.1
 streams_count = 3
 stream_0/stream = ExtResource("1240_g3rwy")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("1241_mc6n8")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("1242_iqn7n")
-stream_2/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fhdqj"]
 random_pitch = 1.25
 streams_count = 3
 stream_0/stream = ExtResource("1243_cnm7d")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("1244_sjplg")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("1245_fjk4v")
-stream_2/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hnniq"]
 random_pitch = 1.1
 streams_count = 1
 stream_0/stream = ExtResource("1246_o3cw8")
-stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jyiof"]
 random_pitch = 1.25
 streams_count = 1
 stream_0/stream = ExtResource("1247_u0o2w")
-stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pmut0"]
 random_pitch = 1.25
 streams_count = 4
 stream_0/stream = ExtResource("1248_6f5xo")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("1249_x1hch")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("1250_tmgt8")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("1251_3s7nq")
-stream_3/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_11rva"]
 random_pitch = 1.25
 streams_count = 3
 stream_0/stream = ExtResource("1252_cug77")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("1253_gfd2f")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("1254_4d8hf")
-stream_2/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xripu"]
 random_pitch = 1.25
 streams_count = 4
 stream_0/stream = ExtResource("1255_yn1ss")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("1256_dn5x4")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("1257_8qm6l")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("1258_qqw6k")
-stream_3/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_0et12"]
 random_pitch = 1.25
 streams_count = 3
 stream_0/stream = ExtResource("1259_gij1q")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("1260_tj4yj")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("1261_hlq3c")
-stream_2/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y1d05"]
 random_pitch = 1.25
 streams_count = 3
 stream_0/stream = ExtResource("1259_l6epd")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("1260_4mo4l")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("1261_wqlaw")
-stream_2/weight = 1.0
 
 [node name="Sentry" type="CharacterBody2D"]
 z_index = 1
@@ -5338,7 +5308,7 @@ type = "Sentry"
 team = "Sentry"
 tags = Array[String](["Angel", "Lesser", "Magic"])
 canBeSeen = false
-pointsOnDeath = 6
+pointsOnDeath = 4
 maxHP = 15
 ARM = 4
 

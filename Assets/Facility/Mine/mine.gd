@@ -20,7 +20,9 @@ class_name Mine
 @export var DMG : int = 16
 @export var AP : int = 5
 
+@warning_ignore("unused_signal")
 signal exploded
+@warning_ignore("unused_signal")
 signal steppedOn
 var detonating : bool = false
 var steppedOff : bool = false

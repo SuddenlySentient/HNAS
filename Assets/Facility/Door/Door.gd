@@ -8,7 +8,7 @@ extends Node2D
 @onready var sensor = $Node2D/UnitSensor
 @onready var closedTimer = $CloseTimer
 @onready var lightTimer = $LightTimer
-@onready var map : TileMap = $".."
+@onready var map : TileMapLayer = $".."
 @onready var doorLight = $DoorLight
 @onready var button = $Node2D2/CanvasLayer/Button
 @export var closed = true
@@ -101,7 +101,7 @@ func getIfSideways() :
 	else : push_error("Error! Door at ", myTileCoords, " is placed weird!")
 
 func getTileNavigable(tileCoord : Vector2i):
-	var data = map.get_cell_tile_data(0, tileCoord)
+	var data = map.get_cell_tile_data(tileCoord)
 	if data == null : return false
 	else : return data.get_custom_data("Navigable")
 

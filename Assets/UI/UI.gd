@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 @onready var world = $".."
-@onready var tileMap = $"../TileMap"
+@onready var tileMap = $"../Main"
 @onready var detector = $"../Detector"
 @onready var control = %Control
 @onready var spawnPanel = %SpawnPanel
@@ -28,7 +28,7 @@ func _input(_event) :
 			detectorToMousePos()
 			if detector.get_overlapping_bodies().size() == 0 :
 				var tileToSpawnOn = tileMap.local_to_map(world.get_global_mouse_position())
-				var tileData = tileMap.get_cell_tile_data(0, tileToSpawnOn)
+				var tileData = tileMap.get_cell_tile_data(tileToSpawnOn)
 				if tileData != null and tileData.get_custom_data("Navigable") :
 					spawnPanel.spawnUnit(tileMap.map_to_local(tileToSpawnOn))
 
