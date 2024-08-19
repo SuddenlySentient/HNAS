@@ -51,6 +51,7 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_evgs4")
 acceleration = 75.0
+DMG = 1
 inaccuracy = 10.0
 recoil = 0.125
 type = "SUB-RFL-48"
