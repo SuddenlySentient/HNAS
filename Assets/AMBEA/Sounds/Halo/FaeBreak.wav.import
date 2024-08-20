@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bhxyd7vfr61gr"
-path="res://.godot/imported/FaeBreak.wav-6bf4127716a575502ea1fd399555e532.sample"
+path="res://.godot/imported/FaeBreak.wav-53787cce441d2db0611942eb542fc66f.sample"
 
 [deps]
 
-source_file="res://Assets/AMBEA/Sounds/FaeBreak.wav"
-dest_files=["res://.godot/imported/FaeBreak.wav-6bf4127716a575502ea1fd399555e532.sample"]
+source_file="res://Assets/AMBEA/Sounds/Halo/FaeBreak.wav"
+dest_files=["res://.godot/imported/FaeBreak.wav-53787cce441d2db0611942eb542fc66f.sample"]
 
 [params]
 

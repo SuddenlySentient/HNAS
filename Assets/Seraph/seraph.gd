@@ -176,23 +176,17 @@ func teleport(location, dodgeing = false) :
 	$RayCast16]
 
 func move(delta) :
-	
 	direction = Vector2.ZERO
-	
-	#print(raycast.rotation_degrees, " : ", Vector2.from_angle(raycast.rotation))
-	
 	for raycast in raycasts :
-		
 		if raycast.is_colliding() : 
 			var distance = getDistanceTo(raycast.get_collision_point())
 			var value = (raycast.get_collision_point() - raycast.global_position) * (512 - distance)
 			direction += -value
-	
 	direction = direction.normalized()
 	velocity += direction * maxSpeed * delta
 	#$Sprite2D.global_position = (direction * 128) + global_position
-	
 	move_and_slide()
+	velocity = get_real_velocity()
 
 func getSeeingTile():
 	
@@ -290,7 +284,7 @@ func getNearTile() :
 	if potentialTiles.size() > 0 : return potentialTiles.pick_random()
 	else : return map.local_to_map(global_position)
 
-func adjustDMG(DMGDealt : int, dealer : Unit, _DMGtype : String, _source : Node = null) :
+func adjustDMG(DMGDealt : int, dealer : Unit, DMGtype : String, _source : Node = null) :
 	if dealer != self :
 		aggroList.append(dealer)
 		aggroTarget = dealer
@@ -298,7 +292,7 @@ func adjustDMG(DMGDealt : int, dealer : Unit, _DMGtype : String, _source : Node 
 		heal(DMGDealt)
 		#print("Self DMG, Healed ", DMG, "HP")
 		DMGDealt = 0
-	if stamina >= 1 and DMGDealt > 0 : 
+	if stamina >= 1 and DMGDealt > 0 and DMGtype != "Instant" : 
 		var teleportTarget = map.map_to_local(getNearTile())
 		if aggroTarget != null : 
 			var seeingTile = getSeeingTile()

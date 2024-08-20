@@ -1,6 +1,6 @@
-[gd_scene load_steps=1271 format=3 uid="uid://dmtei2h0el0pw"]
+[gd_scene load_steps=1286 format=3 uid="uid://dmtei2h0el0pw"]
 
-[ext_resource type="Script" path="res://AMBEA.gd" id="1_giu2x"]
+[ext_resource type="Script" path="res://Assets/AMBEA/AMBEA.gd" id="1_giu2x"]
 [ext_resource type="Texture2D" uid="uid://c1gt17vfg7ndg" path="res://Assets/AMBEA/Frames/Hover/Down/0000.png" id="2_75rb1"]
 [ext_resource type="Texture2D" uid="uid://xxdsg2qy8717" path="res://Assets/AMBEA/Frames/Charging/Down/0000.png" id="2_witov"]
 [ext_resource type="Texture2D" uid="uid://dej1vrxdhky3i" path="res://Assets/AMBEA/Frames/Charging/Down/0001.png" id="3_8yymi"]
@@ -1245,14 +1245,23 @@
 [ext_resource type="AudioStream" uid="uid://b3d8sivtevljj" path="res://Assets/AMBEA/Sounds/Peaceful Drone.wav" id="1242_bf185"]
 [ext_resource type="AudioStream" uid="uid://cax4v08xyiaho" path="res://Assets/AMBEA/Sounds/Bluezone_BC0235_synth_texture_002.wav" id="1243_wswm6"]
 [ext_resource type="AudioStream" uid="uid://cndkka1l4hmhn" path="res://Assets/AMBEA/Sounds/ancient_energy_loop_1.wav" id="1244_1t0p1"]
+[ext_resource type="AudioStream" uid="uid://bqedf4ut0vhlp" path="res://Assets/AMBEA/Sounds/Halo/big_metal_hit_01.wav" id="1244_wqhaa"]
+[ext_resource type="AudioStream" uid="uid://b6fukpaj6h0pb" path="res://Assets/AMBEA/Sounds/Halo/big_metal_hit_02.wav" id="1245_2hurr"]
 [ext_resource type="AudioStream" uid="uid://b0tb7k4f2c77a" path="res://Assets/AMBEA/Sounds/anti_grav_tunnel_loop.wav" id="1245_2xidf"]
+[ext_resource type="AudioStream" uid="uid://6usevb46fc2d" path="res://Assets/AMBEA/Sounds/Halo/big_metal_hit_05.wav" id="1246_gdjiw"]
 [ext_resource type="AudioStream" uid="uid://cp2wnc2frqxf1" path="res://Assets/AMBEA/Sounds/burger.wav" id="1247_r10uc"]
+[ext_resource type="AudioStream" uid="uid://dbwiju3tfbdv6" path="res://Assets/AMBEA/Sounds/Halo/FaeCastA.wav" id="1247_yknsa"]
+[ext_resource type="AudioStream" uid="uid://ddfx8malmmllp" path="res://Assets/AMBEA/Sounds/Halo/FaeCastB.wav" id="1248_166qp"]
 [ext_resource type="AudioStream" uid="uid://dk4im4ne8gg48" path="res://Assets/AMBEA/Sounds/ElectricityContinuous3.wav" id="1248_l7240"]
 [ext_resource type="AudioStream" uid="uid://m5u1fmikh8ih" path="res://Assets/AMBEA/Sounds/electric_buzzing_2_loop.wav" id="1249_spik2"]
+[ext_resource type="AudioStream" uid="uid://dfljpo3u573fm" path="res://Assets/AMBEA/Sounds/Halo/FaeShot.wav" id="1249_u1n7c"]
 [ext_resource type="AudioStream" uid="uid://b82384dhmewwa" path="res://Assets/AMBEA/Sounds/sprung_buzzing_loop.wav" id="1250_83i0i"]
+[ext_resource type="AudioStream" uid="uid://6jhy6sldow50" path="res://Assets/AMBEA/Sounds/Halo/FaeUnbreak.wav" id="1250_hac8s"]
 [ext_resource type="AudioStream" uid="uid://bbkigmw44i81h" path="res://Assets/AMBEA/Sounds/RageHum.wav" id="1251_nnljj"]
+[ext_resource type="AudioStream" uid="uid://cl466wi6fq5lo" path="res://Assets/AMBEA/Sounds/Halo/physx_cutlery_scrape_01.wav" id="1251_ssd0o"]
 [ext_resource type="AudioStream" uid="uid://cy2f8xkypr7id" path="res://Assets/AMBEA/Sounds/radio_static_01.wav" id="1252_p6nin"]
 [ext_resource type="AudioStream" uid="uid://bhduesfsy1dd5" path="res://Assets/AMBEA/Sounds/laserfield_loop.wav" id="1253_66r8n"]
+[ext_resource type="Texture2D" uid="uid://hhxch26uhqyu" path="res://icon.svg" id="1253_u76op"]
 [ext_resource type="AudioStream" uid="uid://dtoboxk8c4qua" path="res://Assets/AMBEA/Sounds/angelic_choirs_01.wav" id="1254_rivjj"]
 [ext_resource type="AudioStream" uid="uid://b3i01g5c3ml6r" path="res://Assets/AMBEA/Sounds/angelic_choirs_02.wav" id="1255_wkrnx"]
 [ext_resource type="AudioStream" uid="uid://vgnatcduak82" path="res://Assets/AMBEA/Sounds/angelic_choirs_03.wav" id="1256_xt34d"]
@@ -5224,6 +5233,43 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_xgvo5"]
 radius = 160.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jycnl"]
+random_pitch = 1.25
+streams_count = 3
+stream_0/stream = ExtResource("1244_wqhaa")
+stream_1/stream = ExtResource("1245_2hurr")
+stream_2/stream = ExtResource("1246_gdjiw")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ortbn"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("1247_yknsa")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rquar"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("1248_166qp")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_j0ot0"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("1249_u1n7c")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qxopq"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("1250_hac8s")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tfkma"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("1251_ssd0o")
+
+[sub_resource type="Curve" id="Curve_qw01b"]
+bake_resolution = 2
+_data = [Vector2(0, 0.4), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="Curve" id="Curve_4hacw"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -5274,14 +5320,8 @@ alpha_curve = SubResource("CurveTexture_774c3")
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_j727y"]
 streams_count = 3
 stream_0/stream = ExtResource("1254_rivjj")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("1255_wkrnx")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("1256_xt34d")
-stream_2/weight = 1.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w1u5c"]
-size = Vector2(64, 256)
 
 [node name="AMBEA" type="CharacterBody2D"]
 z_index = 1
@@ -5290,21 +5330,23 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_giu2x")
 type = "AMBEA"
-tags = Array[String](["Angel", "Magic", "Lesser", "Hover", "Mechanical"])
+tags = Array[String](["Angel", "Magic", "Lesser", "Hover"])
 maxSpeed = 100
 pointsOnDeath = 40
-maxHP = 32
+maxHP = 48
 ARM = 12
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-z_index = 1
 y_sort_enabled = true
+position = Vector2(0, -64)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_e7uv6")
 animation = &"FireDown"
+frame = 22
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
+position = Vector2(0, -64)
 shape = SubResource("CircleShape2D_xgvo5")
 
 [node name="Hover" type="AudioStreamPlayer2D" parent="."]
@@ -5318,7 +5360,79 @@ stream = ExtResource("1243_wswm6")
 max_distance = 2048.0
 attenuation = 2.0
 
-[node name="Orb" type="PointLight2D" parent="."]
+[node name="HaloSounds" type="Node2D" parent="."]
+
+[node name="MetalSlam" type="AudioStreamPlayer2D" parent="HaloSounds"]
+stream = SubResource("AudioStreamRandomizer_jycnl")
+max_distance = 2048.0
+attenuation = 2.0
+max_polyphony = 2
+
+[node name="Fae Cast A" type="AudioStreamPlayer2D" parent="HaloSounds"]
+stream = SubResource("AudioStreamRandomizer_ortbn")
+max_distance = 2048.0
+attenuation = 2.0
+max_polyphony = 2
+
+[node name="Fae Cast B" type="AudioStreamPlayer2D" parent="HaloSounds"]
+stream = SubResource("AudioStreamRandomizer_rquar")
+max_distance = 2048.0
+attenuation = 2.0
+max_polyphony = 2
+
+[node name="Fae Shot" type="AudioStreamPlayer2D" parent="HaloSounds"]
+stream = SubResource("AudioStreamRandomizer_j0ot0")
+max_distance = 2048.0
+attenuation = 2.0
+max_polyphony = 2
+
+[node name="Fae Unbreak" type="AudioStreamPlayer2D" parent="HaloSounds"]
+stream = SubResource("AudioStreamRandomizer_qxopq")
+max_distance = 2048.0
+attenuation = 2.0
+max_polyphony = 2
+
+[node name="Scrape" type="AudioStreamPlayer2D" parent="HaloSounds"]
+stream = SubResource("AudioStreamRandomizer_tfkma")
+volume_db = -5.0
+pitch_scale = 1.5
+max_distance = 2048.0
+attenuation = 3.0
+
+[node name="Rotate" type="Node2D" parent="."]
+position = Vector2(0, -64)
+
+[node name="Line" type="Line2D" parent="Rotate"]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, 192)
+points = PackedVector2Array(0, 0, 0, 2048)
+width = 0.0
+width_curve = SubResource("Curve_qw01b")
+default_color = Color(0, 0, 0, 1)
+texture_mode = 1
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="BeamA" type="AudioStreamPlayer2D" parent="Rotate"]
+position = Vector2(0, 192)
+scale = Vector2(1e-05, 1e-05)
+stream = ExtResource("1257_v25l6")
+volume_db = 10.0
+max_distance = 4048.0
+attenuation = 2.0
+
+[node name="BeamRay" type="RayCast2D" parent="Rotate"]
+position = Vector2(0, 192)
+target_position = Vector2(0, 2048)
+collision_mask = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Rotate/BeamRay"]
+z_index = 16
+position = Vector2(0, 2048)
+texture = ExtResource("1253_u76op")
+
+[node name="Orb" type="PointLight2D" parent="Rotate"]
 z_index = 16
 z_as_relative = false
 scale = Vector2(1e-05, 1e-05)
@@ -5327,7 +5441,7 @@ energy = 2.0
 blend_mode = 1
 texture = ExtResource("194_lp3ut")
 
-[node name="OrbLight" type="PointLight2D" parent="Orb"]
+[node name="OrbLight" type="PointLight2D" parent="Rotate/Orb"]
 z_index = 16
 z_as_relative = false
 color = Color(0.0625, 0.25, 0.25, 1)
@@ -5336,7 +5450,7 @@ shadow_enabled = true
 texture = ExtResource("194_lp3ut")
 texture_scale = 16.0
 
-[node name="OrbParticles" type="GPUParticles2D" parent="Orb"]
+[node name="OrbParticles" type="GPUParticles2D" parent="Rotate/Orb"]
 modulate = Color(2, 2, 2, 1)
 z_index = 16
 z_as_relative = false
@@ -5348,104 +5462,79 @@ lifetime = 6.0
 preprocess = 2.0
 randomness = 1.0
 
-[node name="ELoop" type="AudioStreamPlayer2D" parent="Orb"]
+[node name="ChargeTimer" type="Timer" parent="Rotate/Orb"]
+wait_time = 15.0
+one_shot = true
+
+[node name="ELoop" type="AudioStreamPlayer2D" parent="Rotate/Orb"]
 position = Vector2(0, -32)
 scale = Vector2(0.25, 0.25)
 stream = ExtResource("1244_1t0p1")
 max_distance = 2048.0
 attenuation = 2.0
 
-[node name="TunnelLoop" type="AudioStreamPlayer2D" parent="Orb"]
+[node name="TunnelLoop" type="AudioStreamPlayer2D" parent="Rotate/Orb"]
 position = Vector2(0, -32)
 scale = Vector2(0.25, 0.25)
 stream = ExtResource("1245_2xidf")
 max_distance = 2048.0
 attenuation = 2.0
 
-[node name="BurgerLoop" type="AudioStreamPlayer2D" parent="Orb"]
+[node name="BurgerLoop" type="AudioStreamPlayer2D" parent="Rotate/Orb"]
 scale = Vector2(0.25, 0.25)
 stream = ExtResource("1247_r10uc")
 max_distance = 2048.0
 attenuation = 2.0
 
-[node name="ElectricLoopA" type="AudioStreamPlayer2D" parent="Orb"]
+[node name="ElectricLoopA" type="AudioStreamPlayer2D" parent="Rotate/Orb"]
 position = Vector2(0, -32)
 scale = Vector2(0.25, 0.25)
 stream = ExtResource("1248_l7240")
 max_distance = 2048.0
 attenuation = 2.0
 
-[node name="ElectricLoopB" type="AudioStreamPlayer2D" parent="Orb"]
+[node name="ElectricLoopB" type="AudioStreamPlayer2D" parent="Rotate/Orb"]
 position = Vector2(0, -32)
 scale = Vector2(0.25, 0.25)
 stream = ExtResource("1249_spik2")
 max_distance = 2048.0
 attenuation = 2.0
 
-[node name="ElectricLoopC" type="AudioStreamPlayer2D" parent="Orb"]
+[node name="ElectricLoopC" type="AudioStreamPlayer2D" parent="Rotate/Orb"]
 position = Vector2(0, -32)
 scale = Vector2(0.25, 0.25)
 stream = ExtResource("1250_83i0i")
 max_distance = 2048.0
 attenuation = 2.0
 
-[node name="RageLoop" type="AudioStreamPlayer2D" parent="Orb"]
+[node name="RageLoop" type="AudioStreamPlayer2D" parent="Rotate/Orb"]
 position = Vector2(0, -32)
 scale = Vector2(0.25, 0.25)
 stream = ExtResource("1251_nnljj")
 max_distance = 2048.0
 attenuation = 2.0
 
-[node name="Static" type="AudioStreamPlayer2D" parent="Orb"]
+[node name="Static" type="AudioStreamPlayer2D" parent="Rotate/Orb"]
 position = Vector2(0, -32)
 scale = Vector2(0.25, 0.25)
 stream = ExtResource("1252_p6nin")
 max_distance = 2048.0
 attenuation = 2.0
 
-[node name="Lasers" type="AudioStreamPlayer2D" parent="Orb"]
+[node name="Lasers" type="AudioStreamPlayer2D" parent="Rotate/Orb"]
 position = Vector2(0, -32)
 scale = Vector2(0.25, 0.25)
 stream = ExtResource("1253_66r8n")
 max_distance = 2048.0
 attenuation = 2.0
 
-[node name="Choir" type="AudioStreamPlayer2D" parent="Orb"]
+[node name="Choir" type="AudioStreamPlayer2D" parent="Rotate/Orb"]
 position = Vector2(0, -32)
 scale = Vector2(0.25, 0.25)
 stream = SubResource("AudioStreamRandomizer_j727y")
 max_distance = 2048.0
 attenuation = 2.0
 max_polyphony = 64
-
-[node name="ChargeTimer" type="Timer" parent="Orb"]
-wait_time = 15.0
-one_shot = true
-
-[node name="BeamRay" type="RayCast2D" parent="."]
-position = Vector2(0, 192)
-target_position = Vector2(0, 2048)
-
-[node name="Beam" type="ShapeCast2D" parent="."]
-z_index = 16
-position = Vector2(0, 192)
-scale = Vector2(1e-05, 1e-05)
-enabled = false
-shape = SubResource("RectangleShape2D_w1u5c")
-target_position = Vector2(0, 2048)
-
-[node name="Line2D" type="Line2D" parent="Beam"]
-points = PackedVector2Array(0, 0, 0, 2048)
-width = 128.0
-default_color = Color(0, 0, 0, 1)
-texture_mode = 1
-begin_cap_mode = 2
-end_cap_mode = 1
-
-[node name="BeamA" type="AudioStreamPlayer2D" parent="Beam"]
-stream = ExtResource("1257_v25l6")
-max_distance = 2048.0
-attenuation = 2.0
 
 [node name="RayCast" type="RayCast2D" parent="."]
 visible = false
@@ -5541,3 +5630,5 @@ visible = false
 z_index = 64
 rotation = 2.74944
 target_position = Vector2(0, 512)
+
+[connection signal="frame_changed" from="Sprite" to="." method="_on_sprite_frame_changed"]

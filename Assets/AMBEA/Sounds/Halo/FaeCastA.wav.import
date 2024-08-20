@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dbwiju3tfbdv6"
-path="res://.godot/imported/FaeCastA.wav-24f3299e9feb593bbd5d6983477bfa14.sample"
+path="res://.godot/imported/FaeCastA.wav-73180eebe721069a020d20efde0b5979.sample"
 
 [deps]
 
-source_file="res://Assets/AMBEA/Sounds/FaeCastA.wav"
-dest_files=["res://.godot/imported/FaeCastA.wav-24f3299e9feb593bbd5d6983477bfa14.sample"]
+source_file="res://Assets/AMBEA/Sounds/Halo/FaeCastA.wav"
+dest_files=["res://.godot/imported/FaeCastA.wav-73180eebe721069a020d20efde0b5979.sample"]
 
 [params]
 

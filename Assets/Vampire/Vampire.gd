@@ -103,6 +103,7 @@ func _physics_process(delta) :
 		sprite.speed_scale = extraSpeed
 	
 	move_and_slide()
+	velocity = get_real_velocity()
 
 func _init() :
 	await ready
