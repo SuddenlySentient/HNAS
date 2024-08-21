@@ -85,9 +85,10 @@ func _physics_process(delta) :
 			actionQuery(delta)
 	
 	move_and_slide()
+	velocity = get_real_velocity()
 
 func actionQuery(delta) :
-	ARM = 4
+	ARM = 2
 	reflectShots = false
 	nav.avoidance_enabled = false
 	$NavigationObstacle2D.avoidance_enabled = true
@@ -221,7 +222,7 @@ func wander() :
 func swarm(target : Unit) :
 	#print("Swarming")
 	if $Swarm.playing == false : $Swarm.play()
-	$Swarm.volume_db = 0
+	$Swarm.volume_db = -10
 	aggroTarget = target
 	if State != States.Swarm and $SwarmCooldown.is_stopped() : 
 		$SwarmCooldown.start()

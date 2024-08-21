@@ -9,23 +9,67 @@ enum States {
 Ready = 0,
 Wander = 1,
 Found = 2,
-Firing = 3
+Firing = 3,
+Napalm = 4
 }
 var State = States.Ready
 var charge = 0
 
 
 
-func _ready() :
-	openHalo()
+func _init():
+	await ready
+	HP = maxHP
+	name = getName()
+	vision = $Rotate/Vision
 
 func _physics_process(delta):
+	
+	dealAggro()
+	
 	move(delta)
 	$Rotate.rotation = direction.angle() - (PI/2)
+	
 	if $Rotate/BeamRay.is_colliding() :
 		$Rotate/BeamRay/Sprite2D.global_position = $Rotate/BeamRay.get_collision_point()
-	if State == States.Ready :
-		fireAt(global_position + Vector2(randf_range(-0.5, 0.5), randf_range(-0.5, 0.5)).normalized())
+	
+	match State :
+		States.Found :
+			if $Rotate/Flames/Cooldown.is_stopped() and enemiesInRange([$Rotate/Flames/FlameArea]) : 
+				napalm()
+			elif global_position.distance_to(aggroTarget.position) <= 1792 and global_position.distance_to(aggroTarget.position) >= 512 :
+				if cAni == "Hover" : 
+					openHalo()
+				elif cAni == "HaloHover" :
+					fireBeamAt(global_position + Vector2(randf_range(-0.5, 0.5), randf_range(-0.5, 0.5)).normalized())
+		States.Wander :
+			if cAni == "HaloHover" :
+				closeHalo()
+
+func dealAggro() :
+	
+	var recentVision = checkVision()
+	
+	for thing in recentVision :
+		if thing is Unit :
+			if isFoe(thing) : aggroList.append(thing)
+	
+	var newAggroList : Array[Unit] = []
+	for thing in aggroList :
+		if thing != null and thing.canBeSeen and newAggroList.has(thing) == false : newAggroList.append(thing)
+	aggroList = newAggroList
+	
+	if aggroList.size() > 0 : 
+		aggroTarget = aggroList[0]
+		match State :
+			States.Ready, States.Wander : State = States.Found
+	else : 
+		aggroTarget = null
+		if State == States.Found or State == States.Ready : State = States.Wander
+
+func adjustDMG(DMGDealt : int, dealer, _DMGtype : String, _source : Node = null) :
+	if dealer != null and dealer is Unit : aggroList.append(dealer)
+	return DMGDealt
 
 func _process(_delta):
 	
@@ -33,7 +77,7 @@ func _process(_delta):
 	var wax
 	if cAni.contains("Hover") : 
 		var velocityLength = clamp(velocity.length(), 0, 1)
-		$Hover.pitch_scale = lerp(1.0, 1.5, velocityLength)
+		$Hover.pitch_scale = lerp(1.0, 1.5, velocityLength / 64)
 		var spriteComp = ($Sprite.frame + $Sprite.frame_progress) / 24
 		wax = lerp(0.0, 4.0, spriteComp)
 	else : 
@@ -97,18 +141,66 @@ func _on_sprite_frame_changed() -> void :
 				47 : $HaloSounds/MetalSlam.play()
 
 func openHalo() :
-	if cAni != "Hover" : return false
-	print("Opening Halo")
 	cAni = "HaloOpen"
+	sprite.speed_scale = 1
 	await sprite.animation_finished
-	print("Done Opening Halo")
+	ARM = 20
 	cAni = "HaloHover"
 
-func fireAt(location : Vector2) :
+func closeHalo() :
+	cAni = "HaloOpen"
+	sprite.speed_scale = -1
+	await sprite.animation_finished
+	sprite.speed_scale = 1
+	ARM = 8
+	cAni = "Hover"
+
+var burn = load("res://Assets/Base/Effects/Burning.tscn")
+
+@export var fireLVL : int = 16
+
+func napalm() :
+	State = States.Napalm
+	#print("Napalm")
+	var fired = false
+	#var directionToTarget = global_position.direction_to(aggroTarget.global_position)
+	var flameArea = $Rotate/Flames/FlameArea
+	$Rotate/Flames/FireTime.start()
+	$Rotate/Flames/CanvasLayer/FireParticles.restart()
+	while $Rotate/Flames/FireTime.is_stopped() == false :
+		#var delta = get_physics_process_delta_time()
+		var time = $Rotate/Flames/FireTime.time_left / $Rotate/Flames/FireTime.wait_time
+		
+		if $Rotate/Flames/Flames.playing == false : $Rotate/Flames/Flames.play()
+		$Rotate/Flames/Flames.volume_db = lerpf(-25, 5, clamp(sin(sqrt(time) * PI) , 0, 1))
+		$Rotate/Flames/Flames.pitch_scale = lerpf(1, 0.75, clamp(sin(sqrt(time) * PI) , 0, 0.5) * 2)
+		
+		$Rotate/Flames/CanvasLayer/FireParticles.speed_scale = clamp(sin(sqrt(time) * PI) * 3, 1, 3)
+		$Rotate/Flames/CanvasLayer/FireParticles.global_position = $Rotate/Flames.global_position
+		$Rotate/Flames/CanvasLayer/FireParticles.global_rotation = $Rotate.global_rotation
+		$Rotate/Flames/CanvasLayer/FireParticles.amount_ratio = clamp(sin(sqrt(time) * PI) , 0, 1)
+		if $Rotate/Flames/CanvasLayer/FireParticles.amount_ratio <= 0.25 : 
+			$Rotate/Flames/CanvasLayer/FireParticles.amount_ratio = 0
+		else :
+			if fired == false :
+				$Rotate/Flames/Flamethrower.play()
+				fired = true
+			for thing in flameArea.get_overlapping_bodies() :
+				if thing is Unit and thing != self :
+					var newBurn : Effect = burn.instantiate()
+					newBurn.apply(self, thing, fireLVL)
+		#if aggroTarget != null : directionToTarget = global_position.direction_to(aggroTarget.global_position)
+		#direction.move_toward(directionToTarget, delta)
+		await get_tree().physics_frame
+	#print("Done")
+	State = States.Ready
+	$Rotate/Flames/Flames.stop()
+	$Rotate/Flames/Cooldown.start()
+
+func fireBeamAt(location : Vector2) :
 	if cAni.contains("Halo") == false : 
 		if cAni == "Hover" : await openHalo()
 		else : return false
-	print("Start")
 	State = States.Firing
 	direction = global_position.direction_to(location)
 	cAni = "Prepare"
@@ -165,7 +257,6 @@ func fireAt(location : Vector2) :
 	await sprite.animation_finished
 	cAni = "HaloHover"
 	State = States.Ready
-	print("Done")
 
 @onready var Eloop = $Rotate/Orb/ELoop
 @onready var TunnelLoop = $Rotate/Orb/TunnelLoop
@@ -217,11 +308,11 @@ func chargingEffects() :
 
 var damagedUnits : Array[Unit] = []
 @export var beamDmg : int = 64
-@export var beamShake : int = 4
+@export var beamShake : int = 2
 
 func hitBeam() :
 	if $Rotate/BeamRay.is_colliding() :
-		$Rotate/BeamA.pitch_scale = lerpf(0.25, 1.5, charge)
+		$Rotate/BeamA.pitch_scale = lerpf(1.25, 0.5, charge)
 		var hit = $Rotate/BeamRay.get_collider()
 		var hitLocation = $Rotate/BeamRay.get_collision_point()
 		$Rotate/BeamA.global_position = hitLocation
@@ -256,6 +347,23 @@ func hitBeam() :
 
 func move(delta) :
 	
+	var mult = 2.0
+	if cAni == "Hover" : mult = 4.0
+	
+	match State :
+		States.Found :
+			var newDirection = global_position.direction_to(aggroTarget.global_position)
+			direction = direction.move_toward(newDirection, delta).normalized()
+			
+			if global_position.distance_to(aggroTarget.position) <= 512 :
+				velocity += -direction * maxSpeed * delta * mult
+			elif global_position.distance_to(aggroTarget.position) >= 1536 :
+				velocity += direction * maxSpeed * delta * mult
+		States.Wander :
+			var randVec = Vector2.from_angle(randf_range(0, 359))
+			direction = direction.move_toward(randVec, delta / mult).normalized()
+			velocity += direction * maxSpeed * delta * mult / 4.0
+	
 	var swayDirection = Vector2.ZERO
 	for raycast in raycasts :
 		if raycast.is_colliding() : 
@@ -263,6 +371,11 @@ func move(delta) :
 			var value = (raycast.get_collision_point() - raycast.global_position) * (512 - distance)
 			swayDirection += -value
 	swayDirection = swayDirection.normalized()
+	
+	if State == States.Wander :
+		direction = direction.move_toward(swayDirection, delta).normalized()
+	#print(direction)
+	
 	velocity = lerp(velocity, Vector2.ZERO, delta)
 	velocity += swayDirection * maxSpeed * delta
 	move_and_slide()

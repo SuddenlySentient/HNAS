@@ -88,6 +88,7 @@ func _physics_process(delta) :
 	flashlight.rotation = direction.angle() - PI/2
 	
 	move_and_slide()
+	velocity = get_real_velocity()
 	
 	if sprite.speed_scale != 0 and sprite.is_playing() == false :
 		sprite.play()

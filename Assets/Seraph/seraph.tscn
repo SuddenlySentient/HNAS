@@ -139,44 +139,32 @@ radius = 8192.0
 playback_mode = 1
 streams_count = 2
 stream_0/stream = ExtResource("19_y320f")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("20_7ohao")
-stream_1/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_41tj3"]
 streams_count = 3
 stream_0/stream = ExtResource("19_w07jj")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("20_et37m")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("21_hhpn6")
-stream_2/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_j5fq2"]
 random_pitch = 1.25
 streams_count = 1
 stream_0/stream = ExtResource("27_akueb")
-stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_x10cv"]
 random_pitch = 1.5
 streams_count = 2
 stream_0/stream = ExtResource("28_252sd")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("29_ij0f6")
-stream_1/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yt5w5"]
 random_pitch = 1.25
 streams_count = 4
 stream_0/stream = ExtResource("30_6x5gu")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("31_ybh2h")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("32_17bbr")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("33_83ggn")
-stream_3/weight = 1.0
 
 [node name="Seraph" type="CharacterBody2D"]
 z_index = 1

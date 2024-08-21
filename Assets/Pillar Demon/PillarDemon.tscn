@@ -1665,51 +1665,38 @@ polygon = PackedVector2Array(20, -80, -20, -80, -20, 16, 20, 16)
 random_pitch = 1.25
 streams_count = 4
 stream_0/stream = ExtResource("130_4earj")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("131_dt56u")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("132_itnqt")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("133_qqlps")
-stream_3/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rn50q"]
 random_pitch = 1.25
 streams_count = 1
 stream_0/stream = ExtResource("134_8hau4")
-stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8h066"]
 random_pitch = 1.25
 streams_count = 1
 stream_0/stream = ExtResource("134_xe70q")
-stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uk5sp"]
 streams_count = 5
 stream_0/stream = ExtResource("135_70bkd")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("136_i3h0e")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("137_sxe23")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("138_88txy")
-stream_3/weight = 1.0
 stream_4/stream = ExtResource("139_xuhut")
-stream_4/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5qntu"]
 random_pitch = 1.1
 random_volume_offset_db = 2.5
 streams_count = 1
 stream_0/stream = ExtResource("237_e3bsr")
-stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3uqka"]
 random_pitch = 1.5
 streams_count = 1
 stream_0/stream = ExtResource("391_2u5fi")
-stream_0/weight = 1.0
 
 [node name="PillarDemon" type="CharacterBody2D"]
 z_index = 1
@@ -1780,10 +1767,12 @@ debug_color = Color(0.6, 0.239216, 0.419608, 0.25098)
 path_desired_distance = 64.0
 target_desired_distance = 64.0
 path_max_distance = 64.0
+path_postprocessing = 1
 radius = 128.0
 neighbor_distance = 256.0
-max_neighbors = 1
+max_neighbors = 2
 time_horizon_agents = 0.0
+time_horizon_obstacles = 1.0
 max_speed = 300.0
 avoidance_priority = 0.0
 debug_use_custom = true
@@ -1829,6 +1818,7 @@ max_distance = 2048.0
 [node name="Swarm" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("238_grsr5")
 max_distance = 2048.0
+attenuation = 2.0
 
 [node name="Punch" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_3uqka")

@@ -187,7 +187,7 @@ tile_map_data = PackedByteArray("AAD/////AAAAAAAAAAD//wAAAAAAAAAAAAD+//7/AAAAAAA
 tile_set = SubResource("TileSet_0ufni")
 
 [node name="AMBEA" parent="Main" instance=ExtResource("22_as5w8")]
-position = Vector2(-2048, 0)
+position = Vector2(512, 2048)
 
 [node name="Device" type="TileMapLayer" parent="."]
 y_sort_enabled = true

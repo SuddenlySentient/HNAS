@@ -28,7 +28,8 @@ signal hurt(DMG : int, DMGtype : String)
 	]
 var direction : Vector2 = Vector2.DOWN
 @export var pointsOnDeath : int = 5 
-
+var effects : Array[Effect] = [] 
+var dead = false
 
 
 
@@ -59,13 +60,13 @@ func checkVision(ignoreHiding : bool = false):
 			else : seen.append(result.collider)
 	return seen
 
-# HP, ARM, and stuff related to it
-#@export_group("Stats")
-@export_range(1, 100, 1, "or_greater") var maxHP : int = 1
+@export_range(1, 256, 1, "or_greater") var maxHP : int = 1
 var HP : int = maxHP
-@export_range(1, 100, 1, "or_greater") var ARM : int = 1
+@export_range(1, 256, 1, "or_greater") var ARM : int = 1
 
-func damage(DMG : int, AP : int, dealer : Unit, DMGtype : String, source : Node = null) :
+func damage(DMG : int, AP : int, dealer, DMGtype : String, source : Node = null) :
+	
+	if dead : return 0
 	
 	var reduction = clampf( float(AP) / float(ARM), 0, 1)
 	var DMGDealt = DMG * reduction
@@ -78,15 +79,14 @@ func damage(DMG : int, AP : int, dealer : Unit, DMGtype : String, source : Node 
 	DMGDealt = adjustDMG(DMGDealt, dealer, DMGtype, source)
 	
 	HP -= DMGDealt
-	if source != dealer :
+	if source != dealer and dealer != null :
 		dealer.indirectDMG(self, DMGDealt)
 	if HP <= 0 : 
-		dealer.getKill(self)
+		if dealer != null : dealer.getKill(self)
 		if dealer == self : givePoints(pointsOnDeath * 2, "Self Kill")
-		elif dealer.team == team : 
-			print(team, " VS ", dealer.team)
+		elif dealer != null and isFoe(dealer) == false : 
 			givePoints(pointsOnDeath * 2, "Team Kill")
-		elif dealer.type == type : 
+		elif dealer.type == type and dealer != null : 
 			@warning_ignore("narrowing_conversion")
 			givePoints(pointsOnDeath * 1.5, "Infighting")
 		else : givePoints(pointsOnDeath, "Kill")
@@ -100,7 +100,7 @@ func damage(DMG : int, AP : int, dealer : Unit, DMGtype : String, source : Node 
 	elif DMGDealt == 0 : hitmarker("0", 1, Color.from_hsv(0.6, 0.8, 1, 1))
 	return DMGDealt
 
-func adjustDMG(DMGDealt : int, _dealer : Unit, _DMGtype : String, _source : Node = null) :
+func adjustDMG(DMGDealt : int, _dealer, _DMGtype : String, _source : Node = null) :
 	return DMGDealt
 
 func heal(amount : int) :
@@ -112,6 +112,7 @@ func heal(amount : int) :
 		hitmarker(str(amount), markSize, Color.from_hsv(0.3, 0.8, 1, 1))
 
 func die(_cause : String) :
+	dead = true
 	queue_free()
 
 # Tile Nonsense
@@ -153,7 +154,14 @@ func getTileValue(tileCoord : Vector2i, searchValue : float = -1, distanceValue 
 	return (searched * searchValue) + (distance * distanceValue)
 
 func isFoe(thing : Unit) :
-	return thing != self and (thing.team != team or team == "Unalligned")
+	if thing != self :
+		if thing.team != team : 
+			#print(thing.team, " VS ", team)
+			return true
+		elif team == "Unalligned" : 
+			#print(name)
+			return true
+	return false
 
 func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
 	
@@ -235,7 +243,8 @@ func canSeeTarget(testPosition : Vector2 = global_position, targPosition : Vecto
 func enemiesInRange(areas : Array[Area2D]) :
 	for area in areas :
 		for thing in area.get_overlapping_bodies() :
-			if thing is Unit and isFoe(thing) : return true
+			if thing is Unit and isFoe(thing) : 
+				return true
 	return false
 
 @onready var UI = $"../../UI"

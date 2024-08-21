@@ -1,0 +1,109 @@
+[gd_scene load_steps=15 format=3 uid="uid://7138oun53if5"]
+
+[ext_resource type="Script" path="res://Assets/Base/Effects/Burning.gd" id="1_1xmg2"]
+[ext_resource type="AudioStream" uid="uid://cw4p72ekoh37s" path="res://Assets/Seraph/Sounds/FireStart.wav" id="2_r0yvh"]
+[ext_resource type="AudioStream" uid="uid://bb6od85n0qfpl" path="res://Assets/Seraph/Sounds/FireBig.wav" id="3_kcox0"]
+[ext_resource type="AudioStream" uid="uid://dfkgb3h48rltw" path="res://Assets/Seraph/Sounds/FireSmall.wav" id="4_8kijg"]
+
+[sub_resource type="Gradient" id="Gradient_g6mvt"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.5, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_g3hum"]
+gradient = SubResource("Gradient_g6mvt")
+
+[sub_resource type="Gradient" id="Gradient_8qugk"]
+offsets = PackedFloat32Array(0, 0.5, 0.996416)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.941176, 0.878431, 1, 0.25098, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_habl6"]
+gradient = SubResource("Gradient_8qugk")
+
+[sub_resource type="Curve" id="Curve_6va6x"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_iosi8"]
+curve = SubResource("Curve_6va6x")
+
+[sub_resource type="Curve" id="Curve_dsruj"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_a81ji"]
+curve = SubResource("Curve_dsruj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8brlu"]
+lifetime_randomness = 0.25
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 128.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+orbit_velocity_min = -0.25
+orbit_velocity_max = 0.25
+orbit_velocity_curve = SubResource("CurveTexture_iosi8")
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 256.0
+gravity = Vector3(0, -512, 0)
+scale_min = 2.0
+scale_max = 8.0
+scale_over_velocity_max = 256.0
+scale_over_velocity_curve = SubResource("CurveTexture_a81ji")
+color_ramp = SubResource("GradientTexture1D_habl6")
+color_initial_ramp = SubResource("GradientTexture1D_g3hum")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+collision_use_scale = true
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_20qum"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("2_r0yvh")
+
+[node name="Burning" type="Node"]
+script = ExtResource("1_1xmg2")
+type = "Burning"
+duration = 2.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+follow_viewport_enabled = true
+
+[node name="FireParticles" type="GPUParticles2D" parent="CanvasLayer"]
+modulate = Color(1.5, 1.5, 1.5, 1)
+position = Vector2(0, 32)
+amount = 256
+process_material = SubResource("ParticleProcessMaterial_8brlu")
+speed_scale = 1.5
+fixed_fps = 60
+trail_enabled = true
+trail_lifetime = 0.1
+trail_sections = 2
+trail_section_subdivisions = 1
+
+[node name="StartBurning" type="AudioStreamPlayer2D" parent="CanvasLayer/FireParticles"]
+stream = SubResource("AudioStreamRandomizer_20qum")
+max_distance = 2048.0
+attenuation = 2.0
+
+[node name="SmallBurning" type="AudioStreamPlayer2D" parent="CanvasLayer/FireParticles"]
+stream = ExtResource("4_8kijg")
+autoplay = true
+max_distance = 2048.0
+attenuation = 2.0
+
+[node name="BigBurning" type="AudioStreamPlayer2D" parent="CanvasLayer/FireParticles"]
+stream = ExtResource("3_kcox0")
+autoplay = true
+max_distance = 2048.0
+attenuation = 2.0
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="DMGCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

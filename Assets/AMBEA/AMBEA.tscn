@@ -1,4 +1,4 @@
-[gd_scene load_steps=1286 format=3 uid="uid://dmtei2h0el0pw"]
+[gd_scene load_steps=1300 format=3 uid="uid://dmtei2h0el0pw"]
 
 [ext_resource type="Script" path="res://Assets/AMBEA/AMBEA.gd" id="1_giu2x"]
 [ext_resource type="Texture2D" uid="uid://c1gt17vfg7ndg" path="res://Assets/AMBEA/Frames/Hover/Down/0000.png" id="2_75rb1"]
@@ -1260,8 +1260,11 @@
 [ext_resource type="AudioStream" uid="uid://bbkigmw44i81h" path="res://Assets/AMBEA/Sounds/RageHum.wav" id="1251_nnljj"]
 [ext_resource type="AudioStream" uid="uid://cl466wi6fq5lo" path="res://Assets/AMBEA/Sounds/Halo/physx_cutlery_scrape_01.wav" id="1251_ssd0o"]
 [ext_resource type="AudioStream" uid="uid://cy2f8xkypr7id" path="res://Assets/AMBEA/Sounds/radio_static_01.wav" id="1252_p6nin"]
+[ext_resource type="AudioStream" uid="uid://dw7ykf3xm5j5y" path="res://Assets/AMBEA/Sounds/HellFireShoot1.wav" id="1252_xme08"]
 [ext_resource type="AudioStream" uid="uid://bhduesfsy1dd5" path="res://Assets/AMBEA/Sounds/laserfield_loop.wav" id="1253_66r8n"]
 [ext_resource type="Texture2D" uid="uid://hhxch26uhqyu" path="res://icon.svg" id="1253_u76op"]
+[ext_resource type="AudioStream" uid="uid://bo4cp7ghfdur4" path="res://Assets/AMBEA/Sounds/HellFireShoot2.wav" id="1253_vs3f0"]
+[ext_resource type="AudioStream" uid="uid://cgvbo1hf02rjy" path="res://Assets/AMBEA/Sounds/fire_group_LOOP.wav" id="1254_nhsgs"]
 [ext_resource type="AudioStream" uid="uid://dtoboxk8c4qua" path="res://Assets/AMBEA/Sounds/angelic_choirs_01.wav" id="1254_rivjj"]
 [ext_resource type="AudioStream" uid="uid://b3i01g5c3ml6r" path="res://Assets/AMBEA/Sounds/angelic_choirs_02.wav" id="1255_wkrnx"]
 [ext_resource type="AudioStream" uid="uid://vgnatcduak82" path="res://Assets/AMBEA/Sounds/angelic_choirs_03.wav" id="1256_xt34d"]
@@ -5265,6 +5268,69 @@ random_pitch = 1.2
 streams_count = 1
 stream_0/stream = ExtResource("1251_ssd0o")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_adhlw"]
+radius = 2048.0
+
+[sub_resource type="Gradient" id="Gradient_e6v1m"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.5, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1qcyd"]
+gradient = SubResource("Gradient_e6v1m")
+
+[sub_resource type="Gradient" id="Gradient_xdhyp"]
+offsets = PackedFloat32Array(0, 0.5, 0.996416)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.941176, 0.878431, 1, 0.25098, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5oiog"]
+gradient = SubResource("Gradient_xdhyp")
+
+[sub_resource type="Curve" id="Curve_u85w3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_k1x7b"]
+curve = SubResource("Curve_u85w3")
+
+[sub_resource type="Curve" id="Curve_22klq"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0x35t"]
+curve = SubResource("Curve_22klq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ittg3"]
+lifetime_randomness = 0.25
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 16.0
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 256.0
+initial_velocity_max = 1024.0
+orbit_velocity_min = -0.25
+orbit_velocity_max = 0.25
+orbit_velocity_curve = SubResource("CurveTexture_k1x7b")
+radial_velocity_min = -512.0
+radial_velocity_max = 512.0
+gravity = Vector3(0, -128, 0)
+scale_min = 2.0
+scale_max = 8.0
+scale_over_velocity_max = 256.0
+scale_over_velocity_curve = SubResource("CurveTexture_0x35t")
+color_ramp = SubResource("GradientTexture1D_5oiog")
+color_initial_ramp = SubResource("GradientTexture1D_1qcyd")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+collision_use_scale = true
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1mofj"]
+random_pitch = 1.25
+streams_count = 2
+stream_0/stream = ExtResource("1252_xme08")
+stream_1/stream = ExtResource("1253_vs3f0")
+
 [sub_resource type="Curve" id="Curve_qw01b"]
 bake_resolution = 2
 _data = [Vector2(0, 0.4), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -5332,17 +5398,17 @@ script = ExtResource("1_giu2x")
 type = "AMBEA"
 tags = Array[String](["Angel", "Magic", "Lesser", "Hover"])
 maxSpeed = 100
+reflectShots = true
 pointsOnDeath = 40
-maxHP = 48
-ARM = 12
+maxHP = 96
+ARM = 8
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 position = Vector2(0, -64)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_e7uv6")
-animation = &"FireDown"
-frame = 22
+animation = &"HoverDown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -5400,12 +5466,67 @@ max_distance = 2048.0
 attenuation = 3.0
 
 [node name="Rotate" type="Node2D" parent="."]
-position = Vector2(0, -64)
+
+[node name="Vision" type="Area2D" parent="Rotate"]
+visible = false
+position = Vector2(0, 1536)
+scale = Vector2(1.5, 1)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rotate/Vision"]
+shape = SubResource("CircleShape2D_adhlw")
+debug_color = Color(0.6, 0.239216, 0.419608, 0.25098)
+
+[node name="Flames" type="Node2D" parent="Rotate"]
+position = Vector2(0, 64)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Rotate/Flames"]
+layer = 2
+follow_viewport_enabled = true
+
+[node name="FireParticles" type="GPUParticles2D" parent="Rotate/Flames/CanvasLayer"]
+modulate = Color(1.5, 1.5, 1.5, 1)
+position = Vector2(0, 32)
+amount = 1024
+amount_ratio = 0.0
+process_material = SubResource("ParticleProcessMaterial_ittg3")
+speed_scale = 1.25
+fixed_fps = 60
+visibility_rect = Rect2(-512, 0, 1024, 1024)
+trail_enabled = true
+trail_lifetime = 0.1
+trail_sections = 2
+trail_section_subdivisions = 1
+
+[node name="FlameArea" type="Area2D" parent="Rotate/Flames"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Rotate/Flames/FlameArea"]
+visible = false
+polygon = PackedVector2Array(0, -32, -256, 640, 256, 640)
+
+[node name="Cooldown" type="Timer" parent="Rotate/Flames"]
+one_shot = true
+
+[node name="FireTime" type="Timer" parent="Rotate/Flames"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Flamethrower" type="AudioStreamPlayer2D" parent="Rotate/Flames"]
+stream = SubResource("AudioStreamRandomizer_1mofj")
+volume_db = 10.0
+max_distance = 4096.0
+attenuation = 2.0
+
+[node name="Flames" type="AudioStreamPlayer2D" parent="Rotate/Flames"]
+stream = ExtResource("1254_nhsgs")
+pitch_scale = 0.75
+max_distance = 4096.0
+attenuation = 2.0
 
 [node name="Line" type="Line2D" parent="Rotate"]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(0, 192)
+position = Vector2(0, 128)
 points = PackedVector2Array(0, 0, 0, 2048)
 width = 0.0
 width_curve = SubResource("Curve_qw01b")
@@ -5415,19 +5536,21 @@ begin_cap_mode = 2
 end_cap_mode = 2
 
 [node name="BeamA" type="AudioStreamPlayer2D" parent="Rotate"]
-position = Vector2(0, 192)
+position = Vector2(0, 128)
 scale = Vector2(1e-05, 1e-05)
 stream = ExtResource("1257_v25l6")
 volume_db = 10.0
+pitch_scale = 0.5
 max_distance = 4048.0
 attenuation = 2.0
 
 [node name="BeamRay" type="RayCast2D" parent="Rotate"]
-position = Vector2(0, 192)
+position = Vector2(0, 128)
 target_position = Vector2(0, 2048)
 collision_mask = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Rotate/BeamRay"]
+visible = false
 z_index = 16
 position = Vector2(0, 2048)
 texture = ExtResource("1253_u76op")
@@ -5537,98 +5660,82 @@ attenuation = 2.0
 max_polyphony = 64
 
 [node name="RayCast" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast2" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = 1.5708
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast3" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = -1.5708
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast4" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = -3.14159
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast5" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = -0.785397
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast6" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = 0.785397
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast7" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = -2.35619
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast8" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = 2.35619
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast9" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = 0.393245
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast10" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = 1.96404
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast11" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = -1.17755
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast12" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = -2.74834
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast13" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = -0.392152
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast14" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = 1.17864
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast15" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = -1.96295
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [node name="RayCast16" type="RayCast2D" parent="."]
-visible = false
 z_index = 64
 rotation = 2.74944
-target_position = Vector2(0, 512)
+target_position = Vector2(0, 256)
 
 [connection signal="frame_changed" from="Sprite" to="." method="_on_sprite_frame_changed"]

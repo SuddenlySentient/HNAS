@@ -67,11 +67,9 @@ func _physics_process(delta) :
 	
 	const weight = 4
 	
-	#print(str(State))
-	
 	velocity = velocity.lerp(Vector2.ZERO, delta * weight / 2.0)
 	move_and_slide()
-	#print((velocity).length() / (direction * maxSpeed).length())
+	velocity = get_real_velocity()
 	dealAggro()
 	
 	match cAni :
@@ -213,7 +211,7 @@ func setVulnerable(setV : bool) :
 		$Invulnerable.play()
 	vulnerable = setV
 
-func adjustDMG(DMGDealt : int, dealer : Unit, DMGtype : String, source : Node = null) :
+func adjustDMG(DMGDealt : int, dealer, DMGtype : String, source : Node = null) :
 	if DMGtype == "Melee" :
 		var percentageHP = float(DMGDealt) / float(maxHP)
 		if dealer.direction.dot(direction) < -0.5 :

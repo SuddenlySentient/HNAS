@@ -113,59 +113,46 @@ collision_mode = 2
 random_pitch = 1.25
 streams_count = 2
 stream_0/stream = ExtResource("5_hqeu7")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("6_5bbgn")
-stream_1/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_t4dns"]
 random_pitch = 1.25
 streams_count = 1
 stream_0/stream = ExtResource("5_d6ug7")
-stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5gs3w"]
 random_pitch = 1.25
 streams_count = 3
 stream_0/stream = ExtResource("3_r3eis")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("4_xw8br")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("5_3hnso")
-stream_2/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_umylu"]
 random_pitch = 1.5
 streams_count = 6
 stream_0/stream = ExtResource("6_ejspb")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("7_76h65")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("8_dlxr3")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("9_pcff2")
-stream_3/weight = 1.0
 stream_4/stream = ExtResource("10_c5u2f")
-stream_4/weight = 1.0
 stream_5/stream = ExtResource("11_xnln7")
-stream_5/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4v5jo"]
 random_pitch = 1.25
 streams_count = 1
 stream_0/stream = ExtResource("6_x1pa1")
-stream_0/weight = 1.0
 
 [node name="Fireball" type="RigidBody2D"]
 collision_layer = 0
 mass = 10.0
 gravity_scale = 0.0
 continuous_cd = 2
-max_contacts_reported = 64
 contact_monitor = true
+max_contacts_reported = 64
 linear_damp_mode = 1
 script = ExtResource("1_oxxyh")
 speed = 8.0
-DMG = 12
+DMG = 8
 AP = 2
 
 [node name="Sprite" type="Sprite2D" parent="."]

@@ -245,7 +245,7 @@ func firePlasmaRay(location : Vector2) :
 		newPlasmaRay.DMG = plasmaRayDMG
 		newPlasmaRay.AP = plasmaRayAP
 		newPlasmaRay.targetVector = vectorToTarget
-		var arc = lerpf(plasmaRayMinArc, plasmaRayMaxArc, distanceToTarget)
+		var arc = lerpf(plasmaRayMaxArc, plasmaRayMinArc, distanceToTarget)
 		newPlasmaRay.arcLength = deg_to_rad(arc) / 2.0
 		newPlasmaRay.myOwner = self
 		add_child(newPlasmaRay)
@@ -284,15 +284,12 @@ func getNearTile() :
 	if potentialTiles.size() > 0 : return potentialTiles.pick_random()
 	else : return map.local_to_map(global_position)
 
-func adjustDMG(DMGDealt : int, dealer : Unit, DMGtype : String, _source : Node = null) :
+func adjustDMG(DMGDealt : int, dealer : Unit, DMGtype : String, source : Node = null) :
 	if dealer != self :
 		aggroList.append(dealer)
 		aggroTarget = dealer
-	else :
-		heal(DMGDealt)
-		#print("Self DMG, Healed ", DMG, "HP")
-		DMGDealt = 0
-	if stamina >= 1 and DMGDealt > 0 and DMGtype != "Instant" : 
+	
+	if stamina >= 1 and DMGDealt > 0 and DMGtype != "Instant" and DMGtype != "Effect" : 
 		var teleportTarget = map.map_to_local(getNearTile())
 		if aggroTarget != null : 
 			var seeingTile = getSeeingTile()
@@ -302,6 +299,13 @@ func adjustDMG(DMGDealt : int, dealer : Unit, DMGtype : String, _source : Node =
 			teleport(teleportTarget, true)
 			hitmarker("AVOIDED", 2, Color.from_hsv(0.1, 0.8, 1, 1))
 			DMGDealt = 0
+	
+	if DMGtype == "Effect" :
+		if source.type == "Burning" : 
+			heal(DMGDealt)
+			DMGDealt = 0
+			source.cease()
+	
 	return DMGDealt
 
 
