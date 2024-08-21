@@ -31,8 +31,8 @@ func _enter_tree():
 			$VBoxContainer/VBoxContainer2/SeraphStamina.show()
 		"Vampire"  :
 			$VBoxContainer/VBoxContainer2/VampireBlood.show()
-		"Sentry"  :
-			pass
+		"AMBEA"  :
+			$"VBoxContainer/VBoxContainer2/AMBEACharge".show()
 		_ :
 			push_warning("Weird unit type ''", type, "'' ")
 	
@@ -169,6 +169,55 @@ func _process(delta) :
 					$VBoxContainer/VBoxContainer/States/WanderingPanel.show()
 				4 :
 					$VBoxContainer/VBoxContainer/States/ApproachingPanel.show()
+		"AMBEA"  :
+			var ChargeMeter = $VBoxContainer/VBoxContainer2/AMBEACharge
+			ChargeMeter.value = lerp(ChargeMeter.value, float(observedUnit.charge), delta * updateHPSpeed)
+			var ChargeMeterLabel = $VBoxContainer/VBoxContainer2/AMBEACharge/Label
+			ChargeMeterLabel.text = str(floor(observedUnit.charge * 100)) + "%"
+			const shakeIntensity = 4
+			var shake : Vector2i = Vector2(randf_range(-1, 1), randf_range(-1, 1)) * shakeIntensity * observedUnit.charge
+			position += shake
+			
+			#Ready = 0,
+			#Wander = 1,
+			#Found = 2,
+			#Firing = 3,
+			#Napalm = 4
+			
+			$VBoxContainer/VBoxContainer/States/WanderingPanel.hide()
+			$VBoxContainer/VBoxContainer/States/ApproachingPanel.hide()
+			$VBoxContainer/VBoxContainer/States/AttackingPanel.hide()
+			
+			match observedUnit.State :
+				1 :
+					$VBoxContainer/VBoxContainer/States/WanderingPanel.show()
+				2 :
+					$VBoxContainer/VBoxContainer/States/ApproachingPanel.show()
+				3, 4 : 
+					$VBoxContainer/VBoxContainer/States/AttackingPanel.show()
+		"Sentry"  :
+			
+			#Rest = 0,
+			#Awake = 1,
+			#Ready = 2,
+			#Walk = 3,
+			#Approach = 4,
+			#Attack = 5,
+			#PrepareThrust = 6,
+			#Thrust = 7,
+			#Knocked = 8
+			
+			$VBoxContainer/VBoxContainer/States/WanderingPanel.hide()
+			$VBoxContainer/VBoxContainer/States/ApproachingPanel.hide()
+			$VBoxContainer/VBoxContainer/States/AttackingPanel.hide()
+			
+			match observedUnit.State :
+				1 :
+					$VBoxContainer/VBoxContainer/States/WanderingPanel.show()
+				4 :
+					$VBoxContainer/VBoxContainer/States/ApproachingPanel.show()
+				5, 6, 7 : 
+					$VBoxContainer/VBoxContainer/States/AttackingPanel.show()
 
 func _on_close_requested() :
 	close()

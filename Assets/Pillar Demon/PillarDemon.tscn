@@ -1781,11 +1781,6 @@ debug_path_custom_color = Color(0.752941, 0, 1, 1)
 debug_path_custom_point_size = 16.0
 debug_path_custom_line_width = 4.0
 
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-visible = false
-position = Vector2(0, -32)
-radius = 96.0
-
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 visible = false
 occluder = SubResource("OccluderPolygon2D_pbf14")

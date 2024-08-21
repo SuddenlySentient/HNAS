@@ -49,7 +49,6 @@ func increment(effect : Effect) :
 
 func cease() :
 	if ending or is_node_ready() == false : return false
-	print(name," : Ending")
 	ending = true
 	affected.effects.erase(self)
 	particles.amount_ratio = 0

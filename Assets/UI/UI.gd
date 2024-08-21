@@ -12,8 +12,8 @@ var unitWindows = []
 
 
 func _input(_event) :
+	detectorToMousePos()
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) :
-		detectorToMousePos()
 		var overlaping = detector.get_overlapping_bodies()
 		for thing in overlaping :
 			if thing is Unit and checkWindowsForUnit(thing) :
@@ -25,7 +25,6 @@ func _input(_event) :
 	
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) :
 		if spawnPanel.selectedUnit != spawnPanel.units.None :
-			detectorToMousePos()
 			if detector.get_overlapping_bodies().size() == 0 :
 				var tileToSpawnOn = tileMap.local_to_map(world.get_global_mouse_position())
 				var tileData = tileMap.get_cell_tile_data(tileToSpawnOn)

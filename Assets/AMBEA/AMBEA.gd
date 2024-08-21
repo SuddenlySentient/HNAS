@@ -23,6 +23,12 @@ func _init():
 	name = getName()
 	vision = $Rotate/Vision
 
+func getName() :
+	var numb = str( randi_range(0, 998))
+	while numb.length() < 3 : numb + "0"
+	var newName = type + "-" + numb
+	return newName
+
 func _physics_process(delta):
 	
 	dealAggro()

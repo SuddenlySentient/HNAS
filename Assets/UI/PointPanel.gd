@@ -6,27 +6,27 @@ var mouseHeld = false
 @export var sizeSnap = 64
 var score : int = 0
 @export var scoreCap : int = 6
-@onready var beep = $VBoxContainer/Ticker/Beep
-@onready var maxReached = $VBoxContainer/Ticker/MaxReached
+@onready var beep = $VBoxContainer/HBoxContainer/Ticker/Beep
+@onready var maxReached = $VBoxContainer/HBoxContainer/Ticker/MaxReached
 @onready var consoleText = $VBoxContainer/Console/MarginContainer/Label
 @onready var digits = [
-	$VBoxContainer/Ticker/Container/Digit5,
-	$VBoxContainer/Ticker/Container/Digit4,
-	$VBoxContainer/Ticker/Container/Digit3,
-	$VBoxContainer/Ticker/Container/Digit2,
-	$VBoxContainer/Ticker/Container/Digit1,
-	$VBoxContainer/Ticker/Container/Digit0
+	$VBoxContainer/HBoxContainer/Ticker/Container/Digit5,
+	$VBoxContainer/HBoxContainer/Ticker/Container/Digit4,
+	$VBoxContainer/HBoxContainer/Ticker/Container/Digit3,
+	$VBoxContainer/HBoxContainer/Ticker/Container/Digit2,
+	$VBoxContainer/HBoxContainer/Ticker/Container/Digit1,
+	$VBoxContainer/HBoxContainer/Ticker/Container/Digit0
 	]
 @onready var multDigits = [
-	$VBoxContainer/Multiplier/HBoxContainer/Control/Container/Digit2,
-	$VBoxContainer/Multiplier/HBoxContainer/Control/Container/Digit1,
-	$VBoxContainer/Multiplier/HBoxContainer/Control2/Digit0,
+	$VBoxContainer/HBoxContainer/Multiplier/HBoxContainer/Control/Container/Digit2,
+	$VBoxContainer/HBoxContainer/Multiplier/HBoxContainer/Control/Container/Digit1,
+	$VBoxContainer/HBoxContainer/Multiplier/HBoxContainer/Control2/Digit0,
 	]
 @onready var coloredText = [
-	$VBoxContainer/Ticker/Container,
-	$VBoxContainer/Multiplier/HBoxContainer/Control2/DigitDot,
-	$VBoxContainer/Multiplier/HBoxContainer/Control2/Digit0,
-	$VBoxContainer/Multiplier/HBoxContainer/Control/Container
+	$VBoxContainer/HBoxContainer/Ticker/Container,
+	$VBoxContainer/HBoxContainer/Multiplier/HBoxContainer/Control2/DigitDot,
+	$VBoxContainer/HBoxContainer/Multiplier/HBoxContainer/Control2/Digit0,
+	$VBoxContainer/HBoxContainer/Multiplier/HBoxContainer/Control/Container
 	]
 var multiplier : float = 1 
 signal doneTyping()
@@ -66,8 +66,8 @@ func givePoints(amount : int, reason : String, period : float = 1) :
 	var amountSign = "+"
 	if sign(amount) == -1 : amountSign = ""
 	
-	var outputText = amountSign + str(amount) + "p\t"
-	if multiplier != 1 and sign(amount) == 1 : outputText += "(" + str(originalAmount) + "p x" + str(multiplier) + ")"
+	var outputText = amountSign + str(amount) + "p"
+	if multiplier != 1 and sign(amount) == 1 : outputText += " (" + str(originalAmount) + "p x" + str(multiplier) + ")"
 	else : outputText += "\t"
 	outputText += "\t: " + reason + "\n" 
 	
@@ -83,6 +83,9 @@ func givePoints(amount : int, reason : String, period : float = 1) :
 	typing = true
 	await doneTyping
 	typing = false
+	
+	if queue == 0 : typingTime = 0
+	
 	if pointing : await donePointing
 	pointing = true
 	
@@ -177,10 +180,14 @@ func updateCap(newCap : int) :
 		digits[x].self_modulate = Color("ffffff")
 	scoreCap = newCap
 
+@export var typingSpeed = 1
+var typingTime : float = 0
+
 func _on_type_timer_timeout():
 	if consoleText.visible_characters < consoleText.text.length() :
 		$KeyStroke.play()
-		consoleText.visible_characters += 1
-		$TypeTimer.wait_time = 0.05
+		consoleText.visible_characters += ceil(typingSpeed * typingTime)
+		typingTime += 0.25
 		$TypeTimer.start()
-	else : emit_signal("doneTyping")
+	else : 
+		emit_signal("doneTyping")

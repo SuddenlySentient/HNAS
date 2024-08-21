@@ -85,13 +85,13 @@ func _physics_process(delta) :
 			actionQuery(delta)
 	
 	move_and_slide()
+	avoidenceVelocity = avoidenceVelocity.move_toward(Vector2.ZERO, delta)
 	velocity = get_real_velocity()
 
 func actionQuery(delta) :
 	ARM = 2
 	reflectShots = false
 	nav.avoidance_enabled = false
-	$NavigationObstacle2D.avoidance_enabled = true
 	if State != States.Swarm and State != States.Attack and recentSeenCheck : 
 		scatter(State != States.Scatter)
 	var pillarArray : Array = []
@@ -150,8 +150,6 @@ func pillarQuery(delta) :
 	ARM = 8
 	reflectShots = true
 	nav.avoidance_enabled = true
-	$NavigationObstacle2D.avoidance_enabled = false
-	avoidenceVelocity *= 0.5
 	velocity = lerp(velocity, Vector2.ZERO, delta * deccelerate) + avoidenceVelocity 
 	var pillarArray : Array[Unit] = []
 	var enemyArray : Array[Unit] = []
@@ -329,7 +327,7 @@ func _on_scatter_timer_timeout():
 	#print("Scatter Timer Ran Out")
 
 func _on_pd_nav_velocity_computed(safe_velocity):
-	avoidenceVelocity = safe_velocity
+	avoidenceVelocity = safe_velocity #avoidenceVelocity.move_toward(safe_velocity, 0.125)
 
 func _on_swarm_finished():
 	if State == States.Swarm : $Swarm.play()
