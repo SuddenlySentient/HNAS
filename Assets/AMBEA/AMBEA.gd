@@ -158,6 +158,7 @@ func closeHalo() :
 var burn = load("res://Assets/Base/Effects/Burning.tscn")
 
 @export var fireLVL : int = 16
+@export var fireKnockback : int = 8
 
 func napalm() :
 	State = States.Napalm
@@ -167,6 +168,7 @@ func napalm() :
 	var flameArea = $Rotate/Flames/FlameArea
 	$Rotate/Flames/FireTime.start()
 	$Rotate/Flames/CanvasLayer/FireParticles.restart()
+	$Rotate/Flames/FireLight.enabled = true
 	while $Rotate/Flames/FireTime.is_stopped() == false :
 		#var delta = get_physics_process_delta_time()
 		var time = $Rotate/Flames/FireTime.time_left / $Rotate/Flames/FireTime.wait_time
@@ -174,6 +176,8 @@ func napalm() :
 		if $Rotate/Flames/Flames.playing == false : $Rotate/Flames/Flames.play()
 		$Rotate/Flames/Flames.volume_db = lerpf(-25, 5, clamp(sin(sqrt(time) * PI) , 0, 1))
 		$Rotate/Flames/Flames.pitch_scale = lerpf(1, 0.75, clamp(sin(sqrt(time) * PI) , 0, 0.5) * 2)
+		
+		$Rotate/Flames/FireLight.energy = lerpf(0, 4, clamp(sin(sqrt(time) * PI) , 0, 1))
 		
 		$Rotate/Flames/CanvasLayer/FireParticles.speed_scale = clamp(sin(sqrt(time) * PI) * 3, 1, 3)
 		$Rotate/Flames/CanvasLayer/FireParticles.global_position = $Rotate/Flames.global_position
@@ -189,11 +193,14 @@ func napalm() :
 				if thing is Unit and thing != self :
 					var newBurn : Effect = burn.instantiate()
 					newBurn.apply(self, thing, fireLVL)
+					thing.dealKnockback(fireKnockback, global_position.direction_to(thing.position))
 		#if aggroTarget != null : directionToTarget = global_position.direction_to(aggroTarget.global_position)
 		#direction.move_toward(directionToTarget, delta)
 		await get_tree().physics_frame
 	#print("Done")
 	State = States.Ready
+	$Rotate/Flames/CanvasLayer/FireParticles.amount_ratio = 0
+	$Rotate/Flames/FireLight.enabled = false
 	$Rotate/Flames/Flames.stop()
 	$Rotate/Flames/Cooldown.start()
 

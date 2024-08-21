@@ -65,9 +65,7 @@ func backToTheWall() :
 
 func _physics_process(delta) :
 	
-	const weight = 4
-	
-	velocity = velocity.lerp(Vector2.ZERO, delta * weight / 2.0)
+	velocity = velocity.lerp(Vector2.ZERO, delta * 2)
 	move_and_slide()
 	velocity = get_real_velocity()
 	dealAggro()
@@ -89,7 +87,7 @@ func _physics_process(delta) :
 			cAni = "Walk"
 			nav.target_position = guardPos
 			direction = global_position.direction_to(nav.get_next_path_position())
-			velocity = lerp(velocity, direction * maxSpeed * mult, delta * weight)
+			velocity = lerp(velocity, direction * maxSpeed * mult, delta)
 		States.Approach :
 			cAni = "Walk"
 			var aggroPos = aggroTarget.position
@@ -108,7 +106,7 @@ func _physics_process(delta) :
 				var offsetDirection = direction.rotated(PI / 2.0)
 				var dooply = clamp(distranceToTarget, 0, 256) / 256.0
 				offsetDirection = (offsetDirection * (1 - dooply)) + (direction * dooply) 
-				velocity = lerp(velocity, offsetDirection * maxSpeed * mult, delta * weight)
+				velocity = lerp(velocity, offsetDirection * maxSpeed * mult, delta)
 		States.Rest :
 			direction = guardDirection
 			position = lerp(position, guardPos, delta)
@@ -245,6 +243,8 @@ func knocked() :
 	cAni = "Knocked"
 	velocity = -direction * 96
 
+@export var knockback : int = 64
+
 func _on_sprite_frame_changed():
 	match cAni :
 		"Thrust" :
@@ -259,6 +259,7 @@ func _on_sprite_frame_changed():
 					for thing in thrustArea :
 						if thing is Unit and isFoe(thing) :
 							thing.damage(thrustDMG, thrustAP, self, "Melee", self)
+							thing.dealKnockback(knockback, global_position.direction_to(thing.position))
 		"ThrustPrepare" :
 			match sprite.frame :
 				1 :
@@ -281,11 +282,13 @@ func _on_sprite_frame_changed():
 					for thing in sliceArea :
 						if thing is Unit and isFoe(thing) :
 							thing.damage(sliceDMG, sliceAP, self, "Melee", self)
+							thing.dealKnockback(knockback, global_position.direction_to(thing.position))
 				19 : 
 					var thrustArea = $Rotate/Thrust.get_overlapping_bodies()
 					for thing in thrustArea :
 						if thing is Unit and isFoe(thing) :
 							thing.damage(stabDMG, stabAP, self, "Melee", self)
+							thing.dealKnockback(knockback, global_position.direction_to(thing.position))
 		"Walk" :
 			setVulnerable(false)
 			if $Creaking.playing == false : $Creaking.play()

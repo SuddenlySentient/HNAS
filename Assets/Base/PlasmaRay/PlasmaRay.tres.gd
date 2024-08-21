@@ -52,7 +52,7 @@ func _physics_process(delta):
 			$PlasmaRayB.position = collsionPoint
 			var hit = ray.get_collider()
 			if hit is Unit :
-				hit.velocity -= Vector2.from_angle(ray.rotation - (PI / 2)).normalized() * 65536 * delta
+				hit.dealKnockback(16384 * delta, -Vector2.from_angle(ray.rotation - (PI / 2)).normalized())
 				if hurted.has(hit) == false :
 					hurted.append(hit)
 					if hit.damage(DMG, AP, myOwner, "Ray", self) :

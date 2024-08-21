@@ -9,6 +9,7 @@ var dealer : Unit
 @onready var timer : Timer = $Timer
 
 
+
 func _enter_tree() -> void :
 	await ready
 	initEffect()
@@ -16,7 +17,7 @@ func _enter_tree() -> void :
 		timer.start(duration)
 
 func _physics_process(delta) -> void :
-	doEffect(delta)
+	if is_node_ready() : doEffect(delta)
 
 func apply(emitter : Unit, target : Unit, appLevel : float = level, appDur : float = duration) :
 	dealer = emitter

@@ -1714,6 +1714,7 @@ maxSpeed = 250
 pointsOnDeath = 2
 maxHP = 8
 ARM = 6
+weight = 1.0
 
 [node name="PDSprite" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true

@@ -86,7 +86,7 @@ func damage(DMG : int, AP : int, dealer, DMGtype : String, source : Node = null)
 		if dealer == self : givePoints(pointsOnDeath * 2, "Self Kill")
 		elif dealer != null and isFoe(dealer) == false : 
 			givePoints(pointsOnDeath * 2, "Team Kill")
-		elif dealer.type == type and dealer != null : 
+		elif dealer != null and dealer.type == type : 
 			@warning_ignore("narrowing_conversion")
 			givePoints(pointsOnDeath * 1.5, "Infighting")
 		else : givePoints(pointsOnDeath, "Kill")
@@ -252,3 +252,8 @@ func enemiesInRange(areas : Array[Area2D]) :
 func givePoints(amount : int, reason : String, period : float = 1) :
 	reason += " : " + name
 	UI.givePoints(amount, reason, period)
+
+@export var weight : float = ARM / 2.0
+
+func dealKnockback(amount : float, knockDirection : Vector2) :
+	velocity += knockDirection * (amount / weight)

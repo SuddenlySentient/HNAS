@@ -1,4 +1,4 @@
-[gd_scene load_steps=1300 format=3 uid="uid://dmtei2h0el0pw"]
+[gd_scene load_steps=1303 format=3 uid="uid://dmtei2h0el0pw"]
 
 [ext_resource type="Script" path="res://Assets/AMBEA/AMBEA.gd" id="1_giu2x"]
 [ext_resource type="Texture2D" uid="uid://c1gt17vfg7ndg" path="res://Assets/AMBEA/Frames/Hover/Down/0000.png" id="2_75rb1"]
@@ -1266,6 +1266,7 @@
 [ext_resource type="AudioStream" uid="uid://bo4cp7ghfdur4" path="res://Assets/AMBEA/Sounds/HellFireShoot2.wav" id="1253_vs3f0"]
 [ext_resource type="AudioStream" uid="uid://cgvbo1hf02rjy" path="res://Assets/AMBEA/Sounds/fire_group_LOOP.wav" id="1254_nhsgs"]
 [ext_resource type="AudioStream" uid="uid://dtoboxk8c4qua" path="res://Assets/AMBEA/Sounds/angelic_choirs_01.wav" id="1254_rivjj"]
+[ext_resource type="Texture2D" uid="uid://dr11atb80kaht" path="res://Assets/SUB-RFL-48/Flashlight.png" id="1255_550d3"]
 [ext_resource type="AudioStream" uid="uid://b3i01g5c3ml6r" path="res://Assets/AMBEA/Sounds/angelic_choirs_02.wav" id="1255_wkrnx"]
 [ext_resource type="AudioStream" uid="uid://vgnatcduak82" path="res://Assets/AMBEA/Sounds/angelic_choirs_03.wav" id="1256_xt34d"]
 [ext_resource type="AudioStream" uid="uid://dvcj3mdq6jsgi" path="res://Assets/AMBEA/Sounds/MindflayerBeam.wav" id="1257_v25l6"]
@@ -5236,6 +5237,13 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_xgvo5"]
 radius = 160.0
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_jlrsf"]
+cull_mode = 2
+polygon = PackedVector2Array(-128, -64, -80, -144, 0, -192, 80, -144, 128, -64, 80, 16, 0, 64, -80, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0cq3m"]
+load_path = "res://.godot/imported/CircleLight.png-e82b5e525789deabdfe330fcce213237.ctex"
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jycnl"]
 random_pitch = 1.25
 streams_count = 3
@@ -5402,6 +5410,7 @@ reflectShots = true
 pointsOnDeath = 40
 maxHP = 96
 ARM = 8
+weight = 16.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
@@ -5411,9 +5420,18 @@ sprite_frames = SubResource("SpriteFrames_e7uv6")
 animation = &"HoverDown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -64)
 shape = SubResource("CircleShape2D_xgvo5")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_jlrsf")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0.4, 0.4, 1)
+energy = 0.5
+texture = SubResource("CompressedTexture2D_0cq3m")
+offset = Vector2(0, -64)
+texture_scale = 10.0
 
 [node name="Hover" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1242_bf185")
@@ -5478,7 +5496,7 @@ shape = SubResource("CircleShape2D_adhlw")
 debug_color = Color(0.6, 0.239216, 0.419608, 0.25098)
 
 [node name="Flames" type="Node2D" parent="Rotate"]
-position = Vector2(0, 64)
+position = Vector2(0, 192)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Rotate/Flames"]
 layer = 2
@@ -5501,7 +5519,6 @@ trail_section_subdivisions = 1
 [node name="FlameArea" type="Area2D" parent="Rotate/Flames"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Rotate/Flames/FlameArea"]
-visible = false
 polygon = PackedVector2Array(0, -32, -256, 640, 256, 640)
 
 [node name="Cooldown" type="Timer" parent="Rotate/Flames"]
@@ -5522,6 +5539,16 @@ stream = ExtResource("1254_nhsgs")
 pitch_scale = 0.75
 max_distance = 4096.0
 attenuation = 2.0
+
+[node name="FireLight" type="PointLight2D" parent="Rotate/Flames"]
+texture_filter = 1
+scale = Vector2(3, 3)
+enabled = false
+color = Color(1, 0.266667, 0.2, 1)
+energy = 0.0
+shadow_enabled = true
+texture = ExtResource("1255_550d3")
+offset = Vector2(0, 128)
 
 [node name="Line" type="Line2D" parent="Rotate"]
 z_index = 1

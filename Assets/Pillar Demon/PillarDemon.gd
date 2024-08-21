@@ -334,6 +334,8 @@ func _on_pd_nav_velocity_computed(safe_velocity):
 func _on_swarm_finished():
 	if State == States.Swarm : $Swarm.play()
 
+@export var knockback : int = 128
+
 func _on_pd_sprite_frame_changed():
 	if cAni == "Attack" and sprite.frame == 9 :
 		$Punch.play()
@@ -341,6 +343,7 @@ func _on_pd_sprite_frame_changed():
 		for punched in punching :
 			if punched is Unit and isFoe(punched) :
 				punched.damage(DMG, AP, self, "Melee", self)
+				punched.dealKnockback(knockback, global_position.direction_to(punched.position))
 
 var death = load("res://Assets/Pillar Demon/pd_remains.tscn")
 

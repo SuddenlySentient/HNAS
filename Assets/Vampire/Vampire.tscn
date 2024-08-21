@@ -3620,74 +3620,55 @@ radius = 4096.0
 random_pitch = 1.25
 streams_count = 1
 stream_0/stream = ExtResource("795_w0h1l")
-stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wswfo"]
 random_pitch = 1.25
 streams_count = 2
 stream_0/stream = ExtResource("796_is7ft")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("797_8v1ss")
-stream_1/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vbp1h"]
 random_pitch = 1.25
 streams_count = 2
 stream_0/stream = ExtResource("872_3ow0c")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("873_atj2r")
-stream_1/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_oo4wx"]
 random_pitch = 1.25
 streams_count = 3
 stream_0/stream = ExtResource("872_ajips")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("873_kxjdd")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("874_fcqhs")
-stream_2/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vcdpt"]
 random_pitch = 1.25
 streams_count = 3
 stream_0/stream = ExtResource("877_s37x7")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("878_yvp86")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("879_go4ap")
-stream_2/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bhq2u"]
 random_pitch = 1.25
 streams_count = 3
 stream_0/stream = ExtResource("872_ebj4f")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("873_i8stl")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("874_vkrxm")
-stream_2/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_007hp"]
 random_pitch = 1.25
 streams_count = 3
 stream_0/stream = ExtResource("883_3thnq")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("884_qosqm")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("885_cxqhw")
-stream_2/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_heare"]
 streams_count = 1
 stream_0/stream = ExtResource("889_7lhdf")
-stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_firmp"]
 random_pitch = 1.25
 streams_count = 1
 stream_0/stream = ExtResource("890_cjoen")
-stream_0/weight = 1.0
 
 [node name="Vampire" type="CharacterBody2D"]
 z_index = 1
@@ -3704,6 +3685,7 @@ nameList = Array[StringName]([&"Lady Grace", &"Commander Rosso", &"Lieutenant Sc
 pointsOnDeath = 15
 maxHP = 32
 ARM = 6
+weight = 4.0
 
 [node name="ComboCanvas" type="CanvasLayer" parent="."]
 visible = false

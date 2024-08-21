@@ -72,7 +72,8 @@ func endShot():
 			newBurn.apply(shooter, weakling, ((DMG / 2.0) + size) * falloff)
 			
 			var directionTo = global_position.direction_to(weakling.position)
-			if weakling != self : weakling.velocity += directionTo * 1024 * falloff
+			if weakling != self : 
+				weakling.dealKnockback(1024 * falloff, directionTo)
 	await $ExplostionTimer.timeout
 	queue_free()
 

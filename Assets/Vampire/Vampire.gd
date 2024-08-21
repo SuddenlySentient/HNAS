@@ -213,7 +213,7 @@ func _on_vampire_sprite_frame_changed():
 				if unit is Unit :
 					var dealt = unit.damage(JabDMG, SwordAP, self, "Melee", self)
 					if unit.tags.has("HasBlood") : addToTank(dealt / 2)
-					unit.velocity += global_position.direction_to(unit.position) * knockback
+					unit.dealKnockback(knockback, global_position.direction_to(unit.position))
 		if sprite.frame == 34 :
 			var swungAt : Array = $RotateNode/ThrustArea.get_overlapping_bodies()
 			for unit in $RotateNode/SweepArea.get_overlapping_bodies() :
@@ -227,7 +227,7 @@ func _on_vampire_sprite_frame_changed():
 				if unit is Unit :
 					var dealt = unit.damage(SwingDMG, SwordAP, self, "Melee", self)
 					if unit.tags.has("HasBlood") : addToTank(dealt / 2)
-					unit.velocity += global_position.direction_to(unit.position) * knockback
+					unit.dealKnockback(knockback, global_position.direction_to(unit.position))
 
 func _on_vampire_sprite_animation_finished():
 	if cAni == "Attack" :
