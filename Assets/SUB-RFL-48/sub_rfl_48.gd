@@ -19,12 +19,26 @@ var speed : int = 200
 @export var preferedSquadSize : int = 4
 @export var pointsOnSplit : int = 10
 
+enum Weapons {
+SMG = 0,
+Shotgun = 1
+}
+@export var weapon : Weapons = Weapons.SMG
+
 @export_subgroup("SMG")
-@export var DMG : int = 2
-@export var AP : int = 3
-@export var inaccuracy : float = 5
-@export var recoil : float = 5
+@export var SMGDMG : int = 2
+@export var SMGAP : int = 3
+@export var SMGInaccuracy : float = 5
+@export var SMGRecoil : float = 5
 var revved : float = 0.5
+
+@export_subgroup("Shotgun")
+@export var ShotgunDMG : int = 2
+@export var ShotgunAP : int = 2
+@export var ShotgunInaccuracy : float = 30
+@export var ShotgunRecoil : float = 64
+@export var ShotgunMaxPellets : int = 8
+@export var ShotgunMinPellets : int = 4
 
 enum States {
 Unidle = 0,
@@ -44,6 +58,10 @@ func _init() :
 	vision = $Flashlight/Vision
 	nav = $SUBNavigation
 	name = getName()
+	var randWeapon = randi_range(0, 2)
+	match randWeapon :
+		0, 1 : weapon = Weapons.SMG
+		2 : weapon = Weapons.Shotgun
 
 func getName() :
 	var newName = type + "-" + str(randi_range(0 , 9)) + str(randi_range(0 , 9)) + str(randi_range(0 , 9))
@@ -266,7 +284,7 @@ func move(delta) :
 	
 	const randoTurn = 0.001
 	
-	var vectorToTarget = position.direction_to(target)
+	var vectorToTarget = global_position.direction_to(target)
 	
 	match State :
 		States.Move :
@@ -277,15 +295,13 @@ func move(delta) :
 			if aggroTarget == null : 
 				State = States.Move
 				return false
-			var distanceToTarget = position.distance_to(aggroTarget.position)
-			#if distanceToTarget < 512 : vectorToTarget = vectorToTarget * -1
-			vectorToTarget = vectorToTarget * (-1 * (1 - (clamp(distanceToTarget, 0, 512)/256)))
+			var distanceToTarget = global_position.distance_to(aggroTarget.position)
 			var vectorToLeader = Vector2.ZERO
-			if leader != null : vectorToLeader = position.direction_to(leader.position) * -0.25
-			direction = lerp(direction, (vectorToTarget + vectorToLeader).normalized(), turnSpeed * delta).normalized()
+			if leader != null : vectorToLeader = global_position.direction_to(leader.position) * -0.25
+			direction = lerp(direction, vectorToTarget.normalized(), turnSpeed * delta).normalized()
 			direction = direction + Vector2(randf_range(-randoTurn, randoTurn), randf_range(-randoTurn, randoTurn))
-			#print("Direction : ",direction, ", Direction to Target : ", vectorToTarget, ". Direction to Leader : ", vectorToLeader)
-			velocity = velocity.lerp((direction * speed) + (avoidenceVelocity * 0.75), acceleration * delta)
+			vectorToTarget = vectorToTarget * (-1 * (1 - (clamp(distanceToTarget, 0, 512)/256)))
+			velocity = velocity.lerp(((direction + vectorToTarget + vectorToLeader).normalized() * speed) + (avoidenceVelocity * 0.75), acceleration * delta)
 			nav.target_position = aggroTarget.position
 			if fireArea.overlaps_body(aggroTarget) and fireArea.get_overlapping_bodies().any(allies) == false :
 				State = States.Shoot
@@ -297,7 +313,11 @@ func shoot(delta) :
 	velocity = velocity.lerp(Vector2.ZERO, delta) + avoidenceVelocity
 	testTimer.stop()
 	cAni = "Shoot"
-	sprite.speed_scale = 1 * revved
+	
+	match weapon :
+		Weapons.SMG : sprite.speed_scale = 1 * revved
+		Weapons.Shotgun : sprite.speed_scale = (0.5 / revved) + 0.25
+	
 	if aggroList.is_empty() : 
 		aggroTarget = null
 		revved = 0.5
@@ -321,6 +341,7 @@ func goIdle(lowerRange : float = 3, UpperRange : float = 6) :
 	timer.start()
 
 var cAni : String = "Walk"
+var prevCAni = ""
 
 func _process(_delta):
 	
@@ -345,7 +366,16 @@ func _process(_delta):
 		Vector2(-1, 1) : directionString = "DownLeft"
 		Vector2(1, 1) : directionString = "DownRight"
 	
-	sprite.set_animation(cAni + directionString)
+	var weaponString : String
+	match weapon :
+		Weapons.SMG : weaponString = "SMG"
+		Weapons.Shotgun : weaponString = "Shotgun"
+	
+	var frame = sprite.frame
+	sprite.set_animation(weaponString + cAni + directionString)
+	if prevCAni != cAni :
+		sprite.frame = frame
+		prevCAni = cAni
 
 func roundDirection(toRound : Vector2) :
 	return Vector2(round(toRound.x), round(toRound.y)).normalized()
@@ -353,15 +383,36 @@ func roundDirection(toRound : Vector2) :
 func _on_idle_timer_timeout():
 	State = States.Move
 
+var prevFrame = 1
+
 func _on_animated_sprite_2d_frame_changed():
 	if sprite.animation.contains("Walk") :
 		if sprite.frame == 16 or sprite.frame == 0 :
 			Step.play()
 	if sprite.animation.contains("Shoot") :
-		if sprite.frame == 1 :
-			Fire.play()
-			gunModule.fire(DMG, AP, direction, inaccuracy * revved, 64)
-			velocity += (direction * -1) * recoil
+		if prevFrame == sprite.frame : 
+			prevFrame = sprite.frame
+			return false
+		prevFrame = sprite.frame
+		
+		match weapon :
+			Weapons.SMG :
+				if sprite.frame == 1 :
+					Fire.play()
+					gunModule.fire(SMGDMG, SMGAP, direction, SMGInaccuracy * revved, 64)
+					velocity += (direction * -1) * SMGRecoil
+			Weapons.Shotgun :
+				match sprite.frame :
+					8 : $PumpB.play()
+					10 : $PumpA.play()
+					1 :
+						$ShotgunA.play()
+						$ShotgunB.play()
+						var ShotgunPellets = randi_range(ShotgunMinPellets, ShotgunMaxPellets)
+						var accuracy = (ShotgunInaccuracy / 2) + ((ShotgunInaccuracy / 2) / revved)
+						for x in ShotgunPellets :
+							gunModule.fire(ShotgunDMG, ShotgunAP, direction, accuracy, 192, randf_range(8192, 16384))
+						velocity += (direction * -1) * ShotgunRecoil
 
 func _on_sub_navigation_navigation_finished():
 	

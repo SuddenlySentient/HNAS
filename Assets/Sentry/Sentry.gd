@@ -65,7 +65,7 @@ func backToTheWall() :
 
 func _physics_process(delta) :
 	
-	velocity = velocity.lerp(Vector2.ZERO, delta * 2)
+	velocity = velocity.lerp(Vector2.ZERO, delta)
 	move_and_slide()
 	velocity = get_real_velocity()
 	dealAggro()
@@ -230,7 +230,7 @@ func adjustDMG(DMGDealt : int, dealer, DMGtype : String, source : Node = null) :
 			direction = -dealer.direction
 			knocked()
 	elif DMGtype == "Projectile" : 
-		velocity += direction * 256
+		#velocity += direction * 256
 		dodge()
 		$Ping.play()
 	return DMGDealt

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://6lg6q0wyhlag"]
+[gd_scene load_steps=31 format=3 uid="uid://6lg6q0wyhlag"]
 
 [ext_resource type="Script" path="res://Assets/SUB-RFL-48/sub_rfl_48.gd" id="1_evgs4"]
 [ext_resource type="SpriteFrames" uid="uid://dixx16d0v7joh" path="res://Assets/SUB-RFL-48/Frames.tres" id="1_mp564"]
@@ -17,6 +17,10 @@
 [ext_resource type="AudioStream" uid="uid://cevrlcgyxnd8y" path="res://Assets/SUB-RFL-48/Sound/Walk/physx_rubber_hit_light_06.wav" id="13_d4pxe"]
 [ext_resource type="AudioStream" uid="uid://bm7cw0hectbjw" path="res://Assets/SUB-RFL-48/Plasma_SMG.wav" id="14_1qt1s"]
 [ext_resource type="Script" path="res://Assets/SUB-RFL-48/SRVoice.gd" id="16_8lleg"]
+[ext_resource type="AudioStream" uid="uid://33v3ohovxutc" path="res://Assets/SUB-RFL-48/Sound/Explosion1.wav" id="18_yh6l3"]
+[ext_resource type="AudioStream" uid="uid://dn4vgopcic6jy" path="res://Assets/SUB-RFL-48/Sound/optical_maser_off.wav" id="19_8u7wp"]
+[ext_resource type="AudioStream" uid="uid://ddk2wgqj4inax" path="res://Assets/SUB-RFL-48/Sound/shotgunpump1.wav" id="20_lanf2"]
+[ext_resource type="AudioStream" uid="uid://bpb48sl8qtk8h" path="res://Assets/SUB-RFL-48/Sound/shotgunpump2.wav" id="21_lrfoe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_whhbl"]
 radius = 32.0
@@ -44,6 +48,26 @@ random_pitch = 1.5
 streams_count = 1
 stream_0/stream = ExtResource("14_1qt1s")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kjxkt"]
+random_pitch = 1.25
+random_volume_offset_db = 5.0
+streams_count = 1
+stream_0/stream = ExtResource("18_yh6l3")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_sag5u"]
+random_pitch = 1.25
+random_volume_offset_db = 5.0
+streams_count = 1
+stream_0/stream = ExtResource("19_8u7wp")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8yyqb"]
+streams_count = 1
+stream_0/stream = ExtResource("20_lanf2")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_twd0u"]
+streams_count = 1
+stream_0/stream = ExtResource("21_lrfoe")
+
 [node name="SUB-RFL-48-000" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
@@ -51,9 +75,6 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_evgs4")
 acceleration = 75.0
-DMG = 1
-inaccuracy = 10.0
-recoil = 0.125
 type = "SUB-RFL-48"
 team = "Facility"
 tags = Array[String](["Mechanical", "Robot", "Greater"])
@@ -99,9 +120,10 @@ texture = ExtResource("2_yrspc")
 [node name="SUBSprite" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 texture_filter = 1
+scale = Vector2(1.25, 1.25)
 sprite_frames = ExtResource("1_mp564")
-animation = &"ShootDown"
-offset = Vector2(0, -32)
+animation = &"ShotgunShootDown"
+offset = Vector2(0, -16)
 
 [node name="SUBCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_whhbl")
@@ -110,6 +132,7 @@ shape = SubResource("CircleShape2D_whhbl")
 path_desired_distance = 64.0
 target_desired_distance = 64.0
 path_max_distance = 64.0
+path_postprocessing = 1
 avoidance_enabled = true
 radius = 32.0
 neighbor_distance = 128.0
@@ -123,6 +146,7 @@ debug_path_custom_line_width = 4.0
 one_shot = true
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+scale = Vector2(1.5, 1.5)
 occluder = SubResource("OccluderPolygon2D_81ks5")
 
 [node name="CircleLight" type="PointLight2D" parent="."]
@@ -176,6 +200,32 @@ max_polyphony = 4
 max_distance = 3072.0
 attenuation = 2.0
 script = ExtResource("16_8lleg")
+
+[node name="ShotgunA" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_kjxkt")
+volume_db = 5.0
+max_distance = 4096.0
+attenuation = 2.0
+max_polyphony = 4
+
+[node name="ShotgunB" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_sag5u")
+volume_db = -5.0
+max_distance = 4096.0
+attenuation = 2.0
+max_polyphony = 4
+
+[node name="PumpA" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_8yyqb")
+max_distance = 2048.0
+attenuation = 2.0
+max_polyphony = 2
+
+[node name="PumpB" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_twd0u")
+max_distance = 2048.0
+attenuation = 2.0
+max_polyphony = 2
 
 [node name="DebugLabel" type="Label" parent="."]
 modulate = Color(4, 4, 4, 1)
