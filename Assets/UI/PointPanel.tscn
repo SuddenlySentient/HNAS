@@ -88,6 +88,7 @@ stream_3/stream = ExtResource("20_bruoq")
 transparent_bg = true
 canvas_item_default_texture_filter = 0
 title = "POINT PANEL"
+position = Vector2i(0, 24)
 size = Vector2i(384, 384)
 wrap_controls = true
 transient = true

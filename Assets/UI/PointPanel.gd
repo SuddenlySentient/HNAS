@@ -6,6 +6,7 @@ var mouseHeld = false
 @export var sizeSnap = 64
 var score : int = 0
 @export var scoreCap : int = 6
+@export var disabled : bool = false
 @onready var beep = $VBoxContainer/HBoxContainer/Ticker/Beep
 @onready var maxReached = $VBoxContainer/HBoxContainer/Ticker/MaxReached
 @onready var consoleText = $VBoxContainer/Console/MarginContainer/Label
@@ -58,6 +59,9 @@ func _process(delta):
 		moveIntoFrame()
 
 func givePoints(amount : int, reason : String, period : float = 1) :
+	
+	if disabled : return false
+	
 	var originalAmount = amount
 	if multiplier != 1 and sign(amount) == 1 :
 		amount = int(amount * multiplier)
@@ -79,6 +83,7 @@ func givePoints(amount : int, reason : String, period : float = 1) :
 	consoleText.visible_characters = consoleText.text.length()
 	consoleText.text += outputText
 	
+	cappedAmount = consoleText.visible_characters + consoleText.text.length()
 	$TypeTimer.start()
 	typing = true
 	await doneTyping
@@ -182,11 +187,13 @@ func updateCap(newCap : int) :
 
 @export var typingSpeed = 1
 var typingTime : float = 0
+var cappedAmount = 0
 
 func _on_type_timer_timeout():
 	if consoleText.visible_characters < consoleText.text.length() :
 		$KeyStroke.play()
 		consoleText.visible_characters += ceil(typingSpeed * typingTime)
+		consoleText.visible_characters = clamp(consoleText.visible_characters, 0, cappedAmount)
 		typingTime += 0.25
 		$TypeTimer.start()
 	else : 

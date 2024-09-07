@@ -63,7 +63,7 @@ func backToTheWall() :
 	
 	return backDirection
 
-func _physics_process(delta) :
+func think(delta) :
 	
 	velocity = velocity.lerp(Vector2.ZERO, delta)
 	move_and_slide()

@@ -122,17 +122,18 @@ y_sort_enabled = true
 texture_filter = 1
 scale = Vector2(1.25, 1.25)
 sprite_frames = ExtResource("1_mp564")
-animation = &"ShotgunShootDown"
+animation = &"ShotgunAimDown"
+frame_progress = 0.679926
 offset = Vector2(0, -16)
 
 [node name="SUBCollision" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_whhbl")
 
 [node name="SUBNavigation" type="NavigationAgent2D" parent="."]
 path_desired_distance = 64.0
 target_desired_distance = 64.0
 path_max_distance = 64.0
-path_postprocessing = 1
 avoidance_enabled = true
 radius = 32.0
 neighbor_distance = 128.0
@@ -169,16 +170,20 @@ offset = Vector2(0, 128)
 scale = Vector2(0.333333, 0.166667)
 monitorable = false
 
-[node name="FireCollision" type="CollisionPolygon2D" parent="Flashlight/FireArea"]
+[node name="SMGFireCollision" type="CollisionPolygon2D" parent="Flashlight/FireArea"]
 visible = false
 polygon = PackedVector2Array(0, 0, 640, 2048, -640, 2048)
 
+[node name="ShotgunFireCollision" type="CollisionPolygon2D" parent="Flashlight/FireArea"]
+visible = false
+polygon = PackedVector2Array(0, 0, 512, 512, 640, 1024, 0, 1536, -640, 1024, -512, 512)
+
 [node name="Vision" type="Area2D" parent="Flashlight"]
+visible = false
 scale = Vector2(0.333333, 0.166667)
 collision_layer = 2
 
 [node name="Vision Shape" type="CollisionShape2D" parent="Flashlight/Vision"]
-visible = false
 position = Vector2(0, 1024)
 shape = SubResource("CircleShape2D_wi45q")
 debug_color = Color(1, 0.376471, 0.25098, 0.0627451)

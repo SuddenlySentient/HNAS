@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bsub1nfyeismv"
+path="res://.godot/imported/helllloooo searching.wav-282fd8012ca6b96c26acf9a3155794b8.sample"
+
+[deps]
+
+source_file="res://Assets/Mantis/Audio/Voice/helllloooo searching.wav"
+dest_files=["res://.godot/imported/helllloooo searching.wav-282fd8012ca6b96c26acf9a3155794b8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

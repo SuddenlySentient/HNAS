@@ -32,7 +32,7 @@ Approach = 4
 }
 var State = States.Ready
 
-func _physics_process(delta) :
+func think(delta) :
 	
 	healthRemaining = float(HP) / float(maxHP)
 	

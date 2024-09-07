@@ -25,11 +25,11 @@ func _init():
 
 func getName() :
 	var numb = str( randi_range(0, 998))
-	while numb.length() < 3 : numb + "0"
+	while numb.length() < 3 : numb += "0"
 	var newName = type + "-" + numb
 	return newName
 
-func _physics_process(delta):
+func think(delta) :
 	
 	dealAggro()
 	

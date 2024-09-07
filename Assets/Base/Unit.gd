@@ -30,8 +30,15 @@ var direction : Vector2 = Vector2.DOWN
 @export var pointsOnDeath : int = 5 
 var effects : Array[Effect] = [] 
 var dead = false
+@export var disabled : bool = false
 
 
+
+func _physics_process(delta) :
+	if disabled : return false
+	think(delta)
+
+func think(_delta) : pass
 
 func _init():
 	await ready
@@ -86,9 +93,6 @@ func damage(DMG : int, AP : int, dealer, DMGtype : String, source : Node = null)
 		if dealer == self : givePoints(pointsOnDeath * 2, "Self Kill")
 		elif dealer != null and isFoe(dealer) == false : 
 			givePoints(pointsOnDeath * 2, "Team Kill")
-		elif dealer != null and dealer.type == type : 
-			@warning_ignore("narrowing_conversion")
-			givePoints(pointsOnDeath * 1.5, "Infighting")
 		else : givePoints(pointsOnDeath, "Kill")
 		die(source.name)
 	
@@ -250,7 +254,7 @@ func enemiesInRange(areas : Array[Area2D]) :
 @onready var UI = $"../../UI"
 
 func givePoints(amount : int, reason : String, period : float = 1) :
-	reason += " : " + name
+	#reason += " : " + name
 	UI.givePoints(amount, reason, period)
 
 @export var weight : float = ARM / 2.0

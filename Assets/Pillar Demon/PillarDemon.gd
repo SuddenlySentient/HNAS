@@ -73,7 +73,7 @@ func getName() :
 	var newName = type + " " + "1"
 	return newName
 
-func _physics_process(delta) :
+func think(delta) :
 	
 	recentSeenCheck = seenCheck()
 	thingsInVision = checkVision(true)

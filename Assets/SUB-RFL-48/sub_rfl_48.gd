@@ -70,7 +70,7 @@ func getName() :
 		if thing.name == newName : newName = getName()
 	return newName
 
-func _physics_process(delta) :
+func think(delta) :
 	
 	if isLeader and followers.size() == 0 : 
 		isLeader = false
@@ -220,7 +220,7 @@ var avoidenceVelocity : Vector2 = Vector2.ZERO
 func actionQuery() :
 	match inSquad :
 		false : #alone logic
-			if State == States.Move : voice.tryVoice("Alone")
+			if State != States.Shoot and State != States.Approach : voice.tryVoice("Alone")
 		true : 
 			match isLeader :
 				false : #follower logic, probably ask leader
@@ -292,6 +292,14 @@ func move(delta) :
 			direction = direction + Vector2(randf_range(-randoTurn, randoTurn), randf_range(-randoTurn, randoTurn))
 			velocity = velocity.lerp((direction * speed) + (avoidenceVelocity * 0.75), acceleration * delta)
 		States.Approach :
+			match weapon :
+				Weapons.SMG :
+					$Flashlight/FireArea/SMGFireCollision.disabled = false
+					$Flashlight/FireArea/ShotgunFireCollision.disabled = true
+				Weapons.Shotgun :
+					$Flashlight/FireArea/SMGFireCollision.disabled = true
+					$Flashlight/FireArea/ShotgunFireCollision.disabled = false
+			
 			if aggroTarget == null : 
 				State = States.Move
 				return false
@@ -315,8 +323,14 @@ func shoot(delta) :
 	cAni = "Shoot"
 	
 	match weapon :
-		Weapons.SMG : sprite.speed_scale = 1 * revved
-		Weapons.Shotgun : sprite.speed_scale = (0.5 / revved) + 0.25
+		Weapons.SMG : 
+			$Flashlight/FireArea/SMGFireCollision.disabled = false
+			$Flashlight/FireArea/ShotgunFireCollision.disabled = true
+			sprite.speed_scale = 1 * revved
+		Weapons.Shotgun : 
+			$Flashlight/FireArea/SMGFireCollision.disabled = true
+			$Flashlight/FireArea/ShotgunFireCollision.disabled = false
+			sprite.speed_scale = (0.5 / revved) + 0.25
 	
 	if aggroList.is_empty() : 
 		aggroTarget = null
@@ -341,6 +355,7 @@ func goIdle(lowerRange : float = 3, UpperRange : float = 6) :
 	timer.start()
 
 var cAni : String = "Walk"
+var prevAni = ""
 var prevCAni = ""
 
 func _process(_delta):
@@ -373,9 +388,10 @@ func _process(_delta):
 	
 	var frame = sprite.frame
 	sprite.set_animation(weaponString + cAni + directionString)
-	if prevCAni != cAni :
+	if prevAni != sprite.animation and cAni == prevCAni :
 		sprite.frame = frame
-		prevCAni = cAni
+		prevAni = sprite.animation
+	prevCAni = cAni
 
 func roundDirection(toRound : Vector2) :
 	return Vector2(round(toRound.x), round(toRound.y)).normalized()
@@ -383,18 +399,11 @@ func roundDirection(toRound : Vector2) :
 func _on_idle_timer_timeout():
 	State = States.Move
 
-var prevFrame = 1
-
 func _on_animated_sprite_2d_frame_changed():
 	if sprite.animation.contains("Walk") :
 		if sprite.frame == 16 or sprite.frame == 0 :
 			Step.play()
 	if sprite.animation.contains("Shoot") :
-		if prevFrame == sprite.frame : 
-			prevFrame = sprite.frame
-			return false
-		prevFrame = sprite.frame
-		
 		match weapon :
 			Weapons.SMG :
 				if sprite.frame == 1 :
@@ -451,7 +460,10 @@ func indirectDMG(_who : Unit, amount : int) :
 	if amount == 0 : voice.tryVoice("NoDMG")
 	else : voice.tryVoice("DealDMG")
 
-func _on_hurt(_DMG, DMGtype):
+func _on_hurt(_DMG, DMGtype) :
+	
+	voice.tryVoice("Hurt")
+	
 	match DMGtype :
 		"Melee" :
 			revved = 0.5

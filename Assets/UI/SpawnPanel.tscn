@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://tv4jdog6wsyu"]
+[gd_scene load_steps=40 format=3 uid="uid://tv4jdog6wsyu"]
 
 [ext_resource type="Theme" uid="uid://i5wcemsxfl4u" path="res://Assets/UI/Window.tres" id="1_pff0r"]
 [ext_resource type="Theme" uid="uid://d3md10mt5mmql" path="res://Assets/UI/Default.tres" id="2_liqo0"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://c51roopbssb6b" path="res://Assets/SUB-RFL-48/Frames/SMG/Shooting/Down/0000.png" id="8_x1ovs"]
 [ext_resource type="Texture2D" uid="uid://c1gt17vfg7ndg" path="res://Assets/AMBEA/Frames/Hover/Down/0000.png" id="13_4bcb0"]
 [ext_resource type="AudioStream" uid="uid://bob070kkm2nik" path="res://Assets/UI/Sounds/bubbly_counter_01.wav" id="13_obc2y"]
+[ext_resource type="Texture2D" uid="uid://cb88uoqku2uoh" path="res://Assets/Mantis/Frames/Icon.png" id="14_pgnpy"]
 [ext_resource type="AudioStream" uid="uid://drkexaibko8yr" path="res://Assets/UI/Sounds/bubbly_counter_02.wav" id="14_ux4k3"]
 [ext_resource type="AudioStream" uid="uid://cvi1a2cjb506r" path="res://Assets/UI/Sounds/bubbly_counter_03.wav" id="15_hmya3"]
 
@@ -391,6 +392,36 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AMBEAButton" type="Button" parent="Control/ScrollContainer/HBoxContainer/AMBEAPanel"]
+layout_mode = 2
+theme = SubResource("Theme_c7048")
+toggle_mode = true
+action_mode = 0
+
+[node name="MantisPanel" type="PanelContainer" parent="Control/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(144, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
+
+[node name="TextureRect" type="TextureRect" parent="Control/ScrollContainer/HBoxContainer/MantisPanel"]
+custom_minimum_size = Vector2(64, 144)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("14_pgnpy")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Control/ScrollContainer/HBoxContainer/MantisPanel"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Mantis"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MantisButton" type="Button" parent="Control/ScrollContainer/HBoxContainer/MantisPanel"]
 layout_mode = 2
 theme = SubResource("Theme_c7048")
 toggle_mode = true

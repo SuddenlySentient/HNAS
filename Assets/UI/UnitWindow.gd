@@ -7,6 +7,7 @@ var observedUnit : Unit
 @onready var healthBar : ProgressBar = $VBoxContainer/VBoxContainer2/HBoxContainer/Health
 @onready var healthBarLabel : Label = $VBoxContainer/VBoxContainer2/HBoxContainer/Health/Label
 @export var updateHPSpeed = 16
+@onready var adjustParticles = load("res://Assets/Base/Adjust/adjustParticles.tscn")
 
 var mouseHeld = false
 var closing = false
@@ -25,6 +26,15 @@ func _enter_tree():
 	match type :
 		"SUB-RFL-48"  :
 			$VBoxContainer/VBoxContainer/SR.show()
+			$VBoxContainer/VBoxContainer/SRWeapon.show()
+			match observedUnit.weapon :
+				observedUnit.Weapons.SMG :
+					$VBoxContainer/VBoxContainer/SRWeapon/SMG.show()
+					$VBoxContainer/VBoxContainer/SRWeapon/WeaponBox.value = 0
+				observedUnit.Weapons.Shotgun :
+					$VBoxContainer/VBoxContainer/SRWeapon/Shotgun.show()
+					$VBoxContainer/VBoxContainer/SRWeapon/WeaponBox.value = 1
+			
 		"Pillar Demon"  :
 			$VBoxContainer/VBoxContainer/PD.show()
 		"Seraph"  :
@@ -251,3 +261,20 @@ func moveIntoFrame() :
 		if position.y < frame.position.y : position.y = frame.position.y
 		elif position.y > maxY : position.y = maxY
 		$IntoFrame.play()
+
+func _on_weapon_box_value_changed(value: float) -> void:
+	adjustPart()
+	match value :
+		0.0 :
+			$VBoxContainer/VBoxContainer/SRWeapon/SMG.show()
+			$VBoxContainer/VBoxContainer/SRWeapon/Shotgun.hide()
+			observedUnit.weapon = observedUnit.Weapons.SMG
+		1.0 :
+			$VBoxContainer/VBoxContainer/SRWeapon/SMG.hide()
+			$VBoxContainer/VBoxContainer/SRWeapon/Shotgun.show()
+			observedUnit.weapon = observedUnit.Weapons.Shotgun
+
+func adjustPart() :
+	var newParticles = adjustParticles.instantiate()
+	newParticles.get_child(0).global_position = observedUnit.global_position
+	observedUnit.add_child(newParticles)

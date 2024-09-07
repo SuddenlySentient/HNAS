@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b7e87pw36756c"]
+[gd_scene load_steps=48 format=3 uid="uid://b7e87pw36756c"]
 
 [ext_resource type="Theme" uid="uid://i5wcemsxfl4u" path="res://Assets/UI/Window.tres" id="1_3p5ce"]
 [ext_resource type="FontFile" uid="uid://drk2hxgvh0f5a" path="res://Assets/MinecraftBold-nMK1.otf" id="1_4s5y7"]
@@ -260,6 +260,48 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1n1b"]
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+border_width_left = 8
+border_width_right = 8
+border_color = Color(0.3, 0.3, 0.3, 1)
+corner_radius_top_left = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+expand_margin_right = 2.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrllp"]
+content_margin_top = 4.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.48, 0.8, 0.746667, 1)
+border_width_left = 8
+border_width_right = 8
+border_color = Color(0.24, 0.6, 0.6, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_detail = 1
+expand_margin_left = 2.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e28jw"]
+content_margin_left = 16.0
+content_margin_top = 4.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.8, 0.4, 0.32, 1)
+border_width_left = 8
+border_width_right = 8
+border_color = Color(0.6, 0.12, 0.12, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_detail = 1
+expand_margin_left = 2.0
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1fkjc"]
@@ -746,6 +788,67 @@ text = "Leader"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SRWeapon" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="Weapon" type="PanelContainer" parent="VBoxContainer/VBoxContainer/SRWeapon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme = ExtResource("5_rmh1g")
+theme_override_styles/panel = SubResource("StyleBoxFlat_e1n1b")
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SRWeapon/Weapon"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4s5y7")
+theme_override_font_sizes/font_size = 20
+text = "Weapon"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SMG" type="PanelContainer" parent="VBoxContainer/VBoxContainer/SRWeapon"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme = ExtResource("5_rmh1g")
+theme_override_styles/panel = SubResource("StyleBoxFlat_xrllp")
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SRWeapon/SMG"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4s5y7")
+theme_override_font_sizes/font_size = 20
+text = "SMG"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Shotgun" type="PanelContainer" parent="VBoxContainer/VBoxContainer/SRWeapon"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme = ExtResource("5_rmh1g")
+theme_override_styles/panel = SubResource("StyleBoxFlat_e28jw")
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/SRWeapon/Shotgun"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_4s5y7")
+theme_override_font_sizes/font_size = 20
+text = "Shotgun"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WeaponBox" type="SpinBox" parent="VBoxContainer/VBoxContainer/SRWeapon"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme = ExtResource("5_rmh1g")
+max_value = 1.0
+alignment = 1
+
 [node name="PD" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
@@ -830,3 +933,4 @@ stream = SubResource("AudioStreamRandomizer_7ob2m")
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="pressed" from="VBoxContainer/VBoxContainer2/HBoxContainer/ZoomToButton" to="." method="_on_zoom_to_button_pressed"]
+[connection signal="value_changed" from="VBoxContainer/VBoxContainer/SRWeapon/WeaponBox" to="." method="_on_weapon_box_value_changed"]

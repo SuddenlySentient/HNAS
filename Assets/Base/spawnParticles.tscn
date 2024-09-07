@@ -18,14 +18,15 @@ func _on_gpu_particles_2d_2_finished():
 "
 
 [sub_resource type="Gradient" id="Gradient_p0emb"]
+offsets = PackedFloat32Array(0, 0.992832)
 colors = PackedColorArray(0, 0.5, 1, 1, 0, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_rrpdh"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t3b6u"]
 gradient = SubResource("Gradient_p0emb")
 
 [sub_resource type="Curve" id="Curve_a6v5a"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.75, 0), 0.0, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_mlgft"]
 curve = SubResource("Curve_a6v5a")
@@ -52,17 +53,14 @@ scale_min = 2.0
 scale_max = 8.0
 scale_over_velocity_max = 1.0
 scale_over_velocity_curve = SubResource("CurveTexture_rs01b")
-color_initial_ramp = SubResource("GradientTexture1D_rrpdh")
+color_initial_ramp = SubResource("GradientTexture1D_t3b6u")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3cdb0"]
 random_pitch = 1.25
 streams_count = 3
 stream_0/stream = ExtResource("1_tn10e")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("2_hccki")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("3_wort2")
-stream_2/weight = 1.0
 
 [node name="spawnParticles" type="CanvasLayer"]
 layer = 2

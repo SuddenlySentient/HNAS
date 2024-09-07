@@ -36,7 +36,7 @@ func getName() :
 		if thing.name == newName : newName = getName()
 	return newName
 
-func _physics_process(delta) :
+func think(delta) :
 	
 	if is_nan(position.x) : 
 		push_error("Seraph Velocity Error")

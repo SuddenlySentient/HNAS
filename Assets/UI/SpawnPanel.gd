@@ -11,7 +11,8 @@ $Control/ScrollContainer/HBoxContainer/PDPanel,
 $Control/ScrollContainer/HBoxContainer/VPPanel,
 $Control/ScrollContainer/HBoxContainer/SEPanel,
 $Control/ScrollContainer/HBoxContainer/SNPanel,
-$Control/ScrollContainer/HBoxContainer/AMBEAPanel
+$Control/ScrollContainer/HBoxContainer/AMBEAPanel,
+$Control/ScrollContainer/HBoxContainer/MantisPanel
 ]
 enum units {
 None = 0,
@@ -20,7 +21,8 @@ PD = 2,
 VP = 3,
 SE = 4,
 SN = 4,
-AMBEA = 5
+AMBEA = 5,
+MT = 6
 }
 var selectedUnit : units = units.None
 @onready var teamButtons = [
@@ -43,7 +45,8 @@ load("res://Assets/Pillar Demon/PillarDemon.tscn"),
 load("res://Assets/Vampire/Vampire.tscn"),
 load("res://Assets/Seraph/seraph.tscn"),
 load("res://Assets/Sentry/Sentry.tscn"),
-load("res://Assets/AMBEA/AMBEA.tscn")
+load("res://Assets/AMBEA/AMBEA.tscn"),
+load("res://Assets/Mantis/Mantis.tscn")
 ]
 
 func _input(_event) :

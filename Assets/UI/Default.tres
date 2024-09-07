@@ -1,6 +1,20 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://d3md10mt5mmql"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://d3md10mt5mmql"]
 
 [ext_resource type="FontFile" uid="uid://drk2hxgvh0f5a" path="res://Assets/MinecraftBold-nMK1.otf" id="1_lmdyx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a7kri"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lfjg4"]
+bg_color = Color(0.25, 0.25, 0.25, 1)
+border_width_left = 6
+border_width_right = 6
+border_color = Color(0.4, 0.4, 0.4, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 2
+anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ng2x"]
 content_margin_left = 16.0
@@ -71,6 +85,9 @@ anti_aliasing = false
 [resource]
 default_font = ExtResource("1_lmdyx")
 default_font_size = 10
+LineEdit/font_sizes/font_size = 20
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_a7kri")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_lfjg4")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_4ng2x")
 TabContainer/styles/panel = SubResource("StyleBoxFlat_44y8g")
 TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_2qi13")

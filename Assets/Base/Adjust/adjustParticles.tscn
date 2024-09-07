@@ -1,0 +1,101 @@
+[gd_scene load_steps=15 format=3 uid="uid://b6omjwk5tdh3t"]
+
+[ext_resource type="AudioStream" uid="uid://dqnguju0h0tni" path="res://Assets/Base/Adjust/antigrav_zone_exit_01.wav" id="1_0tvi1"]
+[ext_resource type="AudioStream" uid="uid://cowkfn7telsg7" path="res://Assets/Base/Adjust/antigrav_zone_exit_02.wav" id="2_a1uom"]
+[ext_resource type="AudioStream" uid="uid://nxqlqni4e3ol" path="res://Assets/Base/Adjust/antigrav_zone_exit_03.wav" id="3_qu60r"]
+
+[sub_resource type="GDScript" id="GDScript_71a88"]
+script/source = "extends CanvasLayer
+
+func _physics_process(_delta: float) -> void:
+	$GPUParticles2D2.global_position = get_parent().global_position
+
+func _enter_tree():
+	#$GPUParticles2D2.modulate = modu
+	$GPUParticles2D2.restart()
+
+func _on_gpu_particles_2d_2_finished():
+	queue_free()
+"
+
+[sub_resource type="Gradient" id="Gradient_gq3ae"]
+colors = PackedColorArray(1, 0.25, 0, 1, 1, 0, 0.25, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nl8tx"]
+gradient = SubResource("Gradient_gq3ae")
+
+[sub_resource type="Curve" id="Curve_qnlcx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_p15rf"]
+curve = SubResource("Curve_qnlcx")
+
+[sub_resource type="Curve" id="Curve_a6v5a"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_mlgft"]
+curve = SubResource("Curve_a6v5a")
+
+[sub_resource type="Curve" id="Curve_b8pj2"]
+bake_resolution = 128
+_data = [Vector2(0, 0.125), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, -10.0, 0, 1]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rs01b"]
+curve = SubResource("Curve_b8pj2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a6qqw"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 128.0
+emission_ring_inner_radius = 192.0
+spread = 0.0
+orbit_velocity_min = -0.2
+orbit_velocity_max = 0.2
+orbit_velocity_curve = SubResource("CurveTexture_p15rf")
+radial_velocity_min = -256.0
+radial_velocity_max = -128.0
+radial_velocity_curve = SubResource("CurveTexture_mlgft")
+gravity = Vector3(0, 0, 0)
+damping_min = 64.0
+damping_max = 64.0
+scale_min = 2.0
+scale_max = 8.0
+scale_over_velocity_max = 1.0
+scale_over_velocity_curve = SubResource("CurveTexture_rs01b")
+color_initial_ramp = SubResource("GradientTexture1D_nl8tx")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mmc2s"]
+random_pitch = 1.25
+streams_count = 3
+stream_0/stream = ExtResource("1_0tvi1")
+stream_1/stream = ExtResource("2_a1uom")
+stream_2/stream = ExtResource("3_qu60r")
+
+[node name="CanvasLayer" type="CanvasLayer"]
+layer = 2
+follow_viewport_enabled = true
+script = SubResource("GDScript_71a88")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 64
+process_material = SubResource("ParticleProcessMaterial_a6qqw")
+lifetime = 4.0
+one_shot = true
+speed_scale = 5.0
+explosiveness = 1.0
+visibility_rect = Rect2(-256, -256, 512, 512)
+trail_enabled = true
+trail_lifetime = 0.25
+
+[node name="Spawn" type="AudioStreamPlayer2D" parent="GPUParticles2D2"]
+stream = SubResource("AudioStreamRandomizer_mmc2s")
+autoplay = true
+max_distance = 2048.0
+attenuation = 2.0
