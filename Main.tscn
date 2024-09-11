@@ -1,7 +1,6 @@
 [gd_scene load_steps=40 format=4 uid="uid://ca1pdu3fohe43"]
 
 [ext_resource type="PackedScene" uid="uid://44y0ibufw40t" path="res://Assets/Facility/Ceiling Lamp/ceiling_lamp.tscn" id="1_3qcgb"]
-[ext_resource type="PackedScene" uid="uid://bmkc1qgs776ut" path="res://ui.tscn" id="1_3utnm"]
 [ext_resource type="Texture2D" uid="uid://ccfhf5ts588ay" path="res://Assets/Facility/Floor.png" id="1_l7q3f"]
 [ext_resource type="Texture2D" uid="uid://dlkbyhdbm6w5h" path="res://Assets/Facility/Wall.png" id="2_24oxp"]
 [ext_resource type="Texture2D" uid="uid://hhxch26uhqyu" path="res://icon.svg" id="3_3cdt8"]
@@ -22,6 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://cfxeygpdmto5g" path="res://Assets/Base/Camera/camera_servo_key_off_02.wav" id="13_kym8x"]
 [ext_resource type="AudioStream" uid="uid://dyca2egl4xcvj" path="res://Assets/Base/Camera/camera_servo_key_off_03.wav" id="14_y1wne"]
 [ext_resource type="PackedScene" uid="uid://ciywg2rm71ke6" path="res://Assets/Mantis/Mantis.tscn" id="22_5fnse"]
+[ext_resource type="PackedScene" uid="uid://cnbw0veqxh4y" path="res://Assets/Base/Curiosity/Curiousity.tscn" id="23_ggel5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nogmr"]
 radius = 192.0
@@ -136,9 +136,6 @@ pattern_0 = SubResource("TileMapPattern_f6fuw")
 
 [node name="World" type="Node2D"]
 
-[node name="UI" parent="." instance=ExtResource("1_3utnm")]
-layer = 4
-
 [node name="Detector" type="Area2D" parent="."]
 monitorable = false
 
@@ -148,6 +145,7 @@ scale = Vector2(3, 3)
 texture = ExtResource("3_3cdt8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+visible = false
 shape = SubResource("CircleShape2D_nogmr")
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -188,6 +186,12 @@ tile_set = SubResource("TileSet_0ufni")
 
 [node name="Mantis" parent="Main" instance=ExtResource("22_5fnse")]
 position = Vector2(-384, 128)
+
+[node name="Curiousity" parent="Main" instance=ExtResource("23_ggel5")]
+curioName = "Test"
+strength = 16
+duration = -1
+doDecay = false
 
 [node name="Device" type="TileMapLayer" parent="."]
 y_sort_enabled = true

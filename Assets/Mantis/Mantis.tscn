@@ -1,4 +1,4 @@
-[gd_scene load_steps=1387 format=3 uid="uid://ciywg2rm71ke6"]
+[gd_scene load_steps=1391 format=3 uid="uid://ciywg2rm71ke6"]
 
 [ext_resource type="Script" path="res://Assets/Mantis/Mantis.gd" id="1_kx0xp"]
 [ext_resource type="Texture2D" uid="uid://c87wecvgkn20j" path="res://Assets/Mantis/Frames/Crawl/Down/0016.png" id="2_triht"]
@@ -1378,6 +1378,9 @@
 [ext_resource type="AudioStream" uid="uid://c5yxv06oxo8de" path="res://Assets/Mantis/Audio/sword_shing_02.wav" id="1376_l4eu3"]
 [ext_resource type="AudioStream" uid="uid://cy5cv74gr1m5t" path="res://Assets/Mantis/Audio/sword_shing_03.wav" id="1377_d4ylb"]
 [ext_resource type="AudioStream" uid="uid://3l6nref542nr" path="res://Assets/Mantis/Audio/sword_shing_04.wav" id="1378_7l8es"]
+[ext_resource type="AudioStream" uid="uid://faaxj0fkvwq7" path="res://Assets/Mantis/Audio/spike_impact_01.wav" id="1379_111sm"]
+[ext_resource type="AudioStream" uid="uid://lppxup5r4ixp" path="res://Assets/Mantis/Audio/spike_impact_02.wav" id="1380_w1nab"]
+[ext_resource type="AudioStream" uid="uid://bfpt8q1k6epkj" path="res://Assets/Mantis/Audio/spike_impact_03.wav" id="1381_3whub"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qro0o"]
 animations = [{
@@ -2185,7 +2188,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("242_2sn1u")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceADown",
 "speed": 30.0
 }, {
@@ -2289,7 +2292,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("275_orsht")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceADownLeft",
 "speed": 30.0
 }, {
@@ -2393,7 +2396,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("308_picph")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceADownRight",
 "speed": 30.0
 }, {
@@ -2497,7 +2500,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("341_86rif")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceALeft",
 "speed": 30.0
 }, {
@@ -2601,7 +2604,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("374_upmoi")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceARight",
 "speed": 30.0
 }, {
@@ -2705,7 +2708,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("407_wm10t")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceAUp",
 "speed": 30.0
 }, {
@@ -2809,7 +2812,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("440_02clu")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceAUpLeft",
 "speed": 30.0
 }, {
@@ -2913,7 +2916,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("473_p7v24")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceAUpRight",
 "speed": 30.0
 }, {
@@ -3014,7 +3017,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("505_lyea0")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceBDown",
 "speed": 30.0
 }, {
@@ -3115,7 +3118,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("537_pvcpg")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceBDownLeft",
 "speed": 30.0
 }, {
@@ -3216,7 +3219,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("569_ltk4o")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceBDownRight",
 "speed": 30.0
 }, {
@@ -3317,7 +3320,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("601_b5h3e")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceBLeft",
 "speed": 30.0
 }, {
@@ -3418,7 +3421,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("633_5rpgk")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceBRight",
 "speed": 30.0
 }, {
@@ -3519,7 +3522,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("665_3ir0l")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceBUp",
 "speed": 30.0
 }, {
@@ -3620,7 +3623,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("697_tukak")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceBUpLeft",
 "speed": 30.0
 }, {
@@ -3721,7 +3724,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("729_e2uat")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceBUpRight",
 "speed": 30.0
 }, {
@@ -3870,7 +3873,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("777_24i1f")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceCDown",
 "speed": 30.0
 }, {
@@ -4019,7 +4022,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("825_1pjgq")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceCDownLeft",
 "speed": 30.0
 }, {
@@ -4168,7 +4171,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("873_8gom2")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceCDownRight",
 "speed": 30.0
 }, {
@@ -4317,7 +4320,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("921_cl7a7")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceCLeft",
 "speed": 30.0
 }, {
@@ -4466,7 +4469,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("969_absc7")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceCRight",
 "speed": 30.0
 }, {
@@ -4615,7 +4618,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1017_vhxn7")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceCUp",
 "speed": 30.0
 }, {
@@ -4764,7 +4767,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1065_nl0b1")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceCUpLeft",
 "speed": 30.0
 }, {
@@ -4913,7 +4916,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1113_1wpne")
 }],
-"loop": true,
+"loop": false,
 "name": &"SliceCUpRight",
 "speed": 30.0
 }, {
@@ -5726,9 +5729,8 @@ animations = [{
 "speed": 30.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4e2yw"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_yvm2u"]
 radius = 48.0
-height = 160.0
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_idcor"]
 cull_mode = 1
@@ -5764,26 +5766,40 @@ stream_0/stream = ExtResource("1376_l4eu3")
 stream_1/stream = ExtResource("1377_d4ylb")
 stream_2/stream = ExtResource("1378_7l8es")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pxwho"]
+random_pitch = 1.2
+streams_count = 3
+stream_0/stream = ExtResource("1379_111sm")
+stream_1/stream = ExtResource("1380_w1nab")
+stream_2/stream = ExtResource("1381_3whub")
+
 [node name="Mantis" type="CharacterBody2D"]
+z_index = 1
+y_sort_enabled = true
 script = ExtResource("1_kx0xp")
+crawlSpeed = 2.0
 type = "Mantis"
 team = "Dungeon Spirit"
 tags = Array[String](["Demon", "Biological", "HasBlood", "Greater", "Blind"])
-maxSpeed = 225
+maxSpeed = 300
 pointsOnDeath = 12
+senses = {
+"Magic": 0.5,
+"Smell": 1.0,
+"Sound": 1.5
+}
 maxHP = 25
 weight = 3.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-scale = Vector2(1.5, 1.5)
+y_sort_enabled = true
+scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_qro0o")
-animation = &"CrawlDown"
+animation = &"SliceCDown"
 offset = Vector2(0, -64)
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, -32)
-shape = SubResource("CapsuleShape2D_4e2yw")
+shape = SubResource("CircleShape2D_yvm2u")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 visible = false
@@ -5810,15 +5826,17 @@ shape = SubResource("CircleShape2D_el7m3")
 debug_color = Color(0.6, 0.239216, 0.419608, 0.25098)
 
 [node name="nav" type="NavigationAgent2D" parent="."]
-path_desired_distance = 64.0
-target_desired_distance = 64.0
-path_max_distance = 64.0
+path_desired_distance = 128.0
+target_desired_distance = 96.0
+path_max_distance = 128.0
 avoidance_enabled = true
 radius = 32.0
 neighbor_distance = 128.0
 max_neighbors = 8
 time_horizon_agents = 2.0
+debug_enabled = true
 debug_use_custom = true
+debug_path_custom_color = Color(2, 0, 0.5, 1)
 debug_path_custom_point_size = 16.0
 debug_path_custom_line_width = 4.0
 
@@ -5844,3 +5862,18 @@ stream = SubResource("AudioStreamRandomizer_6vhgh")
 max_distance = 2048.0
 attenuation = 2.0
 max_polyphony = 4
+
+[node name="Spike" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_pxwho")
+volume_db = -10.0
+max_distance = 2048.0
+attenuation = 2.0
+max_polyphony = 16
+
+[node name="ComboTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="frame_changed" from="Sprite" to="." method="_on_sprite_frame_changed"]
+[connection signal="navigation_finished" from="nav" to="." method="_on_nav_navigation_finished"]
+[connection signal="timeout" from="ComboTimer" to="." method="_on_combo_timer_timeout"]

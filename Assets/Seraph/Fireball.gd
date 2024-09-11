@@ -18,7 +18,6 @@ func _physics_process(delta):
 		$ExplosionLight.energy = 16 * ($ExplostionTimer.time_left/$ExplostionTimer.wait_time) 
 	else :
 		size = linear_velocity.length() / 1536.0
-		size = 1
 		if size < 1 : $Whistle.stop()
 		elif $Whistle.playing == false : $Whistle.play()
 		$Light.texture_scale = 8 * sqrt(size)

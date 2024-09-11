@@ -52,10 +52,10 @@ load("res://Assets/Mantis/Mantis.tscn")
 func _input(_event) :
 	dealWithUnitPanels()
 	dealWithTeamButtons()
-
-func _process(delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) : mouseHeld = true
 	else : mouseHeld = false
+
+func _process(delta):
 	if mouseHeld == false :
 		position.x = lerp(position.x, snapped(position.x, positionSnap), delta * postionSnapSpeed)
 		position.y = lerp(position.y, snapped(position.y, positionSnap), delta * postionSnapSpeed)

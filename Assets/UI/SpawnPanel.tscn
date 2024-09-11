@@ -129,12 +129,11 @@ stream_2/stream = ExtResource("15_hmya3")
 transparent_bg = true
 canvas_item_default_texture_filter = 0
 title = "NPC Spawner"
-position = Vector2i(0, 24)
-size = Vector2i(256, 208)
+size = Vector2i(312, 208)
 wrap_controls = true
 transient = true
-min_size = Vector2i(256, 208)
-max_size = Vector2i(720, 208)
+min_size = Vector2i(312, 208)
+max_size = Vector2i(1052, 208)
 keep_title_visible = true
 theme = ExtResource("1_pff0r")
 theme_override_icons/close = SubResource("ImageTexture_i5e58")
@@ -351,7 +350,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 3
 texture = ExtResource("8_36q3w")
 expand_mode = 3
-stretch_mode = 4
+stretch_mode = 5
 
 [node name="Label" type="Label" parent="Control/ScrollContainer/HBoxContainer/SNPanel"]
 custom_minimum_size = Vector2(0, 24)
@@ -400,17 +399,15 @@ action_mode = 0
 [node name="MantisPanel" type="PanelContainer" parent="Control/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(144, 128)
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_w8tr1")
 
 [node name="TextureRect" type="TextureRect" parent="Control/ScrollContainer/HBoxContainer/MantisPanel"]
-custom_minimum_size = Vector2(64, 144)
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 8
 texture = ExtResource("14_pgnpy")
-expand_mode = 4
-stretch_mode = 4
+expand_mode = 3
+stretch_mode = 3
 
 [node name="Label" type="Label" parent="Control/ScrollContainer/HBoxContainer/MantisPanel"]
 custom_minimum_size = Vector2(0, 24)

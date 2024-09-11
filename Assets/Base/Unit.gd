@@ -31,7 +31,11 @@ var direction : Vector2 = Vector2.DOWN
 var effects : Array[Effect] = [] 
 var dead = false
 @export var disabled : bool = false
-
+@export var senses : Dictionary = {
+	"Sound": 1.0,
+	"Smell": 0.5,
+	"Magic": 0.1
+}
 
 
 func _physics_process(delta) :
@@ -66,6 +70,28 @@ func checkVision(ignoreHiding : bool = false):
 				if result.collider.canBeSeen or ignoreHiding : seen.append(result.collider)
 			else : seen.append(result.collider)
 	return seen
+
+func getCuriosities() :
+	var curioList : Array[Dictionary] = []
+	for x in map.get_children() :
+		if x is Curiousity :
+			var sensitivity : float = senses[x.curiousityTypes.keys()[x.curiousityType]]
+			if sensitivity > 0 :
+				var curioTile = map.local_to_map(x.global_position)
+				var distanceTo : float = ceil(getDistanceTo(map.map_to_local(curioTile)))
+				var midStep = pow(((1.0 / 4096.0) * distanceTo) * (1.0 / (x.strength / 16.0) ), 1.0 / sensitivity)
+				var cuiroStrength = ( (midStep + 1.5) / (2 * ((midStep + 1.5) - 1)) ) - 0.5
+				if trySeeTile(curioTile) == false : cuiroStrength = pow(cuiroStrength, 2)
+				cuiroStrength = clamp(cuiroStrength, 0, 1)
+				var newCurio : Dictionary = {
+					"Name" : x.curioName,
+					"Type" : x.curiousityType,
+					"Strength" : cuiroStrength,
+					"Source Team" : x.sourceTeam,
+					"Tile" : curioTile
+					}
+				curioList.append(newCurio)
+	return curioList
 
 @export_range(1, 256, 1, "or_greater") var maxHP : int = 1
 var HP : int = maxHP

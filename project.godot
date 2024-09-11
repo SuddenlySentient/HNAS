@@ -29,6 +29,7 @@ naming/scene_name_casing=1
 2d_physics/layer_1="Physic"
 2d_physics/layer_2="Vision"
 2d_physics/layer_3="Walls"
+2d_physics/layer_4="Sound"
 
 [rendering]
 

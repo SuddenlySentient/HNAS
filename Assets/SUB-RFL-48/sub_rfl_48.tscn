@@ -79,6 +79,11 @@ type = "SUB-RFL-48"
 team = "Facility"
 tags = Array[String](["Mechanical", "Robot", "Greater"])
 pointsOnDeath = 6
+senses = {
+"Magic": 0.0,
+"Smell": 0.0,
+"Sound": 1.0
+}
 maxHP = 16
 ARM = 2
 

@@ -177,6 +177,11 @@ tags = Array[String](["Angel", "Magic", "Greater", "Hover"])
 maxSpeed = 50
 nameList = Array[StringName]([&"Alpha", &"Beta", &"Gamma", &"Delta", &"Epsilon", &"Zeta", &"Eta", &"Theta", &"Iota", &"Kappa", &"Lambda", &"Mu", &"Nu", &"Xi", &"Omicron", &"Pi", &"Rho", &"Sigma", &"Tau", &"Upsilon", &"Phi", &"Chi", &"Phi", &"Chi", &"Psi", &"Omega", &"Digamma", &"San", &"Tsan", &"Heta", &"Koppa", &"Sampi"])
 pointsOnDeath = 25
+senses = {
+"Magic": 0.5,
+"Smell": 0.0,
+"Sound": 0.75
+}
 maxHP = 16
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

@@ -1712,6 +1712,11 @@ tags = Array[String](["Demon", "Biological", "HasBlood", "Lesser"])
 canBeSeen = false
 maxSpeed = 250
 pointsOnDeath = 2
+senses = {
+"Magic": 0.25,
+"Smell": 1.5,
+"Sound": 1.0
+}
 maxHP = 8
 ARM = 6
 weight = 1.0

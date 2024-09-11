@@ -1,4 +1,5 @@
 extends Unit
+class_name AMBEA
 
 @onready var sprite = $Sprite
 @onready var orb = $Rotate/Orb

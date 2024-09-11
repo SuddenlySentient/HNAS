@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://cnbw0veqxh4y"]
+
+[ext_resource type="Script" path="res://Assets/Base/Curiosity/Curiosity.gd" id="1_37qy4"]
+[ext_resource type="Texture2D" uid="uid://r03sifsygrob" path="res://Assets/Base/Curiosity/Sound.png" id="2_8iaec"]
+
+[sub_resource type="Gradient" id="Gradient_rtatl"]
+colors = PackedColorArray(100, 100, 100, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_23y6m"]
+gradient = SubResource("Gradient_rtatl")
+
+[sub_resource type="Curve" id="Curve_udhqd"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_iv3vp"]
+curve = SubResource("Curve_udhqd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yhekn"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 4.0
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_iv3vp")
+color_ramp = SubResource("GradientTexture1D_23y6m")
+
+[node name="Curiousity" type="Node2D"]
+script = ExtResource("1_37qy4")
+strength = 256
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+layer = 2
+follow_viewport_enabled = true
+
+[node name="SoundParticles" type="GPUParticles2D" parent="Canvas"]
+self_modulate = Color(0.5, 0.5, 0.5, 1)
+amount = 6
+process_material = SubResource("ParticleProcessMaterial_yhekn")
+texture = ExtResource("2_8iaec")
+speed_scale = 0.2
+visibility_rect = Rect2(-512, -512, 1024, 1024)
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

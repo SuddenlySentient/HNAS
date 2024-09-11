@@ -5408,6 +5408,11 @@ tags = Array[String](["Angel", "Magic", "Lesser", "Hover"])
 maxSpeed = 100
 reflectShots = true
 pointsOnDeath = 40
+senses = {
+"Magic": 0.5,
+"Smell": 0.0,
+"Sound": 0.25
+}
 maxHP = 96
 ARM = 8
 weight = 16.0
