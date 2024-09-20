@@ -18,10 +18,7 @@ var charge = 0
 
 
 
-func _init():
-	await ready
-	HP = maxHP
-	name = getName()
+func initUnit() :
 	vision = $Rotate/Vision
 
 func getName() :

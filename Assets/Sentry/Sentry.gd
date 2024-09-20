@@ -33,10 +33,7 @@ var cType : String = "Sword"
 
 
 
-func _init() :
-	await ready
-	HP = maxHP
-	name = getName()
+func initUnit() :
 	vision = $Rotate/Vision
 	nav = $nav
 	guardPos = global_position
@@ -74,7 +71,7 @@ func think(delta) :
 		"Walk" :
 			@warning_ignore("integer_division")
 			var sped = velocity.length() / (maxSpeed * 0.8)
-			sped = sped * velocity.normalized().dot(direction)
+			sped *= velocity.normalized().dot(direction)
 			sprite.speed_scale = sped
 		"Awake" : pass
 		_ :

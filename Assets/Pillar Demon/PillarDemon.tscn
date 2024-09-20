@@ -1708,17 +1708,18 @@ script = ExtResource("1_nppuk")
 desiredCompany = 3
 type = "Pillar Demon"
 team = "Pillar Demon"
+maxHP = 8
+ARM = 6
+maxSpeed = 250
 tags = Array[String](["Demon", "Biological", "HasBlood", "Lesser"])
 canBeSeen = false
-maxSpeed = 250
 pointsOnDeath = 2
 senses = {
 "Magic": 0.25,
 "Smell": 1.5,
 "Sound": 1.0
 }
-maxHP = 8
-ARM = 6
+moveNoise = 3.0
 weight = 1.0
 
 [node name="PDSprite" type="AnimatedSprite2D" parent="."]
@@ -1774,11 +1775,9 @@ debug_color = Color(0.6, 0.239216, 0.419608, 0.25098)
 path_desired_distance = 64.0
 target_desired_distance = 64.0
 path_max_distance = 64.0
-path_postprocessing = 1
 radius = 128.0
 neighbor_distance = 256.0
 max_neighbors = 2
-time_horizon_agents = 0.0
 time_horizon_obstacles = 1.0
 max_speed = 300.0
 avoidance_priority = 0.0
@@ -1838,7 +1837,6 @@ one_shot = true
 [connection signal="animation_finished" from="PDSprite" to="." method="_on_pd_sprite_animation_finished"]
 [connection signal="frame_changed" from="PDSprite" to="." method="_on_pd_sprite_frame_changed"]
 [connection signal="navigation_finished" from="PDNav" to="." method="_on_pd_nav_navigation_finished"]
-[connection signal="velocity_computed" from="PDNav" to="." method="_on_pd_nav_velocity_computed"]
 [connection signal="timeout" from="Sniff/SniffTimer" to="." method="_on_sniff_timer_timeout"]
 [connection signal="finished" from="Swarm" to="." method="_on_swarm_finished"]
 [connection signal="finished" from="Punch" to="." method="_on_swarm_finished"]

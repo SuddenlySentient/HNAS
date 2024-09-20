@@ -71,12 +71,15 @@ stream_0/stream = ExtResource("21_lrfoe")
 [node name="SUB-RFL-48-000" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
+use_parent_material = true
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_evgs4")
 acceleration = 75.0
 type = "SUB-RFL-48"
 team = "Facility"
+maxHP = 16
+ARM = 2
 tags = Array[String](["Mechanical", "Robot", "Greater"])
 pointsOnDeath = 6
 senses = {
@@ -84,8 +87,6 @@ senses = {
 "Smell": 0.0,
 "Sound": 1.0
 }
-maxHP = 16
-ARM = 2
 
 [node name="GunModule" parent="." instance=ExtResource("2_1dwod")]
 
@@ -125,10 +126,10 @@ texture = ExtResource("2_yrspc")
 [node name="SUBSprite" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 texture_filter = 1
+use_parent_material = true
 scale = Vector2(1.25, 1.25)
 sprite_frames = ExtResource("1_mp564")
-animation = &"ShotgunAimDown"
-frame_progress = 0.679926
+animation = &"SMGWalkDown"
 offset = Vector2(0, -16)
 
 [node name="SUBCollision" type="CollisionShape2D" parent="."]
@@ -145,6 +146,7 @@ neighbor_distance = 128.0
 max_neighbors = 8
 time_horizon_agents = 2.0
 debug_use_custom = true
+debug_path_custom_color = Color(4, 0, 0, 1)
 debug_path_custom_point_size = 16.0
 debug_path_custom_line_width = 4.0
 
@@ -274,7 +276,7 @@ text = "
 horizontal_alignment = 1
 
 [connection signal="hurt" from="." to="." method="_on_hurt"]
-[connection signal="hurt" from="." to="Voice" method="_on_subrfl_48_hurt"]
+[connection signal="unseenSense" from="." to="." method="_on_unseen_sense"]
 [connection signal="timeout" from="Test" to="." method="_on_test_timeout"]
 [connection signal="frame_changed" from="SUBSprite" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="navigation_finished" from="SUBNavigation" to="." method="_on_sub_navigation_navigation_finished"]

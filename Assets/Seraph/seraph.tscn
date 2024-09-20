@@ -173,8 +173,9 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_ysqkr")
 type = "Seraph"
-tags = Array[String](["Angel", "Magic", "Greater", "Hover"])
+maxHP = 16
 maxSpeed = 50
+tags = Array[String](["Angel", "Magic", "Greater", "Hover"])
 nameList = Array[StringName]([&"Alpha", &"Beta", &"Gamma", &"Delta", &"Epsilon", &"Zeta", &"Eta", &"Theta", &"Iota", &"Kappa", &"Lambda", &"Mu", &"Nu", &"Xi", &"Omicron", &"Pi", &"Rho", &"Sigma", &"Tau", &"Upsilon", &"Phi", &"Chi", &"Phi", &"Chi", &"Psi", &"Omega", &"Digamma", &"San", &"Tsan", &"Heta", &"Koppa", &"Sampi"])
 pointsOnDeath = 25
 senses = {
@@ -182,14 +183,14 @@ senses = {
 "Smell": 0.0,
 "Sound": 0.75
 }
-maxHP = 16
+doMoveNoise = false
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 position = Vector2(0, -48)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_cops4")
-frame_progress = 0.913358
+frame_progress = 0.185664
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2

@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d33cknvg7wsvs"]
+
+[ext_resource type="Shader" path="res://Assets/Base/Shaders/Dither.gdshader" id="1_ownyv"]
+
+[resource]
+shader = ExtResource("1_ownyv")
+shader_parameter/quant = 8.0

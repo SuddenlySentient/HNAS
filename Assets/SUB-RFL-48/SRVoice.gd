@@ -11,6 +11,7 @@ var randPitch : float = 0
 @export var getKillChance : int = 4
 @export var noDMGChance : int = 1024
 @export var dealDMGChance : int = 1024
+@export var hearChance : int = 4
 @onready var SR : SUBRFL48 = $".."
 
 var previousLine = ""
@@ -83,6 +84,12 @@ func tryVoice(voiceLine : String):
 					stream = dealDMGAudio
 					previousLine = voiceLine
 					play()
+			"Hear" :
+				if randi_range(1, dealDMGChance) == 1 and SR.inSquad :
+					print("Hear")
+					stream = hearAudio.pick_random()
+					previousLine = voiceLine
+					play()
 			_ :
 				print(self.name, " : Recieved Invalid Voiceline ''", voiceLine, "''" )
 
@@ -118,13 +125,14 @@ load("res://Assets/SUB-RFL-48/Sound/Voice/NeedBackup.wav"),
 load("res://Assets/SUB-RFL-48/Sound/Voice/NeedSupport.wav"),
 load("res://Assets/SUB-RFL-48/Sound/Voice/MaydayMayday.wav"),
 ]
+var hearAudio : Array[AudioStream] = [
+load("res://Assets/SUB-RFL-48/Sound/Voice/DidYouHearThat.wav"),
+load("res://Assets/SUB-RFL-48/Sound/Voice/IHeardSomething.wav")
+]
 var outnumberAudio : AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/TargetsAreOutnumbered.wav")
 var injuredAudio : AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/ImLow.wav")
 var uhOhAudio : AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/UhOh.wav")
 var dealDMGAudio : AudioStream = load("res://Assets/SUB-RFL-48/Sound/Voice/Tagged.wav")
-
-func _on_hurt(_DMG, _DMGtype):
-	tryVoice("Hurt")
 
 #func speechBubble(speechText : String) :
 #	pass

@@ -20,14 +20,11 @@ var State = States.Searching
 
 
 
-func _init():
-	await ready
+func initUnit() :
 	stamina = maxStamina
-	HP = maxHP
 	sprite.play()
 	vision = $Vision
 	$StaminaRegen.wait_time = staminaRegen
-	name = getName()
 
 func getName() :
 	var newName = nameList.pick_random() + "-" + str(randi_range(0 , 9))

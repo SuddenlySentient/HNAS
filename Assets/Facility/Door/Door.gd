@@ -15,6 +15,9 @@ extends Node2D
 var sideways = false
 @export var scaleSpeed = 2
 var locked = false
+var curio = load("res://Assets/Base/Curiosity/Curiousity.tscn")
+
+
 
 func _ready():
 	
@@ -72,6 +75,9 @@ func _physics_process(delta):
 func open() :
 	if sprite.is_playing() == false and locked == false : 
 		#print("OPEN")
+		var newCurio = curio.instantiate()
+		newCurio.createCuriousity("Door Open", 0, 12, null, 4)
+		map.add_child(newCurio)
 		lightTimer.start()
 		doorLight.color = Color("66ff66")
 		sprite.play("Door")

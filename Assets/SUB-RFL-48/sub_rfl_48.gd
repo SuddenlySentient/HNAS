@@ -51,13 +51,10 @@ var State = States.Move
 
 
 
-func _init() :
-	await ready
-	HP = maxHP
+func initUnit() :
 	testTimer.wait_time = randf_range(1.0, 2.0)
 	vision = $Flashlight/Vision
 	nav = $SUBNavigation
-	name = getName()
 	var randWeapon = randi_range(0, 2)
 	match randWeapon :
 		0, 1 : weapon = Weapons.SMG
@@ -130,10 +127,6 @@ func allies(node) :
 		if node is Unit and isFoe(node) == false :
 			return true
 	return false
-
-func exchangeTileInfo(node : Unit):
-	var nodeTileInfo = node.lastSeenTile
-	lastSeenTile.merge(nodeTileInfo)
 
 func squadLogic(node : SUBRFL48) :
 	
@@ -232,7 +225,6 @@ func actionQuery() :
 						var leaderPos : Vector2 = leader.global_position
 						var leaderFollowers : Array[SUBRFL48] = leader.followers.duplicate()
 						
-						lastSeenTile = leader.lastSeenTile
 						match State :
 							States.Move :
 								voice.tryVoice("Search")
@@ -469,3 +461,8 @@ func _on_hurt(_DMG, DMGtype) :
 			revved = 0.5
 		_ :
 			revved = revved / 1.5
+
+func _on_unseen_sense(sensedThing: Dictionary) :
+	if sensedThing["Type"] == 0 and sensedThing["Strength"] > 0.25 :
+		if randi_range(1, round((1.0 - sensedThing["Strength"]) * 100)) == 1 :
+			voice.tryVoice("Hear")

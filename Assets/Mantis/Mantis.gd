@@ -4,29 +4,94 @@ class_name Mantis
 var inVision = []
 @export var crawlSpeed : float = 1.8
 @export var turnSpeed : float = 8
+@export var knockback : int = 64
+@export var retreatHP : float = 0.5
+@export_group("Slice A")
+@export var sliceADMG : int = 6
+@export var sliceAAP : int = 3
+@export_group("Slice B")
+@export var sliceBDMG : int = 11
+@export var sliceBAP : int = 4
 var crawling : bool = false
 var cAni = "Walk"
 @onready var sprite = $Sprite
 var combo : int = 0
+enum States {
+Wander = 0,
+Approach = 1,
+Attack = 2,
+Retreat = 3
+}
+var State : States = States.Wander
 
 
 
-func _init() :
-	await ready
-	HP = maxHP
-	vision = $RotateNode/Vision
+func initUnit() :
+	vision = $Vision
 	nav = $nav
-	name = getName()
-	nav.target_position = newRandomPos() + global_position
+	nav.target_position = map.map_to_local(getTileToSearch())
 
 func think(delta) :
+	
 	dealVision()
-	print(getCuriosities())
-	attack()
-	#if randi_range(1, 256) == 1 : 
-	#	if crawling : exitCrawl()
-	#	else : enterCrawl()
+	for thing in inVision :
+		if thing is Unit :
+			if isFoe(thing) : aggroList.append(thing)
+	
+	dealAggro()
+	assignState()
+	doState()
+	
 	move(delta)
+	$RotateNode.rotation = direction.angle() - PI/2
+
+func assignState() :
+	
+	if State == States.Retreat : return false
+	if attacking : return false
+	
+	if aggroTarget == null :
+		State = States.Wander
+	else :
+		var HPpercentage = float(HP) / maxHP
+		if HPpercentage >= retreatHP :
+			var distanceToTarget = getDistanceTo(aggroTarget.global_position)
+			if distanceToTarget > 256 : State = States.Approach
+			else : State = States.Attack
+		else : 
+			State = States.Retreat
+			aggroList.clear()
+			aggroTarget = null
+			nav.target_position = map.map_to_local(getTileToSearch(1, -1, -1))
+
+func doState() :
+	
+	match State :
+		States.Wander :
+			if crawling : 
+				exitCrawl()
+				return false
+		States.Approach :
+			if crawling == false : enterCrawl()
+			if round(nav.target_position) != round(aggroTarget.global_position) :
+				nav.target_position = aggroTarget.global_position
+		States.Attack :
+			if crawling : 
+				exitCrawl()
+				return false
+			if round(nav.target_position) != round(aggroTarget.global_position) :
+				nav.target_position = aggroTarget.global_position
+			attack()
+		States.Retreat :
+			if crawling == false : enterCrawl()
+
+func dealAggro() :
+	var newAggroList : Array[Unit] = []
+	for thing in aggroList :
+		if thing != null and thing.canBeSeen and newAggroList.has(thing) == false : newAggroList.append(thing)
+	aggroList = newAggroList
+	if aggroList.size() > 0 : aggroTarget = aggroList[0]
+	else : aggroTarget = null
 
 func getDirectionToTarget() :
 	return global_position.direction_to(nav.get_next_path_position())
@@ -48,7 +113,7 @@ func move(delta) :
 			if sprite.speed_scale == 0 : sprite.frame = 0
 		_ : multi = 2
 	
-	velocity = velocity.lerp(goalVelocity, delta * pow(multi, 2) * (1 -clamp(goalVelocity.dot(velocity.normalized()), -1, 0)))
+	velocity = velocity.lerp(goalVelocity, delta * 4) + avoidenceVeloicity
 	
 	move_and_slide()
 	velocity = get_real_velocity()
@@ -69,10 +134,12 @@ func getName() :
 	return newName
 
 func canHear(testo : Unit) :
-	var velo : float = testo.velocity.length()
-	var distance = clamp(1 - sqrt(testo.global_position.distance_to(global_position) / 4096.0), 0, 1)
-	#print(velo * distance)
-	return (velo * distance) > 50
+	var hearList = []
+	for thing in curios :
+		if thing["Type"] == 0 and (thing["Source"] == null) == false and thing["Source"] is Unit and hearList.has(thing["Source"]) == false :
+			if thing["Strength"] > 0.125 :
+				hearList.append(thing["Source"])
+	return hearList.has(testo)
 
 func checkVision(ignoreHiding : bool = false):
 	var inRange = vision.get_overlapping_bodies()
@@ -144,6 +211,7 @@ func attack() :
 	combo += 1
 	$ComboTimer.paused = false
 	$ComboTimer.start()
+	cAni = "Walk"
 
 var attacking = false
 
@@ -158,6 +226,8 @@ func sliceB() :
 func sliceC() :
 	cAni = "SliceC"
 	await sprite.animation_finished
+
+var hitTargets = []
 
 func _on_sprite_frame_changed():
 	$Slice.pitch_scale = clamp(sprite.speed_scale, 0.75, 2)
@@ -181,7 +251,16 @@ func _on_sprite_frame_changed():
 				16 : 
 					velocity = direction * maxSpeed * 2 * sprite.speed_scale
 					$Slice.play()
-				17, 18, 19, 20 : velocity = direction * maxSpeed * 2 * sprite.speed_scale
+				17, 18, 19, 20 : 
+					velocity = direction * maxSpeed * 2 * sprite.speed_scale
+					var sliceArea = $RotateNode/SliceArea.get_overlapping_bodies()
+					for thing in sliceArea :
+						if thing is Unit and isFoe(thing) :
+							if hitTargets.has(thing) == false :
+								hitTargets.append(thing)
+								thing.damage(sliceADMG, sliceAAP, self, "Melee", self)
+							thing.dealKnockback(knockback, global_position.direction_to(thing.position))
+				32 : hitTargets.clear()
 		"SliceB" :
 			var pseudo = sprite.speed_scale * (1.0 / 30.0)
 			match sprite.frame :
@@ -196,20 +275,66 @@ func _on_sprite_frame_changed():
 				17, 18, 19, 20 : 
 					direction = direction.slerp(getDirectionToTarget(), pseudo * turnSpeed).normalized()
 					velocity = direction * maxSpeed * 3 * sprite.speed_scale
+					var sliceArea = $RotateNode/SliceArea.get_overlapping_bodies()
+					for thing in sliceArea :
+						if thing is Unit and isFoe(thing) :
+							if hitTargets.has(thing) == false :
+								hitTargets.append(thing)
+								thing.damage(sliceBDMG, sliceBAP, self, "Melee", self)
+							thing.dealKnockback(knockback, global_position.direction_to(thing.position))
+				31 : hitTargets.clear()
 		"SliceC" :
 			match sprite.frame :
 				1 : direction = getDirectionToTarget()
 				16 : 
 					velocity = direction * maxSpeed * 2 * sprite.speed_scale
 					$Slice.play()
-				17, 18, 19, 20 : velocity = direction * maxSpeed * 2 * sprite.speed_scale
-				30 : direction = getDirectionToTarget()
+				17, 18, 19, 20 : 
+					velocity = direction * maxSpeed * 2 * sprite.speed_scale
+					var sliceArea = $RotateNode/SliceArea.get_overlapping_bodies()
+					for thing in sliceArea :
+						if thing is Unit and isFoe(thing) :
+							if hitTargets.has(thing) == false :
+								hitTargets.append(thing)
+								thing.damage(sliceADMG, sliceAAP, self, "Melee", self)
+							thing.dealKnockback(knockback, global_position.direction_to(thing.position))
+				30 : 
+					direction = getDirectionToTarget()
+					hitTargets.clear()
 				36 : 
 					$Slice.play()
-				37, 38, 39, 40 : velocity = direction * maxSpeed * 2 * sprite.speed_scale
+				37, 38, 39, 40 : 
+					velocity = direction * maxSpeed * 2 * sprite.speed_scale
+					var sliceArea = $RotateNode/SliceArea.get_overlapping_bodies()
+					for thing in sliceArea :
+						if thing is Unit and isFoe(thing) :
+							if hitTargets.has(thing) == false :
+								hitTargets.append(thing)
+								thing.damage(sliceADMG, sliceAAP, self, "Melee", self)
+							thing.dealKnockback(knockback, global_position.direction_to(thing.position))
+				47 : hitTargets.clear()
 
 func _on_nav_navigation_finished() -> void:
-	nav.target_position = newRandomPos()
+	
+	match State :
+		States.Wander :
+			nav.target_position = map.map_to_local(getTileToSearch())
+		States.Retreat :
+			State = States.Wander
+			assignState()
+		_ : pass
 
 func _on_combo_timer_timeout() -> void:
 	combo = 0
+
+var avoidenceVeloicity = Vector2.ZERO
+func _on_nav_velocity_computed(safe_velocity: Vector2) -> void:
+	avoidenceVeloicity = safe_velocity
+
+func _on_nav_timer_timeout() -> void:
+	if State == States.Wander :
+		nav.target_position = map.map_to_local(getTileToSearch())
+
+func _on_heal_timer_timeout() -> void:
+	if State == States.Wander :
+		heal(1)

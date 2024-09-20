@@ -5306,6 +5306,8 @@ floor_max_angle = 0.0
 script = ExtResource("1_pws73")
 type = "Sentry"
 team = "Sentry"
+maxHP = 15
+ARM = 4
 tags = Array[String](["Angel", "Lesser", "Magic"])
 canBeSeen = false
 pointsOnDeath = 4
@@ -5314,8 +5316,7 @@ senses = {
 "Smell": 0.0,
 "Sound": 0.75
 }
-maxHP = 15
-ARM = 4
+moveNoise = 8.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
@@ -5336,7 +5337,6 @@ offset = Vector2(0, -32)
 texture_scale = 5.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-visible = false
 occluder = SubResource("OccluderPolygon2D_npmot")
 
 [node name="nav" type="NavigationAgent2D" parent="."]

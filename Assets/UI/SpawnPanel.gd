@@ -40,13 +40,13 @@ Yellow = 4
 }
 var selectedTeam : teams = teams.None
 @onready var unitScenes = [
-load("res://Assets/SUB-RFL-48/sub_rfl_48.tscn"),
-load("res://Assets/Pillar Demon/PillarDemon.tscn"),
-load("res://Assets/Vampire/Vampire.tscn"),
-load("res://Assets/Seraph/seraph.tscn"),
-load("res://Assets/Sentry/Sentry.tscn"),
-load("res://Assets/AMBEA/AMBEA.tscn"),
-load("res://Assets/Mantis/Mantis.tscn")
+"res://Assets/SUB-RFL-48/sub_rfl_48.tscn",
+"res://Assets/Pillar Demon/PillarDemon.tscn",
+"res://Assets/Vampire/Vampire.tscn",
+"res://Assets/Seraph/seraph.tscn",
+"res://Assets/Sentry/Sentry.tscn",
+"res://Assets/AMBEA/AMBEA.tscn",
+"res://Assets/Mantis/Mantis.tscn"
 ]
 
 func _input(_event) :
@@ -107,7 +107,7 @@ func dealWithTeamButtons() :
 func spawnUnit(location : Vector2, unit = unitScenes[selectedUnit - 1]) :
 	if $"Spawn Cooldown".is_stopped() == false : return false
 	$"Spawn Cooldown".start()
-	var newUnit = unit.instantiate()
+	var newUnit = load(unit).instantiate()
 	newUnit.global_position = location
 	var team = teams.keys()[selectedTeam]
 	if team != "None" : newUnit.team = team

@@ -12,6 +12,7 @@ var unitWindows = []
 
 
 func _input(_event) :
+	
 	detectorToMousePos()
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) :
 		var overlaping = detector.get_overlapping_bodies()

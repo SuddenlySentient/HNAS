@@ -9,6 +9,8 @@ var desiredPosition = Vector2(128, 128)
 var previousTile : Vector2i
 var panSpeed = 256
 
+
+
 func _process(delta) :
 	
 	var timerProgress = 1 - ($Timer.time_left / $Timer.wait_time)

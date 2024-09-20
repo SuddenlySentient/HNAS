@@ -105,13 +105,10 @@ func think(delta) :
 	move_and_slide()
 	velocity = get_real_velocity()
 
-func _init() :
-	await ready
-	HP = maxHP
+func initUnit() :
 	vision = $RotateNode/Vision
 	nav = $VPNav
 	$ComboCanvas.show()
-	name = getName()
 
 func adjustDMG(DMGDealt : int, dealer : Unit, _DMGtype : String, source : Node = null) :
 	if source is Shot :

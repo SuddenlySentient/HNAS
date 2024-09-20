@@ -143,32 +143,24 @@ size = Vector2(512, 1024)
 random_pitch = 1.25
 streams_count = 1
 stream_0/stream = ExtResource("18_clvv2")
-stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_p4qly"]
 random_pitch = 1.25
 streams_count = 1
 stream_0/stream = ExtResource("19_mly81")
-stream_0/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6c4fx"]
 streams_count = 2
 stream_0/stream = ExtResource("21_4tu43")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("22_8fpad")
-stream_1/weight = 1.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_h7uv2"]
 random_pitch = 1.25
 streams_count = 4
 stream_0/stream = ExtResource("27_7awio")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("28_7pkxj")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("29_56yst")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("30_e23t7")
-stream_3/weight = 1.0
 
 [node name="Door" type="StaticBody2D"]
 z_index = 1

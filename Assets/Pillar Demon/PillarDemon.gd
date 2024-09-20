@@ -37,13 +37,10 @@ var PillarState = PillarStates.Pillar
 var recentSeenCheck : bool = false
 var thingsInVision
 var cAni = "Emerge"
-var avoidenceVelocity : Vector2 = Vector2.ZERO
 
 
 
-func _init() :
-	await ready
-	name = getName()
+func initUnit() :
 	idle()
 	$Sniff/SniffTimer.start(randf_range(0, 60))
 	vision = $Vision
@@ -83,15 +80,12 @@ func think(delta) :
 			pillarQuery(delta)
 		PillarStates.Standing :
 			actionQuery(delta)
-	
 	move_and_slide()
-	avoidenceVelocity = avoidenceVelocity.move_toward(Vector2.ZERO, delta)
 	velocity = get_real_velocity()
 
 func actionQuery(delta) :
 	ARM = 2
 	reflectShots = false
-	nav.avoidance_enabled = false
 	if State != States.Swarm and State != States.Attack and recentSeenCheck : 
 		scatter(State != States.Scatter)
 	var pillarArray : Array = []
@@ -149,8 +143,7 @@ func actionQuery(delta) :
 func pillarQuery(delta) :
 	ARM = 8
 	reflectShots = true
-	nav.avoidance_enabled = true
-	velocity = lerp(velocity, Vector2.ZERO, delta * deccelerate) + avoidenceVelocity 
+	velocity = lerp(velocity, Vector2.ZERO, delta * deccelerate)
 	var pillarArray : Array[Unit] = []
 	var enemyArray : Array[Unit] = []
 	for thing in thingsInVision :
@@ -325,9 +318,6 @@ func _on_nav_timer_timeout():
 func _on_scatter_timer_timeout():
 	idle()
 	#print("Scatter Timer Ran Out")
-
-func _on_pd_nav_velocity_computed(safe_velocity):
-	avoidenceVelocity = safe_velocity #avoidenceVelocity.move_toward(safe_velocity, 0.125)
 
 func _on_swarm_finished():
 	if State == States.Swarm : $Swarm.play()

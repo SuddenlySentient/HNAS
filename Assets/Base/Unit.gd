@@ -1,15 +1,20 @@
 @icon("res://Assets/UnitIcon.png")
 extends CharacterBody2D
 class_name Unit
+@export var disabled : bool = false
 @export var type = "None"
 @export var team : String = "Unalligned"
 var aggroTarget : Unit
 var aggroList : Array[Unit] = []
+@export_range(1, 256, 1, "or_greater") var maxHP : int = 1
+var HP : int = maxHP
+@export_range(1, 256, 1, "or_greater") var ARM : int = 1
+@export var maxSpeed : int= 200
 @export var tags : Array[String]
 @export var canBeSeen : bool = true
-@export var maxSpeed : int= 200
 @export var reflectShots : bool = false
 @onready var marker = load("res://Assets/Base/hit_mark.tscn")
+@onready var curio = load("res://Assets/Base/Curiosity/Curiousity.tscn")
 @warning_ignore("unused_signal")
 signal hurt(DMG : int, DMGtype : String)
 @export var nameList : Array[StringName] = [
@@ -30,17 +35,35 @@ var direction : Vector2 = Vector2.DOWN
 @export var pointsOnDeath : int = 5 
 var effects : Array[Effect] = [] 
 var dead = false
-@export var disabled : bool = false
 @export var senses : Dictionary = {
 	"Sound": 1.0,
-	"Smell": 0.5,
-	"Magic": 0.1
+	"Smell": 0.75,
+	"Magic": 0.125
 }
+@warning_ignore("unused_signal")
+signal sensedSomething(sensedThing : Dictionary)
+@warning_ignore("unused_signal")
+signal unseenSense(sensedThing : Dictionary)
+@export var doMoveNoise : bool = true
+@export var moveNoise : float = 2
+var moveNoiseCurio : Curiousity
 
 
 func _physics_process(delta) :
-	if disabled : return false
-	think(delta)
+	if get_tree().get_frame() == 1 : return false
+	if disabled == false : 
+		getCurios()
+		think(delta)
+		if doMoveNoise :
+			if moveNoiseCurio == null :
+				var cuiroName = type + " Moving"
+				moveNoiseCurio = createCurio(cuiroName, 0, moveNoise, self)
+				moveNoiseCurio.bindToUnit(self)
+			var velo = velocity.length()
+			if velo > 0 :
+				moveNoiseCurio.strength = clamp(velo / maxSpeed, 0.25, 1) * moveNoise
+			else :
+				moveNoiseCurio.strength = 0
 
 func think(_delta) : pass
 
@@ -48,6 +71,10 @@ func _init():
 	await ready
 	HP = maxHP
 	name = getName()
+	initUnit()
+
+func initUnit() :
+	pass
 
 func getName() :
 	var newName = nameList.pick_random()
@@ -71,31 +98,89 @@ func checkVision(ignoreHiding : bool = false):
 			else : seen.append(result.collider)
 	return seen
 
-func getCuriosities() :
+var curios : Array = []
+
+func getCurios() :
+	
 	var curioList : Array[Dictionary] = []
 	for x in map.get_children() :
 		if x is Curiousity :
-			var sensitivity : float = senses[x.curiousityTypes.keys()[x.curiousityType]]
-			if sensitivity > 0 :
-				var curioTile = map.local_to_map(x.global_position)
-				var distanceTo : float = ceil(getDistanceTo(map.map_to_local(curioTile)))
-				var midStep = pow(((1.0 / 4096.0) * distanceTo) * (1.0 / (x.strength / 16.0) ), 1.0 / sensitivity)
-				var cuiroStrength = ( (midStep + 1.5) / (2 * ((midStep + 1.5) - 1)) ) - 0.5
-				if trySeeTile(curioTile) == false : cuiroStrength = pow(cuiroStrength, 2)
-				cuiroStrength = clamp(cuiroStrength, 0, 1)
-				var newCurio : Dictionary = {
-					"Name" : x.curioName,
-					"Type" : x.curiousityType,
-					"Strength" : cuiroStrength,
-					"Source Team" : x.sourceTeam,
-					"Tile" : curioTile
-					}
-				curioList.append(newCurio)
-	return curioList
+			var newCurio = getCurioDic(x)
+			curioList.append(newCurio)
+	
+	var idList = []
+	for z in curios :
+		idList.append(z["ID"])
+	
+	for y in curioList :
+		
+		var dupe = false
+		var duped
+		
+		if idList.has(y["ID"]) :
+			dupe = true
+			duped = curios[idList.find(y["ID"])]
+		
+		if dupe :
+			var seen = duped["Seen"]
+			var index = curios.find(duped)
+			curios[index].merge(y, true)
+			if seen : curios[index]["Seen"] = true
+		else : 
+			curios.append(y)
+			emit_signal("sensedSomething", y)
+		
+		if y["Seen"] == false :
+			emit_signal("unseenSense", y)
+	
+	return curios
 
-@export_range(1, 256, 1, "or_greater") var maxHP : int = 1
-var HP : int = maxHP
-@export_range(1, 256, 1, "or_greater") var ARM : int = 1
+func getCurioDic(toValue : Curiousity) :
+	var sensitivity : float = senses[toValue.curiousityTypes.keys()[toValue.curiousityType]]
+	var curioTile = map.local_to_map(toValue.global_position)
+	var distanceTo : float = ceil(getDistanceTo(map.map_to_local(curioTile)))
+	if distanceTo < 1 : distanceTo = 1
+	var seen = false
+	
+	#print("Beep")
+	
+	var cuiroStrength : float
+	if sensitivity > 0 and toValue.strength > 0 :
+		var midStep = pow(((1.0 / 4096.0) * distanceTo) * (1.0 / (toValue.strength / 16.0) ), 1.0 / sensitivity)
+		cuiroStrength = ( (midStep + 1.5) / (2 * ((midStep + 1.5) - 1)) ) - 0.5
+		cuiroStrength = clamp(cuiroStrength, 0, 1)
+		if trySeeTile(curioTile) == false : 
+			cuiroStrength = pow(cuiroStrength, 2)
+		else :
+			var visionArea : CollisionShape2D = vision.get_child(0)
+			if distanceTo <= visionArea.shape.radius : seen = true
+	else : 
+		#print("Whu-oh! 0! : ", sensitivity, " : ", toValue.strength)
+		cuiroStrength = 0
+	
+	if is_nan(cuiroStrength) : 
+		print("Whu-oh! NAN!")
+	
+	var newCurio : Dictionary = {
+		"ID" : toValue.ID,
+		"Seen" : seen,
+		"Name" : toValue.curioName,
+		"Type" : toValue.curiousityType,
+		"Source" : toValue.source,
+		"Strength" : cuiroStrength,
+		"Tile" : curioTile
+		}
+	return newCurio
+
+func createCurio(setCurioName : String, setCuriousityType, setStrength : float, setSource : Unit = null, setDuration : float = -1) :
+	var newCurio = curio.instantiate()
+	newCurio.createCuriousity(setCurioName, setCuriousityType, setStrength, setSource, setDuration)
+	map.add_child(newCurio)
+	return newCurio
+
+func bindCurio(boundCurio : Curiousity) :
+	boundCurio.bindToUnit(self)
+	return boundCurio
 
 func damage(DMG : int, AP : int, dealer, DMGtype : String, source : Node = null) :
 	
@@ -147,10 +232,14 @@ func die(_cause : String) :
 
 # Tile Nonsense
 @onready var map : TileMapLayer = $".."
-var lastSeenTile : Dictionary = {}
+var knownTiles : Dictionary = {}
 var nav : NavigationAgent2D
 
 func trySeeTile(tileCoord : Vector2i):
+	
+	if tileCoord == map.local_to_map(global_position) : 
+		knownTiles[tileCoord] = Time.get_ticks_msec()
+		return true
 	
 	var space_state = get_world_2d().direct_space_state
 	var query = PhysicsRayQueryParameters2D.create(global_position, map.map_to_local(tileCoord), 3)
@@ -161,15 +250,15 @@ func trySeeTile(tileCoord : Vector2i):
 		return false
 	else :
 		#print("found tile ", tileCoord, " last seen ", getLastSearched(tileCoord))
-		lastSeenTile[tileCoord] = Time.get_ticks_msec()
+		knownTiles[tileCoord] = Time.get_ticks_msec()
 		return true
 
 func getLastSearched(tileCoord : Vector2i):
 	
-	var lastSeen = lastSeenTile.get(tileCoord)
+	var lastSeen = knownTiles.get(tileCoord)
 	if lastSeen != null : return Time.get_ticks_msec() - lastSeen
 	else :
-		lastSeenTile[tileCoord] = -1
+		knownTiles[tileCoord] = -1
 		return -1
 
 func getTileNavigable(tileCoord : Vector2i):
@@ -177,11 +266,23 @@ func getTileNavigable(tileCoord : Vector2i):
 	if data == null : return false
 	else : return data.get_custom_data("Navigable")
 
-func getTileValue(tileCoord : Vector2i, searchValue : float = -1, distanceValue : float = 1):
+func valueCurio(tileCoord : Vector2i, toValue : Dictionary) :
+	var tileDistance = tileCoord.distance_to(toValue["Tile"])
+	if tileDistance < 1 : tileDistance = 1
+	var value = toValue["Strength"] * (1.0 / tileDistance)
+	return value
+
+func getTileValue(tileCoord : Vector2i, searchValue : float = -1, distanceValue : float = 1, curioValue : float = 1) :
 	
 	var searched = getLastSearched(tileCoord)
 	var distance = getDistanceTo(map.map_to_local(tileCoord))
-	return (searched * searchValue) + (distance * distanceValue)
+	var curioAmount = 0.0
+	for sensedCurio in curios :
+		if sensedCurio["Strength"] > 0 and (sensedCurio["Source"] == self) == false :
+			curioAmount += valueCurio(tileCoord, sensedCurio)
+	var value = (searched * searchValue) + (distance * distanceValue)
+	value -= curioValue * curioAmount * 4096
+	return value
 
 func isFoe(thing : Unit) :
 	if thing != self :
@@ -193,12 +294,14 @@ func isFoe(thing : Unit) :
 			return true
 	return false
 
-func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
+const debugSearch = false
+
+func getTileToSearch(searchValue : float = -1, distanceValue : float = 1, curioValue : float = 1):
 	
 	var myTile = map.local_to_map(global_position)
 	var tilesCoords : Array[Vector2i] = map.get_used_cells()
 	var tileValue : Array = []
-	var theOne = Vector2.ZERO
+	var theOne = Vector2i.ZERO
 	
 	var maxSearchDistance = 2048
 	@warning_ignore("unused_variable")
@@ -223,16 +326,17 @@ func getTileToSearch(searchValue : float = -1, distanceValue : float = 1):
 	
 	for tile in tilesCoords :
 		tilesSearched += 1
-		var newEntry = getTileValue(tile, searchValue, distanceValue)
+		var newEntry = getTileValue(tile, searchValue, distanceValue, curioValue)
 		tileValue.append(newEntry)
 		tileValue.sort()
-		#tileValue.reverse()
 		if newEntry == tileValue[0] : 
 			theOne = tile
 	
-	#print("All Tiles : ", allTiles)
-	#print("Tiles Searched : ", tilesSearched)
-	#print("Tiles Search Percent : ", round((float(tilesSearched) / float(allTiles)) * 100), "%")
+	if debugSearch :
+		print("All Tiles : ", allTiles)
+		print("Tiles Searched : ", tilesSearched)
+		print("Tiles Search Percent : ", round((float(tilesSearched) / float(allTiles)) * 100), "%")
+		print("Chose : ", theOne)
 	
 	return theOne
 
