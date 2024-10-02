@@ -76,8 +76,9 @@ func open() :
 	if sprite.is_playing() == false and locked == false : 
 		#print("OPEN")
 		var newCurio = curio.instantiate()
-		newCurio.createCuriousity("Door Open", 0, 12, null, 4)
+		newCurio.createCuriousity("Door Open", 0, 4, null, 2)
 		map.add_child(newCurio)
+		newCurio.global_position = global_position
 		lightTimer.start()
 		doorLight.color = Color("66ff66")
 		sprite.play("Door")

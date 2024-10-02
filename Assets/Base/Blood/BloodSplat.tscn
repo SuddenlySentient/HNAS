@@ -1,0 +1,95 @@
+[gd_scene load_steps=12 format=3 uid="uid://bb17apqm62nfo"]
+
+[ext_resource type="Texture2D" uid="uid://ccfhf5ts588ay" path="res://Assets/Facility/Floor.png" id="1_n7mjn"]
+[ext_resource type="Script" path="res://Assets/Base/Blood/BloodSplat.gd" id="1_qeabo"]
+[ext_resource type="Shader" path="res://Assets/Base/Blood/BloodDither.gdshader" id="2_qfs4n"]
+[ext_resource type="Texture2D" uid="uid://yhq0jnqboap1" path="res://Assets/Base/Splatter1.png" id="3_ivaue"]
+[ext_resource type="Texture2D" uid="uid://c7wicnm3ffaoe" path="res://Assets/Base/Splatter2.png" id="4_nadml"]
+[ext_resource type="Texture2D" uid="uid://coce68x0qbn1s" path="res://Assets/Base/Splatter3.png" id="5_4cu7g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kfqnb"]
+shader = ExtResource("2_qfs4n")
+shader_parameter/quant = 16.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_hrwjl"]
+viewport_path = NodePath("SplatA/SubViewport")
+
+[sub_resource type="Shader" id="Shader_os7jx"]
+code = "shader_type canvas_item;
+
+uniform int blurTimes = 4;
+uniform float spreadAmount = 2.0;
+
+
+void fragment() {
+	/*
+	vec4 color = vec4(0);
+	float blurDistance = TEXTURE_PIXEL_SIZE.x * spreadAmount;
+	
+	for (int i = 0; i <= blurTimes + 1; i++) {
+		float sequin = float(i) / float(blurTimes);
+		
+		float sined = sin(2.0 * PI * sequin);
+		float cosed = cos(2.0 * PI * sequin);
+		
+		color += texture(TEXTURE, UV + vec2(blurDistance * cosed, blurDistance * sined));
+	}
+	color.a /= float(blurTimes / 4);
+	COLOR += color;
+	*/
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4fyj1"]
+shader = SubResource("Shader_os7jx")
+shader_parameter/blurTimes = 16
+shader_parameter/spreadAmount = 2.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l4cwb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ivaue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nadml")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_4cu7g")
+}],
+"loop": false,
+"name": &"Splat",
+"speed": 5.0
+}]
+
+[node name="Blood Splat" type="Node2D"]
+script = ExtResource("1_qeabo")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(4, 4)
+texture = ExtResource("1_n7mjn")
+
+[node name="SplatA" type="Sprite2D" parent="."]
+modulate = Color(0.00999999, 1, 1, 1)
+material = SubResource("ShaderMaterial_kfqnb")
+scale = Vector2(4, 4)
+texture = SubResource("ViewportTexture_hrwjl")
+
+[node name="SubViewport" type="SubViewport" parent="SplatA"]
+transparent_bg = true
+
+[node name="SplatB" type="AnimatedSprite2D" parent="SplatA/SubViewport"]
+material = SubResource("ShaderMaterial_4fyj1")
+position = Vector2(256, 256)
+sprite_frames = SubResource("SpriteFrames_l4cwb")
+animation = &"Splat"
+frame = 1
+
+[node name="Spill" type="Timer" parent="."]
+one_shot = true
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

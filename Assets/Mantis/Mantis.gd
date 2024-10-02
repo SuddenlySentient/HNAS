@@ -6,6 +6,8 @@ var inVision = []
 @export var turnSpeed : float = 8
 @export var knockback : int = 64
 @export var retreatHP : float = 0.5
+@export var maxShield : int = 16
+var shield : int = 16
 @export_group("Slice A")
 @export var sliceADMG : int = 6
 @export var sliceAAP : int = 3
@@ -30,6 +32,7 @@ func initUnit() :
 	vision = $Vision
 	nav = $nav
 	nav.target_position = map.map_to_local(getTileToSearch())
+	shield = maxShield
 
 func think(delta) :
 	
@@ -47,6 +50,8 @@ func think(delta) :
 
 func assignState() :
 	
+	var prevState = State
+	
 	if State == States.Retreat : return false
 	if attacking : return false
 	
@@ -63,6 +68,9 @@ func assignState() :
 			aggroList.clear()
 			aggroTarget = null
 			nav.target_position = map.map_to_local(getTileToSearch(1, -1, -1))
+	
+	if prevState != State :
+		if State == States.Approach and prevState != States.Attack : scream()
 
 func doState() :
 	
@@ -79,6 +87,7 @@ func doState() :
 			if crawling : 
 				exitCrawl()
 				return false
+			if aggroTarget == null : return false
 			if round(nav.target_position) != round(aggroTarget.global_position) :
 				nav.target_position = aggroTarget.global_position
 			attack()
@@ -88,7 +97,7 @@ func doState() :
 func dealAggro() :
 	var newAggroList : Array[Unit] = []
 	for thing in aggroList :
-		if thing != null and thing.canBeSeen and newAggroList.has(thing) == false : newAggroList.append(thing)
+		if (thing == null) == false and thing.canBeSeen and newAggroList.has(thing) == false : newAggroList.append(thing)
 	aggroList = newAggroList
 	if aggroList.size() > 0 : aggroTarget = aggroList[0]
 	else : aggroTarget = null
@@ -103,10 +112,10 @@ func move(delta) :
 	match cAni :
 		"Walk", "Crawl" :
 			match cAni :
-				"Walk" : sprite.speed_scale = (velocity.length() / (maxSpeed / 2.0)) * dot
+				"Walk" : sprite.speed_scale = (velocity.length() / 150) * dot
 				"Crawl" : 
 					multi = crawlSpeed
-					sprite.speed_scale = (velocity.length() / (maxSpeed / 1.5)) * dot
+					sprite.speed_scale = (velocity.length() / 200) * dot
 			goalVelocity = direction * maxSpeed * multi
 			var directionToTarget = getDirectionToTarget()
 			direction = direction.slerp(directionToTarget, delta * multi * turnSpeed).normalized()
@@ -177,10 +186,11 @@ func _process(_delta):
 	prevCAni = cAni
 
 func enterCrawl() :
-	sprite.speed_scale = 1
+	sprite.speed_scale = 0.5
 	cAni = "IntoCrawl"
 	await sprite.animation_changed
 	await sprite.animation_finished
+	moveNoise = 8
 	crawling = true
 	cAni = "Crawl"
 
@@ -189,6 +199,7 @@ func exitCrawl() :
 	cAni = "IntoCrawl"
 	await sprite.animation_changed
 	await sprite.animation_finished
+	moveNoise = 1
 	crawling = false
 	cAni = "Walk"
 
@@ -198,7 +209,7 @@ func attack() :
 	if attacking : return false
 	attacking = true
 	if crawling : await exitCrawl()
-	sprite.speed_scale = clamp((pow(combo, 1.0 / float(combo)) + pow(combo, 0.25)) / 2.5, 0.75, 3)
+	sprite.speed_scale = clamp((pow(combo, 1.0 / float(combo)) + pow(combo, 0.25)) / 2.5, 1, 3)
 	$ComboTimer.paused = true
 	var fromArray = attacksArray[randi_range(0, 1)]
 	attacksArray.erase(fromArray)
@@ -334,7 +345,53 @@ func _on_nav_velocity_computed(safe_velocity: Vector2) -> void:
 func _on_nav_timer_timeout() -> void:
 	if State == States.Wander :
 		nav.target_position = map.map_to_local(getTileToSearch())
+	$NavTimer.start((pow(randf_range(0, 1), 2) * 15) + 1 )
 
 func _on_heal_timer_timeout() -> void:
 	if State == States.Wander :
 		heal(1)
+
+func adjustDMG(DMGDealt : int, _dealer, _DMGtype : String, source : Node = null) :
+	if (source == null) == false and source is Unit and isFoe(source) :
+		if aggroList.has(source) == false :
+			aggroList.push_front(source)
+	DMGDealt -= shield
+	shield = -DMGDealt
+	if shield < 0 : shield = 0 
+	if DMGDealt < 0 : DMGDealt = 0 
+	return DMGDealt
+
+func getKill(who : Unit) :
+	shield += ceil(who.maxHP)
+	shield = clamp(shield, 0, maxShield)
+
+func playVoice() :
+	$VoiceTimer.start((pow(randf_range(0, 1), 2) * 55) + 5)
+	if State == States.Wander :
+		$Voice.stream = voiceLines.pick_random()
+	else : $Voice.stream = voiceLines[5]
+	$Voice.play()
+	var voiceCurio : Curiousity = createCurio("Mantis Voice", 0, 8, self, 3)
+	bindCurio(voiceCurio)
+	voiceCurio.changeColor(Color.CRIMSON)
+
+var voiceLines : Array[AudioStream] = [
+load("res://Assets/Mantis/Audio/Voice/Friend.wav"),
+load("res://Assets/Mantis/Audio/Voice/hear something.wav"),
+load("res://Assets/Mantis/Audio/Voice/helllloooo searching.wav"),
+load("res://Assets/Mantis/Audio/Voice/hello!.wav"),
+load("res://Assets/Mantis/Audio/Voice/hmmm.wav"),
+load("res://Assets/Mantis/Audio/Voice/Laugh.wav"),
+load("res://Assets/Mantis/Audio/Voice/tehe.wav")
+]
+
+func _on_voice_timer_timeout() -> void:
+	playVoice()
+
+func scream() :
+	if $ScreamFar.playing == false :
+		var newScream : Curiousity = createCurio("Mantis Scream", 0, 32, self, 4)
+		bindCurio(newScream)
+		newScream.changeColor(Color.CRIMSON)
+		$ScreamClose.play()
+		$ScreamFar.play()

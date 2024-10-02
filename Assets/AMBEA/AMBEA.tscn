@@ -5509,7 +5509,7 @@ follow_viewport_enabled = true
 
 [node name="FireParticles" type="GPUParticles2D" parent="Rotate/Flames/CanvasLayer"]
 modulate = Color(1.5, 1.5, 1.5, 1)
-position = Vector2(0, 32)
+position = Vector2(0, 72)
 amount = 1024
 amount_ratio = 0.0
 process_material = SubResource("ParticleProcessMaterial_ittg3")
@@ -5524,7 +5524,8 @@ trail_section_subdivisions = 1
 [node name="FlameArea" type="Area2D" parent="Rotate/Flames"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Rotate/Flames/FlameArea"]
-polygon = PackedVector2Array(0, -32, -256, 640, 256, 640)
+visible = false
+polygon = PackedVector2Array(0, -32, -384, 768, 384, 768)
 
 [node name="Cooldown" type="Timer" parent="Rotate/Flames"]
 one_shot = true

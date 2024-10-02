@@ -92,6 +92,7 @@ func tryVoice(voiceLine : String):
 					play()
 			_ :
 				print(self.name, " : Recieved Invalid Voiceline ''", voiceLine, "''" )
+		if playing : SR.createCurio("SR Voice", 0, 12, SR, 2)
 
 var hurtAudio : Array[AudioStream] = [
 load("res://Assets/SUB-RFL-48/Sound/Voice/Hurt1.wav"),

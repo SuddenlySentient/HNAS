@@ -1,0 +1,269 @@
+[gd_scene load_steps=30 format=3 uid="uid://dds3wxt7ww63o"]
+
+[ext_resource type="Script" path="res://Assets/SCT-DRN-16/SCT-DRN-16.gd" id="1_km7nb"]
+[ext_resource type="Texture2D" uid="uid://dqj86a8c0lsps" path="res://Assets/SCT-DRN-16/Frames/Idle/spritesheet.png" id="2_e4cb8"]
+[ext_resource type="PackedScene" uid="uid://bmk4rjsbwbsw5" path="res://Assets/Base/FacilityComms.tscn" id="3_ymhwc"]
+[ext_resource type="Shader" path="res://Assets/SCT-DRN-16/Identify.gdshader" id="4_y5pud"]
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/Base/CircleLight.png" id="5_amkv0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2jsb"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fiwy6"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohjie"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ctai"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndu72"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nthjl"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nngf"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vubah"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ff3al"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2c5y0"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvg6c"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_024e6"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52nef"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v8rck"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j72b1"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2c2kv"]
+atlas = ExtResource("2_e4cb8")
+region = Rect2(192, 192, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t0eov"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2jsb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fiwy6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ohjie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ctai")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndu72")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nthjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2nngf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vubah")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ff3al")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2c5y0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvg6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_024e6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52nef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v8rck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j72b1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2c2kv")
+}],
+"loop": true,
+"name": &"IdleDown",
+"speed": 20.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rx2fi"]
+blend_mode = 2
+
+[sub_resource type="Shader" id="Shader_q5jo6"]
+code = "shader_type canvas_item;
+
+uniform float quant = 8.0;
+render_mode unshaded;
+render_mode blend_add;
+
+
+void fragment() {
+	
+	vec4 newColor = vec4(0.0, 0.0, 0.0, 0.0);
+	
+	for (int i = 0; i < 4; i++) {
+		newColor[i] = COLOR[i] * quant;
+		float f = fract(newColor[i]);
+		
+		float dith = round(1.0 / f);
+		
+		vec2 modo = vec2(
+		mod(UV.x, TEXTURE_PIXEL_SIZE.x * dith) * (0.5 / TEXTURE_PIXEL_SIZE.x),
+		mod(UV.y, TEXTURE_PIXEL_SIZE.y * dith) * (0.5 / TEXTURE_PIXEL_SIZE.y));
+		modo.x = round(modo.x);
+		modo.y = round(modo.y);
+		
+		if (f > ceil(modo.x + modo.y) ) {
+			f = 1.0;
+		}
+		else {
+			f = 0.0;
+		}
+		newColor[i] = floor(newColor[i]) + f;
+		newColor[i] /= quant;
+		}
+		
+	
+	COLOR = newColor;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jtak8"]
+shader = SubResource("Shader_q5jo6")
+shader_parameter/quant = 12.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_kvd53"]
+viewport_path = NodePath("Rotate/Sprite2D/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a2bs3"]
+shader = ExtResource("4_y5pud")
+shader_parameter/quant = 8.0
+shader_parameter/split = 8.0
+shader_parameter/speed = 5.0
+shader_parameter/waveSpeed = 1.0
+shader_parameter/lines = 4.0
+shader_parameter/hue1 = Color(1, 0.133333, 0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3yrdh"]
+radius = 512.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d75es"]
+size = Vector2(512, 2048)
+
+[node name="SCT-DRN-16" type="CharacterBody2D"]
+motion_mode = 1
+wall_min_slide_angle = 3.14159
+script = ExtResource("1_km7nb")
+type = "SCT-DRN-16"
+team = "Facility"
+maxHP = 4
+ARM = 2
+pointsOnDeath = 2
+tags = Array[String](["Mechanical", "Robot", "Lesser", "Hover"])
+weight = 1.0
+doMoveNoise = false
+
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_t0eov")
+animation = &"IdleDown"
+frame_progress = 0.751025
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.12549)
+material = SubResource("CanvasItemMaterial_rx2fi")
+position = Vector2(0, 144)
+scale = Vector2(2, 1)
+texture = ExtResource("5_amkv0")
+
+[node name="FacilityComms" parent="." instance=ExtResource("3_ymhwc")]
+
+[node name="Rotate" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Rotate"]
+z_index = 2
+material = SubResource("ShaderMaterial_jtak8")
+position = Vector2(0, 1024)
+scale = Vector2(4, 4)
+texture = SubResource("ViewportTexture_kvd53")
+
+[node name="SubViewport" type="SubViewport" parent="Rotate/Sprite2D"]
+transparent_bg = true
+size = Vector2i(128, 512)
+size_2d_override = Vector2i(256, 256)
+size_2d_override_stretch = true
+
+[node name="ColorRect" type="ColorRect" parent="Rotate/Sprite2D/SubViewport"]
+material = SubResource("ShaderMaterial_a2bs3")
+custom_minimum_size = Vector2(256, 256)
+offset_right = 256.0
+offset_bottom = 256.0
+
+[node name="RayCast2D" type="RayCast2D" parent="Rotate"]
+visible = false
+target_position = Vector2(0, 2048)
+collision_mask = 4
+
+[node name="Vision" type="Area2D" parent="Rotate"]
+visible = false
+collision_layer = 2
+
+[node name="Vision Shape2" type="CollisionShape2D" parent="Rotate/Vision"]
+shape = SubResource("CircleShape2D_3yrdh")
+debug_color = Color(1, 0.376471, 0.25098, 0.0627451)
+
+[node name="Vision Shape" type="CollisionShape2D" parent="Rotate/Vision"]
+position = Vector2(0, 1024)
+shape = SubResource("RectangleShape2D_d75es")
+debug_color = Color(1, 0.376471, 0.25098, 0.0627451)
+
+[node name="LookTimer" type="Timer" parent="."]
+wait_time = 8.0
+autostart = true
+
+[node name="Flashlight" type="PointLight2D" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+color = Color(0.752941, 1, 1, 1)
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("5_amkv0")

@@ -4,7 +4,7 @@ class_name Curiousity
 var fullStrength = 16
 @export var curioName = "Unnamed Curio"
 @export var strength = 16
-@export var duration = 16
+@export var duration = -1
 @export var doDecay = false
 @export var curiousityType : curiousityTypes
 var source : Unit
@@ -47,8 +47,11 @@ func pause() :
 
 func _enter_tree() -> void :
 	await ready
-	changeColor(curioColor)
-	if duration != -1 : $Timer.start()
+	match curiousityType :
+		0 : changeColor(Color.WHITE)
+		1 : changeColor(Color.GRAY)
+		2 : changeColor(Color.DEEP_SKY_BLUE)
+	if duration != -1 : $Timer.start(duration)
 	match curiousityType :
 		curiousityTypes.Sound :
 			soundParticles.show()
@@ -57,15 +60,15 @@ func _enter_tree() -> void :
 
 func _physics_process(_delta: float) -> void :
 	
-	var visibility = pow(strength / 128.0, 1.0 / 2.0)
+	var visibility = pow(strength / 96.0, 1.0 / 2.0)
 	#visibility = clamp(visibility -0.5, 0, 0.5) * 2
 	visibility = clamp(visibility, 0, 1)
 	if visibility > 0:
 		smellParticles.amount_ratio = clamp(visibility - 0.25, 0, 0.75) * (1.0 / 0.75)
-		soundParticles.speed_scale = lerp(0.2, 0.6, sin((clamp(strength, 0, 384) / 256) * PI * (2.0 / 3.0)))
+		soundParticles.speed_scale = lerp(0.2, 0.6, sin((clamp(strength, 0, 256) / 256) * PI * (1.0 / 2.0)))
 		soundParticles.modulate = lerp(Color.TRANSPARENT, Color.WHITE, visibility)
 		visibility = clamp(visibility, 0.0625, 1)
-		$Sprite2D/SubViewport.size = Vector2(visibility * 512.0, visibility * 512.0)
+		$Sprite2D/SubViewport.size = clamp(Vector2(visibility * 512.0, visibility * 512.0), Vector2(2, 2), Vector2(512, 512))
 	else :
 		smellParticles.amount_ratio = 0
 		soundParticles.speed_scale = 0
@@ -84,5 +87,5 @@ func _on_timer_timeout() -> void :
 
 func changeColor(newColor : Color) :
 	curioColor = newColor
-	soundParticles.self_modulate = curioColor
-	smellParticles.self_modulate = curioColor
+	soundParticles.self_modulate = newColor
+	smellParticles.self_modulate = newColor

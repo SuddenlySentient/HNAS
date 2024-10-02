@@ -4,6 +4,6 @@
 
 [resource]
 shader = ExtResource("1_uu53r")
-shader_parameter/quant = 16.0
+shader_parameter/quant = 12.0
 shader_parameter/lightValue = 1.0
-shader_parameter/lightQuant = 16.0
+shader_parameter/lightQuant = 8.0

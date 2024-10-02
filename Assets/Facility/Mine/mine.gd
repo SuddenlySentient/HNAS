@@ -48,7 +48,7 @@ func _on_timer_timeout():
 
 func _on_detection_area_body_entered(body):
 	if detonating == false :
-		if body is Unit and body.tags.has("Hover") : return false 
+		if body is Unit and (body.tags.has("Hover") or body.tags.has("LightFoot")) : return false 
 		detonating = true
 		emit_signal("steppedOn")
 		#print(body.name)
@@ -77,6 +77,8 @@ func explode():
 	explosionSprite.show()
 	explosionSprite.play()
 	ExplosionParticles.restart()
+	var explosionCuiro : Curiousity = createCurio("Mine Explosion", 0, 64, null, 4)
+	explosionCuiro.global_position = global_position
 	for unit in explosionArea.get_overlapping_bodies() :
 		var falloff = sqrt(1.0 - (position.distance_to(unit.position)/384))
 		#print("Falloff : ", falloff)
@@ -90,3 +92,11 @@ func explode():
 
 func _on_destroy_timer_timeout():
 	queue_free()
+
+@onready var map : TileMapLayer = $".."
+@onready var curio = load("res://Assets/Base/Curiosity/Curiousity.tscn")
+func createCurio(setCurioName : String, setCuriousityType, setStrength : float, setSource : Unit = null, setDuration : float = -1) :
+	var newCurio = curio.instantiate()
+	newCurio.createCuriousity(setCurioName, setCuriousityType, setStrength, setSource, setDuration)
+	$"../../Main".add_child(newCurio)
+	return newCurio

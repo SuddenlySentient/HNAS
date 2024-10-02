@@ -1,0 +1,230 @@
+[gd_scene load_steps=7 format=3 uid="uid://crfxgmrpigxmg"]
+
+[ext_resource type="Theme" uid="uid://i5wcemsxfl4u" path="res://Assets/UI/Window.tres" id="1_6fu8e"]
+[ext_resource type="Texture2D" uid="uid://b1p1446vt2310" path="res://Assets/UI/NinePatch/Monitor.png" id="2_tcsgg"]
+[ext_resource type="Texture2D" uid="uid://bo5j36v8v1gt7" path="res://Assets/UI/NinePatch/Frame.png" id="3_7xt3w"]
+[ext_resource type="FontFile" uid="uid://41ewtn37gdwt" path="res://Assets/FSEX300.ttf" id="4_ylpw8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0tvj1"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.333333, 1, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_8yd51"]
+default_font = ExtResource("4_ylpw8")
+default_font_size = 16
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_0tvj1")
+
+[node name="Shop" type="Window"]
+transparent_bg = true
+canvas_item_default_texture_filter = 0
+title = "SHOP"
+size = Vector2i(356, 324)
+wrap_controls = true
+transient = true
+transparent = true
+theme = ExtResource("1_6fu8e")
+
+[node name="Control" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Image" type="AspectRatioContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="Console2" type="Control" parent="Control/VBoxContainer/Image"]
+custom_minimum_size = Vector2(192, 192)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Control/VBoxContainer/Image/Console2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_tcsgg")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Frame" type="NinePatchRect" parent="Control/VBoxContainer/Image/Console2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_7xt3w")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer/Image/Console2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 32
+
+[node name="Label" type="RichTextLabel" parent="Control/VBoxContainer/Image/Console2/MarginContainer"]
+modulate = Color(0.12549, 0.878431, 0.12549, 1)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("4_ylpw8")
+text = "Text"
+scroll_active = false
+scroll_following = true
+tab_size = 7
+
+[node name="Details" type="Control" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(192, 128)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Control/VBoxContainer/Details"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_tcsgg")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Frame" type="NinePatchRect" parent="Control/VBoxContainer/Details"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_7xt3w")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer/Details"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 32
+
+[node name="Label" type="RichTextLabel" parent="Control/VBoxContainer/Details/MarginContainer"]
+modulate = Color(0.12549, 0.878431, 0.12549, 1)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("4_ylpw8")
+text = "Text test test test test test test test test test test test"
+scroll_active = false
+scroll_following = true
+
+[node name="List" type="Control" parent="Control"]
+custom_minimum_size = Vector2(160, 128)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Control/List"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_tcsgg")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Frame" type="NinePatchRect" parent="Control/List"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_7xt3w")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/List"]
+modulate = Color(0.333333, 1, 0, 1)
+layout_mode = 2
+offset_left = 20.0
+offset_top = 32.0
+offset_right = 140.0
+offset_bottom = 292.0
+grow_horizontal = 2
+grow_vertical = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/List/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/List/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/List/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_8yd51")
+
+[node name="Text" type="RichTextLabel" parent="Control/List/ScrollContainer/MarginContainer/VBoxContainer/PanelContainer"]
+modulate = Color(0.12549, 0.878431, 0.12549, 1)
+custom_minimum_size = Vector2(112, 32)
+layout_mode = 2
+text = "SUB-RFL-48 x4
+100p"
+scroll_following = true

@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
-uniform float quant = 8.0;render_mode unshaded;
+uniform float quant = 8.0;
+render_mode unshaded;
 
 
 

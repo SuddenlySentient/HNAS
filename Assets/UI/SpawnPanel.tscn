@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://o5sa1oilvvpy" path="res://Assets/UI/G.png" id="5_yf68j"]
 [ext_resource type="Texture2D" uid="uid://b272kobaantw5" path="res://Assets/Seraph/Frames/Idle/0000.png" id="6_22tp7"]
 [ext_resource type="Texture2D" uid="uid://ddkjs582xgqpl" path="res://Assets/UI/Y.png" id="6_yefg4"]
-[ext_resource type="Texture2D" uid="uid://dvaqbulvuugka" path="res://Assets/Sentry/Frames/Icon.png" id="8_36q3w"]
+[ext_resource type="Texture2D" uid="uid://dvaqbulvuugka" path="res://Assets/SCT-DRN-16/Sentry/Frames/Icon.png" id="8_36q3w"]
 [ext_resource type="Texture2D" uid="uid://c51roopbssb6b" path="res://Assets/SUB-RFL-48/Frames/SMG/Shooting/Down/0000.png" id="8_x1ovs"]
 [ext_resource type="Texture2D" uid="uid://c1gt17vfg7ndg" path="res://Assets/AMBEA/Frames/Hover/Down/0000.png" id="13_4bcb0"]
 [ext_resource type="AudioStream" uid="uid://bob070kkm2nik" path="res://Assets/UI/Sounds/bubbly_counter_01.wav" id="13_obc2y"]

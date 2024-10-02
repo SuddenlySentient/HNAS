@@ -75,13 +75,12 @@ texture = SubResource("ViewportTexture_f4b1d")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite2D"]
 transparent_bg = true
-size = Vector2i(256, 256)
+size = Vector2i(2, 2)
 size_2d_override = Vector2i(1024, 1024)
 size_2d_override_stretch = true
 
 [node name="SoundParticles" type="GPUParticles2D" parent="Sprite2D/SubViewport"]
 visible = false
-self_modulate = Color(0.5, 0.5, 0.5, 1)
 position = Vector2(512, 512)
 amount = 6
 process_material = SubResource("ParticleProcessMaterial_yhekn")
@@ -91,7 +90,6 @@ visibility_rect = Rect2(-512, -512, 1024, 1024)
 
 [node name="SmellParticles" type="GPUParticles2D" parent="Sprite2D/SubViewport"]
 visible = false
-self_modulate = Color(0.5, 0.5, 0.5, 1)
 position = Vector2(512, 512)
 amount = 256
 amount_ratio = 0.25

@@ -62,7 +62,7 @@ func givePoints(amount : int, reason : String, period : float = 1) :
 	
 	if disabled : return false
 	
-	var originalAmount = amount
+	#var originalAmount = amount
 	if multiplier != 1 and sign(amount) == 1 :
 		amount = int(amount * multiplier)
 		if multiplier < 1 and amount == 0 : amount = 1
@@ -71,8 +71,8 @@ func givePoints(amount : int, reason : String, period : float = 1) :
 	if sign(amount) == -1 : amountSign = ""
 	
 	var outputText = amountSign + str(amount) + "p"
-	if multiplier != 1 and sign(amount) == 1 : outputText += " (" + str(originalAmount) + "p x" + str(multiplier) + ")"
-	else : outputText += "\t"
+	#if multiplier != 1 and sign(amount) == 1 : outputText += " x" + str(multiplier)
+	#else : outputText += "\t"
 	outputText += "\t: " + reason + "\n" 
 	
 	if typing : 

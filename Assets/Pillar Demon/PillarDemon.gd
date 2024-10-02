@@ -132,7 +132,8 @@ func actionQuery(delta) :
 			if State == States.Swarm :
 				if aggroTarget == null : return false
 				direction = vectorToTarget
-				if enemiesInRange([$RotateNode/PunchArea]) : 
+				if enemiesInRange([$RotateNode/PunchArea]) and getDistanceTo(nav.target_position) <= 192 : 
+					direction = vectorToTarget
 					attack()
 					return false
 			cAni = "Skitter"
@@ -155,7 +156,7 @@ func pillarQuery(delta) :
 	
 	if pillarArray.size() > 0 :
 		for pillar in pillarArray :
-			if pillar.State == States.Swarm and pillar.aggroTarget != null :
+			if pillar.State == States.Swarm and (pillar.aggroTarget == null) == false :
 				swarm(pillar.aggroTarget)
 	
 	if enemyArray.size() > 0 :
@@ -339,6 +340,6 @@ func die(_cause : String) :
 	var newDeath = death.instantiate()
 	newDeath.thisScale = $Sniff.pitch_scale
 	newDeath.global_position = position
-	newDeath.scale = scale * 1.5
+	newDeath.scale = scale
 	map.add_child(newDeath)
 	queue_free()

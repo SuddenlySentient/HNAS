@@ -10,6 +10,8 @@ var aggroList : Array[Unit] = []
 var HP : int = maxHP
 @export_range(1, 256, 1, "or_greater") var ARM : int = 1
 @export var maxSpeed : int= 200
+@export var pointsOnDeath : int = 5 
+@export_group("Details")
 @export var tags : Array[String]
 @export var canBeSeen : bool = true
 @export var reflectShots : bool = false
@@ -32,9 +34,10 @@ signal hurt(DMG : int, DMGtype : String)
 	"Bartholomew",
 	]
 var direction : Vector2 = Vector2.DOWN
-@export var pointsOnDeath : int = 5 
 var effects : Array[Effect] = [] 
 var dead = false
+@export var weight : float = ARM / 2.0
+@export_subgroup("Curio")
 @export var senses : Dictionary = {
 	"Sound": 1.0,
 	"Smell": 0.75,
@@ -47,6 +50,14 @@ signal unseenSense(sensedThing : Dictionary)
 @export var doMoveNoise : bool = true
 @export var moveNoise : float = 2
 var moveNoiseCurio : Curiousity
+@export_subgroup("Bleeding")
+@export var bleeding : bool = false
+@export var bloodColor : Color = Color("ff1212")
+@export var bleedResistance : float = 0.2
+@export var splatResistance : float = 0.75
+@onready var splat = load("res://Assets/Base/Blood/BloodSplat.tscn")
+@onready var splurt = load("res://Assets/Base/Blood/BloodSplurt.tscn")
+
 
 
 func _physics_process(delta) :
@@ -60,7 +71,7 @@ func _physics_process(delta) :
 				moveNoiseCurio = createCurio(cuiroName, 0, moveNoise, self)
 				moveNoiseCurio.bindToUnit(self)
 			var velo = velocity.length()
-			if velo > 0 :
+			if velo > 0.1 :
 				moveNoiseCurio.strength = clamp(velo / maxSpeed, 0.25, 1) * moveNoise
 			else :
 				moveNoiseCurio.strength = 0
@@ -72,6 +83,7 @@ func _init():
 	HP = maxHP
 	name = getName()
 	initUnit()
+	bloodColor = Color.from_hsv(bloodColor.h + 0.5, bloodColor.s, bloodColor.v)
 
 func initUnit() :
 	pass
@@ -196,16 +208,34 @@ func damage(DMG : int, AP : int, dealer, DMGtype : String, source : Node = null)
 	
 	DMGDealt = adjustDMG(DMGDealt, dealer, DMGtype, source)
 	
+	var hpLost = float(DMGDealt) / float(maxHP)
+	
+	var bleedAmount = 0.1 * clamp(DMGDealt, 0, maxHP)
+	var splurtDirection = -direction
+	if hpLost >= bleedResistance :
+		if (source == null) == false : splurtDirection = global_position.direction_to(source.global_position)
+		bleedSplurt(bleedAmount, splurtDirection)
+	
+	var splatScale = sqrt(maxHP) / 4.0
+	
 	HP -= DMGDealt
+	
 	if source != dealer and dealer != null :
 		dealer.indirectDMG(self, DMGDealt)
 	if HP <= 0 : 
 		if dealer != null : dealer.getKill(self)
+		
 		if dealer == self : givePoints(pointsOnDeath * 2, "Self Kill")
 		elif dealer != null and isFoe(dealer) == false : 
 			givePoints(pointsOnDeath * 2, "Team Kill")
-		else : givePoints(pointsOnDeath, "Kill")
+		else : givePoints(pointsOnDeath, "Death")
+		bleedSplurt(bleedAmount, splurtDirection)
+		if splatResistance < 1 :
+			bleedSplat(splatScale)
 		die(source.name)
+	elif hpLost >= splatResistance : 
+		bleedSplurt(bleedAmount, splurtDirection)
+		bleedSplat(splatScale * hpLost)
 	
 	if DMGDealt > 0 : 
 		emit_signal("hurt", DMGDealt, DMGtype)
@@ -229,6 +259,18 @@ func heal(amount : int) :
 func die(_cause : String) :
 	dead = true
 	queue_free()
+
+func bleedSplurt(amount : float, splurtDirection : Vector2) :
+	var newSplurt = splurt.instantiate()
+	map.add_child(newSplurt)
+	newSplurt.global_position = global_position
+	newSplurt.start(amount, bloodColor, splurtDirection.angle() - PI/2)
+
+func bleedSplat(splatScale : float) :
+	var newSplat = splat.instantiate()
+	map.add_child(newSplat)
+	newSplat.global_position = global_position
+	newSplat.start(splatScale, bloodColor)
 
 # Tile Nonsense
 @onready var map : TileMapLayer = $".."
@@ -384,10 +426,8 @@ func enemiesInRange(areas : Array[Area2D]) :
 @onready var UI = $"../../UI"
 
 func givePoints(amount : int, reason : String, period : float = 1) :
-	#reason += " : " + name
+	reason = type + " " + reason
 	UI.givePoints(amount, reason, period)
-
-@export var weight : float = ARM / 2.0
 
 func dealKnockback(amount : float, knockDirection : Vector2) :
 	velocity += knockDirection * (amount / weight)

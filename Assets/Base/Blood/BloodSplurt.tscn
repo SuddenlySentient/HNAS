@@ -1,0 +1,132 @@
+[gd_scene load_steps=17 format=3 uid="uid://d1m55rmit5u6"]
+
+[ext_resource type="Script" path="res://Assets/Base/Blood/BloodSplurt.tres.gd" id="1_1egyb"]
+[ext_resource type="Texture2D" uid="uid://ccfhf5ts588ay" path="res://Assets/Facility/Floor.png" id="1_eu7jx"]
+[ext_resource type="Texture2D" uid="uid://ckldc71ln24ll" path="res://Assets/Base/SpillA.png" id="2_ikm60"]
+[ext_resource type="Shader" path="res://Assets/Base/Blood/BloodDither.gdshader" id="2_vealg"]
+[ext_resource type="Texture2D" uid="uid://8rmbi5y2rliy" path="res://Assets/Base/CircleLight.png" id="3_kifk1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ryoaq"]
+shader = ExtResource("2_vealg")
+shader_parameter/quant = 8.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_jvv77"]
+viewport_path = NodePath("Pools/SubViewport")
+
+[sub_resource type="Curve" id="Curve_3ph5l"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_d7x1a"]
+curve = SubResource("Curve_3ph5l")
+
+[sub_resource type="Curve" id="Curve_ctca8"]
+_data = [Vector2(0, 0.3), 0.0, 0.0, 0, 0, Vector2(0.1, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_1r6n6"]
+curve = SubResource("Curve_ctca8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_33kw3"]
+lifetime_randomness = 0.25
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 128.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.05
+scale_max = 0.15
+scale_curve = SubResource("CurveTexture_1r6n6")
+alpha_curve = SubResource("CurveTexture_d7x1a")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_45633"]
+viewport_path = NodePath("Splurt/SubViewport")
+
+[sub_resource type="Curve" id="Curve_1rvh7"]
+max_value = 256.0
+_data = [Vector2(0.5, 256), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_74xk5"]
+curve = SubResource("Curve_1rvh7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eqafd"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 16.0
+emission_ring_inner_radius = 32.0
+direction = Vector3(0, -1, 0)
+spread = 22.5
+initial_velocity_min = 96.0
+initial_velocity_max = 160.0
+radial_velocity_min = -80.0
+radial_velocity_max = -64.0
+velocity_limit_curve = SubResource("CurveTexture_74xk5")
+gravity = Vector3(0, 0, 0)
+scale_min = 0.05
+scale_max = 0.15
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+collision_use_scale = true
+sub_emitter_mode = 2
+sub_emitter_amount_at_end = 1
+
+[node name="Blood Splurt" type="Node2D"]
+script = ExtResource("1_1egyb")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -256)
+scale = Vector2(4, 4)
+texture = ExtResource("1_eu7jx")
+
+[node name="Pools" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ryoaq")
+scale = Vector2(4, 4)
+texture = SubResource("ViewportTexture_jvv77")
+
+[node name="SubViewport" type="SubViewport" parent="Pools"]
+transparent_bg = true
+size_2d_override = Vector2i(1024, 1024)
+size_2d_override_stretch = true
+
+[node name="Pools" type="GPUParticles2D" parent="Pools/SubViewport"]
+modulate = Color(1, 1, 1, 0.376471)
+amount = 512
+process_material = SubResource("ParticleProcessMaterial_33kw3")
+texture = ExtResource("2_ikm60")
+lifetime = 64.0
+
+[node name="Splurt" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ryoaq")
+scale = Vector2(4, 4)
+texture = SubResource("ViewportTexture_45633")
+
+[node name="SubViewport" type="SubViewport" parent="Splurt"]
+transparent_bg = true
+size_2d_override = Vector2i(1024, 1024)
+size_2d_override_stretch = true
+
+[node name="Splurt" type="GPUParticles2D" parent="Splurt/SubViewport"]
+self_modulate = Color(1, 1, 1, 0.25098)
+position = Vector2(512, 512)
+emitting = false
+amount = 256
+amount_ratio = 0.2
+sub_emitter = NodePath("../../../Pools/SubViewport/Pools")
+process_material = SubResource("ParticleProcessMaterial_eqafd")
+texture = ExtResource("3_kifk1")
+lifetime = 3.25
+one_shot = true
+speed_scale = 3.0
+explosiveness = 0.5
+trail_enabled = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 80.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

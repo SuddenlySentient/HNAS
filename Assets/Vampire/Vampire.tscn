@@ -3681,16 +3681,16 @@ type = "Vampire"
 team = "Sanguinist"
 maxHP = 32
 ARM = 6
-tags = Array[String](["Mechanical", "Angel", "HasBlood", "Greater", "Magic"])
+pointsOnDeath = 15
+tags = Array[String](["Mechanical", "Angel", "Greater", "Magic"])
 reflectShots = true
 nameList = Array[StringName]([&"Lady Grace", &"Commander Rosso", &"Lieutenant Scarlet", &"Sir Sangue", &"Ruash Vad", &"Vincent", &"Stranger", &"Mistress Immortali"])
-pointsOnDeath = 15
+weight = 4.0
 senses = {
 "Magic": 0.25,
 "Smell": 0.25,
 "Sound": 0.75
 }
-weight = 4.0
 
 [node name="ComboCanvas" type="CanvasLayer" parent="."]
 visible = false
@@ -3771,7 +3771,6 @@ radius = 256.0
 [node name="RotateNode" type="Node2D" parent="."]
 
 [node name="ThrustArea" type="Area2D" parent="RotateNode"]
-visible = false
 collision_layer = 8
 
 [node name="Thrust" type="CollisionShape2D" parent="RotateNode/ThrustArea"]

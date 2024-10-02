@@ -5,13 +5,20 @@ var explode = false
 var size = 1
 var mark = load("res://Assets/Base/explosion_mark.tscn")
 var burn = load("res://Assets/Base/Effects/Burning.tscn")
+var whizSoundCurio : Curiousity
+
+
 
 func _enter_tree():
 	sparks = load("res://Assets/Seraph/seraph_spark.tscn")
 	global_position += targetVector * distanceFromShooter
 	newSpark()
+	whizSoundCurio = shooter.createCurio("Fireball Whiz", 0, 6, shooter)
+	shooter.map.add_child(whizSoundCurio)
 
 func _physics_process(delta):
+	if (whizSoundCurio == null) == false :
+		whizSoundCurio.global_position = global_position
 	$CanvasLayer/Sparks.global_position = global_position
 	if explode:
 		linear_velocity = Vector2.ZERO
@@ -61,6 +68,9 @@ func endShot():
 	$ExplostionTimer.start()
 	$Smoke.restart()
 	$CanvasLayer/Sparks.emitting = false
+	whizSoundCurio.queue_free()
+	var explosionSoundCurio = shooter.createCurio("Fireball Explode", 0, 32, shooter, 4)
+	$"..".add_child(explosionSoundCurio)
 	for weakling in $Explosion.get_overlapping_bodies() :
 		if weakling is Unit :
 			var falloff = sqrt(1.0 - (position.distance_to(weakling.position)/(512 * size)))

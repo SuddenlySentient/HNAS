@@ -18,6 +18,9 @@ var arcLength = deg_to_rad(5) / 2
 var targetVector = Vector2.LEFT
 var firing = false
 var hurted = []
+var soundCurio : Curiousity
+
+
 
 func _enter_tree():
 	await ready
@@ -33,6 +36,8 @@ func _enter_tree():
 	$HitLight.enabled = true
 	if randi_range(0, 1) == 0 : arcLength *= -1
 	firing = true
+	soundCurio = myOwner.createCurio("Plasma Ray", 0, 32, myOwner)
+	myOwner.map.add_child(soundCurio)
 
 func _process(_delta):
 	if firing :
@@ -46,6 +51,7 @@ func _physics_process(delta):
 		if ray.is_colliding() :
 			var collsionPoint =ray.get_collision_point()
 			line.points[1] = collsionPoint - global_position
+			soundCurio.global_position = collsionPoint
 			$CanvasLayer/SparksB.position = collsionPoint
 			$CanvasLayer/SparksB.rotation = ray.get_collision_normal().angle() + (PI / 2)
 			$HitLight.global_position = collsionPoint
@@ -82,6 +88,7 @@ func _on_arc_timer_timeout():
 	myOwner.add_child(newSparks)
 	$End.play()
 	$End.reparent(myOwner, true)
+	soundCurio.queue_free()
 	queue_free()
 
 func _on_plasma_ray_a_finished():

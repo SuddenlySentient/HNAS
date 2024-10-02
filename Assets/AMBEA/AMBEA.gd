@@ -18,6 +18,7 @@ var charge = 0
 
 
 
+
 func initUnit() :
 	vision = $Rotate/Vision
 
@@ -41,7 +42,7 @@ func think(delta) :
 		States.Found :
 			if $Rotate/Flames/Cooldown.is_stopped() and enemiesInRange([$Rotate/Flames/FlameArea]) : 
 				napalm()
-			elif global_position.distance_to(aggroTarget.position) <= 1792 and global_position.distance_to(aggroTarget.position) >= 512 :
+			elif global_position.distance_to(aggroTarget.position) <= 1792 and global_position.distance_to(aggroTarget.position) >= 512 and (enemiesInRange([$Rotate/Flames/FlameArea]) == false) :
 				if cAni == "Hover" : 
 					openHalo()
 				elif cAni == "HaloHover" :

@@ -47,7 +47,7 @@ func think(delta) :
 		if aggroList.is_empty() == false and (aggroList[0] != null and aggroList[0].canBeSeen) :
 			aggroTarget = aggroList[0]
 		if aggroTarget != null and aggroTarget.canBeSeen :
-			if $RotateNode/ThrustArea.overlaps_body(aggroTarget) : 
+			if $RotateNode/ThrustArea.overlaps_body(aggroTarget) and getDistanceTo(aggroTarget.global_position) <= 480 : 
 				State = States.Attack
 			else : 
 				State = States.Approach

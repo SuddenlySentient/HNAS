@@ -1711,16 +1711,17 @@ team = "Pillar Demon"
 maxHP = 8
 ARM = 6
 maxSpeed = 250
+pointsOnDeath = 2
 tags = Array[String](["Demon", "Biological", "HasBlood", "Lesser"])
 canBeSeen = false
-pointsOnDeath = 2
+weight = 1.0
 senses = {
 "Magic": 0.25,
 "Smell": 1.5,
 "Sound": 1.0
 }
 moveNoise = 3.0
-weight = 1.0
+bloodColor = Color(1, 0.0705882, 0.223529, 1)
 
 [node name="PDSprite" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
@@ -1740,7 +1741,6 @@ position = Vector2(0, 64)
 monitorable = false
 
 [node name="Punch" type="CollisionShape2D" parent="RotateNode/PunchArea"]
-visible = false
 shape = SubResource("CapsuleShape2D_448r3")
 debug_color = Color(0.7, 0.0583333, 0, 0.419608)
 

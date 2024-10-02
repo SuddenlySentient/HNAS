@@ -25,6 +25,12 @@ func initUnit() :
 	sprite.play()
 	vision = $Vision
 	$StaminaRegen.wait_time = staminaRegen
+	var burningCurioHear : Curiousity = createCurio("Seraph Burning Sound", 0, 4, self)
+	bindCurio(burningCurioHear)
+	var burningCurioSmell : Curiousity = createCurio("Seraph Burning Smell", 0, 8, self)
+	burningCurioSmell.changeColor(Color.DIM_GRAY)
+	bindCurio(burningCurioSmell)
+	
 
 func getName() :
 	var newName = nameList.pick_random() + "-" + str(randi_range(0 , 9))
@@ -328,7 +334,7 @@ func _on_stamina_regen_timeout():
 		$Regen.play()
 
 func _on_test_timer_timeout():
-	teleport(map.map_to_local(getTileToSearch(-1, 0.125)))
+	teleport(map.map_to_local(getTileToSearch(-1, 0.125, 0)))
 
 func die(_cause : String) :
 	newSpark()

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmk4rjsbwbsw5"]
+
+[ext_resource type="Script" path="res://Assets/Base/FacilityComms.gd" id="1_hlatp"]
+
+[node name="FacilityComms" type="Node"]
+script = ExtResource("1_hlatp")

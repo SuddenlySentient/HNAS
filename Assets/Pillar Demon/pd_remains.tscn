@@ -1,79 +1,23 @@
-[gd_scene load_steps=12 format=3 uid="uid://cviatko1nn3p8"]
+[gd_scene load_steps=7 format=3 uid="uid://cviatko1nn3p8"]
 
-[ext_resource type="Texture2D" uid="uid://yhq0jnqboap1" path="res://Assets/Base/Splatter1.png" id="1_05x24"]
-[ext_resource type="Texture2D" uid="uid://c7wicnm3ffaoe" path="res://Assets/Base/Splatter2.png" id="2_t623s"]
-[ext_resource type="Texture2D" uid="uid://coce68x0qbn1s" path="res://Assets/Base/Splatter3.png" id="3_d6y75"]
 [ext_resource type="AudioStream" uid="uid://cgwkut04222h2" path="res://Assets/Pillar Demon/Sounds/Death.wav" id="4_3mx5j"]
 
 [sub_resource type="GDScript" id="GDScript_owqho"]
 script/source = "extends Node2D
 
 var thisScale : float = 1
-var spillScale
-var initalScale
-var initalColor = Color(\"cc2944\")
-var finalColor = Color(\"991f33\")
 
-func _enter_tree():
-	
-	$Blood.restart()
+
+
+func _ready() -> void:
 	$Marble.restart()
 	$Death.pitch_scale = thisScale
-	
-	$Splat.rotation = randf_range(0, 2 * PI)
-	$Splat.frame = randi_range(0, 2)
-	
-	initalScale = scale
-	spillScale = scale * 1.5
 	await ready
-	$Timer.start(randf_range(512, 1024))
-	$Spill.start(randf_range(20, 30))
 	$Death.play()
-
-func _process(_delta):
-	var spillCompletion = 1 - ($Spill.time_left/$Spill.wait_time)
-	scale = lerp(initalScale, spillScale, spillCompletion)
-	var opacity = ($Timer.time_left / $Timer.wait_time)
-	opacity = sin(opacity * (PI / 2.0))
-	modulate = Color.from_hsv(0, 0, 1, opacity)
-	$Splat.modulate = lerp(initalColor, finalColor, spillCompletion)
 
 func _on_timer_timeout():
 	queue_free()
 "
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_16npn"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_05x24")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_t623s")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_d6y75")
-}],
-"loop": true,
-"name": &"Splat",
-"speed": 5.0
-}]
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_snjkc"]
-lifetime_randomness = 0.5
-particle_flag_disable_z = true
-emission_shape_scale = Vector3(48, 48, 1)
-emission_shape = 1
-emission_sphere_radius = 1.0
-direction = Vector3(0, -1, 0)
-spread = 60.0
-flatness = 0.25
-initial_velocity_min = 64.0
-initial_velocity_max = 144.0
-gravity = Vector3(0, 128, 0)
-scale_min = 2.0
-scale_max = 8.0
-collision_mode = 2
 
 [sub_resource type="Gradient" id="Gradient_0auon"]
 interpolation_mode = 2
@@ -98,32 +42,13 @@ color_initial_ramp = SubResource("GradientTexture1D_01de0")
 random_pitch = 1.25
 streams_count = 1
 stream_0/stream = ExtResource("4_3mx5j")
-stream_0/weight = 1.0
 
 [node name="PDRemains" type="Node2D"]
 y_sort_enabled = true
-scale = Vector2(2, 2)
 script = SubResource("GDScript_owqho")
 
-[node name="Splat" type="AnimatedSprite2D" parent="."]
-modulate = Color(0.8, 0.16, 0.266667, 1)
-y_sort_enabled = true
-sprite_frames = SubResource("SpriteFrames_16npn")
-animation = &"Splat"
-
-[node name="Blood" type="GPUParticles2D" parent="."]
-modulate = Color(0.8, 0.160784, 0.266667, 1)
-emitting = false
-amount = 64
-process_material = SubResource("ParticleProcessMaterial_snjkc")
-lifetime = 3.0
-one_shot = true
-speed_scale = 2.0
-explosiveness = 1.0
-trail_enabled = true
-trail_lifetime = 0.2
-
 [node name="Marble" type="GPUParticles2D" parent="."]
+z_index = 1
 emitting = false
 amount = 64
 process_material = SubResource("ParticleProcessMaterial_jbc1g")

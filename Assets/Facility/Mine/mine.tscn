@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://dejvmg55walo3"]
+[gd_scene load_steps=39 format=3 uid="uid://dejvmg55walo3"]
 
 [ext_resource type="Script" path="res://Assets/Facility/Mine/mine.gd" id="1_8fbj4"]
 [ext_resource type="Texture2D" uid="uid://dyy7phya7pwt2" path="res://Assets/Facility/Mine/Mine.png" id="1_lqqgo"]
@@ -17,6 +17,9 @@ radius = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4t5sf"]
 radius = 24.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tuosa"]
+light_mode = 1
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_alpiu"]
 atlas = ExtResource("7_im8o6")
@@ -210,8 +213,8 @@ collision_layer = 0
 mass = 0.01
 gravity_scale = 0.0
 lock_rotation = true
-max_contacts_reported = 1
 contact_monitor = true
+max_contacts_reported = 1
 linear_damp = 5.0
 script = ExtResource("1_8fbj4")
 DMG = 20
@@ -285,9 +288,9 @@ attenuation = 4.0
 
 [node name="ExplosionSprite" type="AnimatedSprite2D" parent="."]
 visible = false
-modulate = Color(4, 4, 4, 1)
 light_mask = 0
 z_index = 8
+material = SubResource("CanvasItemMaterial_tuosa")
 scale = Vector2(16, 16)
 sprite_frames = SubResource("SpriteFrames_6dsuv")
 animation = &"Explode"
@@ -299,8 +302,8 @@ radius = 64.0
 [node name="ExplosionObstacle" type="NavigationObstacle2D" parent="."]
 visible = false
 scale = Vector2(2, 2)
-avoidance_enabled = false
 radius = 256.0
+avoidance_enabled = false
 
 [node name="ExplosionParticles" type="GPUParticles2D" parent="."]
 z_index = 4
